@@ -2,11 +2,13 @@ class BootScene extends Phaser.Scene {
 
 	constructor() {
         super({
-            Key: "BootScene"
+            key: "BootScene",
+            active: true
         });
     }
 
     init(data) {}
+    
     preload () {
     	this.load.image('Lharys', 'assets/sprites/Lharys.png');
     }
