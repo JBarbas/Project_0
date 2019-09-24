@@ -3,7 +3,6 @@ class BootScene extends Phaser.Scene {
 	constructor() {
         super({
             key: "BootScene",
-            active: true
         });
     }
 
@@ -14,6 +13,11 @@ class BootScene extends Phaser.Scene {
     }
     create (data)  {
     	var image = this.add.image(400, 300, 'Lharys');
+    	image.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.scene.run('PreloadScene', 'default');
+    		game.scene.stop('BootScene');
+    		console.log("boot");
+    	});
     }
     update(time, delta) {
     	
