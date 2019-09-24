@@ -16,7 +16,6 @@ class PreloadScene extends Phaser.Scene {
     	image.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.scene.run('BootScene');
     		game.scene.stop('PreloadScene');
-    		console.log("preload");
     	});
     }
     update(time, delta) {
