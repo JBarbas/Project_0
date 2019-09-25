@@ -14,6 +14,7 @@ class PreloadScene extends Phaser.Scene {
 	
 	preload () {
     	this.load.image('Lharys', 'assets/sprites/Lharys.png');
+    	this.load.image('CentroMando', 'assets/sprites/Edificio.png');
     }
     create (data)  {
     	var image = this.add.image(300, 300, 'Lharys');
