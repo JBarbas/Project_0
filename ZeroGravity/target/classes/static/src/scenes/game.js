@@ -21,10 +21,29 @@ class GameScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	this.main_camera = this.cameras.main;
     	createGrid(this, tileMap_width, tileMap_height);
     }
     update(time, delta) {
     	
+    	/* Codigo extraido de http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
+    	 * by sanojian - 14 October 2014
+    	 */
+    	if (this.game.input.activePointer.isDown) {
+		  if (this.game.origDragPoint) {
+			// move the camera by the amount the mouse has moved since last update
+			this.cameras.main.scrollX +=
+			  this.game.origDragPoint.x - this.game.input.activePointer.position.x;
+			this.cameras.main.scrollY +=
+			  this.game.origDragPoint.y - this.game.input.activePointer.position.y;
+		  } // set new drag origin to current position
+		  this.game.origDragPoint = this.game.input.activePointer.position.clone();
+		} else {
+		  this.game.origDragPoint = null;
+		}
+    	/* Codigo extraido de http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
+    	 * Updated by chrisme - 30 June 2019
+    	 */
     }
 
 }
