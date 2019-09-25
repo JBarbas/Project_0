@@ -6,7 +6,11 @@ class BootScene extends Phaser.Scene {
         });
     }
 
-    init(data) {}
+    init(data) {
+    	if (game.global.DEBUG_MODE) {
+			console.log("[DEBUG] Entering **BOOT** scene");
+		}
+    }
     
     preload () {
     	this.load.image('Lharys', 'assets/sprites/Lharys.png');

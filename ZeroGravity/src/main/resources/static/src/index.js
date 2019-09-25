@@ -12,28 +12,16 @@ window.onload = function() {
 			  backgroundColor: "#222222",
 			  scene: [	
 				  		BootScene,
-				  		PreloadScene]
+				  		PreloadScene,
+				  		GameScene]
 			};
-	
-	/*config = {
-		    type: Phaser.AUTO,
-		    scale: {
-		        mode: Phaser.Scale.FIT,
-		        parent: 'phaser-example',
-		        autoCenter: Phaser.Scale.CENTER_BOTH,
-		        width: 800,
-		        height: 600
-		    },
-		    //... other settings
-		    scene: GameScene
-		};*/
 	
 	game = new Phaser.Game(config);
 	
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : false,
+		DEBUG_MODE : true,
 		socket : null,
 		loaded : false,
 		myPlayer : new Object()

@@ -6,7 +6,11 @@ class PreloadScene extends Phaser.Scene {
 		});
 	}
 	
-	init(data){}
+	init(data){
+		if (game.global.DEBUG_MODE) {
+			console.log("[DEBUG] Entering **PRELOAD** scene");
+		}
+	}
 	
 	preload () {
     	this.load.image('Lharys', 'assets/sprites/Lharys.png');
@@ -14,7 +18,7 @@ class PreloadScene extends Phaser.Scene {
     create (data)  {
     	var image = this.add.image(300, 300, 'Lharys');
     	image.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.scene.run('BootScene');
+    		game.scene.run('GameScene');
     		game.scene.stop('PreloadScene');
     	});
     }
