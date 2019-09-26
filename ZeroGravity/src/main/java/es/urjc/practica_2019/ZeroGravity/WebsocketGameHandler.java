@@ -48,12 +48,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			
-			case "HOLA":
-				System.out.println("HOLA recibido por el servidor");
-				msg.put("event", "HOLA");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
-				break;
-				
 			default:
 				break;
 			}
