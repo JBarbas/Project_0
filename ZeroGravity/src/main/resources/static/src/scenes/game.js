@@ -1,7 +1,11 @@
 var tile_width = 128;
 var tile_height = 64;
-var tileMap_width = 32; // Numero de tiles a lo ancho
-var tileMap_height = 32; // Numero de tiles a lo largo
+var tileMap_width = 32; // Numero de tiles a lo ancho (+2 para colocar tiles de borde del mapa)
+var tileMap_height = 32; // Numero de tiles a lo largo (+2 para colocar tiles de borde del mapa)
+var world_bounds_margin = 256; // Margen o padding del mapa
+var zoom = 1; // zoom de la camara
+var maxZoom = 2; // zoom maximo permitido
+var zoomSpeed = 0.05 // velocidad del zoom
 
 class GameScene extends Phaser.Scene {
 	
@@ -21,6 +25,11 @@ class GameScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	this.main_camera = this.cameras.main;
+    	zoom = 1; // reset del zoom
+    	// Establecemos los limites del mapa donde puede ver la camara
+    	this.main_camera.setBounds(0-world_bounds_margin, 0-world_bounds_margin, tileMap_width*tile_width + 2*world_bounds_margin, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_margin, true);
+    	// Creamos la malla isometrica
     	createGrid(this, tileMap_width, tileMap_height);
     }
     update(time, delta) {
