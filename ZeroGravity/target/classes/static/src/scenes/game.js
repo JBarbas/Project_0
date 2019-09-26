@@ -32,19 +32,26 @@ class GameScene extends Phaser.Scene {
     	// Creamos la malla isometrica
     	this.mapGrid = createGrid(this, tileMap_width, tileMap_height);
     	this.isDragging = false; // true si la cámara se está moviendo por drag del raton
+    	
+    	// Evento de click para construir edificio
     	let scene = this;
     	this.input.on('pointerup', function(pointer){
+    		// No permite construir si se esta haciendo scroll/drag en la pantalla
     	    if (!scene.isDragging) {
+    	    	// Recogemos la posicion del raton en coordenadas globales
     	    	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(pointer.x, pointer.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(pointer.x, pointer.y).y);
-    	    	console.log(position);
+    	    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
     			position = isometricToCartesian(position);
+    			// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
     			let i = Math.trunc(position.y/tile_height + 1);
     			let j = Math.trunc(position.x/(tile_width/2) + 1);
-    			console.log(i, j);
+    			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
     			let x = scene.mapGrid[i][j].image.x;
     			let y = scene.mapGrid[i][j].image.y;
     	    	var centroMando = new CentroMando(x, y);
+    	    	// Pintamos el edificio desde su esquina inferior
     	    	scene.mapGrid[i][j].content = scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
+    	    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
     	    	scene.mapGrid[i][j].content.depth = i*tileMap_width + j;
 			}
 			else {
@@ -81,10 +88,6 @@ class GameScene extends Phaser.Scene {
     	/* Codigo extraido de http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
     	 * Updated by chrisme - 30 June 2019
     	 */
-    	
-    	this.input.on('pointerup', function(pointer){
-    	    this.isDragging = false;
-    	 });
     }
 
 }
