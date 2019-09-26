@@ -44,7 +44,8 @@ class GameScene extends Phaser.Scene {
     			let x = scene.mapGrid[i][j].image.x;
     			let y = scene.mapGrid[i][j].image.y;
     	    	var centroMando = new CentroMando(x, y);
-    	    	scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
+    	    	scene.mapGrid[i][j].content = scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
+    	    	scene.mapGrid[i][j].content.depth = i*tileMap_width + j;
 			}
 			else {
 				scene.isDragging = false;
