@@ -15,6 +15,7 @@ public class CentroMando extends Edificio {
 		this.setWidth(1);
 		this.setLevel(1);
 		this.setBuildingDependsOn(null);
+		this.setSprite("assets/sprites/Edificio.png");
 	}
 	
 	

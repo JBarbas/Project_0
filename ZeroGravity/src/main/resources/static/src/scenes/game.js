@@ -37,8 +37,10 @@ class GameScene extends Phaser.Scene {
 
     		if(game.input.mousePointer.isDown){
 	    		var centroMando = new CentroMando(game.input.mousePointer.x, game.input.mousePointer.y);
-	    		console.log(centroMando.x)
-	    		this.add.image(centroMando.x, centroMando.y, 'CentroMando');
+	    		this.add.image(centroMando.x, centroMando.y, centroMando.sprite);
+	    		let msg = new Object();
+	    		msg.event = "HOLA";
+	    		game.global.socket.send(JSON.stringify(msg));
     		}
     	
 
