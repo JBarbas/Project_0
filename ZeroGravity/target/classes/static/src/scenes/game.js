@@ -34,8 +34,6 @@ class GameScene extends Phaser.Scene {
     	this.isDragging = false; // true si la cámara se está moviendo por drag del raton
     	let scene = this;
     	this.input.on('pointerup', function(pointer){
-    	    //var touchX = pointer.x;
-    	    //var touchY = pointer.y;
     	    if (!scene.isDragging) {
     	    	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(pointer.x, pointer.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(pointer.x, pointer.y).y);
     	    	console.log(position);
@@ -46,7 +44,7 @@ class GameScene extends Phaser.Scene {
     			let x = scene.mapGrid[i][j].image.x;
     			let y = scene.mapGrid[i][j].image.y;
     	    	var centroMando = new CentroMando(x, y);
-        	    mapGrid[i][j].contenido = scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
+    	    	scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
 			}
 			else {
 				scene.isDragging = false;
@@ -117,19 +115,8 @@ function createGrid(scene, width, height) {
 	for (var i = 0; i < newGrid.length; i++) {
 		for (var j = 0; j < newGrid[i].length; j++) {
 			var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
-			//console.log(position);
 			position = cartesianToIsometric(position);
-			//console.log(position);
 			newGrid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_' + newGrid[i][j].type).setOrigin(0.5, 1);
-			/*newGrid[i][j].image.setInteractive().on('pointerup', function(pointer, localX, localY, event){
-				if (!scene.isDragging) {
-					var centroMando = new CentroMando(this.x, this.y);
-		    		scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
-				}
-				else {
-					scene.isDragging = false;
-				}
-	    	});*/
 		}
 	}
 	return newGrid;
