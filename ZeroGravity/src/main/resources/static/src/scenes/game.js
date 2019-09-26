@@ -1,7 +1,8 @@
 var tile_width = 128;
 var tile_height = 64;
-var tileMap_width = 32; // Numero de tiles a lo ancho
-var tileMap_height = 32; // Numero de tiles a lo largo
+var tileMap_width = 34; // Numero de tiles a lo ancho (+2 para colocar tiles de borde del mapa)
+var tileMap_height = 34; // Numero de tiles a lo largo (+2 para colocar tiles de borde del mapa)
+var world_bounds_margin = 256; // Margen o padding del mapa
 
 class GameScene extends Phaser.Scene {
 	
@@ -22,6 +23,9 @@ class GameScene extends Phaser.Scene {
     }
     create (data)  {
     	this.main_camera = this.cameras.main;
+    	// Establecemos los limites del mapa donde puede ver la camara
+    	this.main_camera.setBounds(0-world_bounds_margin, 0-world_bounds_margin, tileMap_width*tile_width + 2*world_bounds_margin, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_margin, true);
+    	// Creamos la malla isometrica
     	createGrid(this, tileMap_width, tileMap_height);
     }
     update(time, delta) {
@@ -48,32 +52,35 @@ class GameScene extends Phaser.Scene {
 
 }
 
+// Crea un array doble para el mapa
 function randomGrid(width, height) {
 	var randomGrid = new Array();
+	var minGridSide = Math.min(width-2, height-2);
 	for (var i = 0; i < height; i++) {
 		randomGrid.push(new Array());
 		for (var j = 0; j < width; j++) {
-			if (i === 0 || i === height - 1 || j === 0 || j === width - 1) {
+			if (i >= minGridSide/3 && i <= 2*minGridSide/3 && j >= minGridSide/3 && j <= 2*minGridSide/3) {
+				randomGrid[i].push(0);
+			}
+			else if (i === 0 || i === height - 1 || j === 0 || j === width - 1) {
 				randomGrid[i].push(-2);
 			}
-			else if (i === 1 || i === height - 2 || j === 1 || j === width - 2) {
-				randomGrid[i].push(-1);
-			}
 			else {
-				randomGrid[i].push(0);
+				randomGrid[i].push(-1);
 			}
 		}
 	}
 	return randomGrid;
 }
 
+// Asigna los tiles al array del mapa
 function createGrid(scene, width, height) {
 	var newGrid = randomGrid(width, height)
 	for (var i = 0; i < newGrid.length; i++) {
 		for (var j = 0; j < newGrid[i].length; j++) {
 			var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 			position = cartesianToIsometric(position);
-			let tile = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_' + newGrid[i][j]).setOrigin(0.5, 0);
+			let tile = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_' + newGrid[i][j]).setOrigin(0.5, 1);
 		}
 	}
 }
