@@ -18,12 +18,20 @@ class BootScene extends Phaser.Scene {
     	
     	//Buttons
     	this.load.image('session', 'assets/background/btnInicioSesion.png');
+    	this.load.spritesheet( 'btn' , 'assets/background/btnInicioSesionSprite.png' ,{frameWidth:596,frameHeight:142});
     }
     create (data)  {
     	var background = this.add.image(960, 540, 'background');
     	
-    	var button = this.add.image(960, 800, 'session');
-    	/*var buttonHover = this.add.image(960, 800, 'sessionHover');*/
+    	var button = this.add.image(960, 800, 'btn').setInteractive();
+
+    	button.on('pointerover',function(pointer){
+    	    button.setFrame(1);
+    	})
+
+    	button.on('pointerout',function(pointer){
+    	    button.setFrame(0);
+    	})
         
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.scene.run('PreloadScene');

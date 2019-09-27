@@ -75,7 +75,7 @@ class GameScene extends Phaser.Scene {
 					// move the camera by the amount the mouse has moved since last update
 					this.cameras.main.scrollX += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
 					this.cameras.main.scrollY += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
-					if (this.game.origDragPoint.x - this.game.input.activePointer.position.x != 0 || this.game.origDragPoint.y - this.game.input.activePointer.position.y != 0) {
+					if (Math.abs(this.game.origDragPoint.x - this.game.input.activePointer.position.x) > 3 || Math.abs(this.game.origDragPoint.y - this.game.input.activePointer.position.y) > 3) {
 						this.isDragging = true;
 					}
 			  } 
