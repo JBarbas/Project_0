@@ -13,6 +13,9 @@ window.onload = function() {
 			  scene: [	
 				  		BootScene,
 				  		PreloadScene,
+				  		LogInScene,
+				  		MenuScene,
+				  		PreloadGameScene,
 				  		GameScene]
 			};
 	
