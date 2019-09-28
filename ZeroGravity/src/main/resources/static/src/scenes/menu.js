@@ -29,7 +29,7 @@ class MenuScene extends Phaser.Scene {
     	
     	
     	//TODO  HAY QUE ARREGLAR ESTO PORQUE NO FUNCIONA VENGA CHAO
-    	var title = this.add.sprite(200, 200, 'title', 'background.png');
+    	//var title = this.add.sprite(200, 200, 'title', 'background.png');
     	
     	var jugar = this.add.text(80, 400, 'JUGAR', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' });
     	var opciones = this.add.text(80, 500, 'OPCIONES', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' });
@@ -58,7 +58,7 @@ class MenuScene extends Phaser.Scene {
     	});
     	
     	opciones.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.scene.run('PreloadGameScene');
+    		game.scene.run('OptionsScene');
     		game.scene.stop('MenuScene');
     	});
     	opciones.setInteractive().on('pointerover', function(pointer, localX, localY, event){
@@ -69,7 +69,7 @@ class MenuScene extends Phaser.Scene {
     	});
     	
     	creditos.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.scene.run('PreloadGameScene');
+    		game.scene.run('CreditsScene');
     		game.scene.stop('MenuScene');
     	});
     	creditos.setInteractive().on('pointerover', function(pointer, localX, localY, event){

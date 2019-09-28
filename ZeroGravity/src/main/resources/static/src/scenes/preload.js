@@ -16,6 +16,8 @@ class PreloadScene extends Phaser.Scene {
 		// Backgrounds
 		this.load.image('backgroundLogIn', 'assets/background/InicioSesionV.1.png');
 		this.load.image('backgroundMenu', 'assets/background/MenuPrincipal.png');
+		this.load.image('backgroundOptionsAccount', 'assets/background/OpcionesCuenta.png');
+		this.load.image('backgroundCredits', 'assets/background/Creditos.png');
 		
 		//Buttons
     	this.load.image('session', 'assets/background/btnInicioSesion.png');
@@ -23,7 +25,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('btnAmigos', 'assets/background/btnMenuAmigos.png');
 		
 		
-		this.load.multiatlas('title', 'assets/sprites/anim/image1.json', 'assets');
+		//this.load.multiatlas('title', 'assets/sprites/anim/image1.json', 'assets');
 		
     }
     create (data)  {
