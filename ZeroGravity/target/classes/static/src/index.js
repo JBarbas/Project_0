@@ -13,6 +13,9 @@ window.onload = function() {
 			  scene: [	
 				  		BootScene,
 				  		PreloadScene,
+				  		LogInScene,
+				  		MenuScene,
+				  		PreloadGameScene,
 				  		GameScene]
 			};
 	
@@ -53,12 +56,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			break
-		
-		case 'HOLA':
-			if (game.global.DEBUG_MODE) {
-				console.log('[DEBUG] HOLA message recieved')
-				console.dir(msg);
-			}
+	
 		default:
 			break;
 		

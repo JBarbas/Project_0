@@ -13,15 +13,13 @@ class PreloadScene extends Phaser.Scene {
 	}
 	
 	preload () {
-		this.load.bitmapFont('myfont', 'assets/fontMap.png', 'assets/fontMap.fnt');
-
-    	this.load.image('Lharys', 'assets/sprites/Lharys.png');
-    	this.load.image('CentroMando', 'assets/sprites/Edificio.png');
-		this.load.image('tile_prototipo_0', 'assets/sprites/Tiles_prototipo/tile_prototipo_0.png');
-		this.load.image('tile_prototipo_-1', 'assets/sprites/Tiles_prototipo/tile_prototipo_-1.png');
-		this.load.image('tile_prototipo_-2', 'assets/sprites/Tiles_prototipo/tile_prototipo_-2.png');
-
-		this.load.image('backgroundM', 'assets/background/MenuPrincipal.png');
+		// Backgrounds
+		this.load.image('backgroundLogIn', 'assets/background/InicioSesionV.1.png');
+		this.load.image('backgroundMenu', 'assets/background/MenuPrincipal.png');
+		
+		//Buttons
+    	this.load.image('session', 'assets/background/btnInicioSesion.png');
+    	this.load.spritesheet( 'btn' , 'assets/background/btnInicioSesionSprite.png' ,{frameWidth:596,frameHeight:142});
 		this.load.image('btnAmigos', 'assets/background/btnMenuAmigos.png');
 		
 		
@@ -29,6 +27,7 @@ class PreloadScene extends Phaser.Scene {
 		
     }
     create (data)  {
+
     	
     	
     	
@@ -93,6 +92,10 @@ class PreloadScene extends Phaser.Scene {
     	});
     	
     	
+
+		game.scene.run('LogInScene');
+		game.scene.stop('PreloadScene');
+
     }
     update(time, delta) {
     	
