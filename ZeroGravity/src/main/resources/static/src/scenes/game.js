@@ -42,6 +42,12 @@ class GameScene extends Phaser.Scene {
     }
     update(time, delta) {
 
+    	
+    	if(game.global.construyendo){
+    		this.lol.x = this.main_camera.getWorldPoint(this.input.x, this.input.y).x;
+        	this.lol.y = this.main_camera.getWorldPoint(this.input.x, this.input.y).y;
+        }
+    	
     	////////////////////////////////////////////////////////////////////////////////////
     	// CONTROL DE CAMARA
     	////////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +76,17 @@ class GameScene extends Phaser.Scene {
     	 * Updated by chrisme - 30 June 2019
     	 */
     }
+  
+    
+}
 
+function toggle(edificio, scene){
+	
+	switch(edificio){
+	
+	case 'centroMando':
+		game.scene.getScene('GameScene').lol = game.scene.getScene('GameScene').add.image(0, 0, 'edificio');
+	}
 }
 
 // Asigna los tiles al array del mapa
@@ -117,22 +133,19 @@ function construir(pointer, scene) {
 		let j = Math.trunc(position.x/(tile_width/2) + 1);
 		
 		//Comprobamos si se puede construir en la celda seleccionada
-		/*if (game.global.grid[i][j].type === 0) {*/
+		if (game.global.grid[i][j].type === 0) {
 			
 			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
 			let x = game.global.grid[i][j].image.x;
 			let y = game.global.grid[i][j].image.y;
 	    	var centroMando = new CentroMando(x, y);
 	    	
-	    	
-	    	/*this.centroMando.moveTo(this.input.x, this.input.y)*/
-	    	
 	    	// Pintamos el edificio desde su esquina inferior
 	    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, centroMando.sprite).setOrigin(0.5, 1);
 	    	
 	    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
 	    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
-		/*}*/
+		}
 	}
 	else {
 		scene.isDragging = false;

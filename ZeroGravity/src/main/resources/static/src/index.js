@@ -23,7 +23,9 @@ window.onload = function() {
 				  		PreloadGameScene,
 				  		GameScene,
 				  		CentroMandoMenu]
+
 			};
+			
 	
 	game = new Phaser.Game(config);
 	
@@ -33,7 +35,8 @@ window.onload = function() {
 		DEBUG_MODE : true,
 		socket : null,
 		loaded : false,
-		myPlayer : new Object()
+		myPlayer : new Object(),
+		construyendo : false
 	}
 	
 	//WEBSOCKET CONFIGURATOR
