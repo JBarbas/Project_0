@@ -7,6 +7,6 @@ class CentroMando{
 		this.height = 1;
 		this.width = 1;
 		this.level = 1;
-		this.sprite = 'CentroMando';
+		this.sprite = 'edificio';
 	}
 }
