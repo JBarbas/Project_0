@@ -20,6 +20,8 @@ public class Player {
 	
 	public int[][] getGrid() {
 		if (this.grid == null) {
+			
+			//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 			this.grid = new int[GRID_HEIGHT][GRID_WIDTH];
 			int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);
 			for (int i = 0; i < GRID_HEIGHT; i++) {
@@ -35,6 +37,12 @@ public class Player {
 					}
 				}
 			}
+			
+			//Introducimos el Centro de Mando
+			this.grid[GRID_HEIGHT/2][GRID_WIDTH/2] = 1;
+			this.grid[GRID_HEIGHT/2 - 1][GRID_WIDTH/2] = -10;
+			this.grid[GRID_HEIGHT/2 - 1][GRID_WIDTH/2 - 1] = -10;
+			this.grid[GRID_HEIGHT/2][GRID_WIDTH/2 - 1] = -10;
 		}
 		return this.grid;
 	}
