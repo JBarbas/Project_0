@@ -11,8 +11,8 @@ public class CentroMando extends Edificio {
 		int[][] costs = {nivel1, nivel2, nivel3};
 		this.setCosts(costs);
 		
-		this.setHeight(1);
-		this.setWidth(1);
+		this.setHeight(2);
+		this.setWidth(2);
 		this.setLevel(1);
 		this.setBuildingDependsOn(null);
 		this.setSprite("assets/sprites/Edificio.png");

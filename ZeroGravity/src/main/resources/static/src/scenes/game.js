@@ -6,6 +6,7 @@ var world_bounds_margin = 256; // Margen o padding del mapa
 var zoom = 1; // zoom de la camara
 var maxZoom = 2; // zoom maximo permitido
 var zoomSpeed = 0.05 // velocidad del zoom
+var construible = false; //controlador de si es posible contruir en ese momento
 
 class GameScene extends Phaser.Scene {
 	
@@ -111,19 +112,22 @@ function construir(pointer, scene) {
 		let j = Math.trunc(position.x/(tile_width/2) + 1);
 		
 		//Comprobamos si se puede construir en la celda seleccionada
-		if (game.global.grid[i][j].type === 0) {
+		/*if (game.global.grid[i][j].type === 0) {*/
 			
 			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
 			let x = game.global.grid[i][j].image.x;
 			let y = game.global.grid[i][j].image.y;
 	    	var centroMando = new CentroMando(x, y);
 	    	
+	    	
+	    	/*this.centroMando.moveTo(this.input.x, this.input.y)*/
+	    	
 	    	// Pintamos el edificio desde su esquina inferior
-	    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, 'edificio').setOrigin(0.5, 1);
+	    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, centroMando.sprite).setOrigin(0.5, 1);
 	    	
 	    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
 	    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
-		}
+		/*}*/
 	}
 	else {
 		scene.isDragging = false;
