@@ -86,18 +86,22 @@ class GameScene extends Phaser.Scene {
     		let i = Math.trunc(position.y/tile_height + 1);
     		let j = Math.trunc(position.x/(tile_width/2) + 1);
     		
-    		if (game.global.grid[i][j].type === 0) {
-    			this.lol.setFrame(0);
+    		if (typeof game.global.grid[i] !== 'undefined') {
+    			if (typeof game.global.grid[i][j] !== 'undefined') {
+		    		if (game.global.grid[i][j].type === 0) {
+		    			this.lol.setFrame(0);
+		    		}
+		    		else {
+		    			this.lol.setFrame(1);
+		    		} 
+		    		
+		    		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
+		    		this.lol.x = game.global.grid[i][j].image.x;
+		    		this.lol.y = game.global.grid[i][j].image.y;
+		    		
+		    		this.lol.depth = i*tileMap_width + j + 0.1;
+    			}
     		}
-    		else {
-    			this.lol.setFrame(1);
-    		}
-    			
-			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-    		this.lol.x = game.global.grid[i][j].image.x;
-    		this.lol.y = game.global.grid[i][j].image.y;
-    		
-    		this.lol.depth = i*tileMap_width + j + 0.1;
         }
     	
     	////////////////////////////////////////////////////////////////////////////////////
