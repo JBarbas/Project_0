@@ -1,14 +1,14 @@
-class CreditsScene extends Phaser.Scene {
+class DifficultScene extends Phaser.Scene {
 	
 	constructor() {
 		super({
-			key: "CreditsScene",
+			key: "DifficultScene",
 		});
 	}
 	
 	init(data){
 		if (game.global.DEBUG_MODE) {
-			console.log("[DEBUG] Entering **CREDITS** scene");
+			console.log("[DEBUG] Entering **CHOOSE DIFFICULTY** scene");
 		}
 	}
 	
@@ -16,15 +16,15 @@ class CreditsScene extends Phaser.Scene {
 		
     }
     create (data)  {
-    	var background = this.add.image(960, 540, 'backgroundCredits');
+    	
+    	
+    	var background = this.add.image(960, 540, 'backgroundDifficulty');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
     	button.setScale(.15);
     	
-    	var link = this.add.image(1800, 50, 'link').setInteractive();
-
-        link.on('pointerup', openExternalLink, this);
-        
+    	document.getElementById("dificultad").style.visibility = 'visible';
+    	$("dificultad").css("z-index", "2000");
 
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
@@ -36,7 +36,7 @@ class CreditsScene extends Phaser.Scene {
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.scene.run('MenuScene');
-    		game.scene.stop('CreditsScene');
+    		game.scene.stop('DifficultScene');
     	});
     }
     update(time, delta) {

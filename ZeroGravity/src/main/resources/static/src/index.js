@@ -15,6 +15,7 @@ window.onload = function() {
 				  		PreloadScene,
 				  		LogInScene,
 				  		MenuScene,
+				  		DifficultScene,
 				  		OptionsScene,
 				  		CreditsScene,
 				  		PreloadGameScene,

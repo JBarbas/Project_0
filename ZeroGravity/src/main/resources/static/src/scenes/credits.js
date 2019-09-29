@@ -18,8 +18,13 @@ class CreditsScene extends Phaser.Scene {
     create (data)  {
     	var background = this.add.image(960, 540, 'backgroundCredits');
     	
-    	var button = this.add.image(960, 800, 'btn').setInteractive();
+    	var button = this.add.image(150, 100, 'back').setInteractive();
+    	button.setScale(.15);
     	
+    	var link = this.add.image(1800, 50, 'link').setInteractive();
+
+        link.on('pointerup', openExternalLink, this);
+        
 
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
@@ -37,4 +42,6 @@ class CreditsScene extends Phaser.Scene {
     update(time, delta) {
     	
     }
+    
+    
 }
