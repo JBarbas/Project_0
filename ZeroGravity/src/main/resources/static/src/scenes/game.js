@@ -51,16 +51,22 @@ class GameScene extends Phaser.Scene {
     	 * by sanojian - 14 October 2014
     	 */
     	if (this.game.input.activePointer.isDown) {
-			  if (this.game.origDragPoint) {
+    		if (!game.global.inMenu || !(this.game.input.activePointer.position.x > game.global.buildingMenu.x && 
+    				this.game.input.activePointer.position.x < game.global.buildingMenu.x + game.global.buildingMenu.width && 
+    				this.game.input.activePointer.position.y > game.global.buildingMenu.y && 
+    				this.game.input.activePointer.position.y < game.global.buildingMenu.y + game.global.buildingMenu.height)) {
+    			
+	    		if (this.game.origDragPoint) {
 					// move the camera by the amount the mouse has moved since last update
 					this.cameras.main.scrollX += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
 					this.cameras.main.scrollY += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
 					if (Math.abs(this.game.origDragPoint.x - this.game.input.activePointer.position.x) > 3 || Math.abs(this.game.origDragPoint.y - this.game.input.activePointer.position.y) > 3) {
 						this.isDragging = true;
 					}
-			  } 
-			  // set new drag origin to current position
-			  this.game.origDragPoint = this.game.input.activePointer.position.clone();
+				} 
+				// set new drag origin to current position
+				this.game.origDragPoint = this.game.input.activePointer.position.clone();
+    		}
 		} 
     	else {
 			  this.game.origDragPoint = null;
@@ -89,6 +95,7 @@ function createGrid(scene) {
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
 				game.global.grid[i][j].image.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
 					if (!game.scene.isActive('CentroMandoMenu')) {
+						game.global.inMenu = true;
 						game.scene.run('CentroMandoMenu');
 					}
 				});

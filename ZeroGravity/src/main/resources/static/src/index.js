@@ -33,6 +33,13 @@ window.onload = function() {
 		DEBUG_MODE : true,
 		socket : null,
 		loaded : false,
+		inMenu : false,
+		buildingMenu: {
+			x: 50,
+			y: 50,
+			width: 584,
+			height: 908
+		},
 		myPlayer : new Object()
 	}
 	
