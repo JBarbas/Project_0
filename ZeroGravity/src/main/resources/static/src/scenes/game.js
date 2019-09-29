@@ -30,33 +30,13 @@ class GameScene extends Phaser.Scene {
     	// Establecemos los limites del mapa donde puede ver la camara
     	this.main_camera.setBounds(0-world_bounds_margin, 0-world_bounds_margin, tileMap_width*tile_width + 2*world_bounds_margin, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_margin, true);
     	// Creamos la malla isometrica
-    	this.mapGrid = createGrid(this, tileMap_width, tileMap_height);
+    	createGrid(this);
     	this.isDragging = false; // true si la cámara se está moviendo por drag del raton
     	
     	// Evento de click para construir edificio
     	let scene = this;
     	this.input.on('pointerup', function(pointer){
-    		// No permite construir si se esta haciendo scroll/drag en la pantalla
-    	    if (!scene.isDragging) {
-    	    	// Recogemos la posicion del raton en coordenadas globales
-    	    	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(pointer.x, pointer.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(pointer.x, pointer.y).y);
-    	    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
-    			position = isometricToCartesian(position);
-    			// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
-    			let i = Math.trunc(position.y/tile_height + 1);
-    			let j = Math.trunc(position.x/(tile_width/2) + 1);
-    			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-    			let x = scene.mapGrid[i][j].image.x;
-    			let y = scene.mapGrid[i][j].image.y;
-    	    	var centroMando = new CentroMando(x, y);
-    	    	// Pintamos el edificio desde su esquina inferior
-    	    	scene.mapGrid[i][j].content = scene.add.image(centroMando.x, centroMando.y, 'CentroMando').setOrigin(0.5, 1);
-    	    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
-    	    	scene.mapGrid[i][j].content.depth = i*tileMap_width + j;
-			}
-			else {
-				scene.isDragging = false;
-			}
+    		construir(pointer, scene);
     	 });
     }
     update(time, delta) {
@@ -92,38 +72,62 @@ class GameScene extends Phaser.Scene {
 
 }
 
-// Crea un array doble para el mapa
-function randomGrid(width, height) {
-	var randomGrid = new Array();
-	var minGridSide = Math.min(width-2, height-2);
-	for (var i = 0; i < height; i++) {
-		randomGrid.push(new Array());
-		for (var j = 0; j < width; j++) {
-			if (i >= minGridSide/3 + 1 && i < 2*minGridSide/3  + 1 && j >= minGridSide/3  + 1 && j < 2*minGridSide/3  + 1) {
-				randomGrid[i].push({type: 0});
-			}
-			else if (i === 0 || i === height - 1 || j === 0 || j === width - 1) {
-				randomGrid[i].push({type: -2});
-			}
-			else {
-				randomGrid[i].push({type: -1});
-			}
-		}
-	}
-	return randomGrid;
-}
-
 // Asigna los tiles al array del mapa
-function createGrid(scene, width, height) {
-	var newGrid = randomGrid(width, height)
-	for (var i = 0; i < newGrid.length; i++) {
-		for (var j = 0; j < newGrid[i].length; j++) {
+function createGrid(scene) {
+	for (var i = 0; i < game.global.grid.length; i++) {
+		for (var j = 0; j < game.global.grid[i].length; j++) {
 			var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 			position = cartesianToIsometric(position);
-			newGrid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_' + newGrid[i][j].type).setOrigin(0.5, 1);
+			switch(game.global.grid[i][j].type) {
+			case -2:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
+				break;
+			case -1:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
+				break;
+			case 1:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
+				break;
+			default:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
+				break;
+			}
 		}
 	}
-	return newGrid;
+}
+
+function construir(pointer, scene) {
+	// No permite construir si se esta haciendo scroll/drag en la pantalla
+    if (!scene.isDragging) {
+    	
+    	// Recogemos la posicion del raton en coordenadas globales
+    	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(pointer.x, pointer.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(pointer.x, pointer.y).y);
+    	
+    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+		position = isometricToCartesian(position);
+		
+		// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+		let i = Math.trunc(position.y/tile_height + 1);
+		let j = Math.trunc(position.x/(tile_width/2) + 1);
+		
+		//Comprobamos si se puede construir en la celda seleccionada
+		if (game.global.grid[i][j].type === 0) {
+			
+			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
+			let x = game.global.grid[i][j].image.x;
+			let y = game.global.grid[i][j].image.y;
+	    	var centroMando = new CentroMando(x, y);
+	    	
+	    	// Pintamos el edificio desde su esquina inferior
+	    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, 'edificio').setOrigin(0.5, 1);
+	    	
+	    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
+	    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
+		}
+	}
+	else {
+		scene.isDragging = false;
+	}
 }
 
 // Control del zoom

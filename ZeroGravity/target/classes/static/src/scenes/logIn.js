@@ -31,8 +31,11 @@ class LogInScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.scene.run('MenuScene');
-    		game.scene.stop('LogInScene');
+    		let msg = new Object();
+    		msg.event = 'LOG IN';
+    		game.global.socket.send(JSON.stringify(msg));
+    		
+    		// Esperamos la respuesta del servidor para cambiar la escena
     	});
     	
     	

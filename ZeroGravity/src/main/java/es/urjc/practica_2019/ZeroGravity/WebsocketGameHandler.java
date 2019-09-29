@@ -41,7 +41,24 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			Player player = new Player(session);
 			
 			switch (node.get("event").asText()) {
-			
+			case "LOG IN":
+				msg.put("event", "LOGGED");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "ASK PLAYER INFO":
+				msg.put("event", "PLAYER INFO");
+				ArrayNode playerGrid = mapper.createArrayNode();
+				int[][] grid = player.getGrid();
+				for (int i = 0; i < grid.length; i++) {
+					ArrayNode gridColumn = mapper.createArrayNode();
+					for (int j = 0; j < grid[i].length; j++) {						
+						gridColumn.add(grid[i][j]);
+					}
+					playerGrid.addPOJO(gridColumn);
+				}
+				msg.putPOJO("grid", playerGrid);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "TEST":
 				msg.put("event", "TEST");
 				msg.put("mensaje", "Pa ti mi cola");

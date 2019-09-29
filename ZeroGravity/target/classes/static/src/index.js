@@ -54,7 +54,30 @@ window.onload = function() {
 		var msg = JSON.parse(message.data)
 		
 		switch(msg.event){
-		
+		case 'LOGGED':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] LOGGED message recieved')
+				console.dir(msg);
+			}
+			if (game.scene.isActive('LogInScene')) {
+				game.scene.run('MenuScene');
+	    		game.scene.stop('LogInScene');
+			}
+			break;
+		case 'PLAYER INFO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] PLAYER INFO message recieved')
+				console.dir(msg);
+			}
+			game.global.grid = new Array();
+			for (var i = 0; i < msg.grid.length; i++) {
+				game.global.grid.push(new Array());
+				for (var j = 0; j < msg.grid[i].length; j++) {
+					game.global.grid[i].push({type: msg.grid[i][j]});
+				}
+			}
+			game.global.loaded = true;
+			break;
 		case 'TEST':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] TEST message recieved')
