@@ -37,6 +37,14 @@ window.onload = function() {
 		loaded : false,
 		myPlayer : new Object(),
 		construyendo : false
+		inMenu : false,
+		buildingMenu: {
+			x: 50,
+			y: 50,
+			width: 584,
+			height: 908
+		},
+		myPlayer : new Object()
 	}
 	
 	//WEBSOCKET CONFIGURATOR

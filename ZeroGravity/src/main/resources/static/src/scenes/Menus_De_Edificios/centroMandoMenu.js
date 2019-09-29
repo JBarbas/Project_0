@@ -16,8 +16,8 @@ class CentroMandoMenu extends Phaser.Scene {
     	
     }
     create (data)  {
-    	this.menuBox = this.add.image(50, 50, 'centroDeMandoMenu').setOrigin(0, 0); 
-    	this.edificio = this.add.image(100, 150, 'edificio').setOrigin(0, 0);
+    	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
+    	this.edificio = this.add.image(game.global.buildingMenu.x + 50, game.global.buildingMenu.y + 100, 'edificio').setOrigin(0, 0);
     	this.edificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		
     		if(!game.global.construyendo){
@@ -26,6 +26,7 @@ class CentroMandoMenu extends Phaser.Scene {
     			game.scene.pause();
     		}
     		game.scene.stop('CentroMandoMenu');
+    		game.global.inMenu = false;
     	});
     }
     update(time, delta) {
