@@ -37,7 +37,39 @@ class GameScene extends Phaser.Scene {
     	// Evento de click para construir edificio
     	let scene = this;
     	this.input.on('pointerup', function(pointer){
-    		construir(pointer, scene);
+    		// No permite construir si se esta haciendo scroll/drag en la pantalla
+    	    if (!scene.isDragging) {
+    	    	
+    	    	// Recogemos la posicion del raton en coordenadas globales
+    	    	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(pointer.x, pointer.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(pointer.x, pointer.y).y);
+    	    	
+    	    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+    			position = isometricToCartesian(position);
+    			
+    			// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+    			let i = Math.trunc(position.y/tile_height + 1);
+    			let j = Math.trunc(position.x/(tile_width/2) + 1);
+    			
+    			if(game.global.construyendo) {
+        			construir(i, j, scene);
+        		}
+        		else {
+        			switch (game.global.grid[i][j].type) {
+        			case 1:
+        			case -10:
+        				if (!game.scene.isActive('CentroMandoMenu')) {
+    						game.global.inMenu = true;
+    						game.scene.run('CentroMandoMenu');
+    					}
+        				break;
+        			default:
+        				break;
+        			}
+        		}
+    	    }
+    	    else {
+    	    	scene.isDragging = false;
+    	    }
     	});
     }
     update(time, delta) {
@@ -53,10 +85,19 @@ class GameScene extends Phaser.Scene {
     		// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
     		let i = Math.trunc(position.y/tile_height + 1);
     		let j = Math.trunc(position.x/(tile_width/2) + 1);
+    		
+    		if (game.global.grid[i][j].type === 0) {
+    			this.lol.setFrame(0);
+    		}
+    		else {
+    			this.lol.setFrame(1);
+    		}
     			
 			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
     		this.lol.x = game.global.grid[i][j].image.x;
     		this.lol.y = game.global.grid[i][j].image.y;
+    		
+    		this.lol.depth = i*tileMap_width + j + 0.1;
         }
     	
     	////////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +143,7 @@ function toggle(edificio, scene){
 	switch(edificio){
 	
 	case 'centroMando':
-		game.scene.getScene('GameScene').lol = game.scene.getScene('GameScene').add.image(0, 0, 'edificio').setOrigin(0.5, 1);
+		game.scene.getScene('GameScene').lol = game.scene.getScene('GameScene').add.image(0, 0, 'centroOperaciones').setOrigin(0.5, 1);
 		game.scene.getScene('GameScene').lol.alpha = 0.5;
 	}
 }
@@ -122,12 +163,6 @@ function createGrid(scene) {
 				break;
 			case 1:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
-				game.global.grid[i][j].image.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-					if (!game.scene.isActive('CentroMandoMenu')) {
-						game.global.inMenu = true;
-						game.scene.run('CentroMandoMenu');
-					}
-				});
 				break;
 			default:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
@@ -137,39 +172,25 @@ function createGrid(scene) {
 	}
 }
 
-function construir(pointer, scene) {
-	// No permite construir si se esta haciendo scroll/drag en la pantalla
-    if (!scene.isDragging) {
-    	
-    	// Recogemos la posicion del raton en coordenadas globales
-    	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(pointer.x, pointer.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(pointer.x, pointer.y).y);
-    	
-    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
-		position = isometricToCartesian(position);
+function construir(i, j, scene) {
+	//Comprobamos si se puede construir en la celda seleccionada
+	if (game.global.grid[i][j].type === 0) {
 		
-		// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
-		let i = Math.trunc(position.y/tile_height + 1);
-		let j = Math.trunc(position.x/(tile_width/2) + 1);
+		game.global.construyendo = false;
 		
-		//Comprobamos si se puede construir en la celda seleccionada
-		if (game.global.grid[i][j].type === 0) {
-			
-			game.global.construyendo = false;
-			
-			// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-			let x = game.global.grid[i][j].image.x;
-			let y = game.global.grid[i][j].image.y;
-	    	var centroMando = new CentroMando(x, y);
-	    	
-	    	// Pintamos el edificio desde su esquina inferior
-	    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, centroMando.sprite).setOrigin(0.5, 1);
-	    	
-	    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
-	    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
-		}
-	}
-	else {
-		scene.isDragging = false;
+		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
+		let x = game.global.grid[i][j].image.x;
+		let y = game.global.grid[i][j].image.y;
+    	var centroMando = new CentroMando(x, y);
+    	
+    	// Pintamos el edificio desde su esquina inferior
+    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, centroMando.sprite).setOrigin(0.5, 1);
+    	
+    	// Actualizamos la malla
+    	game.global.grid[i][j].type = 2;
+    	
+    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
+    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
 	}
 }
 
