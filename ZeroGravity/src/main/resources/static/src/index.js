@@ -21,7 +21,8 @@ window.onload = function() {
 				  		OptionsScene,
 				  		CreditsScene,
 				  		PreloadGameScene,
-				  		GameScene]
+				  		GameScene,
+				  		CentroMandoMenu]
 			};
 	
 	game = new Phaser.Game(config);
@@ -78,13 +79,6 @@ window.onload = function() {
 			}
 			game.global.loaded = true;
 			break;
-		case 'TEST':
-			if (game.global.DEBUG_MODE) {
-				console.log('[DEBUG] TEST message recieved')
-				console.dir(msg);
-			}
-			break
-	
 		default:
 			break;
 		

@@ -37,7 +37,7 @@ class GameScene extends Phaser.Scene {
     	let scene = this;
     	this.input.on('pointerup', function(pointer){
     		construir(pointer, scene);
-    	 });
+    	});
     }
     update(time, delta) {
 
@@ -87,6 +87,11 @@ function createGrid(scene) {
 				break;
 			case 1:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
+				game.global.grid[i][j].image.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+					if (!game.scene.isActive('CentroMandoMenu')) {
+						game.scene.run('CentroMandoMenu');
+					}
+				});
 				break;
 			default:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);

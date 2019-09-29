@@ -59,12 +59,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.putPOJO("grid", playerGrid);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
-			case "TEST":
-				msg.put("event", "TEST");
-				msg.put("mensaje", "Pa ti mi cola");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
-				break;
-			
 			default:
 				break;
 			}
