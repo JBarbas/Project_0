@@ -19,8 +19,9 @@ class LoadGameScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundLoadGame');
     	
     	
+    	this.add.tween(background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None,0, 1000, true);
     	
-    	setTimeout(function(){
+    	/*setTimeout(function(){
     		this.tweens.add({
     	          targets: background,
     	          alpha: 0,
@@ -29,7 +30,7 @@ class LoadGameScene extends Phaser.Scene {
     	        }, this);
     		game.scene.run('LogInScene');
     		game.scene.stop('LoadGameScene');
-    	}, 3000);
+    	}, 3000);*/
     	/*var time = game.time.events.add(Phaser.Timer.SECOND * 4, fadePicture, this);
     	
     	

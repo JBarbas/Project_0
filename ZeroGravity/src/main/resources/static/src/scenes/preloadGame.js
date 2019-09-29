@@ -29,6 +29,11 @@ class PreloadGameScene extends Phaser.Scene {
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
+		
+		//Interfaz
+		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
+		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
+		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
     }
     create (data)  {
 		
