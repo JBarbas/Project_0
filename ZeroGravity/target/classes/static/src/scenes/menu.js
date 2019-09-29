@@ -47,7 +47,7 @@ class MenuScene extends Phaser.Scene {
     	
     	
     	jugar.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.scene.run('PreloadGameScene');
+    		game.scene.run('DifficultScene');
     		game.scene.stop('MenuScene');
     	});
     	jugar.setInteractive().on('pointerover', function(pointer, localX, localY, event){
