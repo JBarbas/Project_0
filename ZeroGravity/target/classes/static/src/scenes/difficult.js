@@ -24,7 +24,7 @@ class DifficultScene extends Phaser.Scene {
     	button.setScale(.15);
     	
     	document.getElementById("dificultad").style.visibility = 'visible';
-    	$("dificultad").css("z-index", "2000");
+    	//$("dificultad").css("z-index", "2000");
 
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
@@ -35,6 +35,7 @@ class DifficultScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		document.getElementById("dificultad").style.visibility = 'hidden';
     		game.scene.run('MenuScene');
     		game.scene.stop('DifficultScene');
     	});

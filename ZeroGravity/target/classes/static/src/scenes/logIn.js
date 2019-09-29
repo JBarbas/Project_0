@@ -20,6 +20,8 @@ class LogInScene extends Phaser.Scene {
     	
     	var button = this.add.image(960, 800, 'btn').setInteractive();
 
+    	var registro = this.add.text(920, 900, 'REGÍSTRATE', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' });
+    	
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
     	})
@@ -31,6 +33,26 @@ class LogInScene extends Phaser.Scene {
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.scene.run('MenuScene');
     		game.scene.stop('LogInScene');
+    	});
+    	
+    	
+    	var	size = '20px';
+    	
+    	var colorYellow = '#ffd213';
+    	var colorWhite = '#fff';
+
+    	registro.setFontSize(size);
+    	
+    	registro.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.scene.run('RegisterScene');
+    		game.scene.stop('LogInScene');
+    	});
+    	
+    	registro.setInteractive().on('pointerover', function(pointer, localX, localY, event){
+    		registro.setFill(colorYellow);
+    	});
+    	registro.setInteractive().on('pointerout', function(pointer, localX, localY, event){
+    		registro.setFill(colorWhite);
     	});
     }
     update(time, delta) {
