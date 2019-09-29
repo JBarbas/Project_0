@@ -36,7 +36,7 @@ window.onload = function() {
 		socket : null,
 		loaded : false,
 		myPlayer : new Object(),
-		construyendo : false
+		construyendo : false,
 		inMenu : false,
 		buildingMenu: {
 			x: 50,
