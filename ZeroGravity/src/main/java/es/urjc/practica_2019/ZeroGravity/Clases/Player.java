@@ -6,8 +6,8 @@ import org.springframework.web.socket.WebSocketSession;
 public class Player {
 
 	private final WebSocketSession session;
-	private static final int GRID_WIDTH = 32;
-	private static final int GRID_HEIGHT = 32;
+	private static final int GRID_WIDTH = 20;
+	private static final int GRID_HEIGHT = 20;
 	private int [][] grid = null;
 	
 	public Player(WebSocketSession session) {
