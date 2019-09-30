@@ -1,0 +1,84 @@
+function toggle(edificio, scene){
+	
+	switch(edificio){
+	
+	case 'centroMando':
+		game.scene.getScene('GameScene').lol = game.scene.getScene('GameScene').add.image(0, 0, 'centroOperaciones').setOrigin(0.5, 1);
+		game.scene.getScene('GameScene').lol.alpha = 0.5;
+	}
+}
+
+// Asigna los tiles al array del mapa
+function createGrid(scene) {
+	for (var i = 0; i < game.global.grid.length; i++) {
+		for (var j = 0; j < game.global.grid[i].length; j++) {
+			var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
+			position = cartesianToIsometric(position);
+			switch(game.global.grid[i][j].type) {
+			case -2:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
+				break;
+			case -1:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
+				break;
+			case 1:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
+				break;
+			default:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
+				break;
+			}
+		}
+	}
+}
+
+function construir(i, j, scene) {
+	//Comprobamos si se puede construir en la celda seleccionada
+	if (game.global.grid[i][j].type === 0) {
+		
+		game.global.construyendo = false;
+		
+		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
+		let x = game.global.grid[i][j].image.x;
+		let y = game.global.grid[i][j].image.y;
+    	var centroMando = new CentroMando(x, y);
+    	
+    	// Pintamos el edificio desde su esquina inferior
+    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, centroMando.sprite).setOrigin(0.5, 1);
+    	
+    	// Actualizamos la malla
+    	game.global.grid[i][j].type = 2;
+    	
+    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
+    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
+	}
+}
+
+// Control del zoom
+window.addEventListener("wheel", event => {
+    const delta = zoomSpeed*(-Math.sign(event.deltaY));
+    zoom += delta;
+    if (zoom < 1) {
+    	zoom = 1;
+    }
+    else if (zoom > maxZoom) {
+    	zoom = maxZoom;
+    }
+});
+
+/* Codigo extraido de https://gamedevelopment.tutsplus.com/tutorials/creating-isometric-worlds-primer-for-game-developers-updated--cms-28392
+ * by Juwal Bose - 11 May 2017
+ */
+function cartesianToIsometric(cartPt){
+    var tempPt=new Phaser.Geom.Point(0, 0);
+    tempPt.x=cartPt.x-cartPt.y;
+    tempPt.y=(cartPt.x+cartPt.y)/2;
+    return (tempPt);
+}
+
+function isometricToCartesian(isoPt){
+    var tempPt=new Phaser.Geom.Point(0, 0);
+    tempPt.x=(2*isoPt.y+isoPt.x)/2;
+    tempPt.y=(2*isoPt.y-isoPt.x)/2;
+    return (tempPt);
+}
