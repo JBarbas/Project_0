@@ -1,11 +1,11 @@
 var tile_width = 128;
 var tile_height = 64;
-var tileMap_width = 32; // Numero de tiles a lo ancho (+2 para colocar tiles de borde del mapa)
-var tileMap_height = 32; // Numero de tiles a lo largo (+2 para colocar tiles de borde del mapa)
+var tileMap_width = 20; // Numero de tiles a lo ancho (+2 para colocar tiles de borde del mapa)
+var tileMap_height = 20; // Numero de tiles a lo largo (+2 para colocar tiles de borde del mapa)
 var world_bounds_margin = 256; // Margen o padding del mapa
 var zoom = 1; // zoom de la camara
 var maxZoom = 2; // zoom maximo permitido
-var zoomSpeed = 0.05 // velocidad del zoom
+var zoomSpeed = 0.1 // velocidad del zoom
 var construible = false; //controlador de si es posible contruir en ese momento
 
 class GameScene extends Phaser.Scene {

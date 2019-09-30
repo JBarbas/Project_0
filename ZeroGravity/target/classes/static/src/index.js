@@ -9,11 +9,11 @@ window.onload = function() {
 			        width: 1920,
 			        height: 1080			        
 			  },
-			  backgroundColor: "#222222",
+			  backgroundColor: "#000000",
 			  scene: [	
 				  		BootScene,
 				  		PreloadScene,
-				  		LoadGameScene,
+				  		IntroScene,
 				  		LogInScene,
 				  		RegisterScene,
 				  		MenuScene,

@@ -22,8 +22,12 @@ class CreditsScene extends Phaser.Scene {
     	button.setScale(.15);
     	
     	var link = this.add.image(1800, 50, 'link').setInteractive();
+    	
+    	//Animacion creditos saliendo
+    	var team = this.add.image(1010, 1800, 'team').setInteractive();
+    	team.setScale(.8);
 
-        link.on('pointerup', openExternalLink, this);
+        //link.on('pointerup', openExternalLink, this);
         
 
     	button.on('pointerover',function(pointer){
@@ -33,6 +37,8 @@ class CreditsScene extends Phaser.Scene {
     	button.on('pointerout',function(pointer){
     	    button.setFrame(0);
     	})
+
+    
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.scene.run('MenuScene');
@@ -40,7 +46,6 @@ class CreditsScene extends Phaser.Scene {
     	});
     }
     update(time, delta) {
-    	
     }
     
     
