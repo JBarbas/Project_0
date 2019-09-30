@@ -22,6 +22,9 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('backgroundCredits', 'assets/background/Creditos.png');
 		this.load.image('backgroundDifficulty', 'assets/background/ElegirDificultad.png');
 		
+		//Elements
+		this.load.image('team', 'assets/interface/team.png');
+		
 		//Buttons
     	this.load.image('session', 'assets/background/btnInicioSesion.png');
     	this.load.spritesheet( 'btn' , 'assets/background/btnInicioSesionSprite.png' ,{frameWidth:596,frameHeight:142});
