@@ -54,7 +54,6 @@ public class Player {
 		case "centroOperaciones":
 			if (this.grid[i][j] == 0) {
 				this.grid[i][j] = 2;
-				System.out.println("dentro: " + this.grid[i][j]);
 			}
 			break;
 		default:

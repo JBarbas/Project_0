@@ -8,7 +8,7 @@ class IntroScene extends Phaser.Scene {
 	
 	init(data){
 		if (game.global.DEBUG_MODE) {
-			console.log("[DEBUG] Entering **LOG IN** scene");
+			console.log("[DEBUG] Entering **INTRO** scene");
 		}
 	}
 	

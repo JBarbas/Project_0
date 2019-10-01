@@ -43,13 +43,8 @@ function refreshGrid(scene, newGrid) {
 	for (var i = 0; i < game.global.grid.length; i++) {
 		for (var j = 0; j < game.global.grid[i].length; j++) {
 			if (game.global.grid[i][j].type !== newGrid[i][j]) {
-				console.log(game.global.grid[i][j].type, newGrid[i][j]);
-				game.global.grid[i][j].type = newGrid[i][j];
-				
+				game.global.grid[i][j].type = newGrid[i][j];				
 				game.global.grid[i][j].image.destroy();
-				if (typeof game.global.grid[i][j].content !== 'undefined') {
-					game.global.grid[i][j].content.destroy();
-				}
 				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 				position = cartesianToIsometric(position);
 				switch(game.global.grid[i][j].type) {
@@ -69,6 +64,7 @@ function refreshGrid(scene, newGrid) {
 					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
 					break;
 				}
+				game.global.grid[i][j].image.depth = i*tileMap_width + j;
 			}
 		}
 	}
@@ -86,17 +82,20 @@ function construir(i, j, scene, edificio) {
     	edificio.x = x;
     	edificio.y = y;
     	
-    	// Pintamos el edificio desde su esquina inferior
-    	game.global.grid[i][j].content = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(0.5, 1);
+    	// Cambiamos el tile de la malla por la nueva imagen
+    	game.global.grid[i][j].image.destroy();
+    	game.global.grid[i][j].image = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(0.5, 1);
     	
     	// Actualizamos la malla
     	game.global.grid[i][j].type = 2;
     	
     	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
-    	game.global.grid[i][j].content.depth = i*tileMap_width + j;
+    	game.global.grid[i][j].image.depth = i*tileMap_width + j;
     	
+    	// Borramos la previsualización del edificio
     	scene.lol.destroy();
     	
+    	// Informamos al servidor de la construccion, para que este la valide o la descarte
     	let msg = new Object();
 		msg.event = 'BUILD';
 		msg.i = i;

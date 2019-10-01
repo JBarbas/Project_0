@@ -20,12 +20,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import es.urjc.practica_2019.ZeroGravity.Clases.Player;
 
 public class WebsocketGameHandler extends TextWebSocketHandler{
+	
+	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		Player player = new Player(session);
+		session.getAttributes().put(PLAYER_ATTRIBUTE, player);
 		
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "TEST");
@@ -33,12 +36,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	}
 	
 	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		
+	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {		
 		try {
 			JsonNode node = mapper.readTree(message.getPayload());
 			ObjectNode msg = mapper.createObjectNode();
-			Player player = new Player(session);
+			Player player = (Player) session.getAttributes().get(PLAYER_ATTRIBUTE);
 			
 			switch (node.get("event").asText()) {
 			case "LOG IN":
@@ -66,15 +68,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("event", "REFRESH GRID");
 				ArrayNode newGrid = mapper.createArrayNode();
 				grid = player.getGrid();
-				int i2 = node.get("i").asInt();
-				int j2 = node.get("j").asInt();
-				
 				for (int i = 0; i < grid.length; i++) {
 					ArrayNode gridColumn = mapper.createArrayNode();
 					for (int j = 0; j < grid[i].length; j++) {
-						if (i == i2 && j == j2) {
-							System.out.println("fuera: " + grid[i][j]);
-						}
 						gridColumn.add(grid[i][j]);
 					}
 					newGrid.addPOJO(gridColumn);

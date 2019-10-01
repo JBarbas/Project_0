@@ -54,16 +54,20 @@ class GameScene extends Phaser.Scene {
         			construir(i, j, scene, game.global.edificioEnConstruccion);
         		}
         		else {
-        			switch (game.global.grid[i][j].type) {
-        			case 1:
-        			case -10:
-        				if (!game.scene.isActive('CentroMandoMenu')) {
-    						game.global.inMenu = true;
-    						game.scene.run('CentroMandoMenu');
-    					}
-        				break;
-        			default:
-        				break;
+        			if (typeof game.global.grid[i] !== 'undefined') {
+            			if (typeof game.global.grid[i][j] !== 'undefined') {
+		        			switch (game.global.grid[i][j].type) {
+		        			case 1:
+		        			case -10:
+		        				if (!game.scene.isActive('CentroMandoMenu')) {
+		    						game.global.inMenu = true;
+		    						game.scene.run('CentroMandoMenu');
+		    					}
+		        				break;
+		        			default:
+		        				break;
+		        			}
+            			}
         			}
         		}
     	    }
