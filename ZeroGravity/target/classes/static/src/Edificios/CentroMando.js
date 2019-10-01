@@ -1,12 +1,11 @@
-class CentroMando{
+class CentroMando extends Edificio {
 	
 	constructor(x, y){
 		
-		this.x = x;
-		this.y = y;
-		this.height = 1;
-		this.width = 1;
-		this.level = 1;
-		this.sprite = 'edificio';
+		super(x, y);
+		super.height = 1;
+		super.width = 1;
+		super.level = 1;
+		super.sprite = 'edificio';
 	}
 }

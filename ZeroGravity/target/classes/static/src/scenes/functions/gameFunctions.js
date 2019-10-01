@@ -1,10 +1,14 @@
 function toggle(edificio, scene){
+	scene.lol = scene.add.image(edificio.x, edificio.y, edificio.sprite);
+	scene.lol.alpha = 0.5;
 	
-	switch(edificio){
-	
-	case 'centroMando':
-		game.scene.getScene('GameScene').lol = game.scene.getScene('GameScene').add.image(0, 0, 'centroOperaciones').setOrigin(0.5, 1);
-		game.scene.getScene('GameScene').lol.alpha = 0.5;
+	// Se pintaran de forma diferente los edificios cuadrados de los rectangulares
+	switch(edificio.width/edificio.height) {	
+	case 1:
+		scene.lol.setOrigin(0.5, 1);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -32,7 +36,7 @@ function createGrid(scene) {
 	}
 }
 
-function construir(i, j, scene) {
+function construir(i, j, scene, edificio) {
 	//Comprobamos si se puede construir en la celda seleccionada
 	if (game.global.grid[i][j].type === 0) {
 		
@@ -41,16 +45,24 @@ function construir(i, j, scene) {
 		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
 		let x = game.global.grid[i][j].image.x;
 		let y = game.global.grid[i][j].image.y;
-    	var centroMando = new CentroMando(x, y);
+    	edificio.x = x;
+    	edificio.y = y;
     	
     	// Pintamos el edificio desde su esquina inferior
-    	game.global.grid[i][j].content = scene.add.image(centroMando.x, centroMando.y, centroMando.sprite).setOrigin(0.5, 1);
+    	game.global.grid[i][j].content = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(0.5, 1);
     	
     	// Actualizamos la malla
     	game.global.grid[i][j].type = 2;
     	
     	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
     	game.global.grid[i][j].content.depth = i*tileMap_width + j;
+    	
+    	let msg = new Object();
+		msg.event = 'BUILD';
+		msg.i = i;
+		msg.j = j;
+		msg.edificio = edificio.sprite;
+		game.global.socket.send(JSON.stringify(msg));
 	}
 }
 

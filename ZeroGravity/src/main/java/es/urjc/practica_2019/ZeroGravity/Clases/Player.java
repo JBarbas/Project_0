@@ -46,4 +46,16 @@ public class Player {
 		}
 		return this.grid;
 	}
+	
+	public void build(int i, int j, String edificio) {
+		switch (edificio) {
+		case "centroOperaciones":
+			if (this.grid[i][j] == 0) {
+				this.grid[i][j] = 2;
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }

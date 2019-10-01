@@ -51,7 +51,7 @@ class GameScene extends Phaser.Scene {
     			let j = Math.trunc(position.x/(tile_width/2) + 1);
     			
     			if(game.global.construyendo) {
-        			construir(i, j, scene);
+        			construir(i, j, scene, game.global.edificioEnConstruccion);
         		}
         		else {
         			switch (game.global.grid[i][j].type) {
@@ -137,7 +137,6 @@ class GameScene extends Phaser.Scene {
     	/* Codigo extraido de http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
     	 * Updated by chrisme - 30 June 2019
     	 */
-    }
-  
+    } 
     
 }

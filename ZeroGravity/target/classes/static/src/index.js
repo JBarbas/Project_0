@@ -37,6 +37,7 @@ window.onload = function() {
 		loaded : false,
 		myPlayer : new Object(),
 		construyendo : false,
+		edificioEnConstruccion : null,
 		inMenu : false,
 		buildingMenu: {
 			x: 50,

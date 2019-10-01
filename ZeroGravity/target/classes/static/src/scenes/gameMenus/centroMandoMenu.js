@@ -21,8 +21,10 @@ class CentroMandoMenu extends Phaser.Scene {
     	this.edificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		
     		if(!game.global.construyendo){
-    			toggle('centroMando');
+    			var edificio = new CentroOperaciones(0, 0);
+    			toggle(edificio, game.scene.getScene('GameScene'));
     			game.global.construyendo = true;
+    			game.global.edificioEnConstruccion = edificio;
     			game.scene.pause();
     		}
     		game.scene.stop('CentroMandoMenu');
