@@ -1,4 +1,4 @@
-package es.urjc.practica_2019.ZeroGravity.Clases;
+package es.urjc.practica_2019.ZeroGravity;
 
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

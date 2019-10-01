@@ -1,4 +1,4 @@
-class Edificio{
+class Edificio {
 	
 	constructor(x, y){
 		

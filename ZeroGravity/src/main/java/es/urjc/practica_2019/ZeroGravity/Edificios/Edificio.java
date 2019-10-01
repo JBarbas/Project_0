@@ -1,27 +1,17 @@
-package es.urjc.practica_2019.ZeroGravity.Clases;
+package es.urjc.practica_2019.ZeroGravity.Edificios;
 
 import es.urjc.practica_2019.ZeroGravity.Interfaces.EdificioInterface;
 
 public class Edificio  implements EdificioInterface{
 
 	//costes por nivel. 
-	private int[][] costs;
-	private int x;
-	private int y;
-	private int height;
-	private int width;
-	private int level;
-	private String sprite;
-	private Edificio buildingDependsOn;	
-
-
-	public int[][] getCosts() {
-		return costs;
-	}
-
-	public void setCosts(int[][] costs) {
-		this.costs = costs;
-	}
+	protected int x;
+	protected int y;
+	protected int height;
+	protected int width;
+	protected int level;
+	protected String sprite;
+	protected Edificio buildingDependsOn;	
 
 	public int getX() {
 		return x;

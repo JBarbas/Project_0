@@ -1,3 +1,4 @@
+//encajar los edificios en las celdas donde se quedarían al construirse
 function toggle(edificio, scene){
 	scene.lol = scene.add.image(edificio.x, edificio.y, edificio.sprite);
 	scene.lol.alpha = 0.5;
