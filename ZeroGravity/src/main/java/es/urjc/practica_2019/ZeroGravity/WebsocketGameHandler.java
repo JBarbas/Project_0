@@ -61,19 +61,25 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				break;
 			case "BUILD":		
 				// Construimos el edificio, si se puede
-				player.build(node.get("i").asInt(), node.get("j").asInt(), node.get("edificio").asText());				
+				player.build(node.get("i").asInt(), node.get("j").asInt(), node.get("edificio").asText());	
 				// Pedimos al cliente que refresque el grid con la nueva info
 				msg.put("event", "REFRESH GRID");
-				playerGrid = mapper.createArrayNode();
+				ArrayNode newGrid = mapper.createArrayNode();
 				grid = player.getGrid();
+				int i2 = node.get("i").asInt();
+				int j2 = node.get("j").asInt();
+				
 				for (int i = 0; i < grid.length; i++) {
 					ArrayNode gridColumn = mapper.createArrayNode();
-					for (int j = 0; j < grid[i].length; j++) {						
+					for (int j = 0; j < grid[i].length; j++) {
+						if (i == i2 && j == j2) {
+							System.out.println("fuera: " + grid[i][j]);
+						}
 						gridColumn.add(grid[i][j]);
 					}
-					playerGrid.addPOJO(gridColumn);
+					newGrid.addPOJO(gridColumn);
 				}
-				msg.putPOJO("grid", playerGrid);
+				msg.putPOJO("grid", newGrid);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			default:

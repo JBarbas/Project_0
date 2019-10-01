@@ -91,6 +91,13 @@ window.onload = function() {
 			}
 			game.global.loaded = true;
 			break;
+		case 'REFRESH GRID':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] REFRESH GRID message recieved')
+				console.dir(msg);
+			}
+			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
+			break;
 		default:
 			break;
 		

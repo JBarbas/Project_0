@@ -28,9 +28,47 @@ function createGrid(scene) {
 			case 1:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
 				break;
+			case 2:
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroOperaciones').setOrigin(0.5, 1);
+				break;
 			default:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
 				break;
+			}
+		}
+	}
+}
+
+function refreshGrid(scene, newGrid) {
+	for (var i = 0; i < game.global.grid.length; i++) {
+		for (var j = 0; j < game.global.grid[i].length; j++) {
+			if (game.global.grid[i][j].type !== newGrid[i][j]) {
+				console.log(game.global.grid[i][j].type, newGrid[i][j]);
+				game.global.grid[i][j].type = newGrid[i][j];
+				
+				game.global.grid[i][j].image.destroy();
+				if (typeof game.global.grid[i][j].content !== 'undefined') {
+					game.global.grid[i][j].content.destroy();
+				}
+				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
+				position = cartesianToIsometric(position);
+				switch(game.global.grid[i][j].type) {
+				case -2:
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
+					break;
+				case -1:
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
+					break;
+				case 1:
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
+					break;
+				case 2:
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroOperaciones').setOrigin(0.5, 1);
+					break;
+				default:
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
+					break;
+				}
 			}
 		}
 	}
@@ -56,6 +94,8 @@ function construir(i, j, scene, edificio) {
     	
     	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
     	game.global.grid[i][j].content.depth = i*tileMap_width + j;
+    	
+    	scene.lol.destroy();
     	
     	let msg = new Object();
 		msg.event = 'BUILD';
