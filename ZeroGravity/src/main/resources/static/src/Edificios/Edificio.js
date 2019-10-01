@@ -2,6 +2,7 @@ class Edificio{
 	
 	constructor(x, y){
 		
+		this.id = 0;
 		this.x = x;
 		this.y = y;
 		this.height = 1;

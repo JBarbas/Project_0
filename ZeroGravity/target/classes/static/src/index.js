@@ -89,6 +89,7 @@ window.onload = function() {
 					game.global.grid[i].push({type: msg.grid[i][j]});
 				}
 			}
+			game.global.idMap = new Map(Object.entries(msg.idMap));
 			game.global.loaded = true;
 			break;
 		case 'REFRESH GRID':
@@ -96,6 +97,7 @@ window.onload = function() {
 				console.log('[DEBUG] REFRESH GRID message recieved')
 				console.dir(msg);
 			}
+			game.global.idMap = new Map(Object.entries(msg.idMap));
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		default:

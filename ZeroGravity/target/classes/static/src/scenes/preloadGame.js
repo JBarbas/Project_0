@@ -24,11 +24,14 @@ class PreloadGameScene extends Phaser.Scene {
 		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
-		this.load.image('centroDeMando', 'assets/sprites/Edificios/CentroDeMando.png');
-		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png' ,{frameWidth:128,frameHeight:157});
+		this.load.spritesheet('centroDeMando', 'assets/sprites/Edificios/CentroDeMando.png', {frameWidth:256,frameHeight:128});
+		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:128,frameHeight:157});
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
+		
+		//Botones
+		this.load.spritesheet('btnMover', 'assets/sprites/Edificios/btnMover.png', {frameWidth:256,frameHeight:64});
 		
 		//Interfaz
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');

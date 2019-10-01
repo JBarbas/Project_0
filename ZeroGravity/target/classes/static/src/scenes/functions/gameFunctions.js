@@ -27,6 +27,11 @@ function createGrid(scene) {
 				break;
 			case 1:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
+				game.global.grid[i][j].content = new CentroMando(j, i);
+				game.global.grid[i-1][j].content = game.global.grid[i][j].content;
+				game.global.grid[i-1][j-1].content = game.global.grid[i][j].content;
+				game.global.grid[i][j-1].content = game.global.grid[i][j].content;
+				game.global.grid[i][j].content.id = game.global.idMap.get(i.toString() + j.toString());
 				break;
 			case 2:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroOperaciones').setOrigin(0.5, 1);
@@ -45,6 +50,7 @@ function refreshGrid(scene, newGrid) {
 			if (game.global.grid[i][j].type !== newGrid[i][j]) {
 				game.global.grid[i][j].type = newGrid[i][j];				
 				game.global.grid[i][j].image.destroy();
+				game.global.grid[i][j].content = null;
 				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 				position = cartesianToIsometric(position);
 				switch(game.global.grid[i][j].type) {
@@ -101,7 +107,44 @@ function construir(i, j, scene, edificio) {
 		msg.i = i;
 		msg.j = j;
 		msg.edificio = edificio.sprite;
+		msg.id = edificio.id;
 		game.global.socket.send(JSON.stringify(msg));
+	}
+}
+
+// Mueve el edificio con el raton cambiando su sprite a rojo cuando este en una posicion invalida
+function previsualizarEdificio(edificio, scene) {
+	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).y);
+	
+	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+	position = isometricToCartesian(position);
+	
+	// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+	let i = Math.trunc(position.y/tile_height + 1);
+	let j = Math.trunc(position.x/(tile_width/2) + 1);
+	
+	if (typeof game.global.grid[i] !== 'undefined') {
+		if (typeof game.global.grid[i][j] !== 'undefined') {
+			scene.lol.setFrame(0);
+			for (var a = i-edificio.height+1; a <= i; a++) {
+				for (var b = j-edificio.width+1; b <= j; b++) {
+					if (typeof game.global.grid[i] !== 'undefined') {
+						if (typeof game.global.grid[i][j] !== 'undefined') {
+							if (game.global.grid[a][b].type !== 0) {
+								scene.lol.setFrame(1);
+								break;
+							}
+						}
+					}
+				}
+			}
+    		
+    		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
+    		scene.lol.x = game.global.grid[i][j].image.x;
+    		scene.lol.y = game.global.grid[i][j].image.y;
+    		
+    		scene.lol.depth = i*tileMap_width + j + 0.1;
+		}
 	}
 }
 

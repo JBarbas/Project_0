@@ -50,26 +50,27 @@ class GameScene extends Phaser.Scene {
     			let i = Math.trunc(position.y/tile_height + 1);
     			let j = Math.trunc(position.x/(tile_width/2) + 1);
     			
-    			if(game.global.construyendo) {
-        			construir(i, j, scene, game.global.edificioEnConstruccion);
-        		}
-        		else {
-        			if (typeof game.global.grid[i] !== 'undefined') {
-            			if (typeof game.global.grid[i][j] !== 'undefined') {
+    			if (typeof game.global.grid[i] !== 'undefined') {
+        			if (typeof game.global.grid[i][j] !== 'undefined') {
+		    			if(game.global.construyendo) {
+		        			construir(i, j, scene, game.global.edificioEnConstruccion);
+		        		}
+		        		else {
+		        			
 		        			switch (game.global.grid[i][j].type) {
 		        			case 1:
 		        			case -10:
 		        				if (!game.scene.isActive('CentroMandoMenu')) {
 		    						game.global.inMenu = true;
-		    						game.scene.run('CentroMandoMenu');
+		    						game.scene.run('CentroMandoMenu', {edificio: game.global.grid[i][j].content});
 		    					}
 		        				break;
 		        			default:
 		        				break;
 		        			}
-            			}
+		        		}
         			}
-        		}
+    			}
     	    }
     	    else {
     	    	scene.isDragging = false;
@@ -81,31 +82,7 @@ class GameScene extends Phaser.Scene {
     	// Construccion de edificios
     	if(game.global.construyendo){
     		
-    		var position = new Phaser.Geom.Point(this.main_camera.getWorldPoint(this.input.x, this.input.y).x - tileMap_width*tile_width/2, this.main_camera.getWorldPoint(this.input.x, this.input.y).y);
-        	
-        	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
-    		position = isometricToCartesian(position);
-    		
-    		// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
-    		let i = Math.trunc(position.y/tile_height + 1);
-    		let j = Math.trunc(position.x/(tile_width/2) + 1);
-    		
-    		if (typeof game.global.grid[i] !== 'undefined') {
-    			if (typeof game.global.grid[i][j] !== 'undefined') {
-		    		if (game.global.grid[i][j].type === 0) {
-		    			this.lol.setFrame(0);
-		    		}
-		    		else {
-		    			this.lol.setFrame(1);
-		    		} 
-		    		
-		    		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-		    		this.lol.x = game.global.grid[i][j].image.x;
-		    		this.lol.y = game.global.grid[i][j].image.y;
-		    		
-		    		this.lol.depth = i*tileMap_width + j + 0.1;
-    			}
-    		}
+    		previsualizarEdificio(game.global.edificioEnConstruccion, this);
         }
     	
     	////////////////////////////////////////////////////////////////////////////////////

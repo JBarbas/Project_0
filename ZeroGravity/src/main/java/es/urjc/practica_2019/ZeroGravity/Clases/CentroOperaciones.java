@@ -1,8 +1,8 @@
 package es.urjc.practica_2019.ZeroGravity.Clases;
 
-public class CentroMando extends Edificio {
+public class CentroOperaciones extends Edificio {
 
-	public CentroMando(int id) {
+	public CentroOperaciones(int id) {
 		
 		this.setId(id);
 		//Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
@@ -11,11 +11,11 @@ public class CentroMando extends Edificio {
 		int[] nivel3 = {3, 0, 0, 0};
 		int[][] costs = {nivel1, nivel2, nivel3};
 		this.setCosts(costs);
-		this.setHeight(2);
-		this.setWidth(2);
+		this.setHeight(1);
+		this.setWidth(1);
 		this.setLevel(1);
 		this.setBuildingDependsOn(null);
-		this.setSprite("centroDeMando");
+		this.setSprite("centroOperaciones");
 	}
 	
 	
