@@ -4,7 +4,7 @@ import es.urjc.practica_2019.ZeroGravity.Interfaces.EdificioInterface;
 
 public class Edificio  implements EdificioInterface{
 
-	//costes por nivel. 
+	protected int id; 
 	protected int x;
 	protected int y;
 	protected int height;
@@ -12,6 +12,15 @@ public class Edificio  implements EdificioInterface{
 	protected int level;
 	protected String sprite;
 	protected Edificio buildingDependsOn;	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getX() {
 		return x;

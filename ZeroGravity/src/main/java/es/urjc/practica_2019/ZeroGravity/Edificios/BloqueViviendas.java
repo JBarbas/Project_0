@@ -11,8 +11,9 @@ public class BloqueViviendas extends Edificio {
 	private int capacidad;
 	private int colonos;
 
-	public BloqueViviendas(int x, int y, Edificio depends) {
+	public BloqueViviendas(int x, int y, Edificio depends, int id) {
 
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.height = 0;

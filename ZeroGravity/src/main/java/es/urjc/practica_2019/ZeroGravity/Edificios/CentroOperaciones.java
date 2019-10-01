@@ -8,14 +8,25 @@ public class CentroOperaciones extends Edificio {
 	private static final int[] nivel3 = { 0, 0, 0, 0 };
 	private static final int[][] costs = { nivel1, nivel2, nivel3 };
 
-	public CentroOperaciones(int x, int y, Edificio depends) {
+	public CentroOperaciones(int x, int y, Edificio depends, int id) {
 
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.height = 0;
 		this.width = 0;
 		this.level = 1;
 		this.buildingDependsOn = depends;
+		this.sprite = "centroOperaciones";
+	}
+	
+	public CentroOperaciones(int id) {
+		
+		this.id = id;
+		this.height = 0;
+		this.width = 0;
+		this.level = 1;
+		this.buildingDependsOn = null;
 		this.sprite = "centroOperaciones";
 	}
 

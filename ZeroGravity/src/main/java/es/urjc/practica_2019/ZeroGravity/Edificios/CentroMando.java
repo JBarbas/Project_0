@@ -8,10 +8,21 @@ public class CentroMando extends Edificio {
 	private static final int[] nivel3 = {3, 0, 0, 0};
 	private static final int[][] costs = {nivel1, nivel2, nivel3};
 	
-	public CentroMando(int x, int y) {
+	public CentroMando(int x, int y, int id) {
 		
+		this.id = id;
 		this.x = x;
 		this.y = y;
+		this.height = 2;
+		this.width = 2;
+		this.level = 1;
+		this.buildingDependsOn = null;
+		this.sprite = "centroMando";
+	}
+	
+	public CentroMando(int id) {
+		
+		this.id = id;
 		this.height = 2;
 		this.width = 2;
 		this.level = 1;

@@ -3,9 +3,9 @@ class CentroMando extends Edificio {
 	constructor(x, y){
 		
 		super(x, y);
-		super.height = 1;
-		super.width = 1;
+		super.height = 2;
+		super.width = 2;
 		super.level = 1;
-		super.sprite = 'edificio';
+		super.sprite = 'centroDeMando';
 	}
 }

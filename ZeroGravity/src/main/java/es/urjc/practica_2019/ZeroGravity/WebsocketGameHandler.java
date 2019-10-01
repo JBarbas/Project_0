@@ -17,6 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+
+
+import es.urjc.practica_2019.ZeroGravity.Edificios.*;
+
+
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
@@ -57,11 +62,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					playerGrid.addPOJO(gridColumn);
 				}
 				msg.putPOJO("grid", playerGrid);
+				ObjectNode idMap = mapper.createObjectNode();
+				for (Edificio e : player.getEdificios()) {
+					idMap.put(Integer.toString(e.getX()) + Integer.toString(e.getY()), e.getId());
+				}
+				msg.putPOJO("idMap", idMap);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "BUILD":		
 				// Construimos el edificio, si se puede
-				player.build(node.get("i").asInt(), node.get("j").asInt(), node.get("edificio").asText());	
+				player.build(node.get("i").asInt(), node.get("j").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
 				// Pedimos al cliente que refresque el grid con la nueva info
 				msg.put("event", "REFRESH GRID");
 				ArrayNode newGrid = mapper.createArrayNode();
@@ -74,6 +84,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					newGrid.addPOJO(gridColumn);
 				}
 				msg.putPOJO("grid", newGrid);
+				ObjectNode newIdMap = mapper.createObjectNode();
+				for (Edificio e : player.getEdificios()) {
+					newIdMap.put(Integer.toString(e.getX()) + Integer.toString(e.getY()), e.getId());
+				}
+				msg.putPOJO("idMap", newIdMap);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			default:
