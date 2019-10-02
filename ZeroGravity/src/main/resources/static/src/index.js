@@ -114,22 +114,27 @@ window.onload = function() {
 				console.log('[DEBUG] REFRESH GRID message recieved')
 				console.dir(msg);
 			}
-			game.global.edificios = new Map();
 			for (var i = 0; i < msg.edificios.length; i++) {
 				var e = msg.edificios[i];
-				var edificio = new Edificio(0, 0);
-				switch (e.sprite) {
-				case 'centroDeMando':
-					edificio = new CentroMando(e.x, e.y);
-					break;
-				case 'centroOperaciones':
-					edificio = new CentroOperaciones(e.x, e.y);
-					break;
-				default:
-					break;
+				var edificio = game.global.edificios.get(e.id);
+				if (typeof edificio === 'undefined') {
+					switch (e.sprite) {
+					case 'centroDeMando':
+						edificio = new CentroMando(e.x, e.y);
+						break;
+					case 'centroOperaciones':
+						edificio = new CentroOperaciones(e.x, e.y);
+						break;
+					default:
+						break;
+					}
+					edificio.id = e.id;
+					game.global.edificios.set(edificio.id, edificio);
 				}
-				edificio.id = e.id;
-				game.global.edificios.set(edificio.id, edificio);
+				else {
+					edificio.x = e.x;
+					edificio.y = e.y;
+				}
 			}
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;

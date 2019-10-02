@@ -22,5 +22,26 @@ class Edificio {
 		position = cartesianToIsometric(position);
 		position.x += tileMap_width*tile_width/2;
 		this.gameObject = scene.add.image(position.x, position.y, this.sprite).setOrigin(this.originX, 1);
+		this.gameObject.depth = this.y*tileMap_width + this.x + 0.1;
+	}
+	
+	move () {
+		this.gameObject.alpha = 0.5;
+		for (var i = this.y-this.height+1; i <= this.y; i++) {
+			for (var j = this.x-this.width+1; j <= this.x; j++) {
+				if (typeof game.global.grid[i] !== 'undefined') {
+					if (typeof game.global.grid[i][j] !== 'undefined') {
+						game.global.grid[i][j].type = 0
+					}
+				}
+			}
+		}
+		game.global.construyendo = true;
+		game.global.edificioEnConstruccion = this;
+	}
+	
+	previsualizar(scene) {
+		this.gameObject = scene.add.image(this.x, this.y, this.sprite).setOrigin(this.originX, 1);
+		this.gameObject.alpha = 0.5;
 	}
 }

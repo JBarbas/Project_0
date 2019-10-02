@@ -4,7 +4,7 @@ public interface EdificioInterface {
 
 	public int[][] build(int[][] grid, int x, int y);
 	
-	public boolean move(int x, int y);
+	public int[][] move(int[][] grid, int x, int y);
 	
 	public void levelUp();
 	

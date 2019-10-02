@@ -93,7 +93,7 @@ function construir(i, j, scene, edificio) {
     	game.global.grid[i][j].image.depth = i*tileMap_width + j;
     	
     	// Borramos la previsualización del edificio
-    	scene.lol.destroy();
+    	game.global.edificioEnConstruccion.gameObject.alpha = 1;
     	
     	// Informamos al servidor de la construccion, para que este la valide o la descarte
     	let msg = new Object();
@@ -119,13 +119,13 @@ function previsualizarEdificio(edificio, scene) {
 	
 	if (typeof game.global.grid[i] !== 'undefined') {
 		if (typeof game.global.grid[i][j] !== 'undefined') {
-			scene.lol.setFrame(0);
+			edificio.gameObject.setFrame(0);
 			for (var a = i-edificio.height+1; a <= i; a++) {
 				for (var b = j-edificio.width+1; b <= j; b++) {
 					if (typeof game.global.grid[i] !== 'undefined') {
 						if (typeof game.global.grid[i][j] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
-								scene.lol.setFrame(1);
+								edificio.gameObject.setFrame(1);
 								break;
 							}
 						}
@@ -134,10 +134,13 @@ function previsualizarEdificio(edificio, scene) {
 			}
     		
     		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-    		scene.lol.x = game.global.grid[i][j].image.x;
-    		scene.lol.y = game.global.grid[i][j].image.y;
+			edificio.gameObject.x = game.global.grid[i][j].image.x;
+			edificio.gameObject.y = game.global.grid[i][j].image.y;
     		
-    		scene.lol.depth = i*tileMap_width + j + 0.1;
+			edificio.x = game.global.grid[i][j].image.x;
+			edificio.y = game.global.grid[i][j].image.y;
+			
+			edificio.gameObject.depth = i*tileMap_width + j + 0.1;
 		}
 	}
 }

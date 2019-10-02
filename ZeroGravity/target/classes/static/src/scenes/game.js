@@ -73,8 +73,7 @@ class GameScene extends Phaser.Scene {
     update(time, delta) {
 
     	// Construccion de edificios
-    	if(game.global.construyendo){
-    		
+    	if(game.global.construyendo){    		
     		previsualizarEdificio(game.global.edificioEnConstruccion, this);
         }
     	

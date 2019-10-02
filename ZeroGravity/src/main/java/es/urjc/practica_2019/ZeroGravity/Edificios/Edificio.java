@@ -93,6 +93,12 @@ public class Edificio  implements EdificioInterface{
 							return null;
 						}
 					}
+					else {
+						return null;
+					}
+				}
+				else {
+					return null;
 				}
 			}
 		}
@@ -100,9 +106,37 @@ public class Edificio  implements EdificioInterface{
 	}
 
 	@Override
-	public boolean move(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+	public int[][] move(int[][] grid, int x, int y) {
+		for (int i = this.y-this.height+1; i <= this.y; i++) {
+			for (int j = this.x-this.width+1; j <= this.x; j++) {
+				if (i > 0 && i < grid.length) {
+					if (j > 0 && j < grid[i].length) {
+						grid[i][j] = 0;
+					}
+				}
+			}
+		}
+		for (int i = y-this.height+1; i <= y; i++) {
+			for (int j = x-this.width+1; j <= x; j++) {
+				if (i > 0 && i < grid.length) {
+					if (j > 0 && j < grid[i].length) {
+						if (grid[i][j] == 0) {
+							grid[i][j] = this.id;
+						}
+						else {
+							return null;
+						}
+					}
+					else {
+						return null;
+					}
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		return grid;
 	}
 
 	@Override

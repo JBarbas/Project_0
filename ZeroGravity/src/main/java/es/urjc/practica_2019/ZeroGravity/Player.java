@@ -1,5 +1,6 @@
 package es.urjc.practica_2019.ZeroGravity;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -59,7 +60,7 @@ public class Player {
 	
 	public void build(int x, int y, String sprite, int id) {
 		Edificio edificio = edificios.get(id);
-		// Si se trata de un nuevo edificio hay que crearlo y asignarle un id
+		// Si se trata de un nuevo edificio hay que crearlo, asignarle un id y construirlo
 		if (edificio == null) {
 			switch(sprite) {
 			case "centroDeMando":
@@ -72,11 +73,27 @@ public class Player {
 				break;
 			}
 			edificios.put(edificio.getId(), edificio);
+			int [][] newGrid = edificio.build(this.gridCopy(), x, y);
+			if (newGrid != null) {
+				this.grid = newGrid;
+			}
 		}
-		int [][] newGrid = edificio.build(this.grid, x, y);
-		if (newGrid != null) {
-			this.grid = newGrid;
+		else {
+			int [][] newGrid = edificio.move(this.gridCopy(), x, y);
+			if (newGrid != null) {
+				edificio.setX(x);
+				edificio.setY(y);
+				this.grid = newGrid;
+			}
 		}
+	}
+	
+	public int[][] gridCopy() {
+		int[][] copy = new int[GRID_HEIGHT][GRID_WIDTH];
+		for (int i = 0; i < this.grid.length; i++) {
+			copy[i] = Arrays.copyOf(this.grid[i], this.grid[i].length);
+		}
+		return copy;
 	}
 	
 	public Collection<Edificio> getEdificios() {
