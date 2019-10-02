@@ -20,13 +20,7 @@ public class CentroAdministrativo extends Edificio {
 	}
 
 	@Override
-	public boolean build(float x, float y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean move(float x, float y) {
+	public boolean move(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

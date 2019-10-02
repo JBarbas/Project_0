@@ -13,8 +13,8 @@ public class CentroOperaciones extends Edificio {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.height = 0;
-		this.width = 0;
+		this.height = 1;
+		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "centroOperaciones";
@@ -23,21 +23,15 @@ public class CentroOperaciones extends Edificio {
 	public CentroOperaciones(int id) {
 		
 		this.id = id;
-		this.height = 0;
-		this.width = 0;
+		this.height = 1;
+		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroOperaciones";
 	}
 
 	@Override
-	public boolean build(float x, float y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean move(float x, float y) {
+	public boolean move(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

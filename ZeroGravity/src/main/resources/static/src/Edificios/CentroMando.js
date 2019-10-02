@@ -7,5 +7,6 @@ class CentroMando extends Edificio {
 		super.width = 2;
 		super.level = 1;
 		super.sprite = 'centroDeMando';
+		super.menuScene = 'CentroMandoMenu';
 	}
 }

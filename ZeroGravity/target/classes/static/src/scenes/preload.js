@@ -38,7 +38,12 @@ class PreloadScene extends Phaser.Scene {
 		
     }
     create (data)  {
-		game.scene.run('IntroScene');
+		if (!game.global.ONLY_GAME_MODE) {
+			game.scene.run('IntroScene');
+		}
+		else {
+			game.scene.run('PreloadGameScene');
+		}
 		game.scene.stop('PreloadScene');
     }
     update(time, delta) {

@@ -17,7 +17,7 @@ public class CentroMando extends Edificio {
 		this.width = 2;
 		this.level = 1;
 		this.buildingDependsOn = null;
-		this.sprite = "centroMando";
+		this.sprite = "centroDeMando";
 	}
 	
 	public CentroMando(int id) {
@@ -27,17 +27,11 @@ public class CentroMando extends Edificio {
 		this.width = 2;
 		this.level = 1;
 		this.buildingDependsOn = null;
-		this.sprite = "centroMando";
-	}
-	
-	@Override
-	public boolean build(float x, float y) {
-		// TODO Auto-generated method stub
-		return false;
+		this.sprite = "centroDeMando";
 	}
 
 	@Override
-	public boolean move(float x, float y) {
+	public boolean move(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

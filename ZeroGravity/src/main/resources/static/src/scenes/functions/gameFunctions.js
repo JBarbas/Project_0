@@ -26,22 +26,17 @@ function createGrid(scene) {
 			case -1:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
 				break;
-			case 1:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
-				game.global.grid[i][j].content = new CentroMando(j, i);
-				game.global.grid[i-1][j].content = game.global.grid[i][j].content;
-				game.global.grid[i-1][j-1].content = game.global.grid[i][j].content;
-				game.global.grid[i][j-1].content = game.global.grid[i][j].content;
-				game.global.grid[i][j].content.id = game.global.idMap.get(i.toString() + j.toString());
-				break;
-			case 2:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroOperaciones').setOrigin(0.5, 1);
-				break;
 			default:
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
 				break;
 			}
 		}
+	}
+	var edificiosIterator = game.global.edificios.values();
+	var edificio = edificiosIterator.next();
+	while (!edificio.done) {
+		edificio.value.build(scene);
+		edificio = edificiosIterator.next();
 	}
 }
 
@@ -51,7 +46,6 @@ function refreshGrid(scene, newGrid) {
 			if (game.global.grid[i][j].type !== newGrid[i][j]) {
 				game.global.grid[i][j].type = newGrid[i][j];				
 				game.global.grid[i][j].image.destroy();
-				game.global.grid[i][j].content = null;
 				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 				position = cartesianToIsometric(position);
 				switch(game.global.grid[i][j].type) {
@@ -61,19 +55,18 @@ function refreshGrid(scene, newGrid) {
 				case -1:
 					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
 					break;
-				case 1:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroDeMando').setOrigin(0.5, 1);
-					break;
-				case 2:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'centroOperaciones').setOrigin(0.5, 1);
-					break;
 				default:
 					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
 					break;
 				}
-				game.global.grid[i][j].image.depth = i*tileMap_width + j;
 			}
 		}
+	}
+	var edificiosIterator = game.global.edificios.values();
+	var edificio = edificiosIterator.next();
+	while (!edificio.done) {
+		edificio.value.build(scene);
+		edificio = edificiosIterator.next();
 	}
 }
 
@@ -105,8 +98,8 @@ function construir(i, j, scene, edificio) {
     	// Informamos al servidor de la construccion, para que este la valide o la descarte
     	let msg = new Object();
 		msg.event = 'BUILD';
-		msg.i = i;
-		msg.j = j;
+		msg.x = j;
+		msg.y = i;
 		msg.edificio = edificio.sprite;
 		msg.id = edificio.id;
 		game.global.socket.send(JSON.stringify(msg));

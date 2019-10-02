@@ -62,16 +62,21 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					playerGrid.addPOJO(gridColumn);
 				}
 				msg.putPOJO("grid", playerGrid);
-				ObjectNode idMap = mapper.createObjectNode();
+				ArrayNode arrayNodeEdificios = mapper.createArrayNode();
 				for (Edificio e : player.getEdificios()) {
-					idMap.put(Integer.toString(e.getX()) + Integer.toString(e.getY()), e.getId());
+					ObjectNode jsonEdificio = mapper.createObjectNode();
+					jsonEdificio.put("id", e.getId());
+					jsonEdificio.put("x", e.getX());
+					jsonEdificio.put("y", e.getY());
+					jsonEdificio.put("sprite", e.getSprite());
+					arrayNodeEdificios.addPOJO(jsonEdificio);
 				}
-				msg.putPOJO("idMap", idMap);
+				msg.putPOJO("edificios", arrayNodeEdificios);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "BUILD":		
 				// Construimos el edificio, si se puede
-				player.build(node.get("i").asInt(), node.get("j").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
+				player.build(node.get("x").asInt(), node.get("y").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
 				// Pedimos al cliente que refresque el grid con la nueva info
 				msg.put("event", "REFRESH GRID");
 				ArrayNode newGrid = mapper.createArrayNode();
@@ -84,11 +89,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					newGrid.addPOJO(gridColumn);
 				}
 				msg.putPOJO("grid", newGrid);
-				ObjectNode newIdMap = mapper.createObjectNode();
+				arrayNodeEdificios = mapper.createArrayNode();
 				for (Edificio e : player.getEdificios()) {
-					newIdMap.put(Integer.toString(e.getX()) + Integer.toString(e.getY()), e.getId());
+					ObjectNode jsonEdificio = mapper.createObjectNode();
+					jsonEdificio.put("id", e.getId());
+					jsonEdificio.put("x", e.getX());
+					jsonEdificio.put("y", e.getY());
+					jsonEdificio.put("sprite", e.getSprite());
+					arrayNodeEdificios.addPOJO(jsonEdificio);
 				}
-				msg.putPOJO("idMap", newIdMap);
+				msg.putPOJO("edificios", arrayNodeEdificios);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			default:

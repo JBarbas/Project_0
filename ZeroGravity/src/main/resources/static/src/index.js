@@ -33,6 +33,7 @@ window.onload = function() {
 	game.global = {
 		FPS : 30,
 		DEBUG_MODE : true,
+		ONLY_GAME_MODE : true,
 		socket : null,
 		loaded : false,
 		myPlayer : new Object(),
@@ -89,7 +90,23 @@ window.onload = function() {
 					game.global.grid[i].push({type: msg.grid[i][j]});
 				}
 			}
-			game.global.idMap = new Map(Object.entries(msg.idMap));
+			game.global.edificios = new Map();
+			for (var i = 0; i < msg.edificios.length; i++) {
+				var e = msg.edificios[i];
+				var edificio = new Edificio(0, 0);
+				switch (e.sprite) {
+				case 'centroDeMando':
+					edificio = new CentroMando(e.x, e.y);
+					break;
+				case 'centroOperaciones':
+					edificio = new CentroOperaciones(e.x, e.y);
+					break;
+				default:
+					break;
+				}
+				edificio.id = e.id;
+				game.global.edificios.set(edificio.id, edificio);
+			}
 			game.global.loaded = true;
 			break;
 		case 'REFRESH GRID':
@@ -97,7 +114,23 @@ window.onload = function() {
 				console.log('[DEBUG] REFRESH GRID message recieved')
 				console.dir(msg);
 			}
-			game.global.idMap = new Map(Object.entries(msg.idMap));
+			game.global.edificios = new Map();
+			for (var i = 0; i < msg.edificios.length; i++) {
+				var e = msg.edificios[i];
+				var edificio = new Edificio(0, 0);
+				switch (e.sprite) {
+				case 'centroDeMando':
+					edificio = new CentroMando(e.x, e.y);
+					break;
+				case 'centroOperaciones':
+					edificio = new CentroOperaciones(e.x, e.y);
+					break;
+				default:
+					break;
+				}
+				edificio.id = e.id;
+				game.global.edificios.set(edificio.id, edificio);
+			}
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		default:

@@ -44,12 +44,12 @@ class CentroMandoMenu extends Phaser.Scene {
     	button.on('pointerdown', function(pointer, localX, localY, event){
     		if(!game.global.construyendo){
 				toggle(data.edificio, game.scene.getScene('GameScene'));
-				game.global.grid[data.edificio.y][data.edificio.x] = 0;
-				game.global.grid[data.edificio.y-1][data.edificio.x] = 0;
-				game.global.grid[data.edificio.y-1][data.edificio.x-1] = 0;
-				game.global.grid[data.edificio.y][data.edificio.x-1] = 0;
+				game.global.grid[data.miEdificio.y][data.miEdificio.x] = 0;
+				game.global.grid[data.miEdificio.y-1][data.miEdificio.x] = 0;
+				game.global.grid[data.miEdificio.y-1][data.miEdificio.x-1] = 0;
+				game.global.grid[data.miEdificio.y][data.miEdificio.x-1] = 0;
 				game.global.construyendo = true;
-				game.global.edificioEnConstruccion = data.edificio;
+				game.global.edificioEnConstruccion = data.miEdificio;
 				game.scene.pause();
     		}
 			game.scene.stop('CentroMandoMenu');

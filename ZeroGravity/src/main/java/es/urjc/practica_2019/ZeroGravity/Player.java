@@ -19,6 +19,7 @@ public class Player {
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
 	private AtomicInteger edificioId = new AtomicInteger(0);
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
+	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
 	public Player(WebSocketSession session) {
 		this.session = session;
@@ -47,13 +48,8 @@ public class Player {
 		}
 		
 		//Introducimos el Centro de Mando
-		CentroMando cm = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
-		edificios.put(cm.getId(), cm);
-		grid[cm.getY()][cm.getX()] = 1;
-		grid[cm.getY() - 1][cm.getX()] = -10;
-		grid[cm.getY() - 1][cm.getX() - 1] = -10;
-		grid[cm.getY()][cm.getX() - 1] = -10;
-		
+		edificios.put(this.centroMando.getId(), this.centroMando);
+		grid = this.centroMando.build(grid, this.centroMando.getX(), this.centroMando.getY());		
 		return grid;
 	}
 	
@@ -61,61 +57,25 @@ public class Player {
 		return this.grid;
 	}
 	
-	public void build(int i, int j, String sprite, int id) {
+	public void build(int x, int y, String sprite, int id) {
 		Edificio edificio = edificios.get(id);
 		// Si se trata de un nuevo edificio hay que crearlo y asignarle un id
 		if (edificio == null) {
 			switch(sprite) {
 			case "centroDeMando":
-				edificio = new CentroMando(edificioId.incrementAndGet());
+				edificio = new CentroMando(x, y, edificioId.incrementAndGet());
 				break;
 			case "centroOperaciones":
-				edificio = new CentroOperaciones(edificioId.incrementAndGet());
+				edificio = new CentroOperaciones(x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			default:
 				break;
 			}
+			edificios.put(edificio.getId(), edificio);
 		}
-		switch (edificio.getSprite()) {
-		case "centroOperaciones":
-			if (this.grid[i][j] == 0) {
-				this.grid[i][j] = 2;
-				if (edificios.get(edificio.getId()) == null) {
-					edificios.put(edificio.getId(), edificio);
-					edificio.setX(j);
-					edificio.setY(i);
-				}
-				else {
-					this.grid[edificio.getX()][edificio.getY()] = 0;
-					this.grid[i][j] = 2;
-				}
-			}
-			break;
-		case "centroDeMando":
-			if (this.grid[i][j] == 0 && this.grid[i-1][j] == 0 && this.grid[i-1][j-1] == 0 && this.grid[i][j-1] == 0) {
-				this.grid[i][j] = 1;
-				this.grid[i-1][j] = -10;
-				this.grid[i-1][j-1] = -10;
-				this.grid[i][j-1] = -10;
-				if (edificios.get(edificio.getId()) == null) {
-					edificios.put(edificio.getId(), edificio);
-					edificio.setX(j);
-					edificio.setY(i);
-				}
-				else {
-					this.grid[edificio.getY()][edificio.getX()] = 0;
-					this.grid[edificio.getY()-1][edificio.getX()] = 0;
-					this.grid[edificio.getY()-1][edificio.getX()-1] = 0;
-					this.grid[edificio.getY()][edificio.getX()-1] = 0;
-					this.grid[i][j] = 1;
-					this.grid[i-1][j] = -10;
-					this.grid[i-1][j-1] = -10;
-					this.grid[i][j-1] = -10;
-				}
-			}
-			break;
-		default:
-			break;
+		int [][] newGrid = edificio.build(this.grid, x, y);
+		if (newGrid != null) {
+			this.grid = newGrid;
 		}
 	}
 	
