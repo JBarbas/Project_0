@@ -90,7 +90,7 @@ function construir(i, j, scene, edificio) {
     	game.global.grid[i][j].type = 2;
     	
     	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
-    	game.global.grid[i][j].image.depth = i*tileMap_width + j;
+    	game.global.grid[i][j].image.depth = i + j;
     	
     	// Borramos la previsualización del edificio
     	game.global.edificioEnConstruccion.gameObject.alpha = 1;
@@ -122,8 +122,8 @@ function previsualizarEdificio(edificio, scene) {
 			edificio.gameObject.setFrame(0);
 			for (var a = i-edificio.height+1; a <= i; a++) {
 				for (var b = j-edificio.width+1; b <= j; b++) {
-					if (typeof game.global.grid[i] !== 'undefined') {
-						if (typeof game.global.grid[i][j] !== 'undefined') {
+					if (typeof game.global.grid[a] !== 'undefined') {
+						if (typeof game.global.grid[a][b] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
 								edificio.gameObject.setFrame(1);
 								break;
@@ -140,7 +140,7 @@ function previsualizarEdificio(edificio, scene) {
 			edificio.x = game.global.grid[i][j].image.x;
 			edificio.y = game.global.grid[i][j].image.y;
 			
-			edificio.gameObject.depth = i*tileMap_width + j + 0.1;
+			edificio.gameObject.depth = i + j + 0.1;
 		}
 	}
 }

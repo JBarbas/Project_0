@@ -18,10 +18,26 @@ class CentroMandoMenu extends Phaser.Scene {
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
     	this.edificio = this.add.image(game.global.buildingMenu.x + 50, game.global.buildingMenu.y + 100, 'edificio').setOrigin(0, 0);
-    	this.edificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    	this.edificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
+    	this.edificio2 = this.add.image(game.global.buildingMenu.x + 250, game.global.buildingMenu.y + 100, 'centroDeMando').setOrigin(0, 0);
+    	this.edificio2.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroDeMando'); });
+    	
+    	function aux(edificioCons){
     		
     		if(!game.global.construyendo){
-    			var edificio = new CentroOperaciones(0, 0);
+    			var edificio;
+    			switch(edificioCons){
+    			
+    			case 'centroDeMando':
+    				edificio = new CentroMando(0, 0);
+    				break;
+    			case 'centroOperaciones':
+    				edificio = new CentroOperaciones(0, 0);
+    				break;
+    			default:
+    				break;
+    			}
+    			
     			edificio.previsualizar(game.scene.getScene('GameScene'));
     			game.global.construyendo = true;
     			game.global.edificioEnConstruccion = edificio;
@@ -29,7 +45,7 @@ class CentroMandoMenu extends Phaser.Scene {
     		}
     		game.scene.stop('CentroMandoMenu');
     		game.global.inMenu = false;
-    	});
+    	}
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
