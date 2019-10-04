@@ -72,28 +72,26 @@ function refreshGrid(scene, newGrid) {
 
 function construir(i, j, scene, edificio) {
 	//Comprobamos si se puede construir en la celda seleccionada
-	if (game.global.grid[i][j].type === 0) {
+	var puedoConstruir = true;
+	for (var a = i-edificio.height+1; a <= i; a++) {
+		for (var b = j-edificio.width+1; b <= j; b++) {
+			if (typeof game.global.grid[a] !== 'undefined') {
+				if (typeof game.global.grid[a][b] !== 'undefined') {
+					if (game.global.grid[a][b].type !== 0) {
+						puedoConstruir = false
+						break;
+					}
+				}
+			}
+		}
+	}
+	if (puedoConstruir) {
 		
 		game.global.construyendo = false;
-		
-		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-		let x = game.global.grid[i][j].image.x;
-		let y = game.global.grid[i][j].image.y;
-    	edificio.x = x;
-    	edificio.y = y;
-    	
-    	// Cambiamos el tile de la malla por la nueva imagen
-    	game.global.grid[i][j].image.destroy();
-    	game.global.grid[i][j].image = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(0.5, 1);
-    	
-    	// Actualizamos la malla
-    	game.global.grid[i][j].type = 2;
-    	
-    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
-    	game.global.grid[i][j].image.depth = i + j;
     	
     	// Borramos la previsualización del edificio
-    	game.global.edificioEnConstruccion.gameObject.alpha = 1;
+    	edificio.alpha = 1;
+    	edificio.gameObject.destroy();
     	
     	// Informamos al servidor de la construccion, para que este la valide o la descarte
     	let msg = new Object();
@@ -140,7 +138,7 @@ function previsualizarEdificio(edificio, scene) {
 			edificio.x = game.global.grid[i][j].image.x;
 			edificio.y = game.global.grid[i][j].image.y;
 			
-			edificio.gameObject.depth = i + j + 0.1;
+			edificio.gameObject.depth = i + j + 0.1 + 1/edificio.height;;
 		}
 	}
 }

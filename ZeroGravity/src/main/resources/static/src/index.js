@@ -22,7 +22,8 @@ window.onload = function() {
 				  		CreditsScene,
 				  		PreloadGameScene,
 				  		GameScene,
-				  		CentroMandoMenu]
+				  		CentroMandoMenu,
+				  		CentroOperacionesMenu]
 
 			};
 			

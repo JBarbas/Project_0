@@ -57,7 +57,6 @@ class GameScene extends Phaser.Scene {
 		        		}
 		        		else if(game.global.grid[i][j].type > 0) {
 		        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
-		        			console.log(edificio.gameObject.depth);
 	        				if (!game.scene.isActive(edificio.menuScene)) {
 	    						game.global.inMenu = true;
 	    						game.scene.run(edificio.menuScene, {miEdificio: edificio});

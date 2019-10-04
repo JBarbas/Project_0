@@ -72,10 +72,10 @@ public class Player {
 			default:
 				break;
 			}
-			edificios.put(edificio.getId(), edificio);
 			int [][] newGrid = edificio.build(this.gridCopy(), x, y);
 			if (newGrid != null) {
 				this.grid = newGrid;
+				edificios.put(edificio.getId(), edificio);
 			}
 		}
 		else {

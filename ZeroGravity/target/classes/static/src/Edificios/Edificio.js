@@ -22,7 +22,7 @@ class Edificio {
 		position = cartesianToIsometric(position);
 		position.x += tileMap_width*tile_width/2;
 		this.gameObject = scene.add.image(position.x, position.y, this.sprite).setOrigin(this.originX, 1);
-		this.gameObject.depth = this.y + this.x + 1/this.width;
+		this.gameObject.depth = this.y + this.x + 1/this.height;
 	}
 	
 	move () {
