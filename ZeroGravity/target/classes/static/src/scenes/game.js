@@ -31,7 +31,7 @@ class GameScene extends Phaser.Scene {
     	// Establecemos los limites del mapa donde puede ver la camara
     	this.main_camera.setBounds(0-world_bounds_margin, 0-world_bounds_margin, tileMap_width*tile_width + 2*world_bounds_margin, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_margin, true);
     	
-    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1.5, 1.5);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1.75, 1.75);
     	
     	// Creamos la malla isometrica
     	this.gridContainer = this.add.container(0, 0);
