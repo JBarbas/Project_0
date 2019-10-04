@@ -41,6 +41,7 @@ class CentroMandoMenu extends Phaser.Scene {
     			edificio.previsualizar(game.scene.getScene('GameScene'));
     			game.global.construyendo = true;
     			game.global.edificioEnConstruccion = edificio;
+    			game.scene.getScene('GameScene').gridContainer.setAlpha(0.5);
     			game.scene.pause();
     		}
     		game.scene.stop('CentroMandoMenu');

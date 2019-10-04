@@ -30,6 +30,7 @@ function createGrid(scene) {
 				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
 				break;
 			}
+			scene.gridContainer.add(game.global.grid[i][j].image);
 		}
 	}
 	var edificiosIterator = game.global.edificios.values();
@@ -45,7 +46,7 @@ function refreshGrid(scene, newGrid) {
 		for (var j = 0; j < game.global.grid[i].length; j++) {
 			if (game.global.grid[i][j].type !== newGrid[i][j]) {
 				game.global.grid[i][j].type = newGrid[i][j];				
-				game.global.grid[i][j].image.destroy();
+				scene.gridContainer.remove(game.global.grid[i][j].image, true);
 				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 				position = cartesianToIsometric(position);
 				switch(game.global.grid[i][j].type) {
@@ -59,6 +60,7 @@ function refreshGrid(scene, newGrid) {
 					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
 					break;
 				}
+				scene.gridContainer.add(game.global.grid[i][j].image);
 			}
 		}
 	}
@@ -88,6 +90,7 @@ function construir(i, j, scene, edificio) {
 	if (puedoConstruir) {
 		
 		game.global.construyendo = false;
+		scene.gridContainer.setAlpha(0);
     	
     	// Borramos la previsualización del edificio
     	edificio.alpha = 1;

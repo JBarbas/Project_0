@@ -30,8 +30,14 @@ class GameScene extends Phaser.Scene {
     	zoom = 1; // reset del zoom
     	// Establecemos los limites del mapa donde puede ver la camara
     	this.main_camera.setBounds(0-world_bounds_margin, 0-world_bounds_margin, tileMap_width*tile_width + 2*world_bounds_margin, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_margin, true);
+    	
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1.5, 1.5);
+    	
     	// Creamos la malla isometrica
+    	this.gridContainer = this.add.container(0, 0);
     	createGrid(this);
+    	this.gridContainer.setAlpha(0);
+    	console.log(this.gridContainer);
     	this.isDragging = false; // true si la cámara se está moviendo por drag del raton
     	
     	// Evento de click para construir edificio

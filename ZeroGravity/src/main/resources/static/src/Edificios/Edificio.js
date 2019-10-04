@@ -37,6 +37,7 @@ class Edificio {
 			}
 		}
 		game.global.construyendo = true;
+		game.scene.getScene('GameScene').gridContainer.setAlpha(0.5);
 		game.global.edificioEnConstruccion = this;
 	}
 	
