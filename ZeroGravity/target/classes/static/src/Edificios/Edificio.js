@@ -45,4 +45,10 @@ class Edificio {
 		this.gameObject = scene.add.image(this.x, this.y, this.sprite).setOrigin(this.originX, 1);
 		this.gameObject.alpha = 0.5;
 	}
+	
+	destroy() {
+		if (this.gameObject !== null) {
+			this.gameObject.destroy();
+		}
+	}
 }

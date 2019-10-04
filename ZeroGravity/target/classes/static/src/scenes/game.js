@@ -82,6 +82,33 @@ class GameScene extends Phaser.Scene {
     	if(game.global.construyendo){    		
     		previsualizarEdificio(game.global.edificioEnConstruccion, this);
         }
+    	else {    		
+    		var edificiosIterator = game.global.edificios.values();
+    		var e = edificiosIterator.next();
+    		while (!e.done) {
+    			e.value.gameObject.tint = '0xFFFFFF';
+    			e = edificiosIterator.next();
+    		}
+    		
+    		// Recogemos la posicion del raton en coordenadas globales
+	    	var position = new Phaser.Geom.Point(this.main_camera.getWorldPoint(this.input.x, this.input.y).x - tileMap_width*tile_width/2, this.main_camera.getWorldPoint(this.input.x, this.input.y).y);
+	    	
+	    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+			position = isometricToCartesian(position);
+			
+			// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+			let i = Math.trunc(position.y/tile_height + 1);
+			let j = Math.trunc(position.x/(tile_width/2) + 1);
+			
+    		if (typeof game.global.grid[i] !== 'undefined') {
+    			if (typeof game.global.grid[i][j] !== 'undefined') {
+	        		if(game.global.grid[i][j].type > 0) {
+	        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
+	        			edificio.gameObject.tint = '0xF0F0F0';
+	        		}
+    			}
+			}
+    	}
     	
     	////////////////////////////////////////////////////////////////////////////////////
     	// CONTROL DE CAMARA
