@@ -37,7 +37,6 @@ class GameScene extends Phaser.Scene {
     	this.gridContainer = this.add.container(0, 0);
     	createGrid(this);
     	this.gridContainer.setAlpha(0);
-    	console.log(this.gridContainer);
     	this.isDragging = false; // true si la cámara se está moviendo por drag del raton
     	
     	// Evento de click para construir edificio

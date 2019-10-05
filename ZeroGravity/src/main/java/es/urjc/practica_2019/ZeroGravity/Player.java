@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -14,6 +16,8 @@ import es.urjc.practica_2019.ZeroGravity.Robots.*;
 
 public class Player {
 
+	@Id
+	private int id;
 	private final WebSocketSession session;
 	private static final int GRID_WIDTH = 20;
 	private static final int GRID_HEIGHT = 20;
@@ -22,8 +26,9 @@ public class Player {
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
-	public Player(WebSocketSession session) {
+	public Player(WebSocketSession session, int id) {
 		this.session = session;
+		this.id = id;
 		this.grid = createGrid(this.grid);
 	}
 
@@ -31,6 +36,10 @@ public class Player {
 		return session;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 		int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);

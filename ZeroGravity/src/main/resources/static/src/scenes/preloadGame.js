@@ -19,9 +19,8 @@ class PreloadGameScene extends Phaser.Scene {
 		game.global.socket.send(JSON.stringify(msg));
 		
 		this.load.image('fondo', 'assets/sprites/Fondo/fondo.jpg');
-		this.load.image('tile_prototipo_0', 'assets/sprites/Tiles_prototipo/tile_prototipo_0.png');
-		this.load.image('tile_prototipo_-1', 'assets/sprites/Tiles_prototipo/tile_prototipo_-1.png');
-		this.load.image('tile_prototipo_-2', 'assets/sprites/Tiles_prototipo/tile_prototipo_-2.png');
+		this.load.image('tile_0', 'assets/sprites/Tiles_prototipo/tile_0.png');
+		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');

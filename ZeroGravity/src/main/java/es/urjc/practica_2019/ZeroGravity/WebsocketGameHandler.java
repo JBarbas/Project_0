@@ -1,41 +1,64 @@
 package es.urjc.practica_2019.ZeroGravity;
 
+import java.awt.List;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.bson.BsonDocument;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-
+import com.google.gson.Gson;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.ReadPreference;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
-
 
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
-
 	private ObjectMapper mapper = new ObjectMapper();
+	private AtomicInteger playersId = new AtomicInteger();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		Player player = new Player(session);
+		Player player = new Player(session, playersId.incrementAndGet());
 		session.getAttributes().put(PLAYER_ATTRIBUTE, player);
 		
-		ObjectNode msg = mapper.createObjectNode();
-		msg.put("event", "TEST");
-		player.getSession().sendMessage(new TextMessage(msg.toString()));
+		MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
+		MongoClient client = new MongoClient(new ServerAddress(), options);
+
+		MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
+		MongoCollection<Document> coll = db.getCollection("Users", Document.class); // generic interface
+		
+		Document dbPlayer = new Document();
+		dbPlayer.append("id", player.getId());
+		dbPlayer.append("name", "Javi");
+		
+		//coll.insertOne(dbPlayer);
 	}
 	
 	@Override
@@ -54,6 +77,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("event", "PLAYER INFO");
 				ArrayNode playerGrid = mapper.createArrayNode();
 				int[][] grid = player.getGrid();
+				//users.save(player);
 				for (int i = 0; i < grid.length; i++) {
 					ArrayNode gridColumn = mapper.createArrayNode();
 					for (int j = 0; j < grid[i].length; j++) {						

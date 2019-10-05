@@ -19,16 +19,11 @@ function createGrid(scene) {
 		for (var j = 0; j < game.global.grid[i].length; j++) {
 			var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 			position = cartesianToIsometric(position);
-			switch(game.global.grid[i][j].type) {
-			case -2:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
-				break;
-			case -1:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
-				break;
-			default:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
-				break;
+			if (game.global.grid[i][j].type < 0) {
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_-1').setOrigin(0.5, 1);
+			}
+			else {
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_0').setOrigin(0.5, 1);
 			}
 			scene.gridContainer.add(game.global.grid[i][j].image);
 		}
@@ -49,16 +44,11 @@ function refreshGrid(scene, newGrid) {
 				scene.gridContainer.remove(game.global.grid[i][j].image, true);
 				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 				position = cartesianToIsometric(position);
-				switch(game.global.grid[i][j].type) {
-				case -2:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
-					break;
-				case -1:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
-					break;
-				default:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
-					break;
+				if (game.global.grid[i][j].type < 0) {
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_-1').setOrigin(0.5, 1);
+				}
+				else {
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_0').setOrigin(0.5, 1);
 				}
 				scene.gridContainer.add(game.global.grid[i][j].image);
 			}

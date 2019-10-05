@@ -9,6 +9,10 @@ window.onload = function() {
 			        width: 1920,
 			        height: 1080			        
 			  },
+			  parent: 'phaser-example',
+			  dom: {
+			        createContainer: true
+			  },
 			  backgroundColor: "#000000",
 			  scene: [	
 				  		BootScene,
@@ -34,7 +38,8 @@ window.onload = function() {
 	game.global = {
 		FPS : 30,
 		DEBUG_MODE : true,
-		ONLY_GAME_MODE : true,
+		ONLY_GAME_MODE : false,
+		SKIP_INTRO: false,
 		socket : null,
 		loaded : false,
 		myPlayer : new Object(),
