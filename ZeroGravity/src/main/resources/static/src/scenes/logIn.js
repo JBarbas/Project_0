@@ -13,7 +13,7 @@ class LogInScene extends Phaser.Scene {
 	}
 	
 	preload () {
-		this.load.html('loginform', 'assets/text/login-form.html');
+		
     }
     create (data)  {
     	var background = this.add.image(960, 540, 'backgroundLogIn');
@@ -28,16 +28,7 @@ class LogInScene extends Phaser.Scene {
 
     	button.on('pointerout',function(pointer){
     	    button.setFrame(0);
-    	})
-    	
-    	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		let msg = new Object();
-    		msg.event = 'LOG IN';
-    		game.global.socket.send(JSON.stringify(msg));
-    		
-    		// Esperamos la respuesta del servidor para cambiar la escena
-    	});
-    	
+    	})    	
     	
     	var	size = '20px';
     	
@@ -61,43 +52,28 @@ class LogInScene extends Phaser.Scene {
     	var element = this.add.dom(400, 600).createFromCache('loginform');
 
         element.setPerspective(800);
+        
+        button.on('pointerdown', function(pointer, localX, localY, event){
+        	var inputUsername = element.getChildByName('username');
+            var inputPassword = element.getChildByName('password');
 
-        element.addListener('click');
-
-        element.on('click', function (event) {
-
-            if (event.target.name === 'loginButton')
+            //  Have they entered anything?
+            if (inputUsername.value !== '' && inputPassword.value !== '')
             {
-                var inputUsername = this.getChildByName('username');
-                var inputPassword = this.getChildByName('password');
-
-                //  Have they entered anything?
-                if (inputUsername.value !== '' && inputPassword.value !== '')
-                {
-                    //  Turn off the click events
-                    this.removeListener('click');
-
-                    //  Tween the login form out
-                    this.scene.tweens.add({ targets: element.rotate3d, x: 1, w: 90, duration: 3000, ease: 'Power3' });
-
-                    this.scene.tweens.add({ targets: element, scaleX: 2, scaleY: 2, y: 700, duration: 3000, ease: 'Power3',
-                        onComplete: function ()
-                        {
-                            element.setVisible(false);
-                        }
-                    });
-
-                    //  Populate the text with whatever they typed in as the username!
-                    text.setText('Welcome ' + inputUsername.value);
-                }
-                else
-                {
-                    //  Flash the prompt
-                    this.scene.tweens.add({ targets: text, alpha: 0.1, duration: 200, ease: 'Power3', yoyo: true });
-                }
+                
+                let msg = new Object();
+        		msg.event = 'LOG IN';
+        		msg.name = inputUsername.value;
+        		msg.password = inputPassword.value;
+        		game.global.socket.send(JSON.stringify(msg));
+        		
+        		// Esperamos la respuesta del servidor para cambiar la escena
             }
-
-        });
+            else
+            {
+                //  Flash the prompt
+            }
+    	});
     }
     update(time, delta) {
     	

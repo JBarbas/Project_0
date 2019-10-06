@@ -36,7 +36,33 @@ class RegisterScene extends Phaser.Scene {
     		game.scene.stop('RegisterScene');
     	});
     	
-    	
+    	var element = this.add.dom(400, 600).createFromCache('registerform');
+
+        element.setPerspective(800);
+        
+        buttonR.on('pointerdown', function(pointer, localX, localY, event){
+        	var inputUsername = element.getChildByName('username');
+        	var inputEmail = element.getChildByName('email');
+            var inputPassword = element.getChildByName('password');
+
+            //  Have they entered anything?
+            if (inputUsername.value !== '' && inputEmail.value !== '' && inputPassword.value !== '')
+            {
+                
+                let msg = new Object();
+        		msg.event = 'REGISTER';
+        		msg.name = inputUsername.value;
+        		msg.email = inputEmail.value;
+        		msg.password = inputPassword.value;
+        		game.global.socket.send(JSON.stringify(msg));
+        		
+        		// Esperamos la respuesta del servidor para cambiar la escena
+            }
+            else
+            {
+                //  Flash the prompt
+            }
+    	});
     }
     update(time, delta) {
     	

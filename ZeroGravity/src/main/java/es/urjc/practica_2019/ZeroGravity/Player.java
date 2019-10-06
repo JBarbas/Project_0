@@ -1,15 +1,21 @@
 package es.urjc.practica_2019.ZeroGravity;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.crypto.Cipher;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+
+import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 import es.urjc.practica_2019.ZeroGravity.Robots.*;
@@ -17,8 +23,11 @@ import es.urjc.practica_2019.ZeroGravity.Robots.*;
 public class Player {
 
 	@Id
-	private int id;
+	private ObjectId id;
 	private final WebSocketSession session;
+	private String username;
+	private String email;
+	private byte[] password;
 	private static final int GRID_WIDTH = 20;
 	private static final int GRID_HEIGHT = 20;
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
@@ -26,7 +35,7 @@ public class Player {
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
-	public Player(WebSocketSession session, int id) {
+	public Player(WebSocketSession session, ObjectId id) {
 		this.session = session;
 		this.id = id;
 		this.grid = createGrid(this.grid);
@@ -36,8 +45,41 @@ public class Player {
 		return session;
 	}
 	
-	public int getId() {
+	public ObjectId getId() {
 		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public byte[] getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password.getBytes();
+		try {
+			this.password = MessageDigest.getInstance("MD5").digest(getPassword());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int[][] createGrid(int[][] grid) {

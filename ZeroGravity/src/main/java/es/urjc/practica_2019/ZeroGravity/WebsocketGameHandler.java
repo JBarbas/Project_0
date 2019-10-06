@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bson.BsonDocument;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.socket.CloseStatus;
@@ -43,22 +44,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private ObjectMapper mapper = new ObjectMapper();
 	private AtomicInteger playersId = new AtomicInteger();
 	
+	private MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
+	private MongoClient client = new MongoClient(new ServerAddress(), options);
+
+	private MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
+	private MongoCollection<Document> coll = db.getCollection("Users", Document.class);
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		Player player = new Player(session, playersId.incrementAndGet());
+		Player player = new Player(session, ObjectId.get());
 		session.getAttributes().put(PLAYER_ATTRIBUTE, player);
-		
-		MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
-		MongoClient client = new MongoClient(new ServerAddress(), options);
-
-		MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
-		MongoCollection<Document> coll = db.getCollection("Users", Document.class); // generic interface
-		
-		Document dbPlayer = new Document();
-		dbPlayer.append("id", player.getId());
-		dbPlayer.append("name", "Javi");
-		
-		//coll.insertOne(dbPlayer);
 	}
 	
 	@Override
@@ -70,6 +65,26 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			
 			switch (node.get("event").asText()) {
 			case "LOG IN":
+				player.setUsername(node.get("name").asText());
+				player.setPassword(node.get("password").asText());
+				Bson filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				Document myPlayer = coll.find(filter).first();
+				if (myPlayer != null) {
+					player.setId(myPlayer.getObjectId("_id"));
+					msg.put("event", "LOGGED");
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
+			case "REGISTER":
+				player.setUsername(node.get("name").asText());
+				player.setEmail(node.get("email").asText());
+				player.setPassword(node.get("password").asText());
+				Document dbPlayer = new Document();
+				dbPlayer.append("_id", player.getId());
+				dbPlayer.append("name", player.getUsername());			
+				dbPlayer.append("email", player.getEmail());		
+				dbPlayer.append("password", player.getPassword());		
+				coll.insertOne(dbPlayer);				
 				msg.put("event", "LOGGED");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;

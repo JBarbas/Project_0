@@ -33,6 +33,10 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('link', 'assets/interface/link.png');
 		this.load.image('back', 'assets/interface/back.png');
 		
+		//Texts
+		this.load.html('loginform', 'assets/text/login-form.html');
+		this.load.html('registerform', 'assets/text/register-form.html');
+		
 		
 		//this.load.multiatlas('title', 'assets/sprites/anim/image1.json', 'assets');
 		

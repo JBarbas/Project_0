@@ -83,6 +83,10 @@ window.onload = function() {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('LogInScene');
 			}
+			else if (game.scene.isActive('RegisterScene')) {
+				game.scene.run('MenuScene');
+	    		game.scene.stop('RegisterScene');
+			}
 			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
