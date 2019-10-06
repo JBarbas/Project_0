@@ -2,6 +2,7 @@ package es.urjc.practica_2019.ZeroGravity;
 
 import java.awt.List;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
@@ -71,6 +72,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				Document myPlayer = coll.find(filter).first();
 				if (myPlayer != null) {
 					player.setId(myPlayer.getObjectId("_id"));
+					player.updateGrid((Collection<Document>) myPlayer.get("grid"));
+					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
+					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
 					msg.put("event", "LOGGED");
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
@@ -89,56 +93,13 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "ASK PLAYER INFO":
-				msg.put("event", "PLAYER INFO");
-				ArrayNode playerGrid = mapper.createArrayNode();
-				int[][] grid = player.getGrid();
-				//users.save(player);
-				for (int i = 0; i < grid.length; i++) {
-					ArrayNode gridColumn = mapper.createArrayNode();
-					for (int j = 0; j < grid[i].length; j++) {						
-						gridColumn.add(grid[i][j]);
-					}
-					playerGrid.addPOJO(gridColumn);
-				}
-				msg.putPOJO("grid", playerGrid);
-				ArrayNode arrayNodeEdificios = mapper.createArrayNode();
-				for (Edificio e : player.getEdificios()) {
-					ObjectNode jsonEdificio = mapper.createObjectNode();
-					jsonEdificio.put("id", e.getId());
-					jsonEdificio.put("x", e.getX());
-					jsonEdificio.put("y", e.getY());
-					jsonEdificio.put("sprite", e.getSprite());
-					arrayNodeEdificios.addPOJO(jsonEdificio);
-				}
-				msg.putPOJO("edificios", arrayNodeEdificios);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				updateInfo(player, "PLAYER INFO");
 				break;
 			case "BUILD":		
 				// Construimos el edificio, si se puede
 				player.build(node.get("x").asInt(), node.get("y").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
 				// Pedimos al cliente que refresque el grid con la nueva info
-				msg.put("event", "REFRESH GRID");
-				ArrayNode newGrid = mapper.createArrayNode();
-				grid = player.getGrid();
-				for (int i = 0; i < grid.length; i++) {
-					ArrayNode gridColumn = mapper.createArrayNode();
-					for (int j = 0; j < grid[i].length; j++) {
-						gridColumn.add(grid[i][j]);
-					}
-					newGrid.addPOJO(gridColumn);
-				}
-				msg.putPOJO("grid", newGrid);
-				arrayNodeEdificios = mapper.createArrayNode();
-				for (Edificio e : player.getEdificios()) {
-					ObjectNode jsonEdificio = mapper.createObjectNode();
-					jsonEdificio.put("id", e.getId());
-					jsonEdificio.put("x", e.getX());
-					jsonEdificio.put("y", e.getY());
-					jsonEdificio.put("sprite", e.getSprite());
-					arrayNodeEdificios.addPOJO(jsonEdificio);
-				}
-				msg.putPOJO("edificios", arrayNodeEdificios);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				updateInfo(player, "REFRESH GRID");
 				break;
 			default:
 				break;
@@ -146,6 +107,58 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message " + message.getPayload());
+			e.printStackTrace(System.err);
+		}
+	}
+	
+	// Informa al cliente y a la BDD de una actualizacion en la informacion del jugador (Grid y edificios)
+	private void updateInfo(Player player, String event) {
+		ObjectNode msg = mapper.createObjectNode();
+		try {
+			msg.put("event", event);
+			ArrayNode playerGrid = mapper.createArrayNode(); // JSON para el cliente
+			LinkedList<Document> dbGrid = new LinkedList<>(); // Bson para MongoDB
+			int[][] grid = player.getGrid();
+			for (int i = 0; i < grid.length; i++) {
+				ArrayNode gridColumn = mapper.createArrayNode();
+				Document dbGridColumn = new Document();
+				for (int j = 0; j < grid[i].length; j++) {						
+					gridColumn.add(grid[i][j]);
+					dbGridColumn.append(Integer.toString(j), grid[i][j]);
+				}
+				playerGrid.addPOJO(gridColumn);
+				dbGrid.add(dbGridColumn);
+			}
+			msg.putPOJO("grid", playerGrid);
+			ArrayNode arrayNodeEdificios = mapper.createArrayNode(); // JSON para el cliente
+			LinkedList<Document> dbEdificios = new LinkedList<>(); // Bson para MongoDB
+			for (Edificio e : player.getEdificios()) {
+				// JSON para el cliente
+				ObjectNode jsonEdificio = mapper.createObjectNode();
+				jsonEdificio.put("id", e.getId());
+				jsonEdificio.put("x", e.getX());
+				jsonEdificio.put("y", e.getY());
+				jsonEdificio.put("sprite", e.getSprite());
+				arrayNodeEdificios.addPOJO(jsonEdificio);
+				
+				// Bson para MongoDB
+				Document dbEdificio = new Document();
+				dbEdificio.append("id", e.getId());
+				dbEdificio.append("x", e.getX());
+				dbEdificio.append("y", e.getY());
+				dbEdificio.append("sprite", e.getSprite());
+				dbEdificios.add(dbEdificio);
+			}
+			msg.putPOJO("edificios", arrayNodeEdificios);
+			// Enviamos el mensaje al cliente
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			// Actualizamos la info en la BDD
+			coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+					new Document("grid", dbGrid)
+					.append("edificios", dbEdificios)
+					.append("edificioId", player.getEdificioId())));
+		} catch (Exception e) {
+			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);
 		}
 	}

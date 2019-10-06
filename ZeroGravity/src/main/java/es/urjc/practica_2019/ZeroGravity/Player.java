@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.crypto.Cipher;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.web.socket.TextMessage;
@@ -81,6 +82,14 @@ public class Player {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public int getEdificioId() {
+		return edificioId.get();
+	}
+	
+	public void setEdificioId(int id) {
+		this.edificioId.set(id);
+	}
 
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
@@ -107,6 +116,33 @@ public class Player {
 	
 	public int[][] getGrid() {
 		return this.grid;
+	}
+	
+	public void updateGrid(Collection<Document> grid) {
+		int i = 0;
+		for (Document row : grid) {
+			for (int j = 0; j < GRID_WIDTH; j++) {
+				this.grid[i][j] = row.getInteger(Integer.toString(j), 0);
+			}
+			i++;
+		}
+	}
+	
+	public void updateEdificios(Collection<Document> edificios) {
+		for (Document e : edificios) {
+			Edificio edificio = new Edificio();
+			switch (e.getString("sprite")) {
+			case "centroDeMando":
+				edificio = new CentroMando(e.getInteger("x"), e.getInteger("y"), e.getInteger("id"));
+				break;
+			case "centroOperaciones":
+				edificio = new CentroOperaciones(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				break;
+			default:
+				break;
+			}
+			this.edificios.put(edificio.getId(), edificio);
+		}
 	}
 	
 	public void build(int x, int y, String sprite, int id) {
