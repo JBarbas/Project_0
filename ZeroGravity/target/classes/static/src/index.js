@@ -27,7 +27,8 @@ window.onload = function() {
 				  		PreloadGameScene,
 				  		GameScene,
 				  		CentroMandoMenu,
-				  		CentroOperacionesMenu]
+				  		CentroOperacionesMenu,
+				  		CentroAdministrativoMenu]
 
 			};
 			
