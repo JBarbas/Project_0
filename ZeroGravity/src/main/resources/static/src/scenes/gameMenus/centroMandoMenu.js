@@ -17,22 +17,21 @@ class CentroMandoMenu extends Phaser.Scene {
     }
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
-    	this.edificio = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 200, 'centroOperaciones').setOrigin(0.5, 1).setScale(0.65, 0.65);
-    	this.edificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
-    	this.edificio2 = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'centroDeMando').setOrigin(0.5, 1).setScale(0.65, 0.65);
-    	this.edificio2.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroDeMando'); });
+    	this.centroOperaciones = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 200, 'centroOperaciones').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.centroOperaciones.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
+    	this.centroAdministrativo = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'centroAdministrativo').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.centroAdministrativo.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroAdministrativo'); });
     	
     	function aux(edificioCons){
     		
     		if(!game.global.construyendo){
     			var edificio;
     			switch(edificioCons){
-    			
-    			case 'centroDeMando':
-    				edificio = new CentroMando(0, 0);
-    				break;
     			case 'centroOperaciones':
     				edificio = new CentroOperaciones(0, 0);
+    				break;
+    			case 'centroAdministrativo':
+    				edificio = new CentroAdministrativo(0, 0);
     				break;
     			default:
     				break;

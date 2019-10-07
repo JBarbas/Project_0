@@ -138,6 +138,9 @@ public class Player {
 			case "centroOperaciones":
 				edificio = new CentroOperaciones(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
+			case "centroAdministrativo":
+				edificio = new CentroAdministrativo(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				break;
 			default:
 				break;
 			}
@@ -155,6 +158,9 @@ public class Player {
 				break;
 			case "centroOperaciones":
 				edificio = new CentroOperaciones(x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
+			case "centroAdministrativo":
+				edificio = new CentroAdministrativo(x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			default:
 				break;

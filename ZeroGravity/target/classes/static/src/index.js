@@ -111,6 +111,9 @@ window.onload = function() {
 				case 'centroOperaciones':
 					edificio = new CentroOperaciones(e.x, e.y);
 					break;
+				case 'centroAdministrativo':
+					edificio = new CentroAdministrativo(e.x, e.y);
+					break;
 				default:
 					break;
 				}
@@ -134,6 +137,9 @@ window.onload = function() {
 						break;
 					case 'centroOperaciones':
 						edificio = new CentroOperaciones(e.x, e.y);
+						break;
+					case 'centroAdministrativo':
+						edificio = new CentroAdministrativo(e.x, e.y);
 						break;
 					default:
 						break;

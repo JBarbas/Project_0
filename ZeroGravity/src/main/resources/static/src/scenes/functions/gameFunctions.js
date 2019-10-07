@@ -140,8 +140,8 @@ function previsualizarEdificio(edificio, scene) {
 window.addEventListener("wheel", event => {
     const delta = zoomSpeed*(-Math.sign(event.deltaY));
     zoom += delta;
-    if (zoom < 1) {
-    	zoom = 1;
+    if (zoom < minZoom) {
+    	zoom = minZoom;
     }
     else if (zoom > maxZoom) {
     	zoom = maxZoom;
