@@ -9,6 +9,10 @@ window.onload = function() {
 			        width: 1920,
 			        height: 1080			        
 			  },
+			  parent: 'phaser-example',
+			  dom: {
+			        createContainer: true
+			  },
 			  backgroundColor: "#000000",
 			  scene: [	
 				  		BootScene,
@@ -22,7 +26,9 @@ window.onload = function() {
 				  		CreditsScene,
 				  		PreloadGameScene,
 				  		GameScene,
-				  		CentroMandoMenu]
+				  		CentroMandoMenu,
+				  		CentroOperacionesMenu,
+				  		CentroAdministrativoMenu]
 
 			};
 			
@@ -33,7 +39,8 @@ window.onload = function() {
 	game.global = {
 		FPS : 30,
 		DEBUG_MODE : true,
-		ONLY_GAME_MODE : true,
+		ONLY_GAME_MODE : false,
+		SKIP_INTRO: false,
 		socket : null,
 		loaded : false,
 		myPlayer : new Object(),
@@ -76,6 +83,10 @@ window.onload = function() {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('LogInScene');
 			}
+			else if (game.scene.isActive('RegisterScene')) {
+				game.scene.run('MenuScene');
+	    		game.scene.stop('RegisterScene');
+			}
 			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
@@ -100,6 +111,9 @@ window.onload = function() {
 				case 'centroOperaciones':
 					edificio = new CentroOperaciones(e.x, e.y);
 					break;
+				case 'centroAdministrativo':
+					edificio = new CentroAdministrativo(e.x, e.y);
+					break;
 				default:
 					break;
 				}
@@ -113,22 +127,30 @@ window.onload = function() {
 				console.log('[DEBUG] REFRESH GRID message recieved')
 				console.dir(msg);
 			}
-			game.global.edificios = new Map();
 			for (var i = 0; i < msg.edificios.length; i++) {
 				var e = msg.edificios[i];
-				var edificio = new Edificio(0, 0);
-				switch (e.sprite) {
-				case 'centroDeMando':
-					edificio = new CentroMando(e.x, e.y);
-					break;
-				case 'centroOperaciones':
-					edificio = new CentroOperaciones(e.x, e.y);
-					break;
-				default:
-					break;
+				var edificio = game.global.edificios.get(e.id);
+				if (typeof edificio === 'undefined') {
+					switch (e.sprite) {
+					case 'centroDeMando':
+						edificio = new CentroMando(e.x, e.y);
+						break;
+					case 'centroOperaciones':
+						edificio = new CentroOperaciones(e.x, e.y);
+						break;
+					case 'centroAdministrativo':
+						edificio = new CentroAdministrativo(e.x, e.y);
+						break;
+					default:
+						break;
+					}
+					edificio.id = e.id;
+					game.global.edificios.set(edificio.id, edificio);
 				}
-				edificio.id = e.id;
-				game.global.edificios.set(edificio.id, edificio);
+				else {
+					edificio.x = e.x;
+					edificio.y = e.y;
+				}
 			}
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;

@@ -18,15 +18,16 @@ class PreloadGameScene extends Phaser.Scene {
 		msg.event = 'ASK PLAYER INFO';
 		game.global.socket.send(JSON.stringify(msg));
 		
-		this.load.image('tile_prototipo_0', 'assets/sprites/Tiles_prototipo/tile_prototipo_0.png');
-		this.load.image('tile_prototipo_-1', 'assets/sprites/Tiles_prototipo/tile_prototipo_-1.png');
-		this.load.image('tile_prototipo_-2', 'assets/sprites/Tiles_prototipo/tile_prototipo_-2.png');
+		this.load.image('fondo', 'assets/background/Planeta 1/Planeta_1.jpg');
+		this.load.image('tile_0', 'assets/sprites/Tiles_prototipo/tile_0.png');
+		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
 		this.load.spritesheet('centroDeMando', 'assets/sprites/Edificios/CentroDeMando.png', {frameWidth:256,frameHeight:128});
 		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:128,frameHeight:157});
 		this.load.spritesheet( 'taller' , 'assets/sprites/Edificios/taller.png', {frameWidth:128,frameHeight:64});
+		this.load.spritesheet( 'centroAdministrativo' , 'assets/sprites/Edificios/CentroAdministrativo.png', {frameWidth:192,frameHeight:185});
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');

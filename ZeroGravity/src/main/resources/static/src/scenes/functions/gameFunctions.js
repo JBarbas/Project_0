@@ -19,17 +19,13 @@ function createGrid(scene) {
 		for (var j = 0; j < game.global.grid[i].length; j++) {
 			var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 			position = cartesianToIsometric(position);
-			switch(game.global.grid[i][j].type) {
-			case -2:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
-				break;
-			case -1:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
-				break;
-			default:
-				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
-				break;
+			if (game.global.grid[i][j].type < 0) {
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_-1').setOrigin(0.5, 1);
 			}
+			else {
+				game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_0').setOrigin(0.5, 1);
+			}
+			scene.gridContainer.add(game.global.grid[i][j].image);
 		}
 	}
 	var edificiosIterator = game.global.edificios.values();
@@ -45,20 +41,16 @@ function refreshGrid(scene, newGrid) {
 		for (var j = 0; j < game.global.grid[i].length; j++) {
 			if (game.global.grid[i][j].type !== newGrid[i][j]) {
 				game.global.grid[i][j].type = newGrid[i][j];				
-				game.global.grid[i][j].image.destroy();
+				scene.gridContainer.remove(game.global.grid[i][j].image, true);
 				var position = new Phaser.Geom.Point(j*tile_width/2, i*tile_height);
 				position = cartesianToIsometric(position);
-				switch(game.global.grid[i][j].type) {
-				case -2:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-2').setOrigin(0.5, 1);
-					break;
-				case -1:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_-1').setOrigin(0.5, 1);
-					break;
-				default:
-					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_prototipo_0').setOrigin(0.5, 1);
-					break;
+				if (game.global.grid[i][j].type < 0) {
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_-1').setOrigin(0.5, 1);
 				}
+				else {
+					game.global.grid[i][j].image = scene.add.image(tileMap_width*tile_width/2 + position.x, position.y, 'tile_0').setOrigin(0.5, 1);
+				}
+				scene.gridContainer.add(game.global.grid[i][j].image);
 			}
 		}
 	}
@@ -72,28 +64,27 @@ function refreshGrid(scene, newGrid) {
 
 function construir(i, j, scene, edificio) {
 	//Comprobamos si se puede construir en la celda seleccionada
-	if (game.global.grid[i][j].type === 0) {
+	var puedoConstruir = true;
+	for (var a = i-edificio.height+1; a <= i; a++) {
+		for (var b = j-edificio.width+1; b <= j; b++) {
+			if (typeof game.global.grid[a] !== 'undefined') {
+				if (typeof game.global.grid[a][b] !== 'undefined') {
+					if (game.global.grid[a][b].type !== 0) {
+						puedoConstruir = false
+						break;
+					}
+				}
+			}
+		}
+	}
+	if (puedoConstruir) {
 		
 		game.global.construyendo = false;
-		
-		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-		let x = game.global.grid[i][j].image.x;
-		let y = game.global.grid[i][j].image.y;
-    	edificio.x = x;
-    	edificio.y = y;
-    	
-    	// Cambiamos el tile de la malla por la nueva imagen
-    	game.global.grid[i][j].image.destroy();
-    	game.global.grid[i][j].image = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(0.5, 1);
-    	
-    	// Actualizamos la malla
-    	game.global.grid[i][j].type = 2;
-    	
-    	// Configuramos la profundidad para que no se pinte por encima de los edificios que tiene debajo
-    	game.global.grid[i][j].image.depth = i*tileMap_width + j;
+		scene.gridContainer.setAlpha(0);
     	
     	// Borramos la previsualización del edificio
-    	scene.lol.destroy();
+    	edificio.alpha = 1;
+    	edificio.gameObject.destroy();
     	
     	// Informamos al servidor de la construccion, para que este la valide o la descarte
     	let msg = new Object();
@@ -119,13 +110,13 @@ function previsualizarEdificio(edificio, scene) {
 	
 	if (typeof game.global.grid[i] !== 'undefined') {
 		if (typeof game.global.grid[i][j] !== 'undefined') {
-			scene.lol.setFrame(0);
+			edificio.gameObject.setFrame(0);
 			for (var a = i-edificio.height+1; a <= i; a++) {
 				for (var b = j-edificio.width+1; b <= j; b++) {
-					if (typeof game.global.grid[i] !== 'undefined') {
-						if (typeof game.global.grid[i][j] !== 'undefined') {
+					if (typeof game.global.grid[a] !== 'undefined') {
+						if (typeof game.global.grid[a][b] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
-								scene.lol.setFrame(1);
+								edificio.gameObject.setFrame(1);
 								break;
 							}
 						}
@@ -134,10 +125,13 @@ function previsualizarEdificio(edificio, scene) {
 			}
     		
     		// recogemos las coordenadas isometricas de la celda para pintar ahi el edificio
-    		scene.lol.x = game.global.grid[i][j].image.x;
-    		scene.lol.y = game.global.grid[i][j].image.y;
+			edificio.gameObject.x = game.global.grid[i][j].image.x;
+			edificio.gameObject.y = game.global.grid[i][j].image.y;
     		
-    		scene.lol.depth = i*tileMap_width + j + 0.1;
+			edificio.x = game.global.grid[i][j].image.x;
+			edificio.y = game.global.grid[i][j].image.y;
+			
+			edificio.gameObject.depth = i + j + 0.1 + 1/edificio.height;;
 		}
 	}
 }
@@ -146,8 +140,8 @@ function previsualizarEdificio(edificio, scene) {
 window.addEventListener("wheel", event => {
     const delta = zoomSpeed*(-Math.sign(event.deltaY));
     zoom += delta;
-    if (zoom < 1) {
-    	zoom = 1;
+    if (zoom < minZoom) {
+    	zoom = minZoom;
     }
     else if (zoom > maxZoom) {
     	zoom = maxZoom;

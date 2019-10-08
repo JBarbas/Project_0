@@ -28,16 +28,7 @@ class LogInScene extends Phaser.Scene {
 
     	button.on('pointerout',function(pointer){
     	    button.setFrame(0);
-    	})
-    	
-    	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		let msg = new Object();
-    		msg.event = 'LOG IN';
-    		game.global.socket.send(JSON.stringify(msg));
-    		
-    		// Esperamos la respuesta del servidor para cambiar la escena
-    	});
-    	
+    	})    	
     	
     	var	size = '20px';
     	
@@ -57,8 +48,39 @@ class LogInScene extends Phaser.Scene {
     	registro.setInteractive().on('pointerout', function(pointer, localX, localY, event){
     		registro.setFill(colorWhite);
     	});
+        
+    	var element = this.add.dom(400, 600).createFromCache('loginform');
+
+        element.setPerspective(800);
+        
+        button.on('pointerdown', function(pointer, localX, localY, event){
+        	var inputUsername = element.getChildByName('username');
+            var inputPassword = element.getChildByName('password');
+
+            //  Have they entered anything?
+            if (inputUsername.value !== '' && inputPassword.value !== '')
+            {
+                
+                let msg = new Object();
+        		msg.event = 'LOG IN';
+        		msg.name = inputUsername.value;
+        		msg.password = inputPassword.value;
+        		game.global.socket.send(JSON.stringify(msg));
+        		
+        		// Esperamos la respuesta del servidor para cambiar la escena
+            }
+            else
+            {
+                //  Flash the prompt
+            }
+    	});
     }
     update(time, delta) {
     	
+    }
+    
+    textAreaChanged() {
+        var text = this.formUtil.getTextAreaValue("area51");
+        console.log(text);
     }
 }

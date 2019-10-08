@@ -8,21 +8,16 @@ public class CentroAdministrativo extends Edificio {
 	private static final int[] nivel3 = { 0, 0, 0, 0 };
 	private static final int[][] costs = { nivel1, nivel2, nivel3 };
 
-	public CentroAdministrativo(int x, int y, Edificio depends) {
+	public CentroAdministrativo(int x, int y, Edificio depends, int id) {
 
 		this.x = x;
 		this.y = y;
-		this.height = 0;
-		this.width = 0;
+		this.id = id;
+		this.height = 1;
+		this.width = 2;
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "centroAdministrativo";
-	}
-
-	@Override
-	public boolean move(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

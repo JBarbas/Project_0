@@ -40,12 +40,6 @@ public class BloqueViviendas extends Edificio {
 	}
 
 	@Override
-	public boolean move(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void levelUp() {
 		// TODO Auto-generated method stub
 

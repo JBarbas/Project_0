@@ -2,9 +2,11 @@ var tile_width = 128;
 var tile_height = 64;
 var tileMap_width = 20; // Numero de tiles a lo ancho (+2 para colocar tiles de borde del mapa)
 var tileMap_height = 20; // Numero de tiles a lo largo (+2 para colocar tiles de borde del mapa)
-var world_bounds_margin = 256; // Margen o padding del mapa
+var world_bounds_marginX = 900; // Margen o padding del mapa
+var world_bounds_marginY = 650; // Margen o padding del mapa
 var zoom = 1; // zoom de la camara
 var maxZoom = 2; // zoom maximo permitido
+var minZoom = 0.5; // zoom minimo permitido
 var zoomSpeed = 0.1 // velocidad del zoom
 var construible = false; //controlador de si es posible contruir en ese momento
 
@@ -29,9 +31,14 @@ class GameScene extends Phaser.Scene {
     	this.main_camera = this.cameras.main;
     	zoom = 1; // reset del zoom
     	// Establecemos los limites del mapa donde puede ver la camara
-    	this.main_camera.setBounds(0-world_bounds_margin, 0-world_bounds_margin, tileMap_width*tile_width + 2*world_bounds_margin, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_margin, true);
+    	this.main_camera.setBounds(0-world_bounds_marginX, 0-world_bounds_marginY, tileMap_width*tile_width + 2*world_bounds_marginX, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_marginY, true);
+    	
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
+    	
     	// Creamos la malla isometrica
+    	this.gridContainer = this.add.container(0, 0);
     	createGrid(this);
+    	this.gridContainer.setAlpha(0);
     	this.isDragging = false; // true si la cámara se está moviendo por drag del raton
     	
     	// Evento de click para construir edificio
@@ -73,10 +80,36 @@ class GameScene extends Phaser.Scene {
     update(time, delta) {
 
     	// Construccion de edificios
-    	if(game.global.construyendo){
-    		
+    	if(game.global.construyendo){    		
     		previsualizarEdificio(game.global.edificioEnConstruccion, this);
         }
+    	else {    		
+    		var edificiosIterator = game.global.edificios.values();
+    		var e = edificiosIterator.next();
+    		while (!e.done) {
+    			e.value.gameObject.tint = '0xFFFFFF';
+    			e = edificiosIterator.next();
+    		}
+    		
+    		// Recogemos la posicion del raton en coordenadas globales
+	    	var position = new Phaser.Geom.Point(this.main_camera.getWorldPoint(this.input.x, this.input.y).x - tileMap_width*tile_width/2, this.main_camera.getWorldPoint(this.input.x, this.input.y).y);
+	    	
+	    	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+			position = isometricToCartesian(position);
+			
+			// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+			let i = Math.trunc(position.y/tile_height + 1);
+			let j = Math.trunc(position.x/(tile_width/2) + 1);
+			
+    		if (typeof game.global.grid[i] !== 'undefined') {
+    			if (typeof game.global.grid[i][j] !== 'undefined') {
+	        		if(game.global.grid[i][j].type > 0) {
+	        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
+	        			edificio.gameObject.tint = '0xF0F0F0';
+	        		}
+    			}
+			}
+    	}
     	
     	////////////////////////////////////////////////////////////////////////////////////
     	// CONTROL DE CAMARA
