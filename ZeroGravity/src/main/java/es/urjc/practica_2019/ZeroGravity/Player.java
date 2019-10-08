@@ -21,6 +21,12 @@ public class Player {
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
+	private int energia = 100;
+	private int metal = 100;
+	private int ceramica = 100;	
+	private int creditos = 100;
+	private int unionCoins = 100;
+	
 	public Player(WebSocketSession session) {
 		this.session = session;
 		this.grid = createGrid(this.grid);
@@ -81,5 +87,45 @@ public class Player {
 	
 	public Collection<Edificio> getEdificios() {
 		return edificios.values();
+	}
+
+	public int getMetal() {
+		return metal;
+	}
+
+	public void setMetal(int metal) {
+		this.metal = metal;
+	}
+
+	public int getCeramica() {
+		return ceramica;
+	}
+
+	public void setCeramica(int ceramica) {
+		this.ceramica = ceramica;
+	}
+
+	public int getEnergia() {
+		return energia;
+	}
+
+	public void setEnergia(int energia) {
+		this.energia = energia;
+	}
+
+	public int getCreditos() {
+		return creditos;
+	}
+
+	public void setCreditos(int creditos) {
+		this.creditos = creditos;
+	}
+
+	public int getUnionCoins() {
+		return unionCoins;
+	}
+
+	public void setUnionCoins(int unionCoins) {
+		this.unionCoins = unionCoins;
 	}
 }

@@ -7,16 +7,24 @@ import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 
 public class Taller extends GeneradorRecursos{
 
-	private final static int[] nivel1 = {0, 0};
-	private final static int[] nivel2 = {0, 0};
-	private final static int[] nivel3 = {0, 0};
-	private final static int [][] recursosGenerados = {nivel1, nivel2, nivel3};
+	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
+	private static final int[] nivel1 = { 1, 0, 0, 0 };
+	private static final int[] nivel2 = { 2, 0, 0, 0 };
+	private static final int[] nivel3 = { 3, 0, 0, 0 };
+	private static final int[][] costs = { nivel1, nivel2, nivel3 };
+
+	// Establecemos los recursos que generan según su nivel
+	private final static int[] recursosNivel1 = { 0, 0 };
+	private final static int[] recursosNivel2 = { 0, 0 };
+	private final static int[] recursosNivel3 = { 0, 0 };
+	private final static int[][] recursosGenerados = { recursosNivel1, recursosNivel2, recursosNivel3 };
 	
 	private int capacidadRobots;
 	private List<Robot> robots = new LinkedList<Robot>();
 	
-	public Taller(int x, int y, Edificio depends) {
+	public Taller(int id, int x, int y, Edificio depends) {
 		
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.height = 0;
@@ -24,6 +32,18 @@ public class Taller extends GeneradorRecursos{
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "taller";	
+	}
+	
+	public Taller(int id) {
+
+		this.id = id;
+		this.x = 0;
+		this.y = 0;
+		this.height = 0;
+		this.width = 0;
+		this.level = 1;
+		this.buildingDependsOn = null;
+		this.sprite = "taller";
 	}
 	
 	public int getCapacidadRobots() {

@@ -14,6 +14,16 @@ public class Edificio  implements EdificioInterface{
 	protected Edificio buildingDependsOn;	
 	
 
+	public int[] getPosition() {
+		int[] position = {x, y};
+		return position;
+	}
+	
+	public void setPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public int getId() {
 		return id;
 	}

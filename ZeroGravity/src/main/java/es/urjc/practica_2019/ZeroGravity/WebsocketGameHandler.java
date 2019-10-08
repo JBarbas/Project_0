@@ -101,6 +101,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.putPOJO("edificios", arrayNodeEdificios);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+				
+			case "ASK_PLAYER_RESOURCES":
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("energia", player.getMetal());
+				msg.put("metal", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("unionCoins", player.getUnionCoins());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+				
 			default:
 				break;
 			}

@@ -45,8 +45,7 @@ window.onload = function() {
 			y: 50,
 			width: 584,
 			height: 908
-		},
-		myPlayer : new Object()
+		}
 	}
 	
 	//WEBSOCKET CONFIGURATOR
@@ -133,6 +132,18 @@ window.onload = function() {
 			}
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
+		
+		case 'GET_PLAYER_RESOURCES':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] Recibiendo recursos del jugador');
+			}
+			console.log('Energia', msg.energia);
+			console.log('Metal', msg.metal);
+			console.log('Ceramica', msg.ceramica);
+			console.log('UnionCoins', msg.unionCoins);
+			
+		
+		
 		default:
 			break;
 		
