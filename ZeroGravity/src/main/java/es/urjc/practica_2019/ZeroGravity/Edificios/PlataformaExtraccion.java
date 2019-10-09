@@ -14,8 +14,9 @@ public class PlataformaExtraccion extends Edificio {
 	private final static int[] recursosNivel3 = { 0, 0 };
 	private final static int[][] recursosGenerados = { recursosNivel1, recursosNivel2, recursosNivel3 };
 
-	public PlataformaExtraccion(int x, int y, Edificio depends) {
+	public PlataformaExtraccion(int x, int y, Edificio depends, int id) {
 		
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.height = 0;

@@ -28,7 +28,8 @@ window.onload = function() {
 				  		GameScene,
 				  		CentroMandoMenu,
 				  		CentroOperacionesMenu,
-				  		CentroAdministrativoMenu]
+				  		CentroAdministrativoMenu,
+				  		TallerMenu]
 
 			};
 			
@@ -114,6 +115,9 @@ window.onload = function() {
 				case 'centroAdministrativo':
 					edificio = new CentroAdministrativo(e.x, e.y);
 					break;
+				case 'taller':
+					edificio = new Taller(e.x, e.y);
+					break;
 				default:
 					break;
 				}
@@ -141,6 +145,8 @@ window.onload = function() {
 					case 'centroAdministrativo':
 						edificio = new CentroAdministrativo(e.x, e.y);
 						break;
+					case 'taller':
+						edificio = new Taller(e.x, e.y);
 					default:
 						break;
 					}

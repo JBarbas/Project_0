@@ -7,6 +7,6 @@ class Taller extends Edificio{
 		super.width = 1;
 		super.level = 1;
 		super.sprite = 'taller';
-		super.menuScene = 'tallerMenu';
+		super.menuScene = 'TallerMenu';
 	}
 }

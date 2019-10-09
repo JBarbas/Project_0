@@ -1,4 +1,4 @@
-function askServer(){
+function askPlayerResources(){
 	
 	if (game.global.DEBUG_MODE) {
 		console.log("[DEBUG] Asking player's resources");

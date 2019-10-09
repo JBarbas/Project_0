@@ -21,7 +21,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	this.centroOperaciones.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
     	this.centroAdministrativo = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'centroAdministrativo').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.centroAdministrativo.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroAdministrativo'); });
-    	this.taller = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'taller').setOrigin(0.5, 1);
+    	this.taller = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 460, 'taller').setOrigin(0.5, 1);
     	this.taller.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('taller'); });
     
     	

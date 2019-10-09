@@ -22,13 +22,13 @@ public class Taller extends GeneradorRecursos{
 	private int capacidadRobots;
 	private List<Robot> robots = new LinkedList<Robot>();
 	
-	public Taller(int id, int x, int y, Edificio depends) {
+	public Taller(int x, int y, Edificio depends, int id) {
 		
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.height = 0;
-		this.width = 0;
+		this.height = 1;
+		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "taller";	
@@ -39,8 +39,8 @@ public class Taller extends GeneradorRecursos{
 		this.id = id;
 		this.x = 0;
 		this.y = 0;
-		this.height = 0;
-		this.width = 0;
+		this.height = 1;
+		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "taller";
