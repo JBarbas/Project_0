@@ -22,7 +22,7 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 	private static final int[][] costs = { nivel1, nivel2, nivel3 };
 
 	// Establecemos los recursos que generan según su nivel (unidades, duracion en mins)
-	private final static int[] recursosNivel1 = { 4, 1 };
+	private final static int[] recursosNivel1 = { 4, 20 };
 	private final static int[] recursosNivel2 = { 0, 0 };
 	private final static int[] recursosNivel3 = { 0, 0 };
 	private final static int[][] recursosGenerados = { recursosNivel1, recursosNivel2, recursosNivel3 };
