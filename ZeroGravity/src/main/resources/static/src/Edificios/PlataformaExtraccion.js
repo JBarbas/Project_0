@@ -1,4 +1,4 @@
-class PlataformaExtraccion extends Edificio{
+class PlataformaExtraccion extends GeneradorRecursos{
 	
 	constructor(x, y){
 		
@@ -8,5 +8,9 @@ class PlataformaExtraccion extends Edificio{
 		super.level = 1;
 		super.sprite = 'plataformaExtraccion';
 		super.menuScene = 'PlataformaExtraccionMenu';
+		super.resourceSprite = 'clayIcon';
+		this.recursos = [[4, 1],
+						[4, 20],
+						[4, 20]];
 	}
 }

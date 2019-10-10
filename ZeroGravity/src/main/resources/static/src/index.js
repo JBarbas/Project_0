@@ -26,12 +26,12 @@ window.onload = function() {
 				  		CreditsScene,
 				  		PreloadGameScene,
 				  		GameScene,
+				  		GameInterface,
 				  		CentroMandoMenu,
 				  		CentroOperacionesMenu,
 				  		CentroAdministrativoMenu,
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu]
-
 			};
 			
 	
@@ -54,7 +54,8 @@ window.onload = function() {
 			y: 50,
 			width: 584,
 			height: 908
-		}
+		},
+		resources: {}
 	}
 	
 	//WEBSOCKET CONFIGURATOR
@@ -121,6 +122,7 @@ window.onload = function() {
 					break;
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
+					edificio.lleno = e.lleno;
 					break;
 				default:
 					break;
@@ -172,17 +174,44 @@ window.onload = function() {
 		case 'GET_PLAYER_RESOURCES':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
+				console.dir(msg);
 			}
-			console.log('Energia', msg.energia);
-			console.log('Metal', msg.metal);
-			console.log('Ceramica', msg.ceramica);
-			console.log('UnionCoins', msg.unionCoins);
-			
-		
-		
-		default:
+			game.global.resources.energia = msg.energia;
+			game.global.resources.metal = msg.metal;
+			game.global.resources.ceramica = msg.ceramica;
+			game.global.resources.creditos = msg.creditos;
+			game.global.resources.unionCoins = msg.unionCoins;
+		case 'EDIFICIO PRODUCIENDO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] EDIFICIO PRODUCIENDO message recieved');
+				console.dir(msg);
+			}
+			if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+				game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+			}
 			break;
-		
+		case 'EDIFICIO LLENO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] EDIFICIO LLENO message recieved');
+				console.dir(msg);
+			}
+			let edificioLleno = game.global.edificios.get(msg.id);
+			edificioLleno.lleno = true;
+			edificioLleno.build(game.scene.getScene('GameScene'));
+			break;
+		case 'CERAMICA RECOLECTADA':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CERAMICA RECOLECTADA message recieved');
+				console.dir(msg);
+			}
+			game.global.resources.ceramica = msg.ceramica;
+			break;
+		default:
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] UNKNOWN message recieved')
+				console.dir(msg);
+			}
+			break;		
 		}
 	}
 

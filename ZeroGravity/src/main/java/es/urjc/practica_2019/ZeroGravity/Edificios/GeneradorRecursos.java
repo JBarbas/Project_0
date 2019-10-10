@@ -1,10 +1,17 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import es.urjc.practica_2019.ZeroGravity.Task;
+import es.urjc.practica_2019.ZeroGravity.TaskMaster;
+
 public class GeneradorRecursos extends Edificio {
 		
 	private int colonos;
 	private boolean averiado;
-	private boolean lleno;
+	private boolean lleno = false;	
+
 	
 	public GeneradorRecursos() {
 		
@@ -35,6 +42,10 @@ public class GeneradorRecursos extends Edificio {
 	}
 	
 	public void producir() {
+		
+	}
+	
+	public void callbackProducir() {
 		
 	}
 	

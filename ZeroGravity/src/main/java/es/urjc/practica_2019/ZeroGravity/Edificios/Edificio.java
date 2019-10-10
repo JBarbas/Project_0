@@ -1,10 +1,12 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
+import es.urjc.practica_2019.ZeroGravity.Player;
 import es.urjc.practica_2019.ZeroGravity.Interfaces.EdificioInterface;
 
 public class Edificio  implements EdificioInterface{
 
 	protected int id; 
+	protected Player player;
 	protected int x;
 	protected int y;
 	protected int height;
