@@ -194,6 +194,9 @@ public class Player {
 			case "taller":
 				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
+			case "plataformaExtraccion":
+				edificio = new PlataformaExtraccion(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				break;
 			default:
 				break;
 			}
@@ -217,6 +220,10 @@ public class Player {
 				break;
 			case "taller":
 				edificio = new Taller(x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
+			case "plataformaExtraccion":
+				edificio = new PlataformaExtraccion(x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
 			default:
 				break;
 			}

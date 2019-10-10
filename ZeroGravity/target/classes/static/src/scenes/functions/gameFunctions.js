@@ -132,7 +132,12 @@ function previsualizarEdificio(edificio, scene) {
 			edificio.x = game.global.grid[i][j].image.x;
 			edificio.y = game.global.grid[i][j].image.y;
 			
-			edificio.gameObject.depth = i + j + 0.1 + 1/edificio.height;;
+			if (game.global.grid[i][j].type > 0) {
+				edificio.gameObject.depth = 1000;
+			}
+			else {
+				edificio.gameObject.depth = i + j + 0.1 + 1/edificio.height;
+			}
 		}
 	}
 }

@@ -29,6 +29,7 @@ window.onload = function() {
 				  		CentroMandoMenu,
 				  		CentroOperacionesMenu,
 				  		CentroAdministrativoMenu,
+				  		PlataformaExtraccionMenu,
 				  		TallerMenu]
 
 			};
@@ -118,6 +119,9 @@ window.onload = function() {
 				case 'taller':
 					edificio = new Taller(e.x, e.y);
 					break;
+				case 'plataformaExtraccion':
+					edificio = new PlataformaExtraccion(e.x, e.y);
+					break;
 				default:
 					break;
 				}
@@ -147,6 +151,10 @@ window.onload = function() {
 						break;
 					case 'taller':
 						edificio = new Taller(e.x, e.y);
+						break;
+					case 'plataformaExtraccion':
+						edificio = new PlataformaExtraccion(e.x, e.y);
+						break;
 					default:
 						break;
 					}

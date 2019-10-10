@@ -19,8 +19,8 @@ public class PlataformaExtraccion extends Edificio {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.height = 0;
-		this.width = 0;
+		this.height = 1;
+		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "plataformaExtraccion";
