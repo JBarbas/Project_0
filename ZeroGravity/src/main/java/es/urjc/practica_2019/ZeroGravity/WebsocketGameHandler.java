@@ -42,6 +42,7 @@ import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
+	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 	private ObjectMapper mapper = new ObjectMapper();
 	private AtomicInteger playersId = new AtomicInteger();
 	
