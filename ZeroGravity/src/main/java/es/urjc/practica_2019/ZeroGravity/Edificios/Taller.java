@@ -8,10 +8,10 @@ import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 public class Taller extends GeneradorRecursos{
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	private static final int[] nivel1 = { 1, 0, 0, 0 };
-	private static final int[] nivel2 = { 2, 0, 0, 0 };
-	private static final int[] nivel3 = { 3, 0, 0, 0 };
-	private static final int[][] costs = { nivel1, nivel2, nivel3 };
+	public static final int[] nivel1 = { 1, 2, 3, 4 };
+	public static final int[] nivel2 = { 5, 6, 7, 8 };
+	public static final int[] nivel3 = { 9, 10, 11, 12 };
+	public static final int[][] COSTS = { nivel1, nivel2, nivel3 };
 
 	// Establecemos los recursos que generan según su nivel
 	private final static int[] recursosNivel1 = { 0, 0 };
@@ -57,16 +57,4 @@ public class Taller extends GeneradorRecursos{
 	public void mostrarRobots() {
 		
 	}
-
-	@Override
-	public void levelUp() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showMenu() {
-		// TODO Auto-generated method stub
-		
-	} 	
 }

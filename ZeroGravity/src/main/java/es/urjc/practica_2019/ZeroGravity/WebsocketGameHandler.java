@@ -111,6 +111,39 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
+			case "LEVELUP_BUILDING":
+				Edificio edificio = player.getEdificio(node.get("id").asInt());
+				switch(edificio.getSprite()) {
+				
+				case"taller":
+					//energia, metal, ceramica, creditos
+					Boolean canILevelUp = false;
+					
+					if(	player.getEnergia() >= Taller.COSTS[edificio.getLevel()-1][0] &&
+						player.getMetal() >= Taller.COSTS[edificio.getLevel()-1][1] &&
+						player.getCeramica() >= Taller.COSTS[edificio.getLevel()-1][2] &&
+						player.getCreditos() >= Taller.COSTS[edificio.getLevel()-1][3] &&
+						edificio.getLevel() < 3){
+							
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - Taller.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - Taller.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - Taller.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - Taller.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						System.out.println(edificio.getLevel());
+					}
+					
+					msg.put("event", "ANSWER_LEVELUP_BUILDING");
+					msg.put("resultado", canILevelUp.toString());
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					break;
+					
+				default:
+					break;
+				}
+				break;
+				
 			default:
 				break;
 			}
@@ -149,6 +182,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("x", e.getX());
 				jsonEdificio.put("y", e.getY());
 				jsonEdificio.put("sprite", e.getSprite());
+				jsonEdificio.put("nivel", e.getLevel());
 				arrayNodeEdificios.addPOJO(jsonEdificio);
 				
 				// Bson para MongoDB
@@ -157,6 +191,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				dbEdificio.append("x", e.getX());
 				dbEdificio.append("y", e.getY());
 				dbEdificio.append("sprite", e.getSprite());
+				dbEdificio.append("nivel", e.getLevel());
 				dbEdificios.add(dbEdificio);
 			}
 			msg.putPOJO("edificios", arrayNodeEdificios);

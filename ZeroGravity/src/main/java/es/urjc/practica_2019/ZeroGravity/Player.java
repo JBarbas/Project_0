@@ -243,4 +243,10 @@ public class Player {
 		}
 		return copy;
 	}
+	
+	//devuelve un edificio concreto
+	public Edificio getEdificio(int id) {
+		
+		return this.edificios.get(id);
+	}
 }

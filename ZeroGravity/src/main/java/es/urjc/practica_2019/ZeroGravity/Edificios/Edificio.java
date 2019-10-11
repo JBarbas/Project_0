@@ -149,13 +149,11 @@ public class Edificio  implements EdificioInterface{
 		return grid;
 	}
 
-	@Override
 	public void levelUp() {
-		// TODO Auto-generated method stub
-		
+
+		this.setLevel(this.getLevel()+1);
 	}
 
-	@Override
 	public void showMenu() {
 		// TODO Auto-generated method stub
 		

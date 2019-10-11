@@ -47,12 +47,19 @@ window.onload = function() {
 		myPlayer : new Object(),
 		construyendo : false,
 		edificioEnConstruccion : null,
+		edificioSubiendoNivel: null,
 		inMenu : false,
 		buildingMenu: {
 			x: 50,
 			y: 50,
 			width: 584,
 			height: 908
+		},
+		recursos: {
+			energia: 0,
+			metal: 0,
+			ceramica: 0,
+			creditos: 0
 		}
 	}
 	
@@ -169,8 +176,16 @@ window.onload = function() {
 			console.log('Metal', msg.metal);
 			console.log('Ceramica', msg.ceramica);
 			console.log('UnionCoins', msg.unionCoins);
-			
+			game.global.recursos =  {energia: msg.energia, metal: msg.metal, ceramica: msg.ceramica, creditps: msg.creditos};
+			break;
 		
+		case 'ANSWER_LEVELUP_BUILDING':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] respuesta a la peticion subir de nivel');
+				console.log(msg.resultado);
+			}
+			break;
+			
 		
 		default:
 			break;
