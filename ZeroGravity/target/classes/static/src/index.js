@@ -171,6 +171,11 @@ window.onload = function() {
 					edificio.y = e.y;
 				}
 			}
+			game.global.resources.energia = msg.energia;
+			game.global.resources.metal = msg.metal;
+			game.global.resources.ceramica = msg.ceramica;
+			game.global.resources.creditos = msg.creditos;
+			game.global.resources.unionCoins = msg.unionCoins;
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		
@@ -210,6 +215,13 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.ceramica = msg.ceramica;
+			break;
+		case 'CREDITOS INSUFICIENTES':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CREDITOS INSUFICIENTES message recieved');
+				console.dir(msg);
+			}
+			alert("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
 			break;
 		default:
 			if (game.global.DEBUG_MODE) {

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import es.urjc.practica_2019.ZeroGravity.Player;
 import es.urjc.practica_2019.ZeroGravity.Task;
 import es.urjc.practica_2019.ZeroGravity.TaskMaster;
+import es.urjc.practica_2019.ZeroGravity.WebsocketGameHandler;
 
 public class PlataformaExtraccion extends GeneradorRecursos {
 	
@@ -122,9 +123,19 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
-			this.setLleno(true);
-			this.setProduciendo(false);
-			this.player.saveEdificios();
+			if (this.player.getSession().isOpen()) {
+				this.setLleno(true);
+				this.setProduciendo(false);
+				this.player.saveEdificios();				
+			}
+			else {
+				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
+				if (p != null) {
+					((GeneradorRecursos) p.getEdificio(this.getId())).setLleno(true);
+					((GeneradorRecursos) p.getEdificio(this.getId())).setProduciendo(false);
+					p.saveEdificios();
+				}
+			}
 		}
 	}
 	

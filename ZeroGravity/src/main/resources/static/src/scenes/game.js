@@ -62,17 +62,11 @@ class GameScene extends Phaser.Scene {
     			
     			if (typeof game.global.grid[i] !== 'undefined') {
         			if (typeof game.global.grid[i][j] !== 'undefined') {
-		    			if (game.global.construyendo) {
+		    			if (game.global.construyendo && !game.global.inMenu) {
 		        			construir(i, j, scene, game.global.edificioEnConstruccion);
 		        		}
 		    			else if (game.global.expandiendo && !game.global.inMenu) {
-		    				if (lastCell !== null) {
-		    					if (lastCell.type < 0) {
-		    						lastCell.image.setTexture('tile_-1');
-		    					}
-		    				}
-		    				game.scene.getScene('GameScene').gridContainer.setAlpha(0);
-		    				game.global.expandiendo = false;
+		    				buyCell(i, j);
 		    			}
 		        		else if (game.global.grid[i][j].type > 0) {
 		        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);

@@ -93,6 +93,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setCeramica(myPlayer.getInteger("ceramica"));
 					player.setCreditos(myPlayer.getInteger("creditos"));
 					player.setUnionCoins(myPlayer.getInteger("unionCoins"));
+					player.setCosteCelda(myPlayer.getInteger("costeCelda"));
+					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas"));
 					msg.put("event", "LOGGED");
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
@@ -139,6 +141,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
 				break;
+			case "BUY CELL":
+				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
+				updateInfo(player, "REFRESH GRID");
+				break;
 			default:
 				break;
 			}
@@ -183,6 +189,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				arrayNodeEdificios.addPOJO(jsonEdificio);
 			}
 			msg.putPOJO("edificios", arrayNodeEdificios);
+			msg.put("energia", player.getMetal());
+			msg.put("metal", player.getEnergia());
+			msg.put("ceramica", player.getCeramica());
+			msg.put("creditos", player.getCreditos());
+			msg.put("unionCoins", player.getUnionCoins());
 			// Enviamos el mensaje al cliente
 			player.getSession().sendMessage(new TextMessage(msg.toString()));
 		} catch (Exception e) {
