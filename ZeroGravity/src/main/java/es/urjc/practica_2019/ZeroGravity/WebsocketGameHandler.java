@@ -3,6 +3,7 @@ package es.urjc.practica_2019.ZeroGravity;
 import java.awt.List;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
@@ -52,8 +53,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private static MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
 	private static MongoCollection<Document> coll = db.getCollection("Users", Document.class);
 	
+	private static HashMap<ObjectId, Player> players = new HashMap<>();
+	
 	public static MongoCollection<Document> getColl() {
 		return coll;
+	}
+	
+	public static HashMap<ObjectId, Player> getPlayers() {
+		return players;
 	}
 	
 	@Override
@@ -77,6 +84,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				Document myPlayer = coll.find(filter).first();
 				if (myPlayer != null) {
 					player.setId(myPlayer.getObjectId("_id"));
+					players.put(player.getId(), player);
 					player.updateGrid((Collection<Document>) myPlayer.get("grid"));
 					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
 					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
@@ -101,6 +109,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				coll.insertOne(dbPlayer);				
 				msg.put("event", "LOGGED");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				players.put(player.getId(), player);
 				break;
 			case "ASK PLAYER INFO":
 				updateInfo(player, "PLAYER INFO");
@@ -164,6 +173,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("y", e.getY());
 				if (e instanceof GeneradorRecursos) {
 					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+					jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
+					jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
+					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
+					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
+					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
 				}
 				jsonEdificio.put("sprite", e.getSprite());
 				arrayNodeEdificios.addPOJO(jsonEdificio);

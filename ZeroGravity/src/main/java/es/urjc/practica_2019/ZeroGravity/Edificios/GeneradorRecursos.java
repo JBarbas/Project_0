@@ -1,5 +1,7 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -11,6 +13,8 @@ public class GeneradorRecursos extends Edificio {
 	private int colonos;
 	private boolean averiado;
 	private boolean lleno = false;	
+	private boolean produciendo = false;
+	private LocalDateTime productionBeginTime = LocalDateTime.now();
 
 	
 	public GeneradorRecursos() {
@@ -41,6 +45,22 @@ public class GeneradorRecursos extends Edificio {
 		this.lleno = lleno;
 	}
 	
+	public boolean isProduciendo() {
+		return produciendo;
+	}
+
+	public void setProduciendo(boolean produciendo) {
+		this.produciendo = produciendo;
+	}
+
+	public LocalDateTime getProductionBeginTime() {
+		return productionBeginTime;
+	}
+
+	public void setProductionBeginTime(LocalDateTime productionBeginTime) {
+		this.productionBeginTime = productionBeginTime;
+	}
+
 	public void producir() {
 		
 	}

@@ -38,7 +38,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.scene.pause();
 				data.miEdificio.move();
 				game.scene.stop('PlataformaExtraccionMenu');
-	    		game.global.inMenu = false;
+				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
     	

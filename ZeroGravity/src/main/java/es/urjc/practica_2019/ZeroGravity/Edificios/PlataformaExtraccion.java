@@ -1,7 +1,10 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 
+import org.bson.Document;
 import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +46,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		this.producir();
 	}
 
-	public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id, boolean lleno) {
+	public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id, boolean lleno, boolean produciendo, Document date) {
 		
 		this.player = player;
 		this.id = id;
@@ -55,8 +58,15 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		this.buildingDependsOn = depends;
 		this.sprite = "plataformaExtraccion";
 		this.setLleno(lleno);
+		this.setProduciendo(produciendo);
+		int year = date.getInteger("year");
+		int month = date.getInteger("month");
+		int day = date.getInteger("day");
+		int hour = date.getInteger("hour");
+		int minute = date.getInteger("minute");
+		this.setProductionBeginTime(LocalDateTime.of(year, month, day, hour, minute));
 		
-		if (!this.isLleno()) {
+		if (!this.isLleno() && !this.isProduciendo()) {
 			this.producir();
 		}
 	}
@@ -102,6 +112,9 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			break;
 		}
 		TASKMASTER.addTask(task);
+		this.setProduciendo(true);
+		this.setProductionBeginTime(task.getBeginDate());
+		player.saveEdificios();
 	}
 	
 	@Override
@@ -110,6 +123,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
 			this.setLleno(true);
+			this.setProduciendo(false);
 			this.player.saveEdificios();
 		}
 	}

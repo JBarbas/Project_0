@@ -58,6 +58,14 @@ public class TaskMaster {
 					if (t.getPlayer().getSession().isOpen()) {
 						t.getPlayer().getSession().sendMessage(new TextMessage(t.getMsg().toString()));
 					}
+					else {
+						Player p = WebsocketGameHandler.getPlayers().get(t.getPlayer().getId());
+						if (p != null) {
+							if (p.getSession().isOpen()) {
+								p.getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+							}
+						}
+					}
 					
 					// Ejecuta una callback en caso de que ésta se haya definido
 					if (t.getCallback() != null) {

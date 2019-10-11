@@ -206,7 +206,7 @@ public class Player {
 				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
 			case "plataformaExtraccion":
-				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"));
+				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				break;
 			default:
 				break;
@@ -280,6 +280,14 @@ public class Player {
 				dbEdificio.append("y", e.getY());
 				if (e instanceof GeneradorRecursos) {
 					dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
+					dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
+					Document productionBeginTime = new Document();
+					productionBeginTime.append("year", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
+					productionBeginTime.append("month", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
+					productionBeginTime.append("day", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
+					productionBeginTime.append("hour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
+					productionBeginTime.append("minute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+					dbEdificio.append("productionBeginTime", productionBeginTime);
 				}
 				dbEdificio.append("sprite", e.getSprite());
 				dbEdificios.add(dbEdificio);
@@ -320,6 +328,14 @@ public class Player {
 			dbEdificio.append("y", e.getY());
 			if (e instanceof GeneradorRecursos) {
 				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
+				dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
+				Document productionBeginTime = new Document();
+				productionBeginTime.append("year", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
+				productionBeginTime.append("month", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
+				productionBeginTime.append("day", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
+				productionBeginTime.append("hour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
+				productionBeginTime.append("minute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+				dbEdificio.append("productionBeginTime", productionBeginTime);
 			}
 			dbEdificio.append("sprite", e.getSprite());
 			dbEdificios.add(dbEdificio);

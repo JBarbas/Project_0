@@ -47,6 +47,7 @@ window.onload = function() {
 		loaded : false,
 		myPlayer : new Object(),
 		construyendo : false,
+		expandiendo : false,
 		edificioEnConstruccion : null,
 		inMenu : false,
 		buildingMenu: {
@@ -123,6 +124,8 @@ window.onload = function() {
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
+					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
 				default:
 					break;
@@ -186,8 +189,10 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO PRODUCIENDO message recieved');
 				console.dir(msg);
 			}
-			if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
-				game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+			if (typeof game.global.edificios !== 'undefined') {
+				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+				}
 			}
 			break;
 		case 'EDIFICIO LLENO':

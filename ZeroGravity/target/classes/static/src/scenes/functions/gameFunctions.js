@@ -142,6 +142,35 @@ function previsualizarEdificio(edificio, scene) {
 	}
 }
 
+// Cambia el sprite de la celda sobre la que se encuentra el raton
+var lastCell = null; // El GameObject de la ultima celda que se pinto
+function previsualizarExpansion(scene) {
+	game.scene.getScene('GameScene').gridContainer.setAlpha(0.5);
+	if (lastCell !== null) {
+		if (lastCell.type < 0) {
+			lastCell.image.setTexture('tile_-1');
+		}
+	}
+	
+	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).y);
+	
+	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+	position = isometricToCartesian(position);
+	
+	// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+	let i = Math.trunc(position.y/tile_height + 1);
+	let j = Math.trunc(position.x/(tile_width/2) + 1);
+	
+	if (typeof game.global.grid[i] !== 'undefined') {
+		if (typeof game.global.grid[i][j] !== 'undefined') {
+			if (game.global.grid[i][j].type < 0) {
+				lastCell = game.global.grid[i][j];
+				lastCell.image.setTexture('tile_0');
+			}
+		}
+	}
+}
+
 // Control del zoom
 window.addEventListener("wheel", event => {
     const delta = zoomSpeed*(-Math.sign(event.deltaY));
