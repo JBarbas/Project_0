@@ -55,7 +55,7 @@ class CentroMandoMenu extends Phaser.Scene {
     			game.scene.pause();
     		}
     		game.scene.stop('CentroMandoMenu');
-    		game.global.inMenu = false;
+    		setTimeout(function(){ game.global.inMenu = false; }, 500);
     	}
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
@@ -73,7 +73,7 @@ class CentroMandoMenu extends Phaser.Scene {
 				game.scene.pause();
 				data.miEdificio.move();
 				game.scene.stop('CentroMandoMenu');
-	    		game.global.inMenu = false;
+				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
     	

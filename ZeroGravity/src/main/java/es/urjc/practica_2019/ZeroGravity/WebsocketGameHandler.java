@@ -3,6 +3,7 @@ package es.urjc.practica_2019.ZeroGravity;
 import java.awt.List;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
@@ -52,8 +53,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private static MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
 	private static MongoCollection<Document> coll = db.getCollection("Users", Document.class);
 	
+	private static HashMap<ObjectId, Player> players = new HashMap<>();
+	
 	public static MongoCollection<Document> getColl() {
 		return coll;
+	}
+	
+	public static HashMap<ObjectId, Player> getPlayers() {
+		return players;
 	}
 	
 	@Override
@@ -77,14 +84,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				Document myPlayer = coll.find(filter).first();
 				if (myPlayer != null) {
 					player.setId(myPlayer.getObjectId("_id"));
+					players.put(player.getId(), player);
 					player.updateGrid((Collection<Document>) myPlayer.get("grid"));
 					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
 					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
-					/*player.setEnergia(myPlayer.getInteger("energia"));
+					player.setEnergia(myPlayer.getInteger("energia"));
 					player.setMetal(myPlayer.getInteger("metal"));
 					player.setCeramica(myPlayer.getInteger("ceramica"));
 					player.setCreditos(myPlayer.getInteger("creditos"));
-					player.setUnionCoins(myPlayer.getInteger("unionCoins"));*/
+					player.setUnionCoins(myPlayer.getInteger("unionCoins"));
+					player.setCosteCelda(myPlayer.getInteger("costeCelda"));
+					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas"));
+
 					msg.put("event", "LOGGED");
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
@@ -101,6 +112,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				coll.insertOne(dbPlayer);				
 				msg.put("event", "LOGGED");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				players.put(player.getId(), player);
 				break;
 				
 			case "ASK PLAYER INFO":
@@ -171,7 +183,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
 				break;
-
+			case "BUY CELL":
+				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
+				updateInfo(player, "REFRESH GRID");
+				break;
 			default:
 				break;
 			}
@@ -206,22 +221,23 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("y", e.getY());
 				if (e instanceof GeneradorRecursos) {
 					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+					jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
+					jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
+					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
+					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
+					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
 				}
 				jsonEdificio.put("sprite", e.getSprite());
 				jsonEdificio.put("level", e.getLevel());
 				arrayNodeEdificios.addPOJO(jsonEdificio);
-				
-				LinkedList<Document> dbEdificios = new LinkedList<>();// Bson para MongoDB
-				Document dbEdificio = new Document();
-				dbEdificio.append("id", e.getId());
-				dbEdificio.append("x", e.getX());
-				dbEdificio.append("y", e.getY());
-				dbEdificio.append("sprite", e.getSprite());
-				dbEdificio.append("nivel", e.getLevel());
-				dbEdificios.add(dbEdificio);
 
 			}
 			msg.putPOJO("edificios", arrayNodeEdificios);
+			msg.put("energia", player.getMetal());
+			msg.put("metal", player.getEnergia());
+			msg.put("ceramica", player.getCeramica());
+			msg.put("creditos", player.getCreditos());
+			msg.put("unionCoins", player.getUnionCoins());
 			// Enviamos el mensaje al cliente
 			player.getSession().sendMessage(new TextMessage(msg.toString()));
 		} catch (Exception e) {

@@ -37,6 +37,24 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     		}
     	});
     	
+    	var expandir = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 700, 'btnExpandir').setInteractive();
+    	
+    	expandir.on('pointerover',function(pointer){
+    		expandir.setFrame(1);
+    	})
+
+    	expandir.on('pointerout',function(pointer){
+    		expandir.setFrame(0);
+    	})
+    	
+    	expandir.on('pointerdown', function(pointer, localX, localY, event){
+    		if(!game.global.expandiendo){
+    			game.global.expandiendo = true;
+    			game.scene.stop('CentroAdministrativoMenu');
+    			setTimeout(function(){ game.global.inMenu = false; }, 500);
+    		}
+    	});
+    	
     }
     update(time, delta) {
     	

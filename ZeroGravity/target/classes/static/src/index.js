@@ -47,6 +47,7 @@ window.onload = function() {
 		loaded : false,
 		myPlayer : new Object(),
 		construyendo : false,
+		expandiendo : false,
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
@@ -124,6 +125,8 @@ window.onload = function() {
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
+					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
 				default:
 					break;
@@ -171,6 +174,11 @@ window.onload = function() {
 					edificio.y = e.y;
 				}
 			}
+			game.global.resources.energia = msg.energia;
+			game.global.resources.metal = msg.metal;
+			game.global.resources.ceramica = msg.ceramica;
+			game.global.resources.creditos = msg.creditos;
+			game.global.resources.unionCoins = msg.unionCoins;
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		
@@ -191,8 +199,10 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO PRODUCIENDO message recieved');
 				console.dir(msg);
 			}
-			if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
-				game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+			if (typeof game.global.edificios !== 'undefined') {
+				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+				}
 			}
 
 			console.log('Energia', msg.energia);
@@ -230,6 +240,13 @@ window.onload = function() {
 			game.global.resources.ceramica = msg.ceramica;
 			break;
 			
+		case 'CREDITOS INSUFICIENTES':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CREDITOS INSUFICIENTES message recieved');
+				console.dir(msg);
+			}
+			alert("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
+			break;
 		default:
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UNKNOWN message recieved')

@@ -33,7 +33,7 @@ class CentroOperacionesMenu extends Phaser.Scene {
 				game.scene.pause();
 				data.miEdificio.move();
 				game.scene.stop('CentroOperacionesMenu');
-	    		game.global.inMenu = false;
+				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
     	

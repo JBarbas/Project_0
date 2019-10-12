@@ -38,17 +38,22 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.scene.pause();
 				data.miEdificio.move();
 				game.scene.stop('PlataformaExtraccionMenu');
-	    		game.global.inMenu = false;
+				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
     	
     }
     update(time, delta) {
-    	this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
-    	if (this.timeLeft < 0) {
-    		this.timeLeft = 0;
+    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
+    	if (this.miEdificio.lleno) {
+    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.level-1][0] + ' unidades de cerámica listas para recolectar';
     	}
-    	this.timeLeftText.text = this.timeLeft;
+    	else if (this.timeLeft < 1) {
+    		this.timeLeftText.text = 'Almacenando la cerámica...';
+    	}
+    	else {
+    		this.timeLeftText.text = 'Quedan ' + this.timeLeft + ' minutos';
+    	}
     	this.timeLeftText.visible = !this.miEdificio.lleno;
     }
 

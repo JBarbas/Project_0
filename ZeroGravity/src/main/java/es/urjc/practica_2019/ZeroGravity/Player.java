@@ -1,5 +1,6 @@
 package es.urjc.practica_2019.ZeroGravity;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
@@ -41,8 +43,13 @@ public class Player {
 	private int energia = 100;
 	private int metal = 100;
 	private int ceramica = 100;	
-	private int creditos = 100;
+	private int creditos = 1000;
 	private int unionCoins = 100;
+	
+	private int costeCelda = 100;
+	private int celdasCompradas = 0;
+	
+	private ObjectMapper mapper = new ObjectMapper();
 	
 	public Player(WebSocketSession session, ObjectId id) {
 		this.session = session;
@@ -101,6 +108,10 @@ public class Player {
 	
 	public Collection<Edificio> getEdificios() {
 		return edificios.values();
+	}
+	
+	public Edificio getEdificio(int id) {
+		return edificios.get(id);
 	}
 
 	public int getMetal() {
@@ -170,6 +181,22 @@ public class Player {
 		return this.grid;
 	}
 	
+	public int getCosteCelda() {
+		return costeCelda;
+	}
+
+	public void setCosteCelda(int costeCelda) {
+		this.costeCelda = costeCelda;
+	}
+
+	public int getCeldasCompradas() {
+		return celdasCompradas;
+	}
+
+	public void setCeldasCompradas(int celdasCompradas) {
+		this.celdasCompradas = celdasCompradas;
+	}
+
 	public void updateGrid(Collection<Document> grid) {
 		int i = 0;
 		for (Document row : grid) {
@@ -186,6 +213,30 @@ public class Player {
 			((GeneradorRecursos) e).recolectar();
 			this.saveEdificios();
 			this.saveRecursos();
+		}
+	}
+	
+	public void buyCell(int i, int j) {
+		if (this.grid[i][j] < 0) {
+			if (creditos >= costeCelda) {
+				this.grid[i][j] = 0;
+				creditos -= costeCelda;
+				if (celdasCompradas < 20) {
+					celdasCompradas++;
+				}
+				costeCelda = 100 * celdasCompradas * celdasCompradas;
+			}
+			else {
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "CREDITOS INSUFICIENTES");
+				msg.put("cantidad", costeCelda - creditos);
+				try {
+					this.getSession().sendMessage(new TextMessage(msg.toString()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -206,7 +257,7 @@ public class Player {
 				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
 			case "plataformaExtraccion":
-				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"));
+				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				break;
 			default:
 				break;
@@ -263,17 +314,11 @@ public class Player {
 		return copy;
 	}
 	
-
-	//devuelve un edificio concreto
-	public Edificio getEdificio(int id) {
-		
-		return this.edificios.get(id);
-	}
-	
 	public void saveAll() {
-			saveGrid();
-			saveEdificios();
-			saveRecursos();
+
+		saveGrid();
+		saveEdificios();
+		saveRecursos();
 	}
 	
 	public void saveGrid() {
@@ -300,6 +345,14 @@ public class Player {
 			dbEdificio.append("y", e.getY());
 			if (e instanceof GeneradorRecursos) {
 				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
+				dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
+				Document productionBeginTime = new Document();
+				productionBeginTime.append("year", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
+				productionBeginTime.append("month", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
+				productionBeginTime.append("day", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
+				productionBeginTime.append("hour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
+				productionBeginTime.append("minute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+				dbEdificio.append("productionBeginTime", productionBeginTime);
 			}
 			dbEdificio.append("sprite", e.getSprite());
 			dbEdificio.append("level", e.getLevel());
@@ -317,6 +370,8 @@ public class Player {
 				.append("metal", this.metal)
 				.append("ceramica", this.ceramica)
 				.append("creditos", this.creditos)
-				.append("unionCoins", this.unionCoins)));
+				.append("unionCoins", this.unionCoins)
+				.append("costeCelda", this.costeCelda)
+				.append("celdasCompradas", this.celdasCompradas)));
 	}
 }
