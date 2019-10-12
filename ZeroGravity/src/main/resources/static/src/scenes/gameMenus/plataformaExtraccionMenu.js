@@ -89,7 +89,6 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	else {
     		this.timeLeftText.visible = false;
     	}
-    	this.timeLeftText.visible = !this.miEdificio.lleno;
     	
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
