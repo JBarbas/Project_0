@@ -16,6 +16,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
@@ -178,6 +180,15 @@ public class Player {
 		}
 	}
 	
+	public void recolect(int id) {
+		Edificio e = edificios.get(id);
+		if (e instanceof GeneradorRecursos) {
+			((GeneradorRecursos) e).recolectar();
+			this.saveEdificios();
+			this.saveRecursos();
+		}
+	}
+	
 	public void updateEdificios(Collection<Document> edificios) {
 		for (Document e : edificios) {
 			Edificio edificio = new Edificio();
@@ -194,9 +205,13 @@ public class Player {
 			case "taller":
 				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
+			case "plataformaExtraccion":
+				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"));
+				break;
 			default:
 				break;
 			}
+			edificio.setLevel(e.getInteger("level", 1));
 			this.edificios.put(edificio.getId(), edificio);
 		}
 	}
@@ -217,6 +232,10 @@ public class Player {
 				break;
 			case "taller":
 				edificio = new Taller(x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
+			case "plataformaExtraccion":
+				edificio = new PlataformaExtraccion(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
 			default:
 				break;
 			}
@@ -244,9 +263,60 @@ public class Player {
 		return copy;
 	}
 	
+
 	//devuelve un edificio concreto
 	public Edificio getEdificio(int id) {
 		
 		return this.edificios.get(id);
+	}
+	
+	public void saveAll() {
+			saveGrid();
+			saveEdificios();
+			saveRecursos();
+	}
+	
+	public void saveGrid() {
+		LinkedList<Document> dbGrid = new LinkedList<>(); // Bson para MongoDB
+		for (int i = 0; i < grid.length; i++) {
+			Document dbGridColumn = new Document();
+			for (int j = 0; j < grid[i].length; j++) {	
+				dbGridColumn.append(Integer.toString(j), grid[i][j]);
+			}
+			dbGrid.add(dbGridColumn);
+		}
+		// Actualizamos la info en la BDD
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), new Document("$set", 
+				new Document("grid", dbGrid)));
+	}
+	
+	public void saveEdificios() {
+		LinkedList<Document> dbEdificios = new LinkedList<>(); // Bson para MongoDB
+		for (Edificio e : getEdificios()) {				
+			// Bson para MongoDB
+			Document dbEdificio = new Document();
+			dbEdificio.append("id", e.getId());
+			dbEdificio.append("x", e.getX());
+			dbEdificio.append("y", e.getY());
+			if (e instanceof GeneradorRecursos) {
+				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
+			}
+			dbEdificio.append("sprite", e.getSprite());
+			dbEdificio.append("level", e.getLevel());
+			dbEdificios.add(dbEdificio);
+		}
+		// Actualizamos la info en la BDD
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), new Document("$set", 
+				new Document("edificios", dbEdificios)
+				.append("edificioId", getEdificioId())));
+	}
+	
+	public void saveRecursos() {
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), new Document("$set", 
+				new Document("energia", this.energia)
+				.append("metal", this.metal)
+				.append("ceramica", this.ceramica)
+				.append("creditos", this.creditos)
+				.append("unionCoins", this.unionCoins)));
 	}
 }

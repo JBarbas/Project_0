@@ -28,6 +28,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:128,frameHeight:157});
 		this.load.spritesheet( 'taller' , 'assets/sprites/Edificios/taller.png', {frameWidth:128,frameHeight:64});
 		this.load.spritesheet( 'centroAdministrativo' , 'assets/sprites/Edificios/CentroAdministrativo.png', {frameWidth:192,frameHeight:185});
+		this.load.spritesheet( 'plataformaExtraccion' , 'assets/sprites/Edificios/PlataformaExtraccion.png', {frameWidth:128,frameHeight:157});
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
@@ -39,6 +40,9 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
+		
+		//Iconos
+		this.load.image('clayIcon', 'assets/sprites/stone.png');
     }
     create (data)  {
 		

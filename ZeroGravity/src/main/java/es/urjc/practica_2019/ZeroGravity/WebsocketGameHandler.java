@@ -42,14 +42,19 @@ import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
+	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 	private ObjectMapper mapper = new ObjectMapper();
 	private AtomicInteger playersId = new AtomicInteger();
 	
-	private MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
-	private MongoClient client = new MongoClient(new ServerAddress(), options);
+	private static MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
+	private static MongoClient client = new MongoClient(new ServerAddress(), options);
 
-	private MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
-	private MongoCollection<Document> coll = db.getCollection("Users", Document.class);
+	private static MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
+	private static MongoCollection<Document> coll = db.getCollection("Users", Document.class);
+	
+	public static MongoCollection<Document> getColl() {
+		return coll;
+	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -75,6 +80,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.updateGrid((Collection<Document>) myPlayer.get("grid"));
 					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
 					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
+					/*player.setEnergia(myPlayer.getInteger("energia"));
+					player.setMetal(myPlayer.getInteger("metal"));
+					player.setCeramica(myPlayer.getInteger("ceramica"));
+					player.setCreditos(myPlayer.getInteger("creditos"));
+					player.setUnionCoins(myPlayer.getInteger("unionCoins"));*/
 					msg.put("event", "LOGGED");
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
@@ -92,21 +102,31 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("event", "LOGGED");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+				
 			case "ASK PLAYER INFO":
 				updateInfo(player, "PLAYER INFO");
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("energia", player.getMetal());
+				msg.put("metal", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("unionCoins", player.getUnionCoins());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+				
 			case "BUILD":		
 				// Construimos el edificio, si se puede
 				player.build(node.get("x").asInt(), node.get("y").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
 				// Pedimos al cliente que refresque el grid con la nueva info
 				updateInfo(player, "REFRESH GRID");
-				break;
+				break;	
 				
 			case "ASK_PLAYER_RESOURCES":
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("energia", player.getMetal());
 				msg.put("metal", player.getEnergia());
 				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -131,11 +151,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setCeramica(player.getCeramica() - Taller.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - Taller.COSTS[edificio.getLevel()-1][3]);
 						edificio.levelUp();
-						System.out.println(edificio.getLevel());
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
 					}
 					
 					msg.put("event", "ANSWER_LEVELUP_BUILDING");
 					msg.put("resultado", canILevelUp.toString());
+					msg.put("id", node.get("id").asInt());
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 					break;
 					
@@ -144,6 +167,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}
 				break;
 				
+
+			case "RECOLECT":
+				player.recolect(node.get("id").asInt());
+				break;
+
 			default:
 				break;
 			}
@@ -160,32 +188,30 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 		try {
 			msg.put("event", event);
 			ArrayNode playerGrid = mapper.createArrayNode(); // JSON para el cliente
-			LinkedList<Document> dbGrid = new LinkedList<>(); // Bson para MongoDB
 			int[][] grid = player.getGrid();
 			for (int i = 0; i < grid.length; i++) {
 				ArrayNode gridColumn = mapper.createArrayNode();
-				Document dbGridColumn = new Document();
 				for (int j = 0; j < grid[i].length; j++) {						
 					gridColumn.add(grid[i][j]);
-					dbGridColumn.append(Integer.toString(j), grid[i][j]);
 				}
 				playerGrid.addPOJO(gridColumn);
-				dbGrid.add(dbGridColumn);
 			}
 			msg.putPOJO("grid", playerGrid);
 			ArrayNode arrayNodeEdificios = mapper.createArrayNode(); // JSON para el cliente
-			LinkedList<Document> dbEdificios = new LinkedList<>(); // Bson para MongoDB
 			for (Edificio e : player.getEdificios()) {
-				// JSON para el cliente
+				
 				ObjectNode jsonEdificio = mapper.createObjectNode();
 				jsonEdificio.put("id", e.getId());
 				jsonEdificio.put("x", e.getX());
 				jsonEdificio.put("y", e.getY());
+				if (e instanceof GeneradorRecursos) {
+					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+				}
 				jsonEdificio.put("sprite", e.getSprite());
-				jsonEdificio.put("nivel", e.getLevel());
+				jsonEdificio.put("level", e.getLevel());
 				arrayNodeEdificios.addPOJO(jsonEdificio);
 				
-				// Bson para MongoDB
+				LinkedList<Document> dbEdificios = new LinkedList<>();// Bson para MongoDB
 				Document dbEdificio = new Document();
 				dbEdificio.append("id", e.getId());
 				dbEdificio.append("x", e.getX());
@@ -193,18 +219,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				dbEdificio.append("sprite", e.getSprite());
 				dbEdificio.append("nivel", e.getLevel());
 				dbEdificios.add(dbEdificio);
+
 			}
 			msg.putPOJO("edificios", arrayNodeEdificios);
 			// Enviamos el mensaje al cliente
 			player.getSession().sendMessage(new TextMessage(msg.toString()));
-			// Actualizamos la info en la BDD
-			coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
-					new Document("grid", dbGrid)
-					.append("edificios", dbEdificios)
-					.append("edificioId", player.getEdificioId())));
 		} catch (Exception e) {
 			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);
 		}
+		player.saveAll();
 	}
 }

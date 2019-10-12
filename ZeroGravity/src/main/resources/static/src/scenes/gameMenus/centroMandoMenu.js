@@ -23,6 +23,8 @@ class CentroMandoMenu extends Phaser.Scene {
     	this.centroAdministrativo.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroAdministrativo'); });
     	this.taller = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 460, 'taller').setOrigin(0.5, 1);
     	this.taller.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('taller'); });
+    	this.plataformaExtraccion = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 590, 'plataformaExtraccion').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.plataformaExtraccion.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('plataformaExtraccion'); });
     
     	
     	function aux(edificioCons){
@@ -38,6 +40,9 @@ class CentroMandoMenu extends Phaser.Scene {
     				break;
     			case 'taller':
     				edificio = new Taller(0, 0);
+    				break;
+    			case 'plataformaExtraccion':
+    				edificio = new PlataformaExtraccion(0, 0);
     				break;
     			default:
     				break;

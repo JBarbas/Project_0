@@ -25,5 +25,10 @@ function askLevelUpBuilding(edificioId){
 	}
 	
 	game.global.socket.send(JSON.stringify(message));
-	askPlayerResources();
+	askPlayerResources();	
+}
+
+function levelUp(edificio){
+	edificio.level += 1;
+	edificio.gameObject.setFrame(edificio.level -1);
 }

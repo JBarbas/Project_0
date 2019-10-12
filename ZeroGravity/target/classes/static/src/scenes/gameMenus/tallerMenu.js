@@ -38,20 +38,23 @@ class TallerMenu extends Phaser.Scene {
     		}
     	});
     	
+    	this.miEdificio = data.miEdificio;
+    	
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){
     	
-	    	var subirNivel = this.add.image(game.global.buildingMenu.x + 500, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
+	    	this.subirNivel = this.add.image(game.global.buildingMenu.x + 500, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
 	    	
-	    	subirNivel.on('pointerover',function(pointer){
-	    		mover.setFrame(1);
+	    		    	
+	    	this.subirNivel.on('pointerover',function(pointer){
+	    		this.setFrame(1);
 	    	})
 	    	
-	    	subirNivel.on('pointerout',function(pointer){
-	    		mover.setFrame(0);
+	    	this.subirNivel.on('pointerout',function(pointer){
+	    		this.setFrame(0);
 	    	})
 	    	
-	    	subirNivel.on('pointerdown', function(pointer, localX, localY, event){
+	    	this.subirNivel.on('pointerdown', function(pointer, localX, localY, event){
 	    		
 	    		askLevelUpBuilding(data.miEdificio.id);
 	    		
@@ -60,7 +63,9 @@ class TallerMenu extends Phaser.Scene {
     	}
     }
     update(time, delta) {
-    	
+    	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
+    		this.subirNivel.destroy();
+    	}
     }
 
 }

@@ -26,11 +26,12 @@ window.onload = function() {
 				  		CreditsScene,
 				  		PreloadGameScene,
 				  		GameScene,
+				  		GameInterface,
 				  		CentroMandoMenu,
 				  		CentroOperacionesMenu,
 				  		CentroAdministrativoMenu,
+				  		PlataformaExtraccionMenu,
 				  		TallerMenu]
-
 			};
 			
 	
@@ -55,12 +56,7 @@ window.onload = function() {
 			width: 584,
 			height: 908
 		},
-		recursos: {
-			energia: 0,
-			metal: 0,
-			ceramica: 0,
-			creditos: 0
-		}
+		resources: {}
 	}
 	
 	//WEBSOCKET CONFIGURATOR
@@ -125,14 +121,20 @@ window.onload = function() {
 				case 'taller':
 					edificio = new Taller(e.x, e.y);
 					break;
+				case 'plataformaExtraccion':
+					edificio = new PlataformaExtraccion(e.x, e.y);
+					edificio.lleno = e.lleno;
+					break;
 				default:
 					break;
 				}
+				edificio.level = e.level;
 				edificio.id = e.id;
 				game.global.edificios.set(edificio.id, edificio);
 			}
 			game.global.loaded = true;
 			break;
+			
 		case 'REFRESH GRID':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] REFRESH GRID message recieved')
@@ -154,6 +156,10 @@ window.onload = function() {
 						break;
 					case 'taller':
 						edificio = new Taller(e.x, e.y);
+						break;
+					case 'plataformaExtraccion':
+						edificio = new PlataformaExtraccion(e.x, e.y);
+						break;
 					default:
 						break;
 					}
@@ -171,7 +177,24 @@ window.onload = function() {
 		case 'GET_PLAYER_RESOURCES':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
+				console.dir(msg);
 			}
+			game.global.resources.energia = msg.energia;
+			game.global.resources.metal = msg.metal;
+			game.global.resources.ceramica = msg.ceramica;
+			game.global.resources.creditos = msg.creditos;
+			game.global.resources.unionCoins = msg.unionCoins;
+			break;
+			
+		case 'EDIFICIO PRODUCIENDO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] EDIFICIO PRODUCIENDO message recieved');
+				console.dir(msg);
+			}
+			if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+				game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+			}
+
 			console.log('Energia', msg.energia);
 			console.log('Metal', msg.metal);
 			console.log('Ceramica', msg.ceramica);
@@ -183,14 +206,36 @@ window.onload = function() {
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] respuesta a la peticion subir de nivel');
 				console.log(msg.resultado);
+			}	
+			if(msg.resultado){
+				levelUp(game.global.edificios.get(msg.id));
 			}
+			break;		
+		
+		case 'EDIFICIO LLENO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] EDIFICIO LLENO message recieved');
+				console.dir(msg);
+			}
+			let edificioLleno = game.global.edificios.get(msg.id);
+			edificioLleno.lleno = true;
+			edificioLleno.build(game.scene.getScene('GameScene'));
 			break;
 			
-		
-		default:
+		case 'CERAMICA RECOLECTADA':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CERAMICA RECOLECTADA message recieved');
+				console.dir(msg);
+			}
+			game.global.resources.ceramica = msg.ceramica;
 			break;
-		
+			
+		default:
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] UNKNOWN message recieved')
+				console.dir(msg);
+			}
+			break;		
 		}
 	}
-
 }

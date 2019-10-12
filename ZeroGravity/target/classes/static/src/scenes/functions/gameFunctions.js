@@ -111,13 +111,14 @@ function previsualizarEdificio(edificio, scene) {
 	
 	if (typeof game.global.grid[i] !== 'undefined') {
 		if (typeof game.global.grid[i][j] !== 'undefined') {
-			edificio.gameObject.setFrame(0);
+			edificio.gameObject.setFrame(edificio.level-1);
 			for (var a = i-edificio.height+1; a <= i; a++) {
 				for (var b = j-edificio.width+1; b <= j; b++) {
 					if (typeof game.global.grid[a] !== 'undefined') {
 						if (typeof game.global.grid[a][b] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
 								edificio.gameObject.setFrame(1);
+	/////////////////////////////////////////////////////////////////////HAY QUE CAMBIAR EL SETFRAME ///////////////////
 								break;
 							}
 						}
@@ -132,7 +133,12 @@ function previsualizarEdificio(edificio, scene) {
 			edificio.x = game.global.grid[i][j].image.x;
 			edificio.y = game.global.grid[i][j].image.y;
 			
-			edificio.gameObject.depth = i + j + 0.1 + 1/edificio.height;;
+			if (game.global.grid[i][j].type > 0) {
+				edificio.gameObject.depth = 1000;
+			}
+			else {
+				edificio.gameObject.depth = i + j + 0.1 + 1/edificio.height;
+			}
 		}
 	}
 }
