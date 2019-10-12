@@ -43,7 +43,7 @@ class TallerMenu extends Phaser.Scene {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){
     	
-	    	this.subirNivel = this.add.image(game.global.buildingMenu.x + 500, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
+	    	this.subirNivel = this.add.image(game.global.buildingMenu.x + 500, game.global.buildingMenu.y + 800, 'btnSubirNivel').setInteractive();
 	    	
 	    		    	
 	    	this.subirNivel.on('pointerover',function(pointer){
@@ -63,6 +63,7 @@ class TallerMenu extends Phaser.Scene {
     	}
     }
     update(time, delta) {
+    	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();
     	}

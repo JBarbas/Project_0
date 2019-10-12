@@ -31,6 +31,9 @@ window.onload = function() {
 				  		CentroOperacionesMenu,
 				  		BloqueViviendasMenu,
 				  		CentroAdministrativoMenu,
+				  		CentroComercioMenu,
+				  		GeneradorMenu,
+				  		LaboratorioInvestigacionMenu,
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu]
 			};
@@ -132,6 +135,15 @@ window.onload = function() {
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
+				case 'centroComercio':
+					edificio = new CentroComercio(e.x, e.y);
+					break;
+				case 'generador':
+					edificio = new Generador(e.x, e.y);
+					break;
+				case 'laboratorioInvestigacion':
+					edificio = new LaboratorioInvestigacion(e.x, e.y);
+					break;
 				default:
 					break;
 				}
@@ -169,6 +181,15 @@ window.onload = function() {
 						break;
 					case 'plataformaExtraccion':
 						edificio = new PlataformaExtraccion(e.x, e.y);
+						break;
+					case 'centroComercio':
+						edificio = new CentroComercio(e.x, e.y);
+						break;
+					case 'generador':
+						edificio = new Generador(e.x, e.y);
+						break;
+					case 'laboratorioInvestigacion':
+						edificio = new LaboratorioInvestigacion(e.x, e.y);
 						break;
 					default:
 						break;

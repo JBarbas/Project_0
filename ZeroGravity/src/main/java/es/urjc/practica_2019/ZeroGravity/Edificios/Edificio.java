@@ -15,7 +15,6 @@ public class Edificio  implements EdificioInterface{
 	protected String sprite;
 	protected Edificio buildingDependsOn;	
 	
-
 	public int[] getPosition() {
 		int[] position = {x, y};
 		return position;

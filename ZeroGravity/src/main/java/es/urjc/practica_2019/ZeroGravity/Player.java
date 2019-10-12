@@ -287,6 +287,15 @@ public class Player {
 				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
+			case "generador":
+				edificio = new Generador(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				break;
+			case "laboratorioInvestigacion":
+				edificio = new LaboratorioInvestigacion(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				break;
+			case "centroComercio":
+				edificio = new CentroComercio(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				break;
 			default:
 				break;
 			}
@@ -321,6 +330,15 @@ public class Player {
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, x, y, this.centroMando, edificioId.incrementAndGet());
 				generadoresRecursos.add((GeneradorRecursos) edificio);
+				break;
+			case "generador":
+				edificio = new Generador(x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
+			case "laboratorioInvestigacion":
+				edificio = new LaboratorioInvestigacion(x, y, this.centroMando, edificioId.incrementAndGet());
+				break;
+			case "centroComercio":
+				edificio = new CentroComercio(x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			default:
 				break;

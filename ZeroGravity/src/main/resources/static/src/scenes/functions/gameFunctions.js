@@ -117,8 +117,7 @@ function previsualizarEdificio(edificio, scene) {
 					if (typeof game.global.grid[a] !== 'undefined') {
 						if (typeof game.global.grid[a][b] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
-								edificio.gameObject.setFrame(1);
-	/////////////////////////////////////////////////////////////////////HAY QUE CAMBIAR EL SETFRAME ///////////////////
+								edificio.gameObject.setFrame(edificio.level -1 + 3);
 								break;
 							}
 						}

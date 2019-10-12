@@ -3,10 +3,10 @@ package es.urjc.practica_2019.ZeroGravity.Edificios;
 public class CentroOperaciones extends Edificio {
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	private static final int[] nivel1 = { 0, 0, 0, 0 };
-	private static final int[] nivel2 = { 0, 0, 0, 0 };
-	private static final int[] nivel3 = { 0, 0, 0, 0 };
-	private static final int[][] costs = { nivel1, nivel2, nivel3 };
+	public static final int[] NIVEL1 = { 1, 0, 0, 0 };
+	public static final int[] NIVEL2 = { 2, 0, 0, 0 };
+	public static final int[] NIVEL3 = { 3, 0, 0, 0 };
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 
 	public CentroOperaciones(int x, int y, Edificio depends, int id) {
 
@@ -28,18 +28,6 @@ public class CentroOperaciones extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroOperaciones";
-	}
-
-	@Override
-	public void levelUp() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void showMenu() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void mostrarMisiones() {

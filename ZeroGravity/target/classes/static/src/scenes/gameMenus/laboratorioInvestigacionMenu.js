@@ -1,20 +1,21 @@
-class CentroOperacionesMenu extends Phaser.Scene {
+class LaboratorioInvestigacionMenu extends Phaser.Scene {
 
 	constructor() {
         super({
-            key: "CentroOperacionesMenu",
+            key: 'LaboratorioInvestigacionMenu',
         });
     }
 
     init(data) {
     	if (game.global.DEBUG_MODE) {
-			console.log("[DEBUG] Entering **CENTRO DE OPERACIONES** menu");
-		}
+			console.log("[DEBUG] Entering **LABORATORIO_INVESTIGACION** menu");
+		} 	
     }
     
     preload () {
     	
     }
+    
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
     	
@@ -32,7 +33,7 @@ class CentroOperacionesMenu extends Phaser.Scene {
     		if(!game.global.construyendo){
 				game.scene.pause();
 				data.miEdificio.move();
-				game.scene.stop('CentroOperacionesMenu');
+				game.scene.stop('LaboratorioInvestigacionMenu');
 				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});

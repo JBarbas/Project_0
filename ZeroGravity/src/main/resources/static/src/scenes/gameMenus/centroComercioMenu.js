@@ -1,20 +1,21 @@
-class CentroOperacionesMenu extends Phaser.Scene {
+class CentroComercioMenu extends Phaser.Scene {
 
 	constructor() {
         super({
-            key: "CentroOperacionesMenu",
+            key: 'CentroComercioMenu',
         });
     }
 
     init(data) {
     	if (game.global.DEBUG_MODE) {
-			console.log("[DEBUG] Entering **CENTRO DE OPERACIONES** menu");
-		}
+			console.log("[DEBUG] Entering **CENTRO_COMERCIO** menu");
+		} 	
     }
     
     preload () {
     	
     }
+    
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
     	
@@ -32,7 +33,7 @@ class CentroOperacionesMenu extends Phaser.Scene {
     		if(!game.global.construyendo){
 				game.scene.pause();
 				data.miEdificio.move();
-				game.scene.stop('CentroOperacionesMenu');
+				game.scene.stop('CentroComercioMenu');
 				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});

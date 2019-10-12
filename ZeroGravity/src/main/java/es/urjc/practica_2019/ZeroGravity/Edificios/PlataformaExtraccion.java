@@ -20,16 +20,16 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	private static final int[] nivel1 = { 1, 0, 0, 0 };
-	private static final int[] nivel2 = { 2, 0, 0, 0 };
-	private static final int[] nivel3 = { 3, 0, 0, 0 };
-	private static final int[][] costs = { nivel1, nivel2, nivel3 };
-
-	// Establecemos los recursos que generan según su nivel (unidades, duracion en mins)
-	private final static int[] recursosNivel1 = { 4, 20 };
-	private final static int[] recursosNivel2 = { 0, 0 };
-	private final static int[] recursosNivel3 = { 0, 0 };
-	private final static int[][] recursosGenerados = { recursosNivel1, recursosNivel2, recursosNivel3 };
+	public static final int[] NIVEL1 = { 1, 0, 0, 0 };
+	public static final int[] NIVEL2 = { 2, 0, 0, 0 };
+	public static final int[] NIVEL3 = { 3, 0, 0, 0 };
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
+	
+	//Establecemos los recursos que generan según su nivel
+	private final static int[] RECURSOS_NIVEL1 = {0, 0};
+	private final static int[] RECURSOS_NIVEL2 = {0, 0};
+	private final static int[] RECURSOS_NIVEL3 = {0, 0};
+	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3};
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
@@ -46,6 +46,18 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		this.sprite = "plataformaExtraccion";
 		this.producir();
 	}
+
+public PlataformaExtraccion(int id) {
+	
+	this.player = null;
+	this.id = id;
+	this.height = 1;
+	this.width = 1;
+	this.level = 1;
+	this.buildingDependsOn = null;
+	this.sprite = "plataformaExtraccion";
+	this.producir();
+}
 
 	public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id, boolean lleno, boolean produciendo, Document date) {
 		
@@ -73,18 +85,6 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 	}
 
 	@Override
-	public void levelUp() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showMenu() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
 	public void producir() {
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "EDIFICIO PRODUCIENDO");
@@ -103,7 +103,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		callback.start();
 		switch (this.level) {
 		case 1:
-			task = new Task(this.player, this.recursosNivel1[1], msg, callback);
+			task = new Task(this.player, this.RECURSOS_NIVEL1[1], msg, callback);
 			break;
 		case 2:
 			break;
@@ -148,13 +148,13 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			msg.put("event", "CERAMICA RECOLECTADA");
 			switch (this.level) {
 			case 1:
-				player.setCeramica(player.getCeramica() + this.recursosNivel1[0]);
+				player.setCeramica(player.getCeramica() + this.RECURSOS_NIVEL1[0]);
 				break;
 			case 2:
-				player.setCeramica(player.getCeramica() + this.recursosNivel2[0]);
+				player.setCeramica(player.getCeramica() + this.RECURSOS_NIVEL2[0]);
 				break;
 			case 3:
-				player.setCeramica(player.getCeramica() + this.recursosNivel3[0]);
+				player.setCeramica(player.getCeramica() + this.RECURSOS_NIVEL3[0]);
 				break;
 			default:
 				break;

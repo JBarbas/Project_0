@@ -146,12 +146,180 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				
 			case "LEVELUP_BUILDING":
 				Edificio edificio = player.getEdificio(node.get("id").asInt());
+				Boolean canILevelUp = false;
 				switch(edificio.getSprite()) {
 				
-				case"taller":
-					//energia, metal, ceramica, creditos
-					Boolean canILevelUp = false;
+				case "bloqueViviendas":
 					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= BloqueViviendas.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= BloqueViviendas.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= BloqueViviendas.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= BloqueViviendas.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - BloqueViviendas.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - BloqueViviendas.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - BloqueViviendas.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - BloqueViviendas.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "centroAdministrativo":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - CentroAdministrativo.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - CentroAdministrativo.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - CentroAdministrativo.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - CentroAdministrativo.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "centroComercio":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= CentroComercio.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= CentroComercio.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= CentroComercio.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= CentroComercio.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - CentroComercio.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - CentroComercio.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - CentroComercio.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - CentroComercio.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "centroMando":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= CentroMando.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= CentroMando.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= CentroMando.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= CentroMando.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - CentroMando.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - CentroMando.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - CentroMando.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - CentroMando.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "centroOperaciones":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= CentroOperaciones.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= CentroOperaciones.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= CentroOperaciones.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= CentroOperaciones.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - CentroOperaciones.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - CentroOperaciones.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - CentroOperaciones.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - CentroOperaciones.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "generador":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= Generador.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= Generador.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= Generador.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= Generador.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - Generador.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - Generador.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - Generador.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - Generador.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "laboratorioInvestigacion":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "plataformaExtraccion":
+					
+					//energia, metal, ceramica, creditos
+					if(	player.getEnergia() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][0] &&
+					player.getMetal() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][1] &&
+					player.getCeramica() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][2] &&
+					player.getCreditos() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][3] &&
+					edificio.getLevel() < 3){
+						
+						canILevelUp = true;
+						player.setEnergia(player.getEnergia() - PlataformaExtraccion.COSTS[edificio.getLevel()-1][0]);
+						player.setMetal(player.getMetal() - PlataformaExtraccion.COSTS[edificio.getLevel()-1][1]);
+						player.setCeramica(player.getCeramica() - PlataformaExtraccion.COSTS[edificio.getLevel()-1][2]);
+						player.setCreditos(player.getCreditos() - PlataformaExtraccion.COSTS[edificio.getLevel()-1][3]);
+						edificio.levelUp();
+						player.saveEdificios();
+						player.saveRecursos();
+						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
+					}
+					break;
+					
+				case "taller":
+					
+					//energia, metal, ceramica, creditos
 					if(	player.getEnergia() >= Taller.COSTS[edificio.getLevel()-1][0] &&
 						player.getMetal() >= Taller.COSTS[edificio.getLevel()-1][1] &&
 						player.getCeramica() >= Taller.COSTS[edificio.getLevel()-1][2] &&
@@ -168,22 +336,21 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.saveRecursos();
 						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
 					}
-					
-					msg.put("event", "ANSWER_LEVELUP_BUILDING");
-					msg.put("resultado", canILevelUp.toString());
-					msg.put("id", node.get("id").asInt());
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
 					break;
-					
+								
 				default:
 					break;
 				}
+				msg.put("event", "ANSWER_LEVELUP_BUILDING");
+				msg.put("resultado", canILevelUp.toString());
+				msg.put("id", node.get("id").asInt());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
-
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
 				break;
+				
 			case "BUY CELL":
 				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
 				updateInfo(player, "REFRESH GRID");
