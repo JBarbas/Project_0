@@ -175,6 +175,21 @@ public class Player {
 		this.colonosMax = colonosMax;
 	}
 
+	public void requestColonos() {
+		getJobs();
+		while (colonosMax - colonos > 0 && puestosTrabajo > 0) {
+			for (GeneradorRecursos g : generadoresRecursos) {
+				if (g.getJobs() >= 1) {
+					g.addColono();
+					colonos++;
+					puestosTrabajo--;
+					break;
+				}
+			}
+		}
+		saveRecursos();
+	}
+	
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 		int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);
@@ -200,6 +215,14 @@ public class Player {
 	
 	public int[][] getGrid() {
 		return this.grid;
+	}
+	
+	public int getJobs() {
+		puestosTrabajo = 0;
+		for (GeneradorRecursos g : generadoresRecursos) {
+			puestosTrabajo += g.getJobs();
+		}
+		return puestosTrabajo;
 	}
 	
 	public int getCosteCelda() {
@@ -281,10 +304,12 @@ public class Player {
 				break;
 			case "taller":
 				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
+				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			default:
@@ -381,6 +406,7 @@ public class Player {
 			if (e instanceof GeneradorRecursos) {
 				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
 				dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
+				dbEdificio.append("colonos", ((GeneradorRecursos) e).getColonos());
 				Document productionBeginTime = new Document();
 				productionBeginTime.append("year", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
 				productionBeginTime.append("month", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());

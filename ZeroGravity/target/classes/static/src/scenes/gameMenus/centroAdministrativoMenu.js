@@ -13,10 +13,16 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     }
     
     preload () {
-    	
+    	let msg = new Object();
+		msg.event = 'GET JOBS';
+		game.global.socket.send(JSON.stringify(msg));
     }
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
+    	
+    	this.puestosTrabajo = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	let viviendas = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
+    	this.viviendas = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 230, "Viviendas disponibles: " + viviendas, { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
@@ -52,6 +58,28 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     			game.global.expandiendo = true;
     			game.scene.stop('CentroAdministrativoMenu');
     			setTimeout(function(){ game.global.inMenu = false; }, 500);
+    		}
+    	});
+    	
+    	this.colonos = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 600, 'btnColonos').setInteractive();
+    	this.colonos.alpha = 0.5;
+    	this.colonos.canRequest = false;
+    	
+    	this.colonos.on('pointerover',function(pointer){
+    		if (this.canRequest) {
+    			this.setFrame(1);
+    		}
+    	})
+
+    	this.colonos.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	})
+    	
+    	this.colonos.on('pointerdown', function(pointer, localX, localY, event){
+    		if (this.canRequest) {
+	    		let msg = new Object();
+	    		msg.event = 'PEDIR COLONOS';
+	    		game.global.socket.send(JSON.stringify(msg));
     		}
     	});
     	

@@ -37,6 +37,7 @@ class PreloadGameScene extends Phaser.Scene {
 		//Botones
 		this.load.spritesheet('btnMover', 'assets/sprites/Edificios/btnMover.png', {frameWidth:256,frameHeight:64});
 		this.load.spritesheet('btnExpandir', 'assets/sprites/Edificios/btnExpandir.png', {frameWidth:256,frameHeight:64});
+		this.load.spritesheet('btnColonos', 'assets/sprites/Edificios/btnColonos.png', {frameWidth:256,frameHeight:64});
 		
 		//Interfaz
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');

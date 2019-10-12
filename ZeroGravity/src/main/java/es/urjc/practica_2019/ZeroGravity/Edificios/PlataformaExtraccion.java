@@ -25,10 +25,10 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 	private static final int[] nivel3 = { 3, 0, 0, 0 };
 	private static final int[][] costs = { nivel1, nivel2, nivel3 };
 
-	// Establecemos los recursos que generan según su nivel (unidades, duracion en mins)
-	private final static int[] recursosNivel1 = { 4, 20 };
-	private final static int[] recursosNivel2 = { 0, 0 };
-	private final static int[] recursosNivel3 = { 0, 0 };
+	// Establecemos los recursos que generan según su nivel (unidades, duracion en mins, colonos necesarios)
+	private final static int[] recursosNivel1 = { 4, 20, 1};
+	private final static int[] recursosNivel2 = { 99, 330, 2};
+	private final static int[] recursosNivel3 = { 225, 615, 3};
 	private final static int[][] recursosGenerados = { recursosNivel1, recursosNivel2, recursosNivel3 };
 	
 	private ObjectMapper mapper = new ObjectMapper();
@@ -85,37 +85,42 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 	}
 	
 	@Override
+	public void addColono() {
+		this.setColonos(this.getColonos() + 1);
+		if (this.getColonos() >= this.recursosGenerados[this.level-1][2]) {
+			producir();
+		}
+	}
+	
+	@Override
+	public String getColonosString() {
+		return this.getColonos() + "/" + this.recursosGenerados[this.level-1][2];
+	}
+	
+	@Override
 	public void producir() {
-		ObjectNode msg = mapper.createObjectNode();
-		msg.put("event", "EDIFICIO PRODUCIENDO");
-		msg.put("id", this.id);
-		try {
-			if (player.getSession().isOpen()) {				
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+		if (this.getColonos() >= this.recursosGenerados[this.level-1][2]) {
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "EDIFICIO PRODUCIENDO");
+			msg.put("id", this.id);
+			try {
+				if (player.getSession().isOpen()) {				
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+			} catch (IOException e) {
+				System.err.println("Exception sending message " + msg.toString());
+				e.printStackTrace(System.err);
 			}
-		} catch (IOException e) {
-			System.err.println("Exception sending message " + msg.toString());
-			e.printStackTrace(System.err);
+			msg.put("event", "EDIFICIO LLENO");
+			Task task = null;
+			Thread callback = new Thread(() -> this.callbackProducir());
+			callback.start();
+			task = new Task(this.player, this.recursosGenerados[this.level-1][1], msg, callback);
+			TASKMASTER.addTask(task);
+			this.setProduciendo(true);
+			this.setProductionBeginTime(task.getBeginDate());
+			player.saveEdificios();
 		}
-		msg.put("event", "EDIFICIO LLENO");
-		Task task = null;
-		Thread callback = new Thread(() -> this.callbackProducir());
-		callback.start();
-		switch (this.level) {
-		case 1:
-			task = new Task(this.player, this.recursosNivel1[1], msg, callback);
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		default:
-			break;
-		}
-		TASKMASTER.addTask(task);
-		this.setProduciendo(true);
-		this.setProductionBeginTime(task.getBeginDate());
-		player.saveEdificios();
 	}
 	
 	@Override
@@ -146,19 +151,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			this.setLleno(false);	
 			ObjectNode msg = mapper.createObjectNode();			
 			msg.put("event", "CERAMICA RECOLECTADA");
-			switch (this.level) {
-			case 1:
-				player.setCeramica(player.getCeramica() + this.recursosNivel1[0]);
-				break;
-			case 2:
-				player.setCeramica(player.getCeramica() + this.recursosNivel2[0]);
-				break;
-			case 3:
-				player.setCeramica(player.getCeramica() + this.recursosNivel3[0]);
-				break;
-			default:
-				break;
-			}
+			player.setCeramica(player.getCeramica() + this.recursosGenerados[this.level-1][0]);
 			msg.put("ceramica", player.getCeramica());
 			try {	
 				if (player.getSession().isOpen()) {				
@@ -170,5 +163,10 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			}
 			this.producir();
 		}
+	}
+	
+	@Override
+	public int getJobs() {
+		return this.recursosGenerados[this.level-1][2] - this.getColonos();
 	}
 }
