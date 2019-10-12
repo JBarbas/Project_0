@@ -25,6 +25,8 @@ class CentroMandoMenu extends Phaser.Scene {
     	this.taller.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('taller'); });
     	this.plataformaExtraccion = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 590, 'plataformaExtraccion').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.plataformaExtraccion.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('plataformaExtraccion'); });
+    	this.bloqueViviendas = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 720, 'bloqueViviendas').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.bloqueViviendas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('bloqueViviendas'); });
     
     	
     	function aux(edificioCons){
@@ -43,6 +45,9 @@ class CentroMandoMenu extends Phaser.Scene {
     				break;
     			case 'plataformaExtraccion':
     				edificio = new PlataformaExtraccion(0, 0);
+    				break;
+    			case 'bloqueViviendas':
+    				edificio = new BloqueViviendas(0, 0);
     				break;
     			default:
     				break;

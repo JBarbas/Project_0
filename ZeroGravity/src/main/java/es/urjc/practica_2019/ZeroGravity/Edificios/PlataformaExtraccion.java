@@ -123,6 +123,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
+			System.out.println("Plataforma de Extracción " + id + " ha producido");
 			if (this.player.getSession().isOpen()) {
 				this.setLleno(true);
 				this.setProduciendo(false);

@@ -67,6 +67,8 @@ public class TaskMaster {
 						}
 					}
 					
+					System.out.println("Producido");
+					
 					// Ejecuta una callback en caso de que ésta se haya definido
 					if (t.getCallback() != null) {
 						t.getCallback().interrupt();

@@ -74,10 +74,10 @@ public class GeneradorRecursos extends Edificio {
 	}
 	
 	public void addColono() {
-		
+		colonos++;
 	}
 	
 	public void quitarColono() {
-		
+		colonos--;
 	}
 }

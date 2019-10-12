@@ -123,6 +123,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
@@ -238,6 +239,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			msg.put("ceramica", player.getCeramica());
 			msg.put("creditos", player.getCreditos());
 			msg.put("unionCoins", player.getUnionCoins());
+			msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 			// Enviamos el mensaje al cliente
 			player.getSession().sendMessage(new TextMessage(msg.toString()));
 		} catch (Exception e) {

@@ -29,6 +29,7 @@ window.onload = function() {
 				  		GameInterface,
 				  		CentroMandoMenu,
 				  		CentroOperacionesMenu,
+				  		BloqueViviendasMenu,
 				  		CentroAdministrativoMenu,
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu]
@@ -119,6 +120,9 @@ window.onload = function() {
 				case 'centroAdministrativo':
 					edificio = new CentroAdministrativo(e.x, e.y);
 					break;
+				case 'bloqueViviendas':
+					edificio = new BloqueViviendas(e.x, e.y);
+					break;
 				case 'taller':
 					edificio = new Taller(e.x, e.y);
 					break;
@@ -157,6 +161,9 @@ window.onload = function() {
 					case 'centroAdministrativo':
 						edificio = new CentroAdministrativo(e.x, e.y);
 						break;
+					case 'bloqueViviendas':
+						edificio = new BloqueViviendas(e.x, e.y);
+						break;
 					case 'taller':
 						edificio = new Taller(e.x, e.y);
 						break;
@@ -179,6 +186,7 @@ window.onload = function() {
 			game.global.resources.ceramica = msg.ceramica;
 			game.global.resources.creditos = msg.creditos;
 			game.global.resources.unionCoins = msg.unionCoins;
+			game.global.resources.colonos = msg.colonos;
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		
@@ -192,6 +200,7 @@ window.onload = function() {
 			game.global.resources.ceramica = msg.ceramica;
 			game.global.resources.creditos = msg.creditos;
 			game.global.resources.unionCoins = msg.unionCoins;
+			game.global.resources.colonos = msg.colonos;
 			break;
 			
 		case 'EDIFICIO PRODUCIENDO':

@@ -7,8 +7,8 @@ public class BloqueViviendas extends Edificio {
 	private static final int[] nivel2 = { 2, 0, 0, 0 };
 	private static final int[] nivel3 = { 3, 0, 0, 0 };
 	private static final int[][] costs = { nivel1, nivel2, nivel3 };
-
-	private int capacidad;
+	private static final int[] capacidad = {5, 10, 15};
+	
 	private int colonos;
 
 	public BloqueViviendas(int x, int y, Edificio depends, int id) {
@@ -16,19 +16,15 @@ public class BloqueViviendas extends Edificio {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.height = 0;
-		this.width = 0;
+		this.height = 1;
+		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "bloqueViviendas";
 	}
 
 	public int getCapacidad() {
-		return capacidad;
-	}
-
-	public void setCapacidad(int capacidad) {
-		this.capacidad = capacidad;
+		return capacidad[level-1];
 	}
 
 	public int getColonos() {

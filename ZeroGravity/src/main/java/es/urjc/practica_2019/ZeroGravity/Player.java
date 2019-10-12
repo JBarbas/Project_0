@@ -38,6 +38,8 @@ public class Player {
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
 	private AtomicInteger edificioId = new AtomicInteger(0);
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
+	private LinkedList<GeneradorRecursos> generadoresRecursos = new LinkedList<>();
+	private LinkedList<BloqueViviendas> viviendas = new LinkedList<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
 	private int energia = 100;
@@ -45,6 +47,9 @@ public class Player {
 	private int ceramica = 100;	
 	private int creditos = 1000;
 	private int unionCoins = 100;
+	private int colonos = 0;
+	private int colonosMax = 0;
+	private int puestosTrabajo = 0;
 	
 	private int costeCelda = 100;
 	private int celdasCompradas = 0;
@@ -154,6 +159,22 @@ public class Player {
 		this.unionCoins = unionCoins;
 	}
 
+	public int getColonos() {
+		return colonos;
+	}
+
+	public void setColonos(int colonos) {
+		this.colonos = colonos;
+	}
+
+	public int getColonosMax() {
+		return colonosMax;
+	}
+
+	public void setColonosMax(int colonosMax) {
+		this.colonosMax = colonosMax;
+	}
+
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 		int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);
@@ -253,11 +274,18 @@ public class Player {
 			case "centroAdministrativo":
 				edificio = new CentroAdministrativo(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
+			case "bloqueViviendas":
+				edificio = new BloqueViviendas(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				colonosMax += ((BloqueViviendas) edificio).getCapacidad();
+				viviendas.add((BloqueViviendas) edificio);
+				break;
 			case "taller":
 				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
+				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			default:
 				break;
@@ -281,11 +309,18 @@ public class Player {
 			case "centroAdministrativo":
 				edificio = new CentroAdministrativo(x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
+			case "bloqueViviendas":
+				edificio = new BloqueViviendas(x, y, this.centroMando, edificioId.incrementAndGet());
+				colonosMax += ((BloqueViviendas) edificio).getCapacidad();
+				viviendas.add((BloqueViviendas) edificio);
+				break;
 			case "taller":
 				edificio = new Taller(x, y, this.centroMando, edificioId.incrementAndGet());
+				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			default:
 				break;
@@ -372,6 +407,9 @@ public class Player {
 				.append("creditos", this.creditos)
 				.append("unionCoins", this.unionCoins)
 				.append("costeCelda", this.costeCelda)
-				.append("celdasCompradas", this.celdasCompradas)));
+				.append("celdasCompradas", this.celdasCompradas)
+				.append("colonos", this.colonos)
+				.append("colonosMax", this.colonosMax)
+				.append("puestosTrabajo", this.puestosTrabajo)));
 	}
 }
