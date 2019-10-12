@@ -232,6 +232,7 @@ window.onload = function() {
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
 					game.global.edificios.get(msg.id).inicioProduccion = Date.now();
+					game.global.edificios.get(msg.id).produciendo = true;
 				}
 			}
 
@@ -259,6 +260,7 @@ window.onload = function() {
 			}
 			let edificioLleno = game.global.edificios.get(msg.id);
 			edificioLleno.lleno = true;
+			game.global.edificios.get(msg.id).produciendo = false;
 			edificioLleno.build(game.scene.getScene('GameScene'));
 			break;
 			
@@ -269,7 +271,45 @@ window.onload = function() {
 			}
 			game.global.resources.ceramica = msg.ceramica;
 			break;
-			
+		case 'PLATAFORMA EXTRACCION MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] PLATAFORMA EXTRACCION MENU message recieved');
+				console.dir(msg);
+			}
+			game.scene.getScene("PlataformaExtraccionMenu").colonos.text = "Colonos: " + msg.colonos;
+			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
+				game.global.edificios.get(msg.id).produciendo = true;
+			}
+			else {
+				game.global.edificios.get(msg.id).produciendo = false;
+			}
+			break;
+		case 'JOBS':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] JOBS message recieved');
+				console.dir(msg);
+			}
+			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = "Puestos de trabajo disponibles: " + msg.jobs;
+			let viviendas = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
+			if (msg.jobs >= 1 && viviendas >= 1) {
+				game.scene.getScene("CentroAdministrativoMenu").colonos.canRequest = true;
+				game.scene.getScene("CentroAdministrativoMenu").colonos.alpha = 1;
+			}
+			break;
+		case 'ENVIO DE COLONOS':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] ENVIO DE COLONOS message recieved');
+				console.dir(msg);
+			}
+			game.global.resources.colonos = msg.colonos;
+			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = "Puestos de trabajo disponibles: " + msg.jobs;
+			let viviendas2 = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
+			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = "Viviendas disponibles: " + viviendas2;
+			if (msg.jobs < 1 || viviendas2 < 1) {
+				game.scene.getScene("CentroAdministrativoMenu").colonos.canRequest = false;
+				game.scene.getScene("CentroAdministrativoMenu").colonos.alpha = 0.5;
+			}
+			break;
 		case 'CREDITOS INSUFICIENTES':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] CREDITOS INSUFICIENTES message recieved');

@@ -25,6 +25,10 @@ public class GeneradorRecursos extends Edificio {
 		return colonos;
 	}
 
+	public String getColonosString() {
+		return colonos + "/" + colonos;
+	}
+	
 	public void setColonos(int colonos) {
 		this.colonos = colonos;
 	}
@@ -79,5 +83,9 @@ public class GeneradorRecursos extends Edificio {
 	
 	public void quitarColono() {
 		colonos--;
+	}
+
+	public int getJobs() {
+		return 0;
 	}
 }

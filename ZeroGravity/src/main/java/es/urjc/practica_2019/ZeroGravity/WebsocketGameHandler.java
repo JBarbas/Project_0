@@ -88,13 +88,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.updateGrid((Collection<Document>) myPlayer.get("grid"));
 					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
 					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
-					player.setEnergia(myPlayer.getInteger("energia"));
-					player.setMetal(myPlayer.getInteger("metal"));
-					player.setCeramica(myPlayer.getInteger("ceramica"));
-					player.setCreditos(myPlayer.getInteger("creditos"));
-					player.setUnionCoins(myPlayer.getInteger("unionCoins"));
-					player.setCosteCelda(myPlayer.getInteger("costeCelda"));
-					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas"));
+					player.setEnergia(myPlayer.getInteger("energia", 0));
+					player.setMetal(myPlayer.getInteger("metal", 100));
+					player.setCeramica(myPlayer.getInteger("ceramica", 100));
+					player.setCreditos(myPlayer.getInteger("creditos", 1000));
+					player.setUnionCoins(myPlayer.getInteger("unionCoins", 0));
+					player.setCosteCelda(myPlayer.getInteger("costeCelda", 0));
+					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas", 0));
+					player.setColonos(myPlayer.getInteger("colonos", 0));
 
 					msg.put("event", "LOGGED");
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -350,10 +351,27 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
 				break;
-				
+			case "GET PLATAFORMA EXTRACCION MENU":
+				msg.put("event", "PLATAFORMA EXTRACCION MENU");
+				msg.put("id", node.get("id").asInt());
+				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET JOBS":
+				msg.put("event", "JOBS");
+				msg.put("jobs", player.getJobs());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "BUY CELL":
 				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
 				updateInfo(player, "REFRESH GRID");
+				break;
+			case "PEDIR COLONOS":
+				player.requestColonos();
+				msg.put("event", "ENVIO DE COLONOS");
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
+				msg.put("jobs", player.getJobs());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			default:
 				break;

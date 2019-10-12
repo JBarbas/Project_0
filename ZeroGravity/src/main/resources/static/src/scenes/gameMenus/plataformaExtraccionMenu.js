@@ -10,6 +10,10 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **Plataforma de Extraccion** menu");
 		}
+    	let msg = new Object();
+		msg.event = 'GET PLATAFORMA EXTRACCION MENU';
+		msg.id = data.miEdificio.id;
+		game.global.socket.send(JSON.stringify(msg));
     }
     
     preload () {
@@ -20,8 +24,10 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	
     	this.miEdificio = data.miEdificio;
     	
+    	this.colonos = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	
     	this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
-    	this.timeLeftText = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	this.timeLeftText = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 230, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
@@ -67,15 +73,21 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     }
     	
     update(time, delta) {
-    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
-    	if (this.miEdificio.lleno) {
-    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.level-1][0] + ' unidades de cerámica listas para recolectar';
-    	}
-    	else if (this.timeLeft < 1) {
-    		this.timeLeftText.text = 'Almacenando la cerámica...';
+    	if (this.miEdificio.produciendo) {
+	    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
+	    	if (this.miEdificio.lleno) {
+	    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.level-1][0] + ' unidades de cerámica listas para recolectar';
+	    	}
+	    	else if (this.timeLeft < 1) {
+	    		this.timeLeftText.text = 'Almacenando la cerámica...';
+	    	}
+	    	else {
+	    		this.timeLeftText.text = 'Quedan ' + this.timeLeft + ' minutos';
+	    	}
+	    	this.timeLeftText.visible = !this.miEdificio.lleno;
     	}
     	else {
-    		this.timeLeftText.text = 'Quedan ' + this.timeLeft + ' minutos';
+    		this.timeLeftText.visible = false;
     	}
     	this.timeLeftText.visible = !this.miEdificio.lleno;
     	
