@@ -47,9 +47,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
-    	
-    	this.miEdificio = data.miEdificio;
-    	
+    	    	
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){
     	
