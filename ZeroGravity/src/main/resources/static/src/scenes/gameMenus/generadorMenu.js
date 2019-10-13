@@ -18,7 +18,6 @@ class GeneradorMenu extends Phaser.Scene {
     
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
-    	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
     	mover.on('pointerover',function(pointer){

@@ -9,6 +9,7 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.sprite = 'laboratorioInvestigacion';
 		super.menuScene = 'LaboratorioInvestigacionMenu';
 		super.resourceSprite = '';
+		super.originX = 0.67;
 		this.recursos = [[0, 0],
 						[0, 0],
 						[0, 0]];
