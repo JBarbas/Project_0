@@ -43,6 +43,22 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     		}
     	});
     	
+    	var cerrar = this.add.image(game.global.buildingMenu.x + 5, game.global.buildingMenu.y + 5, 'btnCerrar').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	
+    	cerrar.on('pointerover',function(pointer){
+    	    this.setFrame(1);
+    	})
+
+    	cerrar.on('pointerout',function(pointer){
+    	    this.setFrame(0);
+    	})
+    	
+    	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+			game.scene.stop(data.miEdificio.menuScene);
+			game.global.inMenu = false;
+    	});
+    	
     	var expandir = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 700, 'btnExpandir').setInteractive();
     	
     	expandir.on('pointerover',function(pointer){

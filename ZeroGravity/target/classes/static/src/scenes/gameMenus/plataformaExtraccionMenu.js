@@ -47,6 +47,22 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
+    	
+    	var cerrar = this.add.image(game.global.buildingMenu.x + 5, game.global.buildingMenu.y + 5, 'btnCerrar').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	
+    	cerrar.on('pointerover',function(pointer){
+    	    this.setFrame(1);
+    	})
+
+    	cerrar.on('pointerout',function(pointer){
+    	    this.setFrame(0);
+    	})
+    	
+    	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+			game.scene.stop(data.miEdificio.menuScene);
+			game.global.inMenu = false;
+    	});
     	    	
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){

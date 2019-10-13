@@ -209,11 +209,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						edificio.levelUp();
 						player.saveEdificios();
 						player.saveRecursos();
-						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
 					}
 					break;
 					
-				case "centroMando":
+				case "centroDeMando":
 					
 					//energia, metal, ceramica, creditos
 					if(	player.getEnergia() >= CentroMando.COSTS[edificio.getLevel()-1][0] &&
@@ -230,7 +229,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						edificio.levelUp();
 						player.saveEdificios();
 						player.saveRecursos();
-						System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
 					}
 					break;
 					
