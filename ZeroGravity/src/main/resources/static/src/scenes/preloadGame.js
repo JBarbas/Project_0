@@ -42,12 +42,18 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnExpandir', 'assets/sprites/Edificios/btnExpandir.png', {frameWidth:256,frameHeight:64});
 		this.load.spritesheet('btnSubirNivel', 'assets/sprites/Edificios/btnNivel.png', {frameWidth:256,frameHeight:64});
 		this.load.spritesheet('btnColonos', 'assets/sprites/Edificios/btnColonos.png', {frameWidth:256,frameHeight:64});
+		this.load.spritesheet('btnOpciones', 'assets/interface/Gameplay/btnOpcionesSprite.png', {frameWidth:78,frameHeight:78});
 
 		
 		//Interfaz
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
+		this.load.image('intPrincipal', 'assets/interface/Gameplay/Principal.png');
+		this.load.image('intMision', 'assets/interface/Gameplay/btnMision.png');
+		this.load.image('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png');
+		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
+		
 		
 		//Iconos
 		this.load.image('clayIcon', 'assets/sprites/stone.png');

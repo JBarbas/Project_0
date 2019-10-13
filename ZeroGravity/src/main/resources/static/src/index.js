@@ -61,6 +61,36 @@ window.onload = function() {
 			width: 584,
 			height: 908
 		},
+		intPrincipal:{
+			x: 0,
+			y: 0,
+			width: 1920,
+			height: 1080
+		},
+		btnMision:{
+			x: 0,
+			y: 310,
+			width: 110,
+			height: 117
+		},
+		btnAnuncios:{
+			x: 0,
+			y: 427,
+			width: 110,
+			height: 117
+		},
+		btnRanking:{
+			x: 0,
+			y: 544,
+			width: 110,
+			height: 117
+		},
+		btnOpciones:{
+			x: 1870,
+			y: 50,
+			width: 78,
+			height: 78
+		},
 		resources: {}
 	}
 	
