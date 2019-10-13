@@ -3,7 +3,11 @@ Implementation-Title: ZeroGravity
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: jbarb
 Implementation-Vendor-Id: es.urjc.practica_2019
+<<<<<<< HEAD
 Build-Jdk: 1.8.0_191
+=======
+Build-Jdk: 1.8.0_221
+>>>>>>> 7cb7e5a6ebe0cf1c670112c3a387ac56e958d046
 Implementation-URL: http://maven.apache.org
 Created-By: Maven Integration for Eclipse
 

@@ -105,6 +105,12 @@ window.onload = function() {
 			width: 78,
 			height: 78
 		},
+		btnAnuncio:{
+			x: 1350,
+			y: 800,
+			width: 300,
+			height: 54
+		},
 		resources: {}
 	}
 	
