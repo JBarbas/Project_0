@@ -70,7 +70,7 @@ window.onload = function() {
 		inMenu : false,
 		menu : null,
 		buildingMenu: {
-			x: 1220,
+			x: 1280,
 			y: 120,
 			width: 584,
 			height: 908

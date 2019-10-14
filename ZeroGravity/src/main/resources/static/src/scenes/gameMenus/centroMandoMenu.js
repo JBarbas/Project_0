@@ -16,7 +16,13 @@ class CentroMandoMenu extends Phaser.Scene {
     	
     }
     create (data)  {
-    	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0);     	
+    	this.intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
+    	this.intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
+    	this.intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0); 
+    	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
+    	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
+    	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
+    	
     	this.centroOperaciones = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 200, 'centroOperaciones').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.centroOperaciones.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
     	this.centroAdministrativo = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'centroAdministrativo').setOrigin(0.5, 1).setScale(0.65, 0.65);
@@ -33,7 +39,6 @@ class CentroMandoMenu extends Phaser.Scene {
     	this.centroComercio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroComercio'); });
     	this.laboratorioInvestigacion = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 570, 'laboratorioInvestigacion').setOrigin(0.5, 1)
     	this.laboratorioInvestigacion.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('laboratorioInvestigacion'); });
-    
     	
     	function aux(edificioCons){
     		
@@ -97,7 +102,8 @@ class CentroMandoMenu extends Phaser.Scene {
     		}
     	});
     	
-    	var cerrar = this.add.image(game.global.buildingMenu.x + 5, game.global.buildingMenu.y + 5, 'btnCerrar').setInteractive();
+    	var cerrar = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 60, 'xBuilding').setInteractive();
+   
     	cerrar.setOrigin(0, 0);
     	
     	cerrar.on('pointerover',function(pointer){

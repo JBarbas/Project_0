@@ -18,7 +18,9 @@ class BloqueViviendasMenu extends Phaser.Scene {
     create (data)  {
     	
     	//movimiento
-    	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
+    	this.intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
+    	this.intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
+    	this.intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0); 
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
@@ -39,7 +41,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
     		}
     	});
     	
-    	var cerrar = this.add.image(game.global.buildingMenu.x + 5, game.global.buildingMenu.y + 5, 'btnCerrar').setInteractive();
+    	var cerrar = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 60, 'xBuilding').setInteractive();
     	cerrar.setOrigin(0, 0);
     	
     	cerrar.on('pointerover',function(pointer){
