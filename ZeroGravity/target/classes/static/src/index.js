@@ -48,7 +48,8 @@ window.onload = function() {
 				  		GeneradorMenu,
 				  		LaboratorioInvestigacionMenu,
 				  		PlataformaExtraccionMenu,
-				  		TallerMenu]
+				  		TallerMenu,
+				  		AnuncioMenu]
 			};
 			
 	
