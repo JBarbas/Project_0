@@ -39,6 +39,10 @@ public class BloqueViviendas extends Edificio {
 	public int getColonos() {
 		return colonos;
 	}
+	
+	public String getColonosString() {
+		return colonos + "/" + getCapacidad();
+	}
 
 	public void setColonos(int colonos) {
 		this.colonos = colonos;

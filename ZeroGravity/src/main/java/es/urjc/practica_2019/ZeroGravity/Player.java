@@ -40,13 +40,14 @@ public class Player {
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
 	private LinkedList<GeneradorRecursos> generadoresRecursos = new LinkedList<>();
 	private LinkedList<BloqueViviendas> viviendas = new LinkedList<>();
+	private LinkedList<Generador> generadores = new LinkedList<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
-	private int energia = 100;
+	private int energia = 0;
 	private int metal = 100;
 	private int ceramica = 100;	
 	private int creditos = 1000;
-	private int unionCoins = 100;
+	private int unionCoins = 0;
 	private int colonos = 0;
 	private int colonosMax = 0;
 	private int puestosTrabajo = 0;
@@ -136,6 +137,20 @@ public class Player {
 	}
 
 	public int getEnergia() {
+		energia = 0;
+		for (Generador g : generadores) {
+			energia += g.getEnergy();
+		}
+		
+		int i = 0;
+		for (Edificio e : edificios.values()) {
+			e.setEnergia(0);
+			while (e.needsEnergy() && i < energia) {
+				e.addEnergy();
+				i++;
+			}
+		}
+		
 		return energia;
 	}
 
@@ -187,6 +202,7 @@ public class Player {
 				}
 			}
 		}
+		saveEdificios();
 		saveRecursos();
 	}
 	
@@ -313,7 +329,10 @@ public class Player {
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "generador":
-				edificio = new Generador(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new Generador(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+				generadoresRecursos.add((GeneradorRecursos) edificio);
+				generadores.add((Generador) edificio);
 				break;
 			case "laboratorioInvestigacion":
 				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
@@ -359,7 +378,9 @@ public class Player {
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "generador":
-				edificio = new Generador(x, y, this.centroMando, edificioId.incrementAndGet());
+				edificio = new Generador(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				generadoresRecursos.add((GeneradorRecursos) edificio);
+				generadores.add((Generador) edificio);
 				break;
 			case "laboratorioInvestigacion":
 				edificio = new LaboratorioInvestigacion(this, x, y, this.centroMando, edificioId.incrementAndGet());

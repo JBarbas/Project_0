@@ -337,12 +337,8 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.scene.getScene("PlataformaExtraccionMenu").colonos.text = "Colonos: " + msg.colonos;
-			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
-				game.global.edificios.get(msg.id).produciendo = true;
-			}
-			else {
-				game.global.edificios.get(msg.id).produciendo = false;
-			}
+			game.scene.getScene("PlataformaExtraccionMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
 			break;
 		case 'LABORATORIO INVESTIGACION MENU':
 			if (game.global.DEBUG_MODE) {
@@ -350,6 +346,22 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.scene.getScene("LaboratorioInvestigacionMenu").colonos.text = "Colonos: " + msg.colonos;
+			game.scene.getScene("LaboratorioInvestigacionMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
+			break;
+		case 'BLOQUE VIVIENDAS MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] BLOQUE VIVIENDAS MENU message recieved');
+				console.dir(msg);
+			}
+			game.scene.getScene("BloqueViviendasMenu").colonos.text = "Colonos: " + msg.colonos;
+			break;
+		case 'GENERADOR MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] GENERADOR MENU message recieved');
+				console.dir(msg);
+			}
+			game.scene.getScene("GeneradorMenu").colonos.text = "Colonos: " + msg.colonos;
 			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 				game.global.edificios.get(msg.id).produciendo = true;
 			}

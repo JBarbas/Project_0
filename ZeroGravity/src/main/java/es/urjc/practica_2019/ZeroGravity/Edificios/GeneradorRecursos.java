@@ -88,4 +88,8 @@ public class GeneradorRecursos extends Edificio {
 	public int getJobs() {
 		return 0;
 	}
+	
+	public boolean getProduciendo() {
+		return produciendo;
+	}
 }

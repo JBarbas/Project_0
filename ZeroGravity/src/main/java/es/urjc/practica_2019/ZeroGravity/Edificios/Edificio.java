@@ -14,6 +14,7 @@ public class Edificio  implements EdificioInterface{
 	protected int level;
 	protected String sprite;
 	protected Edificio buildingDependsOn;	
+	protected int energia;
 	
 	public int[] getPosition() {
 		int[] position = {x, y};
@@ -158,5 +159,21 @@ public class Edificio  implements EdificioInterface{
 	public void showMenu() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean needsEnergy() {
+		return false;
+	}
+	
+	public void addEnergy() {
+		energia++;
+	}
+	
+	public int getEnergia() {
+		return energia;
+	}
+	
+	public void setEnergia(int energia) {
+		this.energia = energia;
 	}
 }

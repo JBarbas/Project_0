@@ -99,8 +99,16 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 	}
 	
 	@Override
+	public void addEnergy() {
+		this.setEnergia(this.getEnergia()+1);
+		if (!this.needsEnergy()) {
+			this.producir();
+		}
+	}
+	
+	@Override
 	public void producir() {
-		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2]) {
+		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2] && !this.needsEnergy() && !this.getProduciendo()) {
 			ObjectNode msg = mapper.createObjectNode();
 			msg.put("event", "EDIFICIO PRODUCIENDO");
 			msg.put("id", this.id);
@@ -169,5 +177,10 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 	@Override
 	public int getJobs() {
 		return this.RECURSOS_GENERADOS[this.level-1][2] - this.getColonos();
+	}
+	
+	@Override
+	public boolean needsEnergy() {
+		return this.getEnergia() < this.COSTS[this.level-1][0];
 	}
 }

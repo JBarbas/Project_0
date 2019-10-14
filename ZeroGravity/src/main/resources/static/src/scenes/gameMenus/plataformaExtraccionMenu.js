@@ -27,9 +27,10 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	this.miEdificio = data.miEdificio;
     	
     	this.colonos = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	this.energia = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 230, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
     	this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
-    	this.timeLeftText = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 230, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	this.timeLeftText = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 260, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	

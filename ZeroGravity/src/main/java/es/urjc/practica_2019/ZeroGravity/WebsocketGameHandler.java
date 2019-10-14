@@ -119,8 +119,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "ASK PLAYER INFO":
 				updateInfo(player, "PLAYER INFO");
 				msg.put("event", "GET_PLAYER_RESOURCES");
-				msg.put("energia", player.getMetal());
-				msg.put("metal", player.getEnergia());
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
@@ -137,11 +137,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				
 			case "ASK_PLAYER_RESOURCES":
 				msg.put("event", "GET_PLAYER_RESOURCES");
-				msg.put("energia", player.getMetal());
-				msg.put("metal", player.getEnergia());
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
@@ -313,7 +314,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					edificio.levelUp();
 					player.saveEdificios();
 					player.saveRecursos();
-					System.out.println(player.getEdificio(node.get("id").asInt()).getLevel());
 				}
 				msg.put("event", "ANSWER_LEVELUP_BUILDING");
 				msg.put("resultado", canILevelUp.toString());
@@ -328,10 +328,28 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("event", "PLATAFORMA EXTRACCION MENU");
 				msg.put("id", node.get("id").asInt());
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				msg.put("produciendo", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getProduciendo());
+				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
+				msg.put("energiaNecesaria", PlataformaExtraccion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel()-1][0]);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "GET LABORATORIO INVESTIGACION MENU":
 				msg.put("event", "LABORATORIO INVESTIGACION MENU");
+				msg.put("id", node.get("id").asInt());
+				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				msg.put("produciendo", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getProduciendo());
+				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
+				msg.put("energiaNecesaria", LaboratorioInvestigacion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel()-1][0]);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET BLOQUE VIVIENDAS MENU":
+				msg.put("event", "BLOQUE VIVIENDAS MENU");
+				msg.put("id", node.get("id").asInt());
+				msg.put("colonos", ((BloqueViviendas) player.getEdificio(node.get("id").asInt())).getColonosString());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET GENERADOR MENU":
+				msg.put("event", "GENERADOR MENU");
 				msg.put("id", node.get("id").asInt());
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -350,6 +368,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("event", "ENVIO DE COLONOS");
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				msg.put("jobs", player.getJobs());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));				
+				msg = mapper.createObjectNode();
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			default:
@@ -398,8 +425,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 
 			}
 			msg.putPOJO("edificios", arrayNodeEdificios);
-			msg.put("energia", player.getMetal());
-			msg.put("metal", player.getEnergia());
+			msg.put("metal", player.getMetal());
+			msg.put("energia", player.getEnergia());
 			msg.put("ceramica", player.getCeramica());
 			msg.put("creditos", player.getCreditos());
 			msg.put("unionCoins", player.getUnionCoins());

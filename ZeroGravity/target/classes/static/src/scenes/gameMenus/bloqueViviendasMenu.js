@@ -10,6 +10,10 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **BLOQUE DE VIVIENDAS** menu");
 		}
+    	let msg = new Object();
+		msg.event = 'GET BLOQUE VIVIENDAS MENU';
+		msg.id = data.miEdificio.id;
+		game.global.socket.send(JSON.stringify(msg));
     }
     
     preload () {
@@ -21,6 +25,8 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	this.intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
     	this.intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
     	this.intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0); 
+    	
+    	this.colonos = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	

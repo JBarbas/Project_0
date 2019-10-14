@@ -57,4 +57,9 @@ public class Taller extends GeneradorRecursos{
 	public void mostrarRobots() {
 		
 	}
+	
+	@Override
+	public boolean needsEnergy() {
+		return this.getEnergia() < this.COSTS[this.level-1][0];
+	}
 }
