@@ -199,6 +199,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setMetal(player.getMetal() - CentroComercio.COSTS[edificio.getLevel()-1][1]);
 						player.setCeramica(player.getCeramica() - CentroComercio.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - CentroComercio.COSTS[edificio.getLevel()-1][3]);
+
 					}
 					break;
 					
@@ -216,6 +217,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setMetal(player.getMetal() - CentroMando.COSTS[edificio.getLevel()-1][1]);
 						player.setCeramica(player.getCeramica() - CentroMando.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - CentroMando.COSTS[edificio.getLevel()-1][3]);
+
 					}
 					break;
 					

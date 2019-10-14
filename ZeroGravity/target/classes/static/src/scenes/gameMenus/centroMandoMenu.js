@@ -16,7 +16,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	
     }
     create (data)  {
-    	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
+    	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0);     	
     	this.centroOperaciones = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 200, 'centroOperaciones').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.centroOperaciones.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
     	this.centroAdministrativo = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'centroAdministrativo').setOrigin(0.5, 1).setScale(0.65, 0.65);
@@ -95,6 +95,22 @@ class CentroMandoMenu extends Phaser.Scene {
 				game.scene.stop('CentroMandoMenu');
 				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
+    	});
+    	
+    	var cerrar = this.add.image(game.global.buildingMenu.x + 5, game.global.buildingMenu.y + 5, 'btnCerrar').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	
+    	cerrar.on('pointerover',function(pointer){
+    	    this.setFrame(1);
+    	})
+
+    	cerrar.on('pointerout',function(pointer){
+    	    this.setFrame(0);
+    	})
+    	
+    	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+			game.scene.stop(data.miEdificio.menuScene);
+			game.global.inMenu = false;
     	});
     	
     	this.miEdificio = data.miEdificio;

@@ -25,7 +25,7 @@ class PreloadGameScene extends Phaser.Scene {
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
 		this.load.spritesheet('centroDeMando', 'assets/sprites/Edificios/CentroDeMando.png', {frameWidth:247,frameHeight:189});
-		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:217,frameHeight:300});
+		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:128,frameHeight:156});
 		this.load.spritesheet( 'taller' , 'assets/sprites/Edificios/taller.png', {frameWidth:128,frameHeight:64});
 		this.load.spritesheet( 'centroAdministrativo' , 'assets/sprites/Edificios/CentroAdministrativo.png', {frameWidth:192,frameHeight:184});
 		this.load.spritesheet( 'plataformaExtraccion' , 'assets/sprites/Edificios/PlataformaExtraccion.png', {frameWidth:106,frameHeight:83});
@@ -43,7 +43,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnSubirNivel', 'assets/sprites/Edificios/btnNivel.png', {frameWidth:256,frameHeight:64});
 		this.load.spritesheet('btnColonos', 'assets/sprites/Edificios/btnColonos.png', {frameWidth:256,frameHeight:64});
 		this.load.spritesheet('btnOpciones', 'assets/interface/Gameplay/btnOpcionesSprite.png', {frameWidth:78,frameHeight:78});
-
+		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
+		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
 		
 		//Interfaz
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
@@ -53,6 +54,10 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intMision', 'assets/interface/Gameplay/btnMision.png');
 		this.load.image('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png');
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
+		this.load.image('cortina', 'assets/interface/Cortina.png');
+		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
+		this.load.image('xAnuncio', 'assets/interface/Gameplay/x.png');
+		
 		
 		
 		//Iconos
