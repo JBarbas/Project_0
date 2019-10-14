@@ -37,6 +37,7 @@ public class TaskMaster {
 	public void addTask(Task task) {
 		if (task != null) {
 			task.setId(taskId.incrementAndGet());
+			System.out.println("Tarea añadida");
 			tasks.put(task.getId(), task);
 		}
 	}
@@ -53,6 +54,7 @@ public class TaskMaster {
 			Duration diff = Duration.between(t.getBeginDate(), currentDate);
 			long diffMins = diff.toMinutes();
 			if (diffMins >= t.getDuration()) {
+				System.out.println("Tarea finalizada");
 				try {
 					// Informa al cliente de que la tarea ha terminado
 					if (t.getPlayer().getSession().isOpen()) {

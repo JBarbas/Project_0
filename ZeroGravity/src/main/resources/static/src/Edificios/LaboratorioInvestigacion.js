@@ -8,10 +8,10 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.level = 1;
 		super.sprite = 'laboratorioInvestigacion';
 		super.menuScene = 'LaboratorioInvestigacionMenu';
-		super.resourceSprite = '';
+		super.resourceSprite = 'creditIcon';
 		super.originX = 0.67;
-		this.recursos = [[0, 0],
-						[0, 0],
-						[0, 0]];
+		this.recursos = [[4, 1],
+						[4, 20],
+						[4, 20]];
 	}
 }

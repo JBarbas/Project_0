@@ -20,13 +20,13 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-
 	public static final int[] NIVEL1 = { 1, 0, 0, 0 };
 	public static final int[] NIVEL2 = { 2, 0, 0, 0 };
 	public static final int[] NIVEL3 = { 3, 0, 0, 0 };
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 	
 	//Establecemos los recursos que generan según su nivel
+	//recurso, tiempo(minutos), colonos
 	private final static int[] RECURSOS_NIVEL1 = {4, 20, 1};
 	private final static int[] RECURSOS_NIVEL2 = {99, 330, 2};
 	private final static int[] RECURSOS_NIVEL3 = {225, 615, 3};
@@ -48,17 +48,17 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		this.producir();
 	}
 
-public PlataformaExtraccion(int id) {
-	
-	this.player = null;
-	this.id = id;
-	this.height = 1;
-	this.width = 1;
-	this.level = 1;
-	this.buildingDependsOn = null;
-	this.sprite = "plataformaExtraccion";
-	this.producir();
-}
+	public PlataformaExtraccion(int id) {
+		
+		this.player = null;
+		this.id = id;
+		this.height = 1;
+		this.width = 1;
+		this.level = 1;
+		this.buildingDependsOn = null;
+		this.sprite = "plataformaExtraccion";
+		this.producir();
+	}
 
 	public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id, boolean lleno, boolean produciendo, Document date) {
 		

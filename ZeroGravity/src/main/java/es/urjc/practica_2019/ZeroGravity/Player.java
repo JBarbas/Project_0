@@ -316,7 +316,9 @@ public class Player {
 				edificio = new Generador(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
 			case "laboratorioInvestigacion":
-				edificio = new LaboratorioInvestigacion(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "centroComercio":
 				edificio = new CentroComercio(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
@@ -360,7 +362,8 @@ public class Player {
 				edificio = new Generador(x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			case "laboratorioInvestigacion":
-				edificio = new LaboratorioInvestigacion(x, y, this.centroMando, edificioId.incrementAndGet());
+				edificio = new LaboratorioInvestigacion(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "centroComercio":
 				edificio = new CentroComercio(x, y, this.centroMando, edificioId.incrementAndGet());

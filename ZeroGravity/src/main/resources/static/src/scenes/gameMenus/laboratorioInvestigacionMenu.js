@@ -9,7 +9,11 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
     init(data) {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **LABORATORIO_INVESTIGACION** menu");
-		} 	
+		}
+    	let msg = new Object();
+		msg.event = 'GET LABORATORIO INVESTIGACION MENU';
+		msg.id = data.miEdificio.id;
+		game.global.socket.send(JSON.stringify(msg));
     }
     
     preload () {
@@ -18,6 +22,13 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
     
     create (data)  {
     	this.menuBox = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'centroDeMandoMenu').setOrigin(0, 0); 
+    	
+    	this.miEdificio = data.miEdificio;
+    	
+    	this.colonos = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+   
+    	this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
+    	this.timeLeftText = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 230, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
@@ -37,9 +48,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 				setTimeout(function(){ game.global.inMenu = false; }, 500);
     		}
     	});
-    	
-    	this.miEdificio = data.miEdificio;
-    	
+    	    	
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){
     	
@@ -66,6 +75,23 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();
+    	}
+    	
+    	if (this.miEdificio.produciendo) {
+	    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
+	    	if (this.miEdificio.lleno) {
+	    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.level-1][0] + ' creditos listos para recolectar';
+	    	}
+	    	else if (this.timeLeft < 1) {
+	    		this.timeLeftText.text = 'Almacenando los creditos...';
+	    	}
+	    	else {
+	    		this.timeLeftText.text = 'Quedan ' + this.timeLeft + ' minutos';
+	    	}
+	    	this.timeLeftText.visible = !this.miEdificio.lleno;
+    	}
+    	else {
+    		this.timeLeftText.visible = false;
     	}
     }
 

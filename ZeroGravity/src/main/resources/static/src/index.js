@@ -173,6 +173,9 @@ window.onload = function() {
 					break;
 				case 'laboratorioInvestigacion':
 					edificio = new LaboratorioInvestigacion(e.x, e.y);
+					edificio.lleno = e.lleno;
+					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
+					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
 				default:
 					break;
@@ -301,12 +304,32 @@ window.onload = function() {
 			}
 			game.global.resources.ceramica = msg.ceramica;
 			break;
+		case 'CREDITOS RECOLECTADOS':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CREDITOS RECOLECTADOS message recieved');
+				console.dir(msg);
+			}
+			game.global.resources.creditos = msg.creditos;
+			break;
 		case 'PLATAFORMA EXTRACCION MENU':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] PLATAFORMA EXTRACCION MENU message recieved');
 				console.dir(msg);
 			}
 			game.scene.getScene("PlataformaExtraccionMenu").colonos.text = "Colonos: " + msg.colonos;
+			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
+				game.global.edificios.get(msg.id).produciendo = true;
+			}
+			else {
+				game.global.edificios.get(msg.id).produciendo = false;
+			}
+			break;
+		case 'LABORATORIO INVESTIGACION MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] LABORATORIO INVESTIGACION MENU message recieved');
+				console.dir(msg);
+			}
+			game.scene.getScene("LaboratorioInvestigacionMenu").colonos.text = "Colonos: " + msg.colonos;
 			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 				game.global.edificios.get(msg.id).produciendo = true;
 			}
