@@ -20,10 +20,29 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	
     }
     create (data)  {
-    	this.intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
-    	this.intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
-    	this.intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0); 
+    	var intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
+    	var intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
+    	var intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0);
+    	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
+    	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
+    	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
+    	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    		intEdificios.alpha = 1.0;
+    		intMejoras.alpha = 0.0;
+    		intDetalles.alpha = 0.0;
+    	});
     	
+    	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    		intEdificios.alpha = 0.0;
+    		intMejoras.alpha = 1.0;
+    		intDetalles.alpha = 0.0;
+    	});
+    	
+    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    		intEdificios.alpha = 0.0;
+    		intMejoras.alpha = 0.0;
+    		intDetalles.alpha = 1.0;
+    	});
     	this.miEdificio = data.miEdificio;
     	
     	this.colonos = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
@@ -31,7 +50,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
     	this.timeLeftText = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 230, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
     	
-    	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
+    	var mover = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
     	mover.on('pointerover',function(pointer){
     	    mover.setFrame(1);
@@ -69,7 +88,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){
     	
-	    	this.subirNivel = this.add.image(game.global.buildingMenu.x + 500, game.global.buildingMenu.y + 800, 'btnSubirNivel').setInteractive();
+    		this.subirNivel = this.add.image(game.global.buildingMenu.x + 420, game.global.buildingMenu.y + 800, 'btnSubirNivel').setInteractive();
 	    	
 	    		    	
 	    	this.subirNivel.on('pointerover',function(pointer){

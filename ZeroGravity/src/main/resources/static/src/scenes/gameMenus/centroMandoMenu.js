@@ -16,28 +16,46 @@ class CentroMandoMenu extends Phaser.Scene {
     	
     }
     create (data)  {
-    	this.intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
-    	this.intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
-    	this.intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0); 
+    	var intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
+    	var intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
+    	var intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0); 
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
+    	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    		intEdificios.alpha = 1.0;
+    		intMejoras.alpha = 0.0;
+    		intDetalles.alpha = 0.0;
+    	});
     	
-    	this.centroOperaciones = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 200, 'centroOperaciones').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    		intEdificios.alpha = 0.0;
+    		intMejoras.alpha = 1.0;
+    		intDetalles.alpha = 0.0;
+    	});
+    	
+    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    		intEdificios.alpha = 0.0;
+    		intMejoras.alpha = 0.0;
+    		intDetalles.alpha = 1.0;
+    	});
+    	
+    	
+    	this.centroOperaciones = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 300, 'centroOperaciones').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.centroOperaciones.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
-    	this.centroAdministrativo = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 330, 'centroAdministrativo').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.centroAdministrativo = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 430, 'centroAdministrativo').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.centroAdministrativo.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroAdministrativo'); });
-    	this.taller = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 445, 'taller').setOrigin(0.5, 1);
+    	this.taller = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 545, 'taller').setOrigin(0.5, 1);
     	this.taller.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('taller'); });
-    	this.plataformaExtraccion = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 200, 'plataformaExtraccion').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.plataformaExtraccion = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 300, 'plataformaExtraccion').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.plataformaExtraccion.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('plataformaExtraccion'); });
-    	this.bloqueViviendas = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 330, 'bloqueViviendas').setOrigin(0.5, 1).setScale(0.65, 0.65);
+    	this.bloqueViviendas = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 430, 'bloqueViviendas').setOrigin(0.5, 1).setScale(0.65, 0.65);
     	this.bloqueViviendas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('bloqueViviendas'); });
-    	this.generador = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 445, 'generador').setOrigin(0.5, 1);
+    	this.generador = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 545, 'generador').setOrigin(0.5, 1);
     	this.generador.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('generador'); });
-    	this.centroComercio = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 570, 'centroComercio').setOrigin(0.5, 1);
+    	this.centroComercio = this.add.image(game.global.buildingMenu.x + 120, game.global.buildingMenu.y + 670, 'centroComercio').setOrigin(0.5, 1);
     	this.centroComercio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroComercio'); });
-    	this.laboratorioInvestigacion = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 570, 'laboratorioInvestigacion').setOrigin(0.5, 1)
+    	this.laboratorioInvestigacion = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 670, 'laboratorioInvestigacion').setOrigin(0.5, 1)
     	this.laboratorioInvestigacion.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('laboratorioInvestigacion'); });
     	
     	function aux(edificioCons){
@@ -83,7 +101,7 @@ class CentroMandoMenu extends Phaser.Scene {
     		setTimeout(function(){ game.global.inMenu = false; }, 500);
     	}
     	
-    	var mover = this.add.image(game.global.buildingMenu.x + 200, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
+    	var mover = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
     	mover.on('pointerover',function(pointer){
     	    mover.setFrame(1);
@@ -124,7 +142,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){
     	
-	    	this.subirNivel = this.add.image(game.global.buildingMenu.x + 500, game.global.buildingMenu.y + 800, 'btnSubirNivel').setInteractive();
+	    	this.subirNivel = this.add.image(game.global.buildingMenu.x + 420, game.global.buildingMenu.y + 800, 'btnSubirNivel').setInteractive();
 	    	
 	    		    	
 	    	this.subirNivel.on('pointerover',function(pointer){
