@@ -27,7 +27,7 @@ public class Taller extends GeneradorRecursos{
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.height = 1;
+		this.height = 2;
 		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = depends;
@@ -39,7 +39,7 @@ public class Taller extends GeneradorRecursos{
 		this.id = id;
 		this.x = 0;
 		this.y = 0;
-		this.height = 1;
+		this.height = 2;
 		this.width = 1;
 		this.level = 1;
 		this.buildingDependsOn = null;
