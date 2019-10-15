@@ -160,6 +160,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					edificio.getLevel() < 3){
 						
 						canILevelUp = true;
+						player.setColonosMax(player.getColonosMax() - BloqueViviendas.capacidad[edificio.getLevel()-1] + BloqueViviendas.capacidad[edificio.getLevel()]);
 						player.setMetal(player.getMetal() - BloqueViviendas.COSTS[edificio.getLevel()-1][1]);
 						player.setCeramica(player.getCeramica() - BloqueViviendas.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - BloqueViviendas.COSTS[edificio.getLevel()-1][3]);
