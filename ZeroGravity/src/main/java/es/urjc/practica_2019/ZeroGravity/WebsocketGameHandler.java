@@ -43,17 +43,17 @@ import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
-	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 	private ObjectMapper mapper = new ObjectMapper();
-	private AtomicInteger playersId = new AtomicInteger();
 	
 	private static MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
 	private static MongoClient client = new MongoClient(new ServerAddress(), options);
 
 	private static MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
 	private static MongoCollection<Document> coll = db.getCollection("Users", Document.class);
+	private static MongoCollection<Document> collOfertas = db.getCollection("Ofertas", Document.class);
 	
 	private static HashMap<ObjectId, Player> players = new HashMap<>();
+	private static HashMap<ObjectId, Oferta> ofertas = new HashMap<>();
 	
 	public static MongoCollection<Document> getColl() {
 		return coll;
@@ -61,6 +61,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	public static HashMap<ObjectId, Player> getPlayers() {
 		return players;
+	}
+	
+	public static MongoCollection<Document> getCollOfertas() {
+		return collOfertas;
+	}
+	
+	public static HashMap<ObjectId, Oferta> getOfertas() {
+		return ofertas;
 	}
 	
 	@Override
@@ -88,6 +96,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.updateGrid((Collection<Document>) myPlayer.get("grid"));
 					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
 					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
+					player.updateOfertas((Collection<Document>) myPlayer.get("ofertas"));
 					player.setEnergia(myPlayer.getInteger("energia", 0));
 					player.setMetal(myPlayer.getInteger("metal", 100));
 					player.setCeramica(myPlayer.getInteger("ceramica", 100));
@@ -171,8 +180,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				Boolean canILevelUp = false;
 				switch(edificio.getSprite()) {
 				
-				case "bloqueViviendas":
-					
+				case "bloqueViviendas":	
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= BloqueViviendas.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= BloqueViviendas.COSTS[edificio.getLevel()-1][2] &&
@@ -184,12 +192,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setMetal(player.getMetal() - BloqueViviendas.COSTS[edificio.getLevel()-1][1]);
 						player.setCeramica(player.getCeramica() - BloqueViviendas.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - BloqueViviendas.COSTS[edificio.getLevel()-1][3]);
-		
 					}
 					break;
 					
-				case "centroAdministrativo":
-					
+				case "centroAdministrativo":		
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][2] &&
@@ -203,8 +209,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					}
 					break;
 					
-				case "centroComercio":
-					
+				case "centroComercio":			
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= CentroComercio.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroComercio.COSTS[edificio.getLevel()-1][2] &&
@@ -215,12 +220,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setMetal(player.getMetal() - CentroComercio.COSTS[edificio.getLevel()-1][1]);
 						player.setCeramica(player.getCeramica() - CentroComercio.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - CentroComercio.COSTS[edificio.getLevel()-1][3]);
-
 					}
 					break;
 					
 				case "centroDeMando":
-					
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= CentroMando.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroMando.COSTS[edificio.getLevel()-1][2] &&
@@ -231,12 +234,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setMetal(player.getMetal() - CentroMando.COSTS[edificio.getLevel()-1][1]);
 						player.setCeramica(player.getCeramica() - CentroMando.COSTS[edificio.getLevel()-1][2]);
 						player.setCreditos(player.getCreditos() - CentroMando.COSTS[edificio.getLevel()-1][3]);
-
 					}
 					break;
 					
 				case "centroOperaciones":
-					
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= CentroOperaciones.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroOperaciones.COSTS[edificio.getLevel()-1][2] &&
@@ -251,7 +252,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					break;
 					
 				case "generador":
-					
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= Generador.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= Generador.COSTS[edificio.getLevel()-1][2] &&
@@ -265,8 +265,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					}
 					break;
 					
-				case "laboratorioInvestigacion":
-					
+				case "laboratorioInvestigacion":	
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][2] &&
@@ -281,7 +280,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					break;
 					
 				case "plataformaExtraccion":
-					
 					//energia, metal, ceramica, creditos
 					if(player.getMetal() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][2] &&
@@ -294,9 +292,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						player.setCreditos(player.getCreditos() - PlataformaExtraccion.COSTS[edificio.getLevel()-1][3]);
 					}
 					break;
-					
+
 				case "taller":
-					
 					//energia, metal, ceramica, creditos
 					if(	player.getMetal() >= Taller.COSTS[edificio.getLevel()-1][1] &&
 						player.getCeramica() >= Taller.COSTS[edificio.getLevel()-1][2] &&
@@ -382,6 +379,23 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "CREATE AN OFFER":
+				//creamos una oferta con la info del cliente
+				Oferta oferta = new Oferta(ObjectId.get(), player.getId(), 
+						node.get("recurso").asText(), node.get("cantidad").asInt(), node.get("creditos").asInt());
+				//la guardamos en los atributos y bd del jugador
+				player.addOferta(oferta);
+				player.saveOfertas();
+				//la guardamos en la bd comun a todos los jugadores
+				Document dbOferta = new Document();
+				dbOferta.append("id", oferta.getId());
+				dbOferta.append("playerId", oferta.getPlayerId());
+				dbOferta.append("recurso", oferta.getRecurso());
+				dbOferta.append("cantidad", oferta.getCantidad());
+				dbOferta.append("creditos", oferta.getCreditos());
+				collOfertas.insertOne(dbOferta);
+				break;
+				
 			default:
 				break;
 			}
