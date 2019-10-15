@@ -1,100 +1,16 @@
 <html>
 	<head>
-	<meta charset="UTF-8">
-	<style>
-				
-		.box {
-		  width: 300px;
-		  height: 420px;
-		  padding-left: 350px;
-		  padding-top: -500px;
-		  /* Positioning */
-		  position: absolute;
-		  -ms-transform: scale(2,2); /* IE 9 */
-  		  -webkit-transform: scale(2,2); /* Safari prior 9.0 */
- 		  transform: scale(2,2); /* Standard syntax */
-		}
-		
-		.input-box {
-		  position: relative;
-		}
-		
-		.input-box input {
-		  border-style: none;
-		  background: transparent;
-		  /*border-bottom: 1px solid white;*/
-		  width: 100%;
-		  position: relative;
-		  outline: none;
-		  padding: 10px 0;
-		  color: white;
-		  font-size: 18px;
-		  margin-bottom: 30px;
-		}
-		
-		.input-box label {
-		  color: white;
-		  position: absolute;
-		  padding: 10px 0;
-		  top: 0;
-		  left: 0;
-		  pointer-events: none;
-		  transition: 0.5s;
-		}
-		
-		.input-box input:focus ~ label,
-		.input-box input:valid ~ label {
-		  color: #0088BF;
-		  font-size: 16px;
-		  top: -20px;
-		  transition: 0.5s;
-		}
-		
-		.box input[type="submit"] {
-		  background: transparent;
-		  color: white;
-		  border-spacing: none;
-		  border: 1px solid white;
-		  padding: 10px 20px;
-		  font-size: 16px;
-		  border-radius: 3px;
-		  outline: none;
-		  cursor: pointer;
-		  transition: 0.3s;
-		}
-		
-		.box input[type="submit"]:hover {
-		  background: yellow;
-		  border: 1px solid yellow;
-		  transition: 0.3s;
-		}
-		
-		input:-webkit-autofill,
-		input:-webkit-autofill:hover, 
-		input:-webkit-autofill:focus,
-		textarea:-webkit-autofill,
-		textarea:-webkit-autofill:hover,
-		textarea:-webkit-autofill:focus,
-		select:-webkit-autofill,
-		select:-webkit-autofill:hover,
-		select:-webkit-autofill:focus {
-		  -webkit-text-fill-color: green;
-		  transition: background-color 5000s ease-in-out 0s;
-		  -webkit-text-fill-color: #fff !important;
-		  
-		}
-				
-	</style>  
+		<meta charset="UTF-8">  
 	</head>
 	<body>
 		<div class="box">
 		  <form action="" autocomplete="off">
 		    <div class="input-box">
-		      <input type="text" name="username" required />
+		      <input type="text" name="username" id="username" required />
 		      <label for="">Nombre de Usuario</label>
 		    </div>
 		    <div class="input-box" style="top: -10px;">
-		      <input type="password" name="password" required  />
+		      <input type="password" name="password" id="password" required  />
 		      <label for="">Contraseña</label>
 		    </div>
 		  </form>
@@ -106,29 +22,3 @@
 	    <input type="submit" value="Sign In" name="loginButton">-->
 	</body>
 </html>
-
-
-
-
-<!-- 
-<form class="contact-form row">
-      <div class="form-field col x-50">
-         <input id="name" class="input-text js-input" type="text" required>
-         <label class="label" for="name">Name</label>
-      </div>
-      <div class="form-field col x-50">
-         <input id="email" class="input-text js-input" type="email" required>
-         <label class="label" for="email">E-mail</label>
-      </div>
-      <div class="form-field col x-100">
-         <input id="message" class="input-text js-input" type="text" required>
-         <label class="label" for="message">Message</label>
-      </div>
-      <div class="form-field col x-100 align-center">
-         <input class="submit-btn" type="submit" value="Submit">
-      </div>
-   </form>
-
-
-
- -->

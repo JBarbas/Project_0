@@ -1,13 +1,23 @@
 <html>
-	<head>    
+	<head>
+		<meta charset="UTF-8">    
 	</head>
-	<body>
-		<div id="phaser-login-form" class="login">
-		    <input type="text" placeholder="Username" id="username" name="username">
-		    <input type="text" placeholder="Email" id="email" name="email">
-		    <input type="password" placeholder="password" id="password" name="password">
-		    <a href="#" class="forgot">forgot password?</a>
-		    <input type="submit" value="Sign In" name="loginButton">
+	<body>  
+		<div class="box" style="top: -150px;">
+		  <form action="" autocomplete="off">
+		    <div class="input-box" style="top: -20px;">
+		      <input type="text" name="username" id="username" required />
+		      <label for="">Nombre de Usuario</label>
+		    </div>
+		    <div class="input-box" style="top: -10px;">
+		      <input type="text" id="email" name="email" required>
+		      <label for="">E-mail</label>
+		    </div>
+		    <div class="input-box" >
+		      <input type="password" name="password" id="password" required  />
+		      <label for="">Contraseña</label>
+		    </div>
+		  </form>
 		</div>
 	</body>
 </html>

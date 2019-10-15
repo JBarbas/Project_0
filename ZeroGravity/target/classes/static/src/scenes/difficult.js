@@ -23,6 +23,10 @@ class DifficultScene extends Phaser.Scene {
     	var button = this.add.image(150, 100, 'back').setInteractive();
     	button.setScale(.15);
     	
+    	var element = this.add.dom(400, 600).createFromCache('loginform');
+
+        element.setPerspective(800);
+    	
     	document.getElementById("dificultad").style.visibility = 'visible';
     	//$("dificultad").css("z-index", "2000");
 
