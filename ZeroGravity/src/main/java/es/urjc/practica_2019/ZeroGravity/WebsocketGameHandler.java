@@ -98,22 +98,42 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setColonos(myPlayer.getInteger("colonos", 0));
 
 					msg.put("event", "LOGGED");
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
-				break;
-			case "REGISTER":
-				player.setUsername(node.get("name").asText());
-				player.setEmail(node.get("email").asText());
-				player.setPassword(node.get("password").asText());
-				Document dbPlayer = new Document();
-				dbPlayer.append("_id", player.getId());
-				dbPlayer.append("name", player.getUsername());			
-				dbPlayer.append("email", player.getEmail());		
-				dbPlayer.append("password", player.getPassword());		
-				coll.insertOne(dbPlayer);				
-				msg.put("event", "LOGGED");
+				else {
+					msg.put("event", "LOGIN FAILED");
+					msg.put("data", "Usuario y contraseña no válidos");		
+				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
-				players.put(player.getId(), player);
+				break;
+			case "REGISTER":	
+				filter = new Document("name", node.get("name").asText());
+				myPlayer = coll.find(filter).first();
+				if (myPlayer != null) {
+					msg.put("event", "LOGIN FAILED");
+					msg.put("data", "Ese nombre de usuario ya ha sido utilizado");					
+				}
+				else {
+					filter = new Document("email", node.get("email").asText());
+					myPlayer = coll.find(filter).first();
+					if (myPlayer != null) {
+						msg.put("event", "LOGIN FAILED");
+						msg.put("data", "Ese email ya ha sido utilizado");
+					}
+					else {
+						player.setUsername(node.get("name").asText());
+						player.setEmail(node.get("email").asText());
+						player.setPassword(node.get("password").asText());
+						Document dbPlayer = new Document();
+						dbPlayer.append("_id", player.getId());
+						dbPlayer.append("name", player.getUsername());			
+						dbPlayer.append("email", player.getEmail());		
+						dbPlayer.append("password", player.getPassword());		
+						coll.insertOne(dbPlayer);				
+						msg.put("event", "LOGGED");
+						players.put(player.getId(), player);
+					}
+				}
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
 			case "ASK PLAYER INFO":

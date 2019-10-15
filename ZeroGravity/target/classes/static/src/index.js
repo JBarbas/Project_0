@@ -148,6 +148,12 @@ window.onload = function() {
 	    		game.scene.stop('RegisterScene');
 			}
 			break;
+		case 'LOGIN FAILED':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] LOGIN FAILED message recieved')
+				console.dir(msg);
+			}
+			alert(msg.data);
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] PLAYER INFO message recieved')
