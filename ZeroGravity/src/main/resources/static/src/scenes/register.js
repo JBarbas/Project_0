@@ -21,7 +21,6 @@ class RegisterScene extends Phaser.Scene {
     	var buttonR = this.add.image(960, 900, 'btnRegister').setInteractive();
     	
     	var back = this.add.image(150, 100, 'back').setInteractive();
-    	back.setScale(.15);
 
     	buttonR.on('pointerover',function(pointer){
     		buttonR.setFrame(1);
@@ -29,6 +28,14 @@ class RegisterScene extends Phaser.Scene {
 
     	buttonR.on('pointerout',function(pointer){
     		buttonR.setFrame(0);
+    	})
+    	
+    	back.on('pointerover',function(pointer){
+    		back.setFrame(1);
+    	})
+
+    	back.on('pointerout',function(pointer){
+    		back.setFrame(0);
     	})
     	
     	back.setInteractive().on('pointerdown', function(pointer, localX, localY, event){

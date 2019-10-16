@@ -22,7 +22,7 @@ class LoadGameplayScene extends Phaser.Scene {
     	
     	
     	game.global.cargando = this.add.image(game.config.width/2+20, game.config.height/2, 'load');
-    	game.global.timer = this.add.text(game.config.width/2, game.config.height/2, '0%', { fontSize: '40px', fill: '#fff' });
+    	game.global.timer = this.add.text((game.config.width/2)-15, (game.config.height/2)-15, '0%', { fontSize: '40px', fill: '#fff'});
     	
     	
     	//Timer

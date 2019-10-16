@@ -19,7 +19,6 @@ class CreditsScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundCredits');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
-    	button.setScale(.15);
     	
     	var link = this.add.image(1800, 50, 'link').setInteractive();
     	
