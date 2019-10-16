@@ -113,6 +113,10 @@ window.onload = function() {
 			width: 300,
 			height: 54
 		},
+		cargando:null,
+		timedEvent:null,
+		timer:null,
+		team:null,
 		resources: {}
 	}
 	

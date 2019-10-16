@@ -20,7 +20,9 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('backgroundMenu', 'assets/background/MenuPrincipal.png');
 		this.load.image('backgroundOptionsAccount', 'assets/background/OpcionesCuenta.png');
 		this.load.image('backgroundCredits', 'assets/background/Creditos.png');
+		this.load.image('creditosHover', 'assets/background/CreditosHover.png');
 		this.load.image('backgroundDifficulty', 'assets/background/ElegirDificultad.png');
+		this.load.image('bckCargando', 'assets/background/backload.png');
 		
 		//Elements
 		this.load.image('team', 'assets/interface/team.png');
@@ -41,6 +43,7 @@ class PreloadScene extends Phaser.Scene {
 		
 		
 		
+		this.load.image('load', 'assets/interface/Cargando.png');
 		
 		this.load.atlas('title', 'assets/atlas/title.png', 'assets/atlas/title.json');
 		

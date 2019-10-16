@@ -10,9 +10,12 @@ class PreloadGameScene extends Phaser.Scene {
 		if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **PRELOAD GAME** scene");
 		}
+		
 	}
 	
 	preload () {
+		game.scene.run('LoadGameplayScene');
+		
 		// Pedimos la info del jugador, como su map grid o sus recursos
 		let msg = new Object();
 		msg.event = 'ASK PLAYER INFO';
@@ -48,8 +51,6 @@ class PreloadGameScene extends Phaser.Scene {
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
 		
-		//Backgrounds
-		this.load.image('bckCargando', 'assets/background/backload.png');
 		
 		//Interfaz
 		
@@ -67,7 +68,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
 		
-		this.load.image('load', 'assets/interface/Cargando.png');
+		
 		
 		
 		
@@ -81,7 +82,7 @@ class PreloadGameScene extends Phaser.Scene {
     }
     update(time, delta) {
     	if (game.global.loaded) {
-    		game.scene.run('LoadGameplayScene');
+    		
     		game.scene.stop('PreloadGameScene');
     	}
     }
