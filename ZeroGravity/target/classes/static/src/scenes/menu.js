@@ -21,7 +21,9 @@ class MenuScene extends Phaser.Scene {
     	
     	//var textT = this.add.bitmapText(200, 50, 'myfont', 'Holaaaaaaaaaa', 128); 
     	
-    	
+    	var element = this.add.dom(0, 0).createFromCache('menuform');
+
+        element.setPerspective(800);
     	
     	
     	

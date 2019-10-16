@@ -21,7 +21,6 @@ class OptionsScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundOptionsAccount');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
-    	button.setScale(.15);
     	
 
     	button.on('pointerover',function(pointer){
