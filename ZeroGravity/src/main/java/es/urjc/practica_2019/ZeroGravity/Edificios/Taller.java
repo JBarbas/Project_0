@@ -1,8 +1,18 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.web.socket.TextMessage;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import es.urjc.practica_2019.ZeroGravity.Player;
 import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 
 public class Taller extends GeneradorRecursos{
@@ -20,10 +30,16 @@ public class Taller extends GeneradorRecursos{
 	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3};
 	
 	private int capacidadRobots;
-	private List<Robot> robots = new LinkedList<Robot>();
+	private HashMap<Integer, Robot> robots = new HashMap<>();
+	private AtomicInteger robotId = new AtomicInteger();
 	
-	public Taller(int x, int y, Edificio depends, int id) {
+	private Player player;
+	
+	private ObjectMapper mapper = new ObjectMapper();
+	
+	public Taller(Player player, int x, int y, Edificio depends, int id) {
 		
+		this.player = player;
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -34,8 +50,9 @@ public class Taller extends GeneradorRecursos{
 		this.sprite = "taller";	
 	}
 	
-	public Taller(int id) {
+	public Taller(Player player, int id) {
 
+		this.player = player;
 		this.id = id;
 		this.x = 0;
 		this.y = 0;
@@ -46,6 +63,14 @@ public class Taller extends GeneradorRecursos{
 		this.sprite = "taller";
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 	public int getCapacidadRobots() {
 		return capacidadRobots;
 	}
@@ -53,13 +78,57 @@ public class Taller extends GeneradorRecursos{
 	public void setCapacidadRobots(int capacidadRobots) {
 		this.capacidadRobots = capacidadRobots;
 	}
+	
+	public int getRobotId() {
+		return robotId.get();
+	}
+	
+	public int incrementAndGetRobotId() {
+		return robotId.incrementAndGet();
+	}
 
+	public void setRobotId(int id) {
+		robotId.set(id);
+	}
+	
 	public void mostrarRobots() {
 		
+	}
+	
+	public void addRobot(Robot robot) {
+		robots.put(robot.getId(), robot);
+	}
+	
+	public Robot getRobot(int id) {
+		return robots.get(id);
+	}
+	
+	public Collection<Robot> getRobots() {
+		return robots.values();
 	}
 	
 	@Override
 	public boolean needsEnergy() {
 		return this.getEnergia() < this.COSTS[this.level-1][0];
+	}
+	
+	@Override
+	public void recolectar() {
+		for (Robot r : getRobots()) {
+			if (!r.isAusente() && r.getCarga() > 0) {
+				r.recolectar();
+			}
+		}
+		ObjectNode msg = mapper.createObjectNode();			
+		msg.put("event", "METAL RECOLECTADO");
+		msg.put("metal", player.getMetal());
+		try {	
+			if (player.getSession().isOpen()) {				
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
+		} catch (IOException e) {
+			System.err.println("Exception sending message " + msg.toString());
+			e.printStackTrace(System.err);
+		}
 	}
 }

@@ -127,6 +127,11 @@ window.onload = function() {
 		if (game.global.DEBUG_MODE) {
 			console.log('[DEBUG] WebSocket connection opened.')
 		}
+		setInterval(function(){ 
+			let msg = new Object();
+			msg.event = 'I AM HERE';
+			game.global.socket.send(JSON.stringify(msg)); 
+			}, 30000);
 	}
 	
 	game.global.socket.onclose = () => {
@@ -343,6 +348,13 @@ window.onload = function() {
 			}
 			game.global.resources.creditos = msg.creditos;
 			break;
+		case 'METAL RECOLECTADO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] METAL RECOLECTADO message recieved');
+				console.dir(msg);
+			}
+			game.global.resources.metal = msg.metal;
+			break;
 		case 'PLATAFORMA EXTRACCION MENU':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] PLATAFORMA EXTRACCION MENU message recieved');
@@ -367,6 +379,58 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.scene.getScene("BloqueViviendasMenu").colonos.text = "Colonos: " + msg.colonos;
+			break;
+		case 'TALLER MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] TALLER MENU message recieved');
+				console.dir(msg);
+			}
+			//game.scene.getScene("TallerMenu").colonos.text = "Colonos: " + msg.colonos;
+			for (var i = 0; i < msg.robots.length; i++) {
+				var robot = new Robot(msg.robots[i].id);
+				robot.ausente = msg.robots[i].ausente;
+				robot.nivel = msg.robots[i].nivel;
+				game.global.edificios.get(msg.id).robots.set(robot.id, robot);
+				let robotX = game.scene.getScene("TallerMenu").robotsX;
+				let robotY = game.scene.getScene("TallerMenu").robotsY[i];
+				game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0);
+				if (!robot.ausente) {
+					if (msg.robots[i].carga > 0) {
+						let btnRecolectar = game.scene.getScene("TallerMenu").add.image(robotX + 160, robotY + 70, 'btnRecolectar').setOrigin(0, 0.5).setInteractive();
+						btnRecolectar.on('pointerover',function(pointer){
+				    	    this.setFrame(1);
+				    	})
+				    	btnRecolectar.on('pointerout',function(pointer){
+				    	    this.setFrame(0);
+				    	})			    	
+				    	btnRecolectar.on('pointerdown', function(pointer, localX, localY, event){
+				    		let msgBack = new Object();
+				    		msgBack.event = 'RECOLECT';
+				    		msgBack.id = msg.id;
+				    		msgBack.robotId = robot.id;
+				    		game.global.socket.send(JSON.stringify(msgBack));
+				    		this.destroy();
+				    	});
+					}
+					else {
+						let btnEnviar = game.scene.getScene("TallerMenu").add.image(robotX + 160, robotY + 70, 'btnEnviar').setOrigin(0, 0.5).setInteractive();
+						btnEnviar.on('pointerover',function(pointer){
+				    	    this.setFrame(1);
+				    	})
+				    	btnEnviar.on('pointerout',function(pointer){
+				    	    this.setFrame(0);
+				    	})			    	
+				    	btnEnviar.on('pointerdown', function(pointer, localX, localY, event){
+				    		let msgBack = new Object();
+				    		msgBack.event = 'ENVIAR';
+				    		msgBack.tallerId = msg.id;
+				    		msgBack.robotId = robot.id;
+				    		game.global.socket.send(JSON.stringify(msgBack));
+				    		this.destroy();
+				    	});
+					}
+				}
+			}
 			break;
 		case 'GENERADOR MENU':
 			if (game.global.DEBUG_MODE) {

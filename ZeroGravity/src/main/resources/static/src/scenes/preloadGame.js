@@ -45,6 +45,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnExpandir', 'assets/sprites/Edificios/btnExpandir.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnSubirNivel', 'assets/sprites/Edificios/btnNivel.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnColonos', 'assets/sprites/Edificios/btnColonos.png', {frameWidth:200,frameHeight:50});
+		this.load.spritesheet('btnEnviar', 'assets/sprites/Edificios/btnEnviar.png', {frameWidth:200,frameHeight:50});
+		this.load.spritesheet('btnRecolectar', 'assets/sprites/Edificios/btnRecolectar.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnOpciones', 'assets/interface/Gameplay/btnOpcionesSprite.png', {frameWidth:78,frameHeight:78});
 		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
 		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
@@ -68,10 +70,11 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
 		
-		
-		
-		
-		
+		//Robots
+		this.load.image('robotNv1', 'assets/sprites/robotNv1.png');
+		this.load.image('robotNv2', 'assets/sprites/robotNv2.png');
+		this.load.image('robotNv3', 'assets/sprites/robotNv3.png');
+				
 		//Iconos
 		this.load.image('clayIcon', 'assets/sprites/stone.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');

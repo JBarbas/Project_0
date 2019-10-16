@@ -1,11 +1,15 @@
 package es.urjc.practica_2019.ZeroGravity.Robots;
 
+import java.time.LocalDateTime;
+
 public class Robot {
 
 	private int vida;
+	private int id;
 	private int carga;
-	private int nivel;
+	private int nivel = 1;
 	private boolean ausente;
+	private LocalDateTime productionBeginTime = LocalDateTime.now();
 	
 	public Robot() {
 		
@@ -15,8 +19,20 @@ public class Robot {
 		
 	}
 	
+	public void producir() {
+		
+	}
+	
 	public void recolectar() {
 		
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getVida() {
@@ -49,5 +65,13 @@ public class Robot {
 
 	public void setAusente(boolean ausente) {
 		this.ausente = ausente;
+	}
+
+	public LocalDateTime getProductionBeginTime() {
+		return productionBeginTime;
+	}
+
+	public void setProductionBeginTime(LocalDateTime productionBeginTime) {
+		this.productionBeginTime = productionBeginTime;
 	}
 }

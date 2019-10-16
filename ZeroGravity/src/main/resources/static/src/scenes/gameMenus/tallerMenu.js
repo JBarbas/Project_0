@@ -10,6 +10,10 @@ class TallerMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **TALLER** menu");
 		} 	
+    	let msg = new Object();
+		msg.event = 'GET TALLER MENU';
+		msg.id = data.miEdificio.id;
+		game.global.socket.send(JSON.stringify(msg));
     }
     
     preload () {
@@ -40,6 +44,11 @@ class TallerMenu extends Phaser.Scene {
     		intMejoras.alpha = 0.0;
     		intDetalles.alpha = 1.0;
     	});
+    	
+    	this.robotsX = game.global.buildingMenu.x + 40;
+    	this.robotsY = [game.global.buildingMenu.y + 170,
+    					game.global.buildingMenu.y + 370,
+    					game.global.buildingMenu.y + 570];
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	

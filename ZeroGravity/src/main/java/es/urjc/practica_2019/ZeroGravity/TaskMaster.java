@@ -38,6 +38,7 @@ public class TaskMaster {
 		if (task != null) {
 			task.setId(taskId.incrementAndGet());
 			tasks.put(task.getId(), task);	
+			System.out.println("tarea añadida");
 		}
 	}
 	

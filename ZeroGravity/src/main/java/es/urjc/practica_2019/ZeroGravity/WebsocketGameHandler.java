@@ -40,6 +40,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
+import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
+import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
@@ -328,6 +330,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
 				break;
+			case "ENVIAR":
+				((Taller) player.getEdificio(node.get("tallerId").asInt())).getRobot(node.get("robotId").asInt()).producir();
+				player.saveEdificios();
+				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
 				msg.put("event", "PLATAFORMA EXTRACCION MENU");
 				msg.put("id", node.get("id").asInt());
@@ -355,6 +361,22 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "GET GENERADOR MENU":
 				msg.put("event", "GENERADOR MENU");
 				msg.put("id", node.get("id").asInt());
+				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET TALLER MENU":
+				msg.put("event", "TALLER MENU");
+				msg.put("id", node.get("id").asInt());
+				ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+				for (Robot r : ((Taller) player.getEdificio(node.get("id").asInt())).getRobots()) {
+					ObjectNode jsonRobot = mapper.createObjectNode();
+					jsonRobot.put("id", r.getId());
+					jsonRobot.put("ausente", r.isAusente());					
+					jsonRobot.put("nivel", r.getNivel());	
+					jsonRobot.put("carga", r.getCarga());	
+					arrayNodeRobots.addPOJO(jsonRobot);
+				}
+				msg.putPOJO("robots", arrayNodeRobots);
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -399,7 +421,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				dbOferta.append("creditos", oferta.getCreditos());
 				collOfertas.insertOne(dbOferta);
 				break;
-				
+			case "I AM HERE":
+				msg.put("event", "OK");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			default:
 				break;
 			}
