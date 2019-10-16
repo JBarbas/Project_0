@@ -1,0 +1,14 @@
+{
+  "short_name": "Polaris",
+  "name": "Polaris: A new home",
+  "app": {
+    "background": {
+      "scripts": [
+      "index.js",
+      "gameFunctions.js"
+      ]
+    }
+  },
+  "manifest_version": 1,
+  "version": "0.0.1"
+}
