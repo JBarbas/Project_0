@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoClientURI;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
@@ -47,11 +48,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private ObjectMapper mapper = new ObjectMapper();
 	private AtomicInteger playersId = new AtomicInteger();
 	
-	private static MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
-	private static MongoClient client = new MongoClient(new ServerAddress(), options);
 
-	private static MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
-	private static MongoCollection<Document> coll = db.getCollection("Users", Document.class);
+	private static MongoClientURI uri = new MongoClientURI(
+		    "mongodb+srv://ZeroGravity:webyrrss@polaris-u3pvb.mongodb.net/POLARIS?retryWrites=true&w=majority");
+
+	private static MongoClient mongoClient = new MongoClient(uri);
+	private static MongoDatabase database = mongoClient.getDatabase("POLARIS");
+
+	private static MongoCollection<Document> coll = database.getCollection("Users", Document.class);
 	
 	private static HashMap<ObjectId, Player> players = new HashMap<>();
 	

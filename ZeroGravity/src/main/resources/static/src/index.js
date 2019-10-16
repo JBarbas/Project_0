@@ -116,7 +116,7 @@ window.onload = function() {
 	}
 	
 	//WEBSOCKET CONFIGURATOR
-	game.global.socket = new WebSocket("ws://localhost:8080/polaris")
+	game.global.socket = new WebSocket("ws://" + location.href.substring(7) + "/polaris")
 	
 	game.global.socket.onopen = () => {
 		if (game.global.DEBUG_MODE) {
