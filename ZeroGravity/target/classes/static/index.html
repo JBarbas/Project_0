@@ -21,6 +21,7 @@
 		<script src="src/scenes/register.js"></script>
 		<script src="src/scenes/menu.js"></script>
 		<script src="src/scenes/difficult.js"></script>
+		<script src="src/scenes/loadGameplay.js"></script>
 		<script src="src/scenes/options.js"></script>
 		<script src="src/scenes/credits.js"></script>
 		<script src="src/scenes/preloadGame.js"></script>
@@ -56,59 +57,35 @@
 		<!-- Functions -->
 		<script src="src/scenes/functions/gameFunctions.js"></script>
 		<script src="src/scenes/functions/levelUpBuildings.js"></script>
+		<script src="src/scenes/functions/offerManager.js"></script>
 		<script src="src/scenes/functions/buyCell.js"></script>
+
+		
+		<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 		
 		<script src="src/index.js"></script>
+		
+		
 	
 	</head>
 	
 	<body>
-		 <div id="dificultad" style="visibility:hidden; position:absolute; z-index:2">
-			<div class="container">
-		        <div class="card">
-		            <div class="face face1">
-		                <div class="content">
-		                    <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/design_128.png?raw=true">
-		                    <h3>Design</h3>
-		                </div>
-		            </div>
-		            <div class="face face2">
-		                <div class="content">
-		                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cum cumque minus iste veritatis provident at.</p>
-		                        <a href="#">Read More</a>
-		                </div>
-		            </div>
-		        </div>
-		        <div class="card">
-		            <div class="face face1">
-		                <div class="content">
-		                    <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/code_128.png?raw=true">
-		                    <h3>Code</h3>
-		                </div>
-		            </div>
-		            <div class="face face2">
-		                <div class="content">
-		                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cum cumque minus iste veritatis provident at.</p>
-		                        <a href="#">Read More</a>
-		                </div>
-		            </div>
-		        </div>
-		        <div class="card">
-		            <div class="face face1">
-		                <div class="content">
-		                    <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/launch_128.png?raw=true">
-		                    <h3>Launch</h3>
-		                </div>
-		            </div>
-		            <div class="face face2">
-		                <div class="content">
-		                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cum cumque minus iste veritatis provident at.</p>
-		                        <a href="#">Read More</a>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-	    </div>
+		<!-- Plugin cogido de https://lottiefiles.com/web-player?lottie_url=https://assets1.lottiefiles.com/packages/lf20_8KZ9eh.json -->
+		<div id="animacion" style="visibility: hidden; position: absolute; top:35%; left:45%;">
+			 <lottie-player 
+			    src="https://assets1.lottiefiles.com/packages/lf20_8KZ9eh.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay >
+			</lottie-player>
+    	</div>
+    	<div  id="jugartxt" style="visibility: hidden; position: absolute; top:35%; left:10%;">
+    		<span class="glitch" data-text="JUGAR">JUGAR</span>
+    	</div>
+    	<div  id="opcionestxt" style="visibility: hidden; position: absolute; top:45%; left:10%;">
+    		<span class="glitch" data-text="OPCIONES">OPCIONES</span>
+    	</div>
+    	<div  id="creditostxt" style="visibility: hidden; position: absolute; top:55%; left:10%;">
+    		<span class="glitch" data-text="CREDITOS">CREDITOS</span>
+    	</div>
+    	
 	</body>
 
 </html>

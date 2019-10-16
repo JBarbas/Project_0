@@ -25,6 +25,7 @@ class PreloadScene extends Phaser.Scene {
 		//Elements
 		this.load.image('team', 'assets/interface/team.png');
 		
+		
 		//Buttons
     	this.load.image('session', 'assets/background/btnInicioSesion.png');
     	this.load.spritesheet( 'btn' , 'assets/background/btnInicioSesionSprite.png' ,{frameWidth:596,frameHeight:142});
@@ -36,9 +37,14 @@ class PreloadScene extends Phaser.Scene {
 		//Texts
 		this.load.html('loginform', 'assets/text/login-form.html');
 		this.load.html('registerform', 'assets/text/register-form.html');
+		this.load.html('difficultform', 'assets/text/difficult-form.html');
 		
 		
-		//this.load.multiatlas('title', 'assets/sprites/anim/image1.json', 'assets');
+		
+		
+		this.load.atlas('title', 'assets/atlas/title.png', 'assets/atlas/title.json');
+		
+		//this.load.spritesheet('title', 'assets/atlas/title.png', { frameWidth: 375, frameHeight: 120 });
 		
     }
     create (data)  {

@@ -38,6 +38,7 @@ public class Player {
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
 	private AtomicInteger edificioId = new AtomicInteger(0);
 	private HashMap<Integer, Edificio> edificios = new HashMap<>();
+	private HashMap<ObjectId, Oferta> ofertas = new HashMap<>();
 	private LinkedList<GeneradorRecursos> generadoresRecursos = new LinkedList<>();
 	private LinkedList<BloqueViviendas> viviendas = new LinkedList<>();
 	private LinkedList<Generador> generadores = new LinkedList<>();
@@ -118,6 +119,18 @@ public class Player {
 	
 	public Edificio getEdificio(int id) {
 		return edificios.get(id);
+	}
+	
+	public Collection<Oferta> getOfertas() {
+		return ofertas.values();
+	}
+	
+	public void addOferta(Oferta oferta) {
+		ofertas.put(oferta.getId(), oferta);
+	}
+	
+	public Oferta getOferta(int id) {
+		return this.ofertas.get(id);
 	}
 
 	public int getMetal() {
@@ -300,6 +313,19 @@ public class Player {
 		}
 	}
 	
+	public void updateOfertas(Collection<Document> ofertas) {
+		Oferta oferta;
+		for(Document o : ofertas) {
+			oferta = new Oferta();
+			oferta.setId(o.getObjectId("id"));
+			oferta.setPlayerId(o.getObjectId("playerId"));
+			oferta.setRecurso(o.getString("recurso"));
+			oferta.setCantidad(o.getInteger("cantidad"));
+			oferta.setCreditos(o.getInteger("creditos"));
+			this.ofertas.put(oferta.getId(), oferta);
+		}
+	}
+	
 	public void updateEdificios(Collection<Document> edificios) {
 		for (Document e : edificios) {
 			Edificio edificio = new Edificio();
@@ -421,6 +447,7 @@ public class Player {
 		saveGrid();
 		saveEdificios();
 		saveRecursos();
+		saveOfertas();
 	}
 	
 	public void saveGrid() {
@@ -479,5 +506,22 @@ public class Player {
 				.append("colonos", this.colonos)
 				.append("colonosMax", this.colonosMax)
 				.append("puestosTrabajo", this.puestosTrabajo)));
+	}
+	
+	public void saveOfertas() {
+		LinkedList<Document> dbOfertas = new LinkedList<>(); //Bson para mongo
+		for(Oferta o : this.getOfertas()) {
+			Document dbOferta = new Document();
+			dbOferta.append("id", o.getId());
+			dbOferta.append("playerId", o.getPlayerId());
+			dbOferta.append("recurso", o.getRecurso());
+			dbOferta.append("cantidad", o.getCantidad());
+			dbOferta.append("creditos", o.getCreditos());
+			dbOfertas.add(dbOferta);
+		}
+		
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
+				new Document("$set", new Document("ofertas", dbOfertas)));
+		
 	}
 }

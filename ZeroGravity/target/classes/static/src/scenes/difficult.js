@@ -23,12 +23,23 @@ class DifficultScene extends Phaser.Scene {
     	var button = this.add.image(150, 100, 'back').setInteractive();
     	button.setScale(.15);
     	
-    	var element = this.add.dom(400, 600).createFromCache('loginform');
+    	var element = this.add.dom(400, 600).createFromCache('difficultform');
 
         element.setPerspective(800);
     	
     	document.getElementById("dificultad").style.visibility = 'visible';
     	//$("dificultad").css("z-index", "2000");
+    	
+    	/*document.getElementById("selectNivel").onclick(){
+    		game.scene.run('PreloadGameScene');
+    		game.scene.stop('DifficultScene');
+    	}*/
+    	
+    	$( "#selectNivel" ).click(function() {
+    		game.scene.run('PreloadGameScene');
+    		game.scene.stop('DifficultScene');
+    	});
+    		
 
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);

@@ -38,6 +38,7 @@ window.onload = function() {
 				  		OptionsScene,
 				  		CreditsScene,
 				  		PreloadGameScene,
+				  		LoadGameplayScene,
 				  		GameScene,
 				  		GameInterface,
 				  		CentroMandoMenu,

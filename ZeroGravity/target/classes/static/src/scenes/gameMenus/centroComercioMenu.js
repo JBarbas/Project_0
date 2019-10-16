@@ -17,6 +17,8 @@ class CentroComercioMenu extends Phaser.Scene {
     }
     
     create (data)  {
+    	this.miEdificio = data.miEdificio;
+    	
     	var intEdificios = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intEdificios').setOrigin(0, 0); 
     	var intMejoras = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intMejoras').setOrigin(0, 0); 
     	var intDetalles = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'intDetalles').setOrigin(0, 0);
@@ -75,7 +77,23 @@ class CentroComercioMenu extends Phaser.Scene {
 			game.global.inMenu = false;
     	});
     	
-    	this.miEdificio = data.miEdificio;
+    	var crearOfertabtn = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	
+    	crearOfertabtn.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	})
+    	
+    	crearOfertabtn.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	})
+    	
+    	crearOfertabtn.on('pointerdown', function(pointer, localX, localY, event){
+    		
+    		//cantidad, recurso, creditos a cambio
+    		crearOferta(25, 'metal', 100);
+    	});
+    	
     	
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(data.miEdificio.level < 3){

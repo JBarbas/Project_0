@@ -48,7 +48,11 @@ class PreloadGameScene extends Phaser.Scene {
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
 		
+		//Backgrounds
+		this.load.image('bckCargando', 'assets/background/backload.png');
+		
 		//Interfaz
+		
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
@@ -63,6 +67,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
 		
+		this.load.image('load', 'assets/interface/Cargando.png');
+		
 		
 		
 		//Iconos
@@ -75,7 +81,7 @@ class PreloadGameScene extends Phaser.Scene {
     }
     update(time, delta) {
     	if (game.global.loaded) {
-    		game.scene.run('GameScene');
+    		game.scene.run('LoadGameplayScene');
     		game.scene.stop('PreloadGameScene');
     	}
     }
