@@ -21,7 +21,7 @@ class PreloadGameScene extends Phaser.Scene {
 		msg.event = 'ASK PLAYER INFO';
 		game.global.socket.send(JSON.stringify(msg));
 		
-		this.load.image('fondo', 'assets/background/Planeta 1/Planeta_1.jpg');
+		this.load.image('fondo', 'assets/sprites/Fondo/fondo.jpg');
 		this.load.image('tile_0', 'assets/sprites/Tiles_prototipo/tile_0.png');
 		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		

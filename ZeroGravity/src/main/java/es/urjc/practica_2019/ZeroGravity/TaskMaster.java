@@ -20,7 +20,7 @@ public class TaskMaster {
 	/* TaskMaster tiene una bolsa de tareas con una duracion determinada.
 	 * Comprueba cada 1 minuto cuales de esas tareas han acabado
 	 * Informa al cliente de que la tarea ha terminado
-	 * Ejecuta una callback en caso de que ésta se haya definido
+	 * Ejecuta un callback en caso de que ésta se haya definido
 	 */
 	
 	public static final TaskMaster INSTANCE = new TaskMaster();
@@ -37,8 +37,7 @@ public class TaskMaster {
 	public void addTask(Task task) {
 		if (task != null) {
 			task.setId(taskId.incrementAndGet());
-			System.out.println("Tarea añadida");
-			tasks.put(task.getId(), task);
+			tasks.put(task.getId(), task);	
 		}
 	}
 	
