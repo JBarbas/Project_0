@@ -28,8 +28,10 @@ class CreditsScene extends Phaser.Scene {
     	
     	var creditosHover = this.add.image(960, 160, 'creditosHover');
 
-        //link.on('pointerup', openExternalLink, this);
-        
+        link.on('pointerdown', openExternalLink, this);
+        link.on('pointerover',function(pointer){
+    	    
+    	})
 
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
@@ -45,6 +47,10 @@ class CreditsScene extends Phaser.Scene {
     		game.scene.run('MenuScene');
     		game.scene.stop('CreditsScene');
     	});
+    	
+    	function openExternalLink(){
+    		window.open("https://marferfer.github.io/WebSitePortfolio/", "_blank"); 
+    	}
     }
     update(time, delta) {
     	game.global.team.y -= 1;
