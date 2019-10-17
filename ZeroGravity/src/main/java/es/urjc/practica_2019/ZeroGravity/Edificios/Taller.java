@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.urjc.practica_2019.ZeroGravity.Player;
@@ -121,6 +122,17 @@ public class Taller extends GeneradorRecursos{
 		}
 		ObjectNode msg = mapper.createObjectNode();			
 		msg.put("event", "METAL RECOLECTADO");
+		msg.put("id", this.getId());
+		ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+		for (Robot r : this.getRobots()) {
+			ObjectNode jsonRobot = mapper.createObjectNode();
+			jsonRobot.put("id", r.getId());
+			jsonRobot.put("ausente", r.isAusente());					
+			jsonRobot.put("nivel", r.getNivel());	
+			jsonRobot.put("carga", 1);	
+			arrayNodeRobots.addPOJO(jsonRobot);
+		}
+		msg.putPOJO("robots", arrayNodeRobots);
 		msg.put("metal", player.getMetal());
 		try {	
 			if (player.getSession().isOpen()) {				
