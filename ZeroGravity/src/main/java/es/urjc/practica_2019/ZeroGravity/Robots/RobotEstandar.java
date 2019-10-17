@@ -73,7 +73,7 @@ public class RobotEstandar extends Robot {
 			if (this.taller.getPlayer().getSession().isOpen()) {
 				this.setAusente(false);
 				this.setCarga(carga);
-				this.taller.getPlayer().saveEdificios();				
+				this.taller.getPlayer().saveEdificios();
 			}
 			else {
 				Player p = WebsocketGameHandler.getPlayers().get(this.taller.getPlayer().getId());
