@@ -26,11 +26,17 @@ class PreloadScene extends Phaser.Scene {
 		
 		//Elements
 		this.load.image('team', 'assets/interface/team.png');
-		
+		this.load.image('txtCuenta', 'assets/interface/Opciones/cuentaTextos.png');
+		this.load.image('txtSonido', 'assets/interface/Opciones/sonidoTextos.png');
+		this.load.image('txtIdioma', 'assets/interface/Opciones/idiomaTextos.png');
 		
 		//Buttons
     	this.load.image('session', 'assets/background/btnInicioSesion.png');
     	this.load.spritesheet( 'btn' , 'assets/background/btnInicioSesionSprite.png' ,{frameWidth:596,frameHeight:142});
+    	this.load.spritesheet( 'btnCuenta' , 'assets/interface/Opciones/CuentaSprite.png' ,{frameWidth:131,frameHeight:131});
+    	this.load.spritesheet( 'btnSonido' , 'assets/interface/Opciones/EqualizerSprite.png' ,{frameWidth:131,frameHeight:131});
+    	this.load.spritesheet( 'btnIdioma' , 'assets/interface/Opciones/IdiomaSprite.png' ,{frameWidth:131,frameHeight:131});
+    	
     	this.load.spritesheet( 'btnRegister' , 'assets/interface/btnRegistrar.png' ,{frameWidth:596,frameHeight:142});
     	this.load.image('btnAmigos', 'assets/background/btnMenuAmigos.png');
 		this.load.image('link', 'assets/interface/link.png');
