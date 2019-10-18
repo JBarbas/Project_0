@@ -64,12 +64,15 @@ window.onload = function() {
 		socket : null,
 		loaded : false,
 		myPlayer : new Object(),
+		myPlayerId: "",
+		puntuacion: 0,
 		construyendo : false,
 		expandiendo : false,
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
 		menu : null,
+		offers: [],
 		buildingMenu: {
 			x: 1280,
 			y: 120,
@@ -139,6 +142,8 @@ window.onload = function() {
 				console.log('[DEBUG] LOGGED message recieved')
 				console.dir(msg);
 			}
+			/*al hacer el login aprovecho para tener en el cliente su id*/
+			game.global.myPlayerId = msg.playerId;
 			if (game.scene.isActive('LogInScene')) {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('LogInScene');
@@ -268,6 +273,7 @@ window.onload = function() {
 			game.global.resources.creditos = msg.creditos;
 			game.global.resources.unionCoins = msg.unionCoins;
 			game.global.resources.colonos = msg.colonos;
+			game.global.puntuacion = msg.puntuacion;
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		
@@ -282,6 +288,7 @@ window.onload = function() {
 			game.global.resources.creditos = msg.creditos;
 			game.global.resources.unionCoins = msg.unionCoins;
 			game.global.resources.colonos = msg.colonos;
+			game.global.puntuacion = msg.puntuacion;
 			break;
 			
 		case 'EDIFICIO PRODUCIENDO':
@@ -409,6 +416,64 @@ window.onload = function() {
 			}
 			alert("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
 			break;
+		case 'RESPUESTA CREAR OFERTA':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] RESPUESTA CREAR OFERTA message recieved');
+				console.log(msg.respuesta);
+			}
+			if(!msg.respuesta){
+				alert("Necesitas más recursos para enviar esta oferta al mercado");
+			}else{
+				let message = {		
+						event: 'ASK_PLAYER_RESOURCES',
+				}
+				game.global.socket.send(JSON.stringify(message));
+			}
+			pedirOfertas();
+			break;
+			
+		case 'SEND OFFERS':
+			/*vaciamos las ofertas anteriores*/
+			game.global.offers = [];
+			/*guardamos las nuevas ofertas*/
+			for(var i = 0; i < msg.ofertas.length; i++){
+				let id = i;
+				let idOferta = msg.ofertas[i].id;
+				let playerId = msg.ofertas[i].playerId;
+				let cantidad = msg.ofertas[i].cantidad;
+				let recurso = msg.ofertas[i].recurso;
+				let creditos = msg.ofertas[i].creditos;
+				let oferta = new Oferta(idOferta, playerId, cantidad, recurso, creditos);
+				game.global.offers[i] = oferta;
+			}
+			break;
+		
+		case 'DELETED OFFER':
+			let message = {		
+				event: 'ASK_PLAYER_RESOURCES'
+			}
+			game.global.socket.send(JSON.stringify(message));
+			break;
+		
+		case 'OFFER PURCHASED':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] RESPUESTA COMPRAR OFERTA message recieved');
+				console.log(msg.respuesta);
+			}
+			let messag = {		
+				event: 'ASK_PLAYER_RESOURCES'
+			}
+			game.global.socket.send(JSON.stringify(messag));
+			break;
+		
+		case 'ACTUALIZAR PUNTUACION':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] ACTUALIZAR PUNTUACION message recieved');
+				console.log('PUNTUACION:' + msg.punctuacion);
+			}
+			game.global.puntuacion = msg.punctuacion;
+			break;
+			
 		default:
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UNKNOWN message recieved')

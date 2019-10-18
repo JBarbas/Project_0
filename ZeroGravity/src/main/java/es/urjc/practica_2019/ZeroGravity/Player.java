@@ -52,7 +52,7 @@ public class Player {
 	private int colonos = 0;
 	private int colonosMax = 0;
 	private int puestosTrabajo = 0;
-	
+	private int puntuacion = 0;
 	private int costeCelda = 100;
 	private int celdasCompradas = 0;
 	
@@ -129,8 +129,13 @@ public class Player {
 		ofertas.put(oferta.getId(), oferta);
 	}
 	
-	public Oferta getOferta(int id) {
-		return this.ofertas.get(id);
+	public Oferta getOferta(ObjectId id) {	
+		return ofertas.get(id);
+	}
+	
+	public void deleteOferta(ObjectId id) {
+		ofertas.remove(id);
+		
 	}
 
 	public int getMetal() {
@@ -195,6 +200,14 @@ public class Player {
 		this.colonos = colonos;
 	}
 
+	public int getPuntuacion() {
+		return this.puntuacion;
+	}
+	
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	
 	public int getColonosMax() {
 		return colonosMax;
 	}
@@ -448,6 +461,7 @@ public class Player {
 		saveEdificios();
 		saveRecursos();
 		saveOfertas();
+		savePuntuacion();
 	}
 	
 	public void saveGrid() {
@@ -508,6 +522,11 @@ public class Player {
 				.append("puestosTrabajo", this.puestosTrabajo)));
 	}
 	
+	public void savePuntuacion() {
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), new Document("$set", 
+				new Document("puntuacion", this.puntuacion)));
+	}
+	
 	public void saveOfertas() {
 		LinkedList<Document> dbOfertas = new LinkedList<>(); //Bson para mongo
 		for(Oferta o : this.getOfertas()) {
@@ -518,10 +537,8 @@ public class Player {
 			dbOferta.append("cantidad", o.getCantidad());
 			dbOferta.append("creditos", o.getCreditos());
 			dbOfertas.add(dbOferta);
-		}
-		
+		}	
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
 				new Document("$set", new Document("ofertas", dbOfertas)));
-		
 	}
 }
