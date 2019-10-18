@@ -9,5 +9,6 @@ class Taller extends Edificio{
 		super.sprite = 'taller';
 		super.menuScene = 'TallerMenu';
 		super.originX = 0.32;
+		this.robots = new Map();
 	}
 }

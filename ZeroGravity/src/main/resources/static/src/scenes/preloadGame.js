@@ -10,15 +10,18 @@ class PreloadGameScene extends Phaser.Scene {
 		if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **PRELOAD GAME** scene");
 		}
+		
 	}
 	
 	preload () {
+		game.scene.run('LoadGameplayScene');
+		
 		// Pedimos la info del jugador, como su map grid o sus recursos
 		let msg = new Object();
 		msg.event = 'ASK PLAYER INFO';
 		game.global.socket.send(JSON.stringify(msg));
 		
-		this.load.image('fondo', 'assets/background/Planeta 1/Planeta_1.jpg');
+		this.load.image('fondo', 'assets/sprites/Fondo/fondo.jpg');
 		this.load.image('tile_0', 'assets/sprites/Tiles_prototipo/tile_0.png');
 		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		
@@ -42,13 +45,17 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnExpandir', 'assets/sprites/Edificios/btnExpandir.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnSubirNivel', 'assets/sprites/Edificios/btnNivel.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnColonos', 'assets/sprites/Edificios/btnColonos.png', {frameWidth:200,frameHeight:50});
+		this.load.spritesheet('btnEnviar', 'assets/sprites/Edificios/btnEnviar.png', {frameWidth:200,frameHeight:50});
+		this.load.spritesheet('btnRecolectar', 'assets/sprites/Edificios/btnRecolectar.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnOpciones', 'assets/interface/Gameplay/btnOpcionesSprite.png', {frameWidth:78,frameHeight:78});
 		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
 		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
 		
+		
 		//Interfaz
+		
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
@@ -58,24 +65,32 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
+		this.load.image('panelRanking', 'assets/interface/Gameplay/Ranking.png');
 		this.load.image('xAnuncio', 'assets/interface/Gameplay/x.png');
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
 		
-		
-		
+		//Robots
+		this.load.image('robotNv1', 'assets/sprites/robotNv1.png');
+		this.load.image('robotNv2', 'assets/sprites/robotNv2.png');
+		this.load.image('robotNv3', 'assets/sprites/robotNv3.png');
+				
 		//Iconos
 		this.load.image('clayIcon', 'assets/sprites/stone.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/sprites/stone.png');
+		this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
+		
+		//Texts
+		this.load.html('rankingmenu', 'assets/text/rankingmenu.html');
     }
     create (data)  {
 		
     }
     update(time, delta) {
     	if (game.global.loaded) {
-    		game.scene.run('GameScene');
+    		
     		game.scene.stop('PreloadGameScene');
     	}
     }

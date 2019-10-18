@@ -19,16 +19,19 @@ class CreditsScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundCredits');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
-    	button.setScale(.15);
     	
     	var link = this.add.image(1800, 50, 'link').setInteractive();
     	
     	//Animacion creditos saliendo
-    	var team = this.add.image(1010, 1800, 'team').setInteractive();
-    	team.setScale(.8);
+    	game.global.team = this.add.image(1010, 1800, 'team').setInteractive();
+    	game.global.team.setScale(.8);
+    	
+    	var creditosHover = this.add.image(960, 160, 'creditosHover');
 
-        //link.on('pointerup', openExternalLink, this);
-        
+        link.on('pointerdown', openExternalLink, this);
+        link.on('pointerover',function(pointer){
+    	    
+    	})
 
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
@@ -44,8 +47,13 @@ class CreditsScene extends Phaser.Scene {
     		game.scene.run('MenuScene');
     		game.scene.stop('CreditsScene');
     	});
+    	
+    	function openExternalLink(){
+    		window.open("https://marferfer.github.io/WebSitePortfolio/", "_blank"); 
+    	}
     }
     update(time, delta) {
+    	game.global.team.y -= 1;
     }
     
     

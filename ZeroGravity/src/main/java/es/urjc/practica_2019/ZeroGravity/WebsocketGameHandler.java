@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoClientURI;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.FindIterable;
@@ -42,6 +43,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
+import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
+import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
@@ -52,13 +55,17 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 	private ObjectMapper mapper = new ObjectMapper();
 	
-	private static MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
-	private static MongoClient client = new MongoClient(new ServerAddress(), options);
+	private static MongoClientURI uri = new MongoClientURI(
+		    "mongodb+srv://ZeroGravity:webyrrss@polaris-u3pvb.mongodb.net/POLARIS?retryWrites=true&w=majority");
 
-	private static MongoDatabase db = client.getDatabase("POLARIS").withReadPreference(ReadPreference.secondary());
-	private static MongoCollection<Document> coll = db.getCollection("Users", Document.class);
-	private static MongoCollection<Document> collOfertas = db.getCollection("Ofertas", Document.class);
-	private static MongoCollection<Document> collPuntuaciones = db.getCollection("Puntuaciones", Document.class);
+	private static MongoClient mongoClient = new MongoClient(uri);
+	private static MongoDatabase database = mongoClient.getDatabase("POLARIS");
+
+	private static MongoCollection<Document> coll = database.getCollection("Users", Document.class);
+	private static MongoCollection<Document> collOfertas = database.getCollection("Ofertas", Document.class);
+	private static MongoCollection<Document> collPuntuaciones = database.getCollection("Puntuaciones", Document.class);
+
+	
 	
 	private static HashMap<ObjectId, Player> players = new HashMap<>();
 	private static HashMap<ObjectId, Oferta> ofertas = new HashMap<>();
@@ -367,6 +374,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("punctuacion", player.getPuntuacion());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "ENVIAR":
+				((Taller) player.getEdificio(node.get("tallerId").asInt())).getRobot(node.get("robotId").asInt()).producir();
+				player.saveEdificios();
+				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
 				msg.put("event", "PLATAFORMA EXTRACCION MENU");
 				msg.put("id", node.get("id").asInt());
@@ -394,6 +405,22 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "GET GENERADOR MENU":
 				msg.put("event", "GENERADOR MENU");
 				msg.put("id", node.get("id").asInt());
+				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET TALLER MENU":
+				msg.put("event", "TALLER MENU");
+				msg.put("id", node.get("id").asInt());
+				ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+				for (Robot r : ((Taller) player.getEdificio(node.get("id").asInt())).getRobots()) {
+					ObjectNode jsonRobot = mapper.createObjectNode();
+					jsonRobot.put("id", r.getId());
+					jsonRobot.put("ausente", r.isAusente());					
+					jsonRobot.put("nivel", r.getNivel());	
+					jsonRobot.put("carga", r.getCarga());	
+					arrayNodeRobots.addPOJO(jsonRobot);
+				}
+				msg.putPOJO("robots", arrayNodeRobots);
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -564,7 +591,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
-				
+			case "I AM HERE":
+				msg.put("event", "OK");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			default:
 				break;
 			}

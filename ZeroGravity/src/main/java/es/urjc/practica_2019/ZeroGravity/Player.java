@@ -358,7 +358,15 @@ public class Player {
 				viviendas.add((BloqueViviendas) edificio);
 				break;
 			case "taller":
-				edificio = new Taller(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new Taller(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				for (Document r : (Collection<Document>) e.get("robots")) {
+					Robot robot = new RobotEstandar(r.getInteger("id"), (Taller) edificio);
+					robot.setAusente(r.getBoolean("ausente"));
+					robot.setNivel(r.getInteger("nivel"));
+					robot.setCarga(r.getInteger("carga"));
+					((Taller) edificio).addRobot(robot);
+				}
+				((Taller) edificio).setRobotId(e.getInteger("robotId", 0));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
@@ -409,7 +417,8 @@ public class Player {
 				viviendas.add((BloqueViviendas) edificio);
 				break;
 			case "taller":
-				edificio = new Taller(x, y, this.centroMando, edificioId.incrementAndGet());
+				edificio = new Taller(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				((Taller) edificio).addRobot(new RobotEstandar(((Taller) edificio).incrementAndGetRobotId(), ((Taller) edificio)));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "plataformaExtraccion":
@@ -490,6 +499,19 @@ public class Player {
 				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
 				dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
 				dbEdificio.append("colonos", ((GeneradorRecursos) e).getColonos());
+				if (e instanceof Taller) {
+					LinkedList<Document> dbRobots = new LinkedList<>(); // Bson para MongoDB
+					for (Robot r : ((Taller) e).getRobots()) {
+						Document dbRobot = new Document();
+						dbRobot.append("id", r.getId());
+						dbRobot.append("ausente", r.isAusente());
+						dbRobot.append("nivel", r.getNivel());
+						dbRobot.append("carga", r.getCarga());
+						dbRobots.add(dbRobot);
+					}
+					dbEdificio.append("robotId", ((Taller) e).getRobotId());
+					dbEdificio.append("robots", dbRobots);
+				}
 				Document productionBeginTime = new Document();
 				productionBeginTime.append("year", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
 				productionBeginTime.append("month", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());

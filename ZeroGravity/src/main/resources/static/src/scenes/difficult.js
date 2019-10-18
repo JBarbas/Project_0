@@ -21,7 +21,6 @@ class DifficultScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundDifficulty');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
-    	button.setScale(.15);
     	
     	var element = this.add.dom(400, 600).createFromCache('difficultform');
 
