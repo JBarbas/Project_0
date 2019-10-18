@@ -33,6 +33,8 @@ class OptionsScene extends Phaser.Scene {
 		txtSonido.setVisible(false);
 		txtIdioma.setVisible(false);
     	
+		
+		
     	//Default cuenta
     	btnCuenta.setFrame(1);
     	
@@ -80,6 +82,17 @@ class OptionsScene extends Phaser.Scene {
     	var element = this.add.dom(400, 600).createFromCache('optionsform');
 
         element.setPerspective(800);
+        
+        var fSYes = document.getElementById('fullScreenYes');
+		var fSNo = document.getElementById('fullScreenNo');
+		
+		fSYes.addEventListener("click", function(){
+			if(this.scale.isFullscreen){
+				this.scale.stopFullscreen();
+			}else{
+				this.scale.startFullscreen();
+			}
+		}, this);
     
     	
     }

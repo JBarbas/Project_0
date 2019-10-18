@@ -80,6 +80,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('clayIcon', 'assets/sprites/stone.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/sprites/stone.png');
+		this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
 		
 		//Texts
 		this.load.html('rankingmenu', 'assets/text/rankingmenu.html');

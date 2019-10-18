@@ -30,6 +30,13 @@ class GameInterface extends Phaser.Scene {
     	this.unionCoins = this.add.text(80, 22, game.global.resources.unionCoins, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	this.colonos = this.add.text(1298, 22, game.global.resources.colonos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	
+    	var e1 = this.add.image(920, 15, 'starIcon').setOrigin(0, 0);
+    	var e2 = this.add.image(970, 15, 'starIcon').setOrigin(0, 0);
+    	var e3 = this.add.image(1020, 15, 'starIcon').setOrigin(0, 0);
+    	var e4 = this.add.image(1070, 15, 'starIcon').setOrigin(0, 0);
+    	var e5 = this.add.image(1120, 15, 'starIcon').setOrigin(0, 0);
+    
+    	
     	var btnAnuncios = this.add.image(game.global.btnAnuncios.x, game.global.btnAnuncios.y, 'intAnuncios').setOrigin(0, 0); 
     	btnAnuncios.setInteractive();
     	btnRanking.setInteractive();

@@ -401,7 +401,7 @@ body {
 	 display: table;
 	 clear: both;
 }
- .tab-group li a {
+ .tab-group li span {
 	 display: block;
 	 text-decoration: none;
 	 padding: 15px;
@@ -414,11 +414,11 @@ body {
 	 cursor: pointer;
 	 transition: 0.5s ease;
 }
- .tab-group li a:hover {
+ .tab-group li span:hover {
 	 background: #959595;
 	 color: white;
 }
- .tab-group .active a {
+ .tab-group .active span {
 	 background: #959595;
 	 color: #fff;
 }
