@@ -1,4 +1,4 @@
-class Taller extends Edificio{
+class Taller extends GeneradorRecursos {
 	
 	constructor(x, y){
 		
@@ -10,5 +10,6 @@ class Taller extends Edificio{
 		super.menuScene = 'TallerMenu';
 		super.originX = 0.32;
 		this.robots = new Map();
+		super.resourceSprite = 'clayIcon';
 	}
 }

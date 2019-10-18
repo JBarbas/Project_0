@@ -326,12 +326,37 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("id", node.get("id").asInt());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
-				
+			case "ASK_LEVELUP_ROBOT":
+				canILevelUp = ((Taller) player.getEdificio(node.get("taller").asInt())).getRobot(node.get("id").asInt()).levelUp();
+				msg.put("event", "REFRESH MENU");
+				msg.put("id", node.get("taller").asInt());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
 				break;
+			case "RECOLECTAR ROBOT":
+				((Taller)  player.getEdificio(node.get("id").asInt())).getRobot(node.get("robotId").asInt()).recolectar();		
+				msg.put("event", "METAL RECOLECTADO");
+				msg.put("id", node.get("id").asInt());
+				ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+				for (Robot r : ((Taller)  player.getEdificio(node.get("id").asInt())).getRobots()) {
+					ObjectNode jsonRobot = mapper.createObjectNode();
+					jsonRobot.put("id", r.getId());
+					jsonRobot.put("ausente", r.isAusente());					
+					jsonRobot.put("nivel", r.getNivel());	
+					jsonRobot.put("carga", r.getCarga());	
+					arrayNodeRobots.addPOJO(jsonRobot);
+				}
+				msg.putPOJO("robots", arrayNodeRobots);
+				msg.put("metal", player.getMetal());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "ENVIAR":
 				((Taller) player.getEdificio(node.get("tallerId").asInt())).getRobot(node.get("robotId").asInt()).producir();
+				msg.put("event", "REFRESH MENU");
+				msg.put("id", node.get("tallerId").asInt());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				player.saveEdificios();
 				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
@@ -367,16 +392,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "GET TALLER MENU":
 				msg.put("event", "TALLER MENU");
 				msg.put("id", node.get("id").asInt());
-				ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
+				msg.put("energiaNecesaria", PlataformaExtraccion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel()-1][0]);
+				ArrayNode arrayNodeRobots2 = mapper.createArrayNode(); // JSON para el cliente
 				for (Robot r : ((Taller) player.getEdificio(node.get("id").asInt())).getRobots()) {
 					ObjectNode jsonRobot = mapper.createObjectNode();
 					jsonRobot.put("id", r.getId());
 					jsonRobot.put("ausente", r.isAusente());					
 					jsonRobot.put("nivel", r.getNivel());	
 					jsonRobot.put("carga", r.getCarga());	
-					arrayNodeRobots.addPOJO(jsonRobot);
+					arrayNodeRobots2.addPOJO(jsonRobot);
 				}
-				msg.putPOJO("robots", arrayNodeRobots);
+				msg.putPOJO("robots", arrayNodeRobots2);
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -464,6 +492,23 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
 					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
 					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+					if (e instanceof Taller) {
+						ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+						for (Robot r :  ((Taller) e).getRobots()) {
+							ObjectNode jsonRobot = mapper.createObjectNode();
+							jsonRobot.put("id", r.getId());
+							jsonRobot.put("ausente", r.isAusente());
+							jsonRobot.put("nivel", r.getNivel());
+							jsonRobot.put("carga", r.getCarga());
+							jsonRobot.put("dateYear", r.getProductionBeginTime().getYear());
+							jsonRobot.put("dateMonth", r.getProductionBeginTime().getMonthValue());
+							jsonRobot.put("dateDay", r.getProductionBeginTime().getDayOfMonth());
+							jsonRobot.put("dateHour", r.getProductionBeginTime().getHour());
+							jsonRobot.put("dateMinute", r.getProductionBeginTime().getMinute());
+							arrayNodeRobots.addPOJO(jsonRobot);
+						}
+						jsonEdificio.putPOJO("robots", arrayNodeRobots);
+					}
 				}
 				jsonEdificio.put("sprite", e.getSprite());
 				jsonEdificio.put("level", e.getLevel());

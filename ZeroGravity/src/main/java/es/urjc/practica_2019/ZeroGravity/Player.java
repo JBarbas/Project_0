@@ -351,6 +351,7 @@ public class Player {
 					robot.setAusente(r.getBoolean("ausente"));
 					robot.setNivel(r.getInteger("nivel"));
 					robot.setCarga(r.getInteger("carga"));
+					robot.setProductionBeginTime((Document) e.get("productionBeginTime"));
 					((Taller) edificio).addRobot(robot);
 				}
 				((Taller) edificio).setRobotId(e.getInteger("robotId", 0));
@@ -493,6 +494,13 @@ public class Player {
 						dbRobot.append("ausente", r.isAusente());
 						dbRobot.append("nivel", r.getNivel());
 						dbRobot.append("carga", r.getCarga());
+						Document productionBeginTime = new Document();
+						productionBeginTime.append("year", r.getProductionBeginTime().getYear());
+						productionBeginTime.append("month", r.getProductionBeginTime().getMonthValue());
+						productionBeginTime.append("day", r.getProductionBeginTime().getDayOfMonth());
+						productionBeginTime.append("hour", r.getProductionBeginTime().getHour());
+						productionBeginTime.append("minute", r.getProductionBeginTime().getMinute());
+						dbRobot.append("productionBeginTime", productionBeginTime);
 						dbRobots.add(dbRobot);
 					}
 					dbEdificio.append("robotId", ((Taller) e).getRobotId());
