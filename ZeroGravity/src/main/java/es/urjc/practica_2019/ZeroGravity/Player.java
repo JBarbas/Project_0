@@ -56,6 +56,8 @@ public class Player {
 	private int costeCelda = 100;
 	private int celdasCompradas = 0;
 	
+	private boolean gameStarted = false;
+	
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	public Player(WebSocketSession session, ObjectId id) {
@@ -231,7 +233,15 @@ public class Player {
 		saveEdificios();
 		saveRecursos();
 	}
-	
+		
+	public boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	public void setGameStarted(boolean gameStarted) {
+		this.gameStarted = gameStarted;
+	}
+
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 		int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);
@@ -549,7 +559,8 @@ public class Player {
 				.append("celdasCompradas", this.celdasCompradas)
 				.append("colonos", this.colonos)
 				.append("colonosMax", this.colonosMax)
-				.append("puestosTrabajo", this.puestosTrabajo)));
+				.append("puestosTrabajo", this.puestosTrabajo)
+				.append("gameStarted", this.gameStarted)));
 	}
 	
 	public void savePuntuacion() {

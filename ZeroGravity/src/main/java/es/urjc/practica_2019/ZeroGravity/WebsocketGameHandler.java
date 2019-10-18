@@ -130,9 +130,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setCosteCelda(myPlayer.getInteger("costeCelda", 0));
 					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas", 0));
 					player.setColonos(myPlayer.getInteger("colonos", 0));
+					player.setGameStarted(myPlayer.getBoolean("gameStarted", false));
 
 					msg.put("event", "LOGGED");
 					msg.put("playerId", player.getId().toString());
+					msg.put("gameStarted", player.isGameStarted());
 				}
 				else {
 					msg.put("event", "LOGIN FAILED");
@@ -167,12 +169,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						msg.put("event", "LOGGED");
 						msg.put("playerId", player.getId().toString());
 						players.put(player.getId(), player);
+						player.saveAll();
 					}
 				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
 			case "ASK PLAYER INFO":
+				if (!player.isGameStarted()) {
+					player.setGameStarted(true);
+				}
 				updateInfo(player, "PLAYER INFO");
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("metal", player.getMetal());

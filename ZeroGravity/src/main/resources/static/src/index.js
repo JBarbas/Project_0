@@ -65,7 +65,9 @@ window.onload = function() {
 		SKIP_INTRO: false,
 		socket : null,
 		loaded : false,
-		myPlayer : new Object(),
+		myPlayer : {
+			gameStarted : false
+		},
 		myPlayerId: "",
 		puntuacion: 0,
 		construyendo : false,
@@ -155,6 +157,7 @@ window.onload = function() {
 			}
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
+			game.global.myPlayer.gameStarted = msg.gameStarted;
 			if (game.scene.isActive('LogInScene')) {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('LogInScene');
