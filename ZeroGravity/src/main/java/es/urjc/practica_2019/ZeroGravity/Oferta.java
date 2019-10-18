@@ -1,9 +1,11 @@
 package es.urjc.practica_2019.ZeroGravity;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
 public class Oferta {
 
+	@Id
 	private ObjectId id;
 	private ObjectId playerId;
 	private String recurso;

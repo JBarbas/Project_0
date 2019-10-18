@@ -29,16 +29,4 @@ public class CentroComercio extends Edificio {
 		this.buildingDependsOn = null;
 		this.sprite = "centroComercio";
 	}
-
-	public void mostrarOfertas() {
-
-	}
-
-	public void ofrecerIntercambio() {
-
-	}
-
-	public void aceptarIntercambio() {
-
-	}
 }
