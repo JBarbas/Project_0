@@ -65,6 +65,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
+		this.load.image('panelRanking', 'assets/interface/Gameplay/Ranking.png');
 		this.load.image('xAnuncio', 'assets/interface/Gameplay/x.png');
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
@@ -79,6 +80,9 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('clayIcon', 'assets/sprites/stone.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/sprites/stone.png');
+		
+		//Texts
+		this.load.html('rankingmenu', 'assets/text/rankingmenu.html');
     }
     create (data)  {
 		

@@ -47,7 +47,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.html('registerform', 'assets/text/register-form.html');
 		this.load.html('difficultform', 'assets/text/difficult-form.html');
 		this.load.html('menuform', 'assets/text/menu-form.html');
-		
+		this.load.html('optionsform', 'assets/text/options-form.html');
 		
 		this.load.image('load', 'assets/interface/Cargando.png');
 		

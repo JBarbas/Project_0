@@ -76,6 +76,12 @@ class OptionsScene extends Phaser.Scene {
     		game.scene.run('MenuScene');
     		game.scene.stop('OptionsScene');
     	});
+    	
+    	var element = this.add.dom(400, 600).createFromCache('optionsform');
+
+        element.setPerspective(800);
+    
+    	
     }
     update(time, delta) {
     	

@@ -50,7 +50,8 @@ window.onload = function() {
 				  		LaboratorioInvestigacionMenu,
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu,
-				  		AnuncioMenu]
+				  		AnuncioMenu,
+				  		RankingMenu]
 			};
 			
 	

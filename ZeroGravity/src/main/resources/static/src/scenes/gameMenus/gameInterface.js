@@ -19,7 +19,7 @@ class GameInterface extends Phaser.Scene {
     	this.intPrincipal = this.add.image(game.global.intPrincipal.x, game.global.intPrincipal.y, 'intPrincipal').setOrigin(0, 0); 
     	this.btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
     	
-    	this.btnRanking = this.add.image(game.global.btnRanking.x, game.global.btnRanking.y, 'intRanking').setOrigin(0, 0); 
+    	var btnRanking = this.add.image(game.global.btnRanking.x, game.global.btnRanking.y, 'intRanking').setOrigin(0, 0); 
     	
     	var btnOpciones = this.add.image(game.global.btnOpciones.x, game.global.btnOpciones.y, 'btnOpciones').setInteractive();
 
@@ -32,7 +32,7 @@ class GameInterface extends Phaser.Scene {
     	
     	var btnAnuncios = this.add.image(game.global.btnAnuncios.x, game.global.btnAnuncios.y, 'intAnuncios').setOrigin(0, 0); 
     	btnAnuncios.setInteractive();
-    
+    	btnRanking.setInteractive();
     	
     	
     	btnOpciones.on('pointerover',function(pointer){
@@ -43,7 +43,15 @@ class GameInterface extends Phaser.Scene {
     		btnOpciones.setFrame(0);
     	})
     	
-    	
+    	btnRanking.on('pointerdown', function(pointer){
+    		//start scene
+    		game.global.inMenu = true;
+			if (game.global.menu !== null) {
+				game.scene.stop(game.global.menu);
+			}
+			game.global.menu = 'RankingMenu';
+			game.scene.run('RankingMenu');
+    	});
     	
     	btnAnuncios.on('pointerdown', function(pointer){
     		//start scene
