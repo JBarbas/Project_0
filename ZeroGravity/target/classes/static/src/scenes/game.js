@@ -28,6 +28,7 @@ class GameScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	game.global.inGame = true;
     	this.main_camera = this.cameras.main;
     	zoom = 1; // reset del zoom
     	// Establecemos los limites del mapa donde puede ver la camara

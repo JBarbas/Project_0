@@ -75,8 +75,15 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.scene.run('MenuScene');
-    		game.scene.stop('OptionsScene');
+    		if(game.global.inGame){
+    			game.scene.run('GameInterface');
+    			game.scene.run('GameScene');
+        		game.scene.stop('OptionsScene');
+    		}
+    		else{
+    			game.scene.run('MenuScene');
+    			game.scene.stop('OptionsScene');
+    		}
     	});
     	
     	var element = this.add.dom(400, 600).createFromCache('optionsform');
