@@ -34,7 +34,11 @@ class GameScene extends Phaser.Scene {
     	// Establecemos los limites del mapa donde puede ver la camara
     	this.main_camera.setBounds(0-world_bounds_marginX, 0-world_bounds_marginY, tileMap_width*tile_width + 2*world_bounds_marginX, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_marginY, true);
     	
-    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo-lite').setOrigin(0.5, 0.5).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg0').setOrigin(1, 1).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg1').setOrigin(0, 1).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg2').setOrigin(1, 0).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg3').setOrigin(0, 0).setScale(2, 2);
+    	
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
     	
     	// Creamos la malla isometrica
@@ -93,7 +97,7 @@ class GameScene extends Phaser.Scene {
     	var camera = this.cameras.main;
         dragScale
             .on('drag1', function (dragScale) {
-            	game.scene.getScene('GameScene').isDragging = true;
+            	//game.scene.getScene('GameScene').isDragging = true;
                 var drag1Vector = dragScale.drag1Vector;
                 camera.scrollX -= drag1Vector.x / camera.zoom;
                 camera.scrollY -= drag1Vector.y / camera.zoom;
@@ -157,7 +161,7 @@ class GameScene extends Phaser.Scene {
     	/* Codigo extraido de http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
     	 * by sanojian - 14 October 2014
     	 */
-    	/*if (this.game.input.activePointer.isDown) {
+    	if (this.game.input.activePointer.isDown) {
     		if (!game.global.inMenu || !(this.game.input.activePointer.position.x > game.global.buildingMenu.x && 
     				this.game.input.activePointer.position.x < game.global.buildingMenu.x + game.global.buildingMenu.width && 
     				this.game.input.activePointer.position.y > game.global.buildingMenu.y && 
@@ -166,8 +170,8 @@ class GameScene extends Phaser.Scene {
     			
 	    		if (this.game.origDragPoint) {
 					// move the camera by the amount the mouse has moved since last update
-					this.cameras.main.scrollX += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
-					this.cameras.main.scrollY += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
+					//this.cameras.main.scrollX += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
+					//this.cameras.main.scrollY += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
 					if (Math.abs(this.game.origDragPoint.x - this.game.input.activePointer.position.x) > 3 || Math.abs(this.game.origDragPoint.y - this.game.input.activePointer.position.y) > 3) {
 						this.isDragging = true;
 					}
