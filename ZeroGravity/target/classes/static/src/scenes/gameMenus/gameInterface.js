@@ -30,11 +30,16 @@ class GameInterface extends Phaser.Scene {
     	this.unionCoins = this.add.text(80, 22, game.global.resources.unionCoins, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	this.colonos = this.add.text(1298, 22, game.global.resources.colonos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	
-    	var e1 = this.add.image(920, 15, 'starIcon').setOrigin(0, 0);
-    	var e2 = this.add.image(970, 15, 'starIcon').setOrigin(0, 0);
-    	var e3 = this.add.image(1020, 15, 'starIcon').setOrigin(0, 0);
-    	var e4 = this.add.image(1070, 15, 'starIcon').setOrigin(0, 0);
-    	var e5 = this.add.image(1120, 15, 'starIcon').setOrigin(0, 0);
+    	this.e1 = this.add.image(920, 15, 'starIcon').setOrigin(0, 0);
+    	this.e2 = this.add.image(970, 15, 'starIcon').setOrigin(0, 0);
+    	this.e3 = this.add.image(1020, 15, 'starIcon').setOrigin(0, 0);
+    	this.e4 = this.add.image(1070, 15, 'starIcon').setOrigin(0, 0);
+    	this.e5 = this.add.image(1120, 15, 'starIcon').setOrigin(0, 0);
+    	
+
+    	this.e1.setFrame(1);
+
+    	
     
     	
     	var btnAnuncios = this.add.image(game.global.btnAnuncios.x, game.global.btnAnuncios.y, 'intAnuncios').setOrigin(0, 0); 
@@ -84,6 +89,66 @@ class GameInterface extends Phaser.Scene {
     	this.creditos.text = game.global.resources.creditos;
     	this.unionCoins.text = game.global.resources.unionCoins;
     	this.colonos.text = game.global.resources.colonos;
+    	
+    	this.puntuacion = game.global.puntuacion;
+    	if(this.puntuacion >= 5000){
+    		this.e5.setFrame(2);
+    		this.e4.setFrame(2);
+    		this.e3.setFrame(2);
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	//Intermedio
+    	if(this.puntuacion >= 3800){
+    		this.e5.setFrame(1);
+    		this.e4.setFrame(2);
+    		this.e3.setFrame(2);
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	if(this.puntuacion >= 2300){
+    		this.e4.setFrame(2);
+    		this.e3.setFrame(2);
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	//Intermedio
+    	if(this.puntuacion >= 1600){
+    		this.e5.setFrame(0);
+    		this.e4.setFrame(1);
+    		this.e3.setFrame(2);
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	if(this.puntuacion >= 1100){
+    		this.e3.setFrame(2);
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	//Intermedio
+    	if(this.puntuacion >= 800){
+    		this.e5.setFrame(0);
+    		this.e4.setFrame(0);
+    		this.e3.setFrame(1);
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	
+    	if(this.puntuacion >= 500){
+    		this.e2.setFrame(2);
+    		this.e1.setFrame(2);
+    	}
+    	//Intermedio
+    	if(this.puntuacion >= 350){
+    		this.e5.setFrame(0);
+    		this.e4.setFrame(0);
+    		this.e3.setFrame(0);
+    		this.e2.setFrame(1);
+    		this.e1.setFrame(2);
+    	}
+    	if(this.puntuacion >= 200){
+    		this.e1.setFrame(2);
+    	}
     }
 
 }
