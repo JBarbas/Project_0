@@ -16,6 +16,7 @@ class IntroScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	this.scale.startFullscreen();
     	var background = this.add.image(960, 540, 'backgroundLoadGame');
     	background.alpha = 0;
     	
@@ -30,7 +31,21 @@ class IntroScene extends Phaser.Scene {
     	});
     	
     	tween.on('complete', function(tween, targets){
-    		game.scene.run('LogInScene');
+    		let text = game.scene.getScene('IntroScene').add.text(game.config.width/2, game.config.height/2, "Haz click para continuar", { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px'});
+    		text.setOrigin(0.5, 0.5);
+    		game.scene.getScene('IntroScene').tweens.add({
+        	    targets: text,
+        	    alpha: { from: 0, to: 1 },
+        	    ease: 'Linear',
+        	    duration: 500,
+        	    yoyo: true,
+        	    loop: -1
+        	});
+    	});
+    	
+    	this.input.on('pointerup', function(pointer){
+        	openFullscreen();
+        	game.scene.run('LogInScene');
     		game.scene.stop('IntroScene');
     	});
     	
