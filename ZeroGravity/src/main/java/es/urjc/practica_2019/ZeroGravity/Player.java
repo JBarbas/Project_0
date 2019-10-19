@@ -393,7 +393,7 @@ public class Player {
 				generadores.add((Generador) edificio);
 				break;
 			case "laboratorioInvestigacion":
-				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
