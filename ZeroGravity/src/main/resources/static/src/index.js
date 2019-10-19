@@ -371,29 +371,8 @@ window.onload = function() {
 			}
 			let tallerLleno = game.global.edificios.get(msg.taller);
 			if (game.scene.isActive('TallerMenu')) {
-				var robot = game.global.edificios.get(msg.taller).robots.get(msg.id);
-				robot.ausente = false;
-				if (!robot.ausente) {
-					let btnRecolectar = game.scene.getScene("TallerMenu").add.image(robot.x + 160, robot.y + 70, 'btnRecolectar').setOrigin(0, 0.5).setInteractive();
-					btnRecolectar.id = robot.id;
-					btnRecolectar.on('pointerover',function(pointer){
-			    	    this.setFrame(1);
-			    	})
-			    	btnRecolectar.on('pointerout',function(pointer){
-			    	    this.setFrame(0);
-			    	})			    	
-			    	btnRecolectar.on('pointerdown', function(pointer, localX, localY, event){
-			    		let msgBack = new Object();
-			    		msgBack.event = 'RECOLECTAR ROBOT';
-			    		msgBack.id = msg.id;
-			    		msgBack.robotId = this.id;
-			    		game.global.socket.send(JSON.stringify(msgBack));
-			    		this.destroy();
-			    		if (tallerLleno.recolectIcon !== null) {
-			    			tallerLLeno.recolectIcon.destroy();
-			    		}
-			    	});
-				}
+				game.scene.stop('TallerMenu');
+				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
 			}
 			else {
 				tallerLleno.lleno = true;

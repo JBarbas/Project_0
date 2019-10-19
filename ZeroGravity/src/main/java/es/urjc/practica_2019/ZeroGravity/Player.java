@@ -226,6 +226,12 @@ public class Player {
 					g.addColono();
 					colonos++;
 					puestosTrabajo--;
+					for (BloqueViviendas v : viviendas) {
+						if (v.getColonos() < v.getCapacidad()) {
+							v.setColonos(v.getColonos() + 1);
+							break;
+						}
+					}
 					break;
 				}
 			}
@@ -537,6 +543,9 @@ public class Player {
 				productionBeginTime.append("hour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
 				productionBeginTime.append("minute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
 				dbEdificio.append("productionBeginTime", productionBeginTime);
+			}
+			else if (e instanceof BloqueViviendas) {
+				dbEdificio.append("colonos", ((BloqueViviendas) e).getColonos());
 			}
 			dbEdificio.append("sprite", e.getSprite());
 			dbEdificio.append("level", e.getLevel());
