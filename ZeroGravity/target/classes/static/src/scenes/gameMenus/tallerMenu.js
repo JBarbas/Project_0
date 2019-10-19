@@ -10,7 +10,7 @@ class TallerMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **TALLER** menu");
 		} 	
-		if (data.miEdificio.recolectIcon !== null) {
+		if (data.miEdificio.recolectIcon !== null && typeof data.miEdificio.recolectIcon !== 'undefined') {
 			data.miEdificio.recolectIcon.destroy();
 		}
     }
