@@ -3,9 +3,13 @@ package es.urjc.practica_2019.ZeroGravity;
 import java.awt.List;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,6 +55,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	/*Puntuaciones: construir edificio, subir de nivel edificio, recolectar recursos, ampliar la base*/
 	private static final int[] PUNTUACIONES = {1, 2, 3, 4};
 	private static final int NIVEL_MAX_EDIFICIO = 3;
+	private static final int NUM_MAX_PUNTUACIONES_MOSTRAR = 15;
 	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 	private ObjectMapper mapper = new ObjectMapper();
@@ -63,13 +68,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 
 	private static MongoCollection<Document> coll = database.getCollection("Users", Document.class);
 	private static MongoCollection<Document> collOfertas = database.getCollection("Ofertas", Document.class);
-	private static MongoCollection<Document> collPuntuaciones = database.getCollection("Puntuaciones", Document.class);
-
-	
 	
 	private static HashMap<ObjectId, Player> players = new HashMap<>();
 	private static HashMap<ObjectId, Oferta> ofertas = new HashMap<>();
-	private static HashMap<ObjectId, Integer> puntuaciones = new HashMap<>();
 	
 	public static MongoCollection<Document> getColl() {
 		return coll;
@@ -85,14 +86,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	public static HashMap<ObjectId, Oferta> getOfertas() {
 		return ofertas;
-	}
-
-	public static MongoCollection<Document> getCollPuntuaciones() {
-		return collPuntuaciones;
-	}
-	
-	public static HashMap<ObjectId, Integer> getPuntuaciones() {
-		return puntuaciones;
 	}
 	
 	@Override
@@ -180,7 +173,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
-				msg.put("puntuacion", player.getPuntuacion());
+				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -193,7 +186,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[0]);
 				player.savePuntuacion();
-				savePuntuaciones(player);
 				msg.put("event", "ACTUALIZAR PUNTUACION");
 				msg.put("punctuacion", player.getPuntuacion());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -206,7 +198,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
-				msg.put("puntuacion", player.getPuntuacion());
+				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -353,7 +345,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					/*actualizamos la puntuacion del jugador*/
 					player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[1]);
 					player.savePuntuacion();
-					savePuntuaciones(player);
 					msg.put("event", "ACTUALIZAR PUNTUACION");
 					msg.put("punctuacion", player.getPuntuacion());
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -369,7 +360,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[2]);
 				player.savePuntuacion();
-				savePuntuaciones(player);
 				msg.put("event", "ACTUALIZAR PUNTUACION");
 				msg.put("punctuacion", player.getPuntuacion());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -435,7 +425,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[3]);
 				player.savePuntuacion();
-				savePuntuaciones(player);
 				msg.put("event", "ACTUALIZAR PUNTUACION");
 				msg.put("punctuacion", player.getPuntuacion());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -452,6 +441,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("energia", player.getEnergia());
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -591,9 +581,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
+				
 			case "I AM HERE":
 				msg.put("event", "OK");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			
+			case "GIVE ME PUNCTUATIONS":
+				sendPunctuations(player);
 				break;
 			default:
 				break;
@@ -605,6 +600,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 		}
 	}
 	
+	/*Enviamos las ofertas al cliente*/
 	private void sendOffers(Player player) {
 		ObjectNode msg = mapper.createObjectNode();
 		try {
@@ -637,18 +633,68 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 		}
 	}
 	
-	/*Almacena la puntuacion en la colección de puntuaciones*/
-	private void savePuntuaciones(Player player) {
+	/*Enviamos las puntuaciones maximas ordenas al jugador*/
+	private void sendPunctuations(Player player) {
 		
-		FindIterable<Document> iterable = collPuntuaciones.find(new Document("_id", player.getId()));
-	    if( iterable.first() != null) {
-	    	collPuntuaciones.updateOne(new Document("_id", player.getId()), new Document("$set", new Document("_id", player.getId())
-					.append("puntuacion", player.getPuntuacion())));
-	    }else {
-	    	collPuntuaciones.insertOne(new Document("_id", player.getId())
-					.append("puntuacion", player.getPuntuacion()));
-	    }
+		ObjectNode msg = mapper.createObjectNode();
+		HashMap<String, Integer>puntuaciones = new HashMap<>();
+		String todasLasPuntuaciones = "";
+        int numMaxPuntuaciones = 0;
 		
+		/*extraemos los nombres y las puntuaciones de los jugadores en un mapa*/
+		try {
+			MongoCursor<Document> cursor = coll.find().iterator();
+			try {
+				while(cursor.hasNext()) {
+					Document next = cursor.next();
+					puntuaciones.put(next.getString("name"), next.getInteger("puntuacion"));
+				}
+			}finally {
+				cursor.close();
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exception sending message " + msg.toString());
+			e.printStackTrace(System.err);
+		}
+		
+		/*ordenamos el mapa
+		 * solucion parcialmente sacada de: https://www.mkyong.com/java/how-to-sort-a-map-in-java/*/
+		LinkedList<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(puntuaciones.entrySet());
+		
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>(){
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return (o1.getValue()).compareTo(o2.getValue());
+			}
+		});
+			
+		puntuaciones.clear();
+		
+        for (Map.Entry<String, Integer> entry : list) {
+            puntuaciones.put(entry.getKey(), entry.getValue());
+        }
+        
+        /*con las puntuaciones ordenadas se las mandamos al cliente en un String*/
+        for(Map.Entry<String, Integer> entry : puntuaciones.entrySet()) {
+            
+        	if(numMaxPuntuaciones < NUM_MAX_PUNTUACIONES_MOSTRAR) {
+        		todasLasPuntuaciones += entry.getKey() + "\n" + entry.getValue() + "\n";
+                numMaxPuntuaciones++;
+        	}else {
+        		break;
+        	}
+        }
+                
+		try {
+			msg.put("event", "ALL PUNCTUATIONS");
+	        msg.put("todasLasPuntuaciones", todasLasPuntuaciones);
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			msg.put("event", "ACTUALIZAR PUNTUACION");
+			msg.put("punctuacion", player.getPuntuacion());
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}        
 	}
 	
 	// Informa al cliente y a la BDD de una actualizacion en la informacion del jugador (Grid y edificios)

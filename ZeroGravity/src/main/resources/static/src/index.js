@@ -68,6 +68,7 @@ window.onload = function() {
 		myPlayer : new Object(),
 		myPlayerId: "",
 		puntuacion: 0,
+		mejoresPuntuaciones:[],
 		construyendo : false,
 		expandiendo : false,
 		edificioEnConstruccion : null,
@@ -163,6 +164,8 @@ window.onload = function() {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('RegisterScene');
 			}
+			/*y yo aprovecho para precargar las puntuaciones*/
+			pedirPuntuaciones()
 			break;
 		case 'LOGIN FAILED':
 			if (game.global.DEBUG_MODE) {
@@ -284,7 +287,7 @@ window.onload = function() {
 			game.global.resources.creditos = msg.creditos;
 			game.global.resources.unionCoins = msg.unionCoins;
 			game.global.resources.colonos = msg.colonos;
-			game.global.puntuacion = msg.puntuacion;
+			game.global.puntuacion = msg.punctuacion;
 			refreshGrid(game.scene.getScene('GameScene'), msg.grid);
 			break;
 		
@@ -299,7 +302,7 @@ window.onload = function() {
 			game.global.resources.creditos = msg.creditos;
 			game.global.resources.unionCoins = msg.unionCoins;
 			game.global.resources.colonos = msg.colonos;
-			game.global.puntuacion = msg.puntuacion;
+			game.global.puntuacion = msg.punctuacion;
 			break;
 			
 		case 'EDIFICIO PRODUCIENDO':
@@ -328,7 +331,8 @@ window.onload = function() {
 			}	
 			if(msg.resultado){
 				levelUp(game.global.edificios.get(msg.id));
-			}
+				pedirPuntuaciones()
+			}	
 			break;		
 		
 		case 'EDIFICIO LLENO':
@@ -348,6 +352,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.ceramica = msg.ceramica;
+			pedirPuntuaciones()
 			break;
 		case 'CREDITOS RECOLECTADOS':
 			if (game.global.DEBUG_MODE) {
@@ -355,6 +360,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.creditos = msg.creditos;
+			pedirPuntuaciones()
 			break;
 		case 'METAL RECOLECTADO':
 			if (game.global.DEBUG_MODE) {
@@ -409,6 +415,7 @@ window.onload = function() {
 					}
 				}
 			}
+			pedirPuntuaciones()
 			break;
 		case 'PLATAFORMA EXTRACCION MENU':
 			if (game.global.DEBUG_MODE) {
@@ -546,7 +553,6 @@ window.onload = function() {
 				}
 				game.global.socket.send(JSON.stringify(message));
 			}
-			pedirOfertas();
 			break;
 			
 		case 'SEND OFFERS':
@@ -581,6 +587,7 @@ window.onload = function() {
 				event: 'ASK_PLAYER_RESOURCES'
 			}
 			game.global.socket.send(JSON.stringify(messag));
+			pedirPuntuaciones()
 			break;
 		
 		case 'ACTUALIZAR PUNTUACION':
@@ -589,6 +596,20 @@ window.onload = function() {
 				console.log('PUNTUACION:' + msg.punctuacion);
 			}
 			game.global.puntuacion = msg.punctuacion;
+			break;
+			
+		case 'ALL PUNCTUATIONS':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] ALL PUNCTUATIONS message recieved');
+				console.log('PUNTUACIONES:' + msg.todasLasPuntuaciones);
+			}
+			game.global.mejoresPuntuaciones = [];
+			let arrayAux = msg.todasLasPuntuaciones.split("\n");
+			arrayAux.pop();
+			for(let i = 0; i < arrayAux.length; i++){
+			console.log(arrayAux[i]);
+			}
+			game.global.mejoresPuntuaciones = arrayAux;
 			break;
 			
 		default:
