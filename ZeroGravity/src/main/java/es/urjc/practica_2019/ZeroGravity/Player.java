@@ -370,6 +370,8 @@ public class Player {
 				break;
 			case "bloqueViviendas":
 				edificio = new BloqueViviendas(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio.setLevel(e.getInteger("level", 1));
+				((BloqueViviendas) edificio).setColonos(e.getInteger("colonos", 0));
 				colonosMax += ((BloqueViviendas) edificio).getCapacidad();
 				viviendas.add((BloqueViviendas) edificio);
 				break;
