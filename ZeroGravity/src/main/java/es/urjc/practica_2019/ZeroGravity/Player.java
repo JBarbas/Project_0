@@ -392,6 +392,7 @@ public class Player {
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+				((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "generador":
@@ -403,6 +404,7 @@ public class Player {
 			case "laboratorioInvestigacion":
 				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+				((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "centroComercio":
@@ -517,6 +519,7 @@ public class Player {
 			if (e instanceof GeneradorRecursos) {
 				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
 				dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
+				dbEdificio.append("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
 				dbEdificio.append("colonos", ((GeneradorRecursos) e).getColonos());
 				if (e instanceof Taller) {
 					LinkedList<Document> dbRobots = new LinkedList<>(); // Bson para MongoDB

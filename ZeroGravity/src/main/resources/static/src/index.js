@@ -219,6 +219,7 @@ window.onload = function() {
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
@@ -231,6 +232,7 @@ window.onload = function() {
 				case 'laboratorioInvestigacion':
 					edificio = new LaboratorioInvestigacion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
@@ -325,6 +327,7 @@ window.onload = function() {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
 					game.global.edificios.get(msg.id).inicioProduccion = Date.now();
 					game.global.edificios.get(msg.id).produciendo = true;
+					game.global.edificios.get(msg.id).levelProduciendo = game.global.edificios.get(msg.id).level;
 				}
 			}
 			break;

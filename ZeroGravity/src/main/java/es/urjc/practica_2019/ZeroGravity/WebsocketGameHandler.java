@@ -758,6 +758,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("y", e.getY());
 				if (e instanceof GeneradorRecursos) {
 					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+					jsonEdificio.put("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
 					jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
 					jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
 					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());

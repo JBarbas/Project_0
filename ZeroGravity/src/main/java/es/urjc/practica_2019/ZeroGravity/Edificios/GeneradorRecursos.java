@@ -14,6 +14,7 @@ public class GeneradorRecursos extends Edificio {
 	private boolean averiado;
 	private boolean lleno = false;	
 	private boolean produciendo = false;
+	private int levelProduciendo = 1;
 	private LocalDateTime productionBeginTime = LocalDateTime.now();
 
 	
@@ -91,5 +92,13 @@ public class GeneradorRecursos extends Edificio {
 	
 	public boolean getProduciendo() {
 		return produciendo;
+	}
+
+	public int getLevelProduciendo() {
+		return levelProduciendo;
+	}
+
+	public void setLevelProduciendo(int levelProduciendo) {
+		this.levelProduciendo = levelProduciendo;
 	}
 }

@@ -124,6 +124,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			TASKMASTER.addTask(task);
 			this.setProduciendo(true);
 			this.setProductionBeginTime(task.getBeginDate());
+			this.setLevelProduciendo(this.getLevel());
 			player.saveEdificios();
 		}
 	}
@@ -156,7 +157,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			this.setLleno(false);	
 			ObjectNode msg = mapper.createObjectNode();			
 			msg.put("event", "CREDITOS RECOLECTADOS");
-			player.setCreditos(player.getCreditos() + this.RECURSOS_GENERADOS[this.level-1][0]);
+			player.setCreditos(player.getCreditos() + LaboratorioInvestigacion.RECURSOS_GENERADOS[this.getLevelProduciendo()-1][0]);
 			msg.put("creditos", player.getCreditos());
 			try {	
 				if (player.getSession().isOpen()) {				
