@@ -72,6 +72,13 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
 		
+		//Efectos
+		this.load.image('orangeSpark', 'assets/sprites/Particulas/orangeSpark.png');
+		this.load.image('blueSpark', 'assets/sprites/Particulas/blueSpark.png');
+		this.load.image('greenSpark', 'assets/sprites/Particulas/greenSpark.png');
+		this.load.image('redSpark', 'assets/sprites/Particulas/redSpark.png');
+		this.load.image('pinkSpark', 'assets/sprites/Particulas/pinkSpark.png');
+		
 		//Robots
 		this.load.image('robotNv1', 'assets/sprites/robotNv1.png');
 		this.load.image('robotNv2', 'assets/sprites/robotNv2.png');

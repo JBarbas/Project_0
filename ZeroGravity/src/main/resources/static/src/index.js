@@ -661,7 +661,6 @@ window.onload = function() {
 		case 'ACTUALIZAR PUNTUACION':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] ACTUALIZAR PUNTUACION message recieved');
-				console.log('PUNTUACION:' + msg.punctuacion);
 			}
 			game.global.puntuacion = msg.punctuacion;
 			break;
@@ -673,10 +672,7 @@ window.onload = function() {
 			}
 			game.global.mejoresPuntuaciones = [];
 			let arrayAux = msg.todasLasPuntuaciones.split("\n");
-			arrayAux.pop();
-			for(let i = 0; i < arrayAux.length; i++){
-			console.log(arrayAux[i]);
-			}
+			arrayAux.pop(); //por alguna razón mete un undefined al final
 			game.global.mejoresPuntuaciones = arrayAux;
 			break;
 			
