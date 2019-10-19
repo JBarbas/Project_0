@@ -60,7 +60,7 @@ window.onload = function() {
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : true,
+		DEBUG_MODE : false,
 		ONLY_GAME_MODE : false,
 		SKIP_INTRO: false,
 		socket : null,
@@ -76,6 +76,7 @@ window.onload = function() {
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
+		inZoom : false,
 		menu : null,
 		offers: [],
 		buildingMenu: {
@@ -213,7 +214,6 @@ window.onload = function() {
 						r.ausente = e.robots[j].ausente;
 						r.carga = e.robots[j].carga;
 						r.nivel = e.robots[j].nivel;
-						console.log(r.inicioProduccion + ", " + Date.UTC(e.robots[j].dateYear, e.robots[j].dateMonth-1, e.robots[j].dateDay, e.robots[j].dateHour-2, e.robots[j].dateMinute+1, 0));
 						edificio.robots.set(r.id, r);
 					}
 					break;

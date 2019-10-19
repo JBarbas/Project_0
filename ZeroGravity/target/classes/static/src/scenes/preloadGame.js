@@ -107,6 +107,11 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenu', 'assets/text/centroComercioMenu.html');
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
+		
+
+		var url;		  
+        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/plugins/dist/rexpinchplugin.min.js';
+        this.load.plugin('rexpinchplugin', url, true);
     }
     create (data)  {
 		
