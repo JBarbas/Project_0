@@ -16,6 +16,7 @@ class GameInterface extends Phaser.Scene {
     	
     }
     create (data)  {
+    	
     	this.intPrincipal = this.add.image(game.global.intPrincipal.x, game.global.intPrincipal.y, 'intPrincipal').setOrigin(0, 0); 
     	this.btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
     	
@@ -78,9 +79,10 @@ class GameInterface extends Phaser.Scene {
     	
     	
     	btnOpciones.on('pointerdown', function(pointer){
-    		console.log("HOLAAAAA");
-    		
+    		console.log("HOLAAAAA");   		
     	});
+    	
+    	//particulasRecurso();
     }
     update(time, delta) {
     	this.energia.text = game.global.resources.energia;
@@ -150,5 +152,4 @@ class GameInterface extends Phaser.Scene {
     		this.e1.setFrame(2);
     	}
     }
-
 }
