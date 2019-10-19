@@ -37,9 +37,13 @@ class GameScene extends Phaser.Scene {
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg0').setOrigin(1, 1).setScale(2, 2);
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg1').setOrigin(0, 1).setScale(2, 2);
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg2').setOrigin(1, 0).setScale(2, 2);
-    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg3').setOrigin(0, 0).setScale(2, 2);
-    	
-    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg3').setOrigin(0, 0).setScale(2, 2);    	
+
+		var mediaQuery = window.matchMedia("(max-width: 700px)")
+		if (!mediaQuery.matches) { 
+			this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
+		}
+    	//this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
     	
     	// Creamos la malla isometrica
     	this.gridContainer = this.add.container(0, 0);
