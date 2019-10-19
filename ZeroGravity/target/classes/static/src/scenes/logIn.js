@@ -16,6 +16,7 @@ class LogInScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	game.config.scaleMode = Phaser.Scale.NONE;
     	var background = this.add.image(960, 540, 'backgroundLogIn');
     	
     	var button = this.add.image(960, 800, 'btn').setInteractive();
