@@ -50,7 +50,12 @@ class MenuScene extends Phaser.Scene {
     		jugar.style.visibility = "hidden";
         	opciones.style.visibility = "hidden";
         	creditos.style.visibility = "hidden";
-    		game.scene.run('DifficultScene');
+    		if (game.global.myPlayer.gameStarted) {
+    			game.scene.run('PreloadGameScene');
+    		}
+    		else {
+    			game.scene.run('DifficultScene');
+    		}
     		game.scene.stop('MenuScene');
     	});
     	

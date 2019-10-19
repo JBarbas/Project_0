@@ -14,6 +14,9 @@ class TallerMenu extends Phaser.Scene {
 		msg.event = 'GET TALLER MENU';
 		msg.id = data.miEdificio.id;
 		game.global.socket.send(JSON.stringify(msg));
+		if (data.miEdificio.recolectIcon !== null) {
+			data.miEdificio.recolectIcon.destroy();
+		}
     }
     
     preload () {
@@ -45,10 +48,15 @@ class TallerMenu extends Phaser.Scene {
     		intDetalles.alpha = 1.0;
     	});
     	
+    	this.colonos = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 170, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	this.energia = this.add.text(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	
     	this.robotsX = game.global.buildingMenu.x + 40;
-    	this.robotsY = [game.global.buildingMenu.y + 170,
-    					game.global.buildingMenu.y + 370,
-    					game.global.buildingMenu.y + 570];
+    	this.robotsY = [game.global.buildingMenu.y + 240,
+    					game.global.buildingMenu.y + 390,
+    					game.global.buildingMenu.y + 560];
+    	
+    	this.times = [];
     	
     	var mover = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 800, 'btnMover').setInteractive();
     	
@@ -113,6 +121,18 @@ class TallerMenu extends Phaser.Scene {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();
+    	}
+    	
+    	for (var i = 0; i < this.times.length; i++) {
+    		if (typeof this.times[i] !== 'undefined') {
+	    		this.times[i].timeLeft = Math.floor(this.times[i].robot.recursos[this.times[i].robot.nivel-1][1] - (Date.now() - this.times[i].robot.inicioProduccion)/60000);
+	    		if (this.times[i].timeLeft < 1) {
+	        		this.times[i].timeLeftText.text = 'Almacenando el metal...';
+	        	}
+	        	else {
+	        		this.times[i].timeLeftText.text = 'Quedan ' + this.times[i].timeLeft + ' minutos';
+	        	}
+    		}
     	}
     }
 

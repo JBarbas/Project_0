@@ -56,6 +56,8 @@ public class Player {
 	private int costeCelda = 100;
 	private int celdasCompradas = 0;
 	
+	private boolean gameStarted = false;
+	
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	public Player(WebSocketSession session, ObjectId id) {
@@ -231,7 +233,15 @@ public class Player {
 		saveEdificios();
 		saveRecursos();
 	}
-	
+		
+	public boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	public void setGameStarted(boolean gameStarted) {
+		this.gameStarted = gameStarted;
+	}
+
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 		int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);
@@ -364,6 +374,7 @@ public class Player {
 					robot.setAusente(r.getBoolean("ausente"));
 					robot.setNivel(r.getInteger("nivel"));
 					robot.setCarga(r.getInteger("carga"));
+					robot.setProductionBeginTime((Document) e.get("productionBeginTime"));
 					((Taller) edificio).addRobot(robot);
 				}
 				((Taller) edificio).setRobotId(e.getInteger("robotId", 0));
@@ -507,6 +518,13 @@ public class Player {
 						dbRobot.append("ausente", r.isAusente());
 						dbRobot.append("nivel", r.getNivel());
 						dbRobot.append("carga", r.getCarga());
+						Document productionBeginTime = new Document();
+						productionBeginTime.append("year", r.getProductionBeginTime().getYear());
+						productionBeginTime.append("month", r.getProductionBeginTime().getMonthValue());
+						productionBeginTime.append("day", r.getProductionBeginTime().getDayOfMonth());
+						productionBeginTime.append("hour", r.getProductionBeginTime().getHour());
+						productionBeginTime.append("minute", r.getProductionBeginTime().getMinute());
+						dbRobot.append("productionBeginTime", productionBeginTime);
 						dbRobots.add(dbRobot);
 					}
 					dbEdificio.append("robotId", ((Taller) e).getRobotId());
@@ -541,7 +559,8 @@ public class Player {
 				.append("celdasCompradas", this.celdasCompradas)
 				.append("colonos", this.colonos)
 				.append("colonosMax", this.colonosMax)
-				.append("puestosTrabajo", this.puestosTrabajo)));
+				.append("puestosTrabajo", this.puestosTrabajo)
+				.append("gameStarted", this.gameStarted)));
 	}
 	
 	public void savePuntuacion() {

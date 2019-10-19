@@ -12,9 +12,4 @@ public class RobotEspecial extends Robot {
 	public void recolectar() {
 
 	}
-
-	@Override
-	public void subirNivel() {
-
-	}
 }
