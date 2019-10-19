@@ -52,7 +52,7 @@ class LogInScene extends Phaser.Scene {
     	var element = this.add.dom(420, 600).createFromCache('loginform');
 
         element.setPerspective(800);
-        
+        var scene = this;
         button.on('pointerdown', function(pointer, localX, localY, event){
         	var inputUsername = element.getChildByName('username');
             var inputPassword = element.getChildByName('password');

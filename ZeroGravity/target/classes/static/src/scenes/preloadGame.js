@@ -28,14 +28,14 @@ class PreloadGameScene extends Phaser.Scene {
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
 		this.load.spritesheet('centroDeMando', 'assets/sprites/Edificios/CentroDeMando.png', {frameWidth:247,frameHeight:189});
-		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:128,frameHeight:156});
+		this.load.spritesheet( 'centroOperaciones' , 'assets/sprites/Edificios/CentroOperaciones.png', {frameWidth:128,frameHeight:222});
 		this.load.spritesheet( 'taller' , 'assets/sprites/Edificios/Taller.png', {frameWidth:189,frameHeight:162});
-		this.load.spritesheet( 'centroAdministrativo' , 'assets/sprites/Edificios/CentroAdministrativo.png', {frameWidth:192,frameHeight:184});
-		this.load.spritesheet( 'plataformaExtraccion' , 'assets/sprites/Edificios/PlataformaExtraccion.png', {frameWidth:106,frameHeight:83});
+		this.load.spritesheet( 'centroAdministrativo' , 'assets/sprites/Edificios/CentroAdministrativo.png', {frameWidth:192,frameHeight:188});
+		this.load.spritesheet( 'plataformaExtraccion' , 'assets/sprites/Edificios/PlataformaExtraccion.png', {frameWidth:106,frameHeight:104});
 		this.load.spritesheet( 'bloqueViviendas' , 'assets/sprites/Edificios/BloqueViviendas.png', {frameWidth:128,frameHeight:205});
 		this.load.spritesheet( 'generador' , 'assets/sprites/Edificios/Generador.png', {frameWidth:127,frameHeight:102});
 		this.load.spritesheet( 'laboratorioInvestigacion' , 'assets/sprites/Edificios/LaboratorioInvestigacion.png', {frameWidth:194,frameHeight:154});
-		this.load.spritesheet( 'centroComercio' , 'assets/sprites/Edificios/CentroComercio.png', {frameWidth:128,frameHeight:123});
+		this.load.spritesheet( 'centroComercio' , 'assets/sprites/Edificios/CentroComercio.png', {frameWidth:128,frameHeight:169});
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
@@ -82,6 +82,13 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intCComprar', 'assets/interface/Comercio/ComprarComercio.png');
 		this.load.image('intCVender', 'assets/interface/Comercio/VenderComercio.png');
 		this.load.image('intCOfertas', 'assets/interface/Comercio/misOfertasComercio.png');
+		
+		//Efectos
+		this.load.image('orangeSpark', 'assets/sprites/Particulas/orangeSpark.png');
+		this.load.image('blueSpark', 'assets/sprites/Particulas/blueSpark.png');
+		this.load.image('greenSpark', 'assets/sprites/Particulas/greenSpark.png');
+		this.load.image('redSpark', 'assets/sprites/Particulas/redSpark.png');
+		this.load.image('pinkSpark', 'assets/sprites/Particulas/pinkSpark.png');
 		
 		//Robots
 		this.load.image('robotNv1', 'assets/sprites/robotNv1.png');
