@@ -18,19 +18,20 @@ function particulasRecurso(x, y){
 function particulasGameplay(caso, x, y){
 	
 	var interfaz = game.scene.getScene("GameInterface");
+	var particulas;
 	switch(caso){
 	case 'subirNivel':
 	case 'construir':
-		const particulas = interfaz.add.particles('blueSpark');
+		 particulas = interfaz.add.particles('blueSpark');
 		break;
 	case 'expandirBase':
-		const particulas = interfaz.add.particles('redSpark');
+		particulas = interfaz.add.particles('redSpark');
 		break;
 	case 'xp':
-		const particulas = interfaz.add.particles('greenSpark');
+		particulas = interfaz.add.particles('greenSpark');
 		break;
 	case 'recolectar':
-		const particulas = interfaz.add.particles('pinkSpark');
+		particulas = interfaz.add.particles('pinkSpark');
 		break;
 	default:
 		break;
