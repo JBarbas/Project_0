@@ -530,7 +530,8 @@ window.onload = function() {
 		    		game.scene.getScene("TallerMenu").times[i].robot = game.global.edificios.get(msg.id).robots.get(robot.id);
 		    		game.scene.getScene("TallerMenu").times[i].timeLeftText = 
 		    			game.scene.getScene("TallerMenu").add.text(robot.x + 160, robot.y + 70, '', { fontFamily: '"Roboto Condensed"', color: 'white' });
-		    		console.log(game.scene.getScene("TallerMenu").times[i].robot);
+					game.scene.getScene("TallerMenu").edificiosContainer.add(game.scene.getScene("TallerMenu").times[i].timeLeftText);
+					console.log(game.scene.getScene("TallerMenu").times[i].robot);
 				}				
 			}
 			break;
