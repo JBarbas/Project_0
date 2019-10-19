@@ -52,8 +52,8 @@ import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
-	/*Puntuaciones: construir edificio, subir de nivel edificio, recolectar recursos, ampliar la base*/
-	private static final int[] PUNTUACIONES = {1, 2, 3, 4};
+	/*Puntuaciones: construir edificio, subir de nivel edificio, recolectar recursos, ampliar la base, comprar una oferta*/
+	private static final int[] PUNTUACIONES = {1, 2, 3, 4, 5};
 	private static final int NIVEL_MAX_EDIFICIO = 3;
 	private static final int NUM_MAX_PUNTUACIONES_MOSTRAR = 15;
 	
@@ -602,7 +602,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					playerVendedor.setCreditos(playerVendedor.getCreditos() + Integer.parseInt(myOffer.get("creditos").toString()));
 					playerVendedor.saveOfertas();
 					playerVendedor.saveRecursos();
-					
+					player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[4]);
+					player.savePuntuacion();
 					/*borramos la oferta de la base de datos comun a todos los jugadores*/
 					collOfertas.deleteOne(new Document("_id", myOfferId));
 					
@@ -701,16 +702,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				return (o1.getValue()).compareTo(o2.getValue());
 			}
 		});
-			
-		puntuaciones.clear();
-		
+		Collections.reverse(list);
+		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
         for (Map.Entry<String, Integer> entry : list) {
-            puntuaciones.put(entry.getKey(), entry.getValue());
+        	sortedMap.put(entry.getKey(), entry.getValue());
         }
         
         /*con las puntuaciones ordenadas se las mandamos al cliente en un String*/
-        for(Map.Entry<String, Integer> entry : puntuaciones.entrySet()) {
-            
+        for(Map.Entry<String, Integer> entry : sortedMap.entrySet()) {         
         	if(numMaxPuntuaciones < NUM_MAX_PUNTUACIONES_MOSTRAR) {
         		todasLasPuntuaciones += entry.getKey() + "\n" + entry.getValue() + "\n";
                 numMaxPuntuaciones++;
