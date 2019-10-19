@@ -124,6 +124,7 @@ window.onload = function() {
 		timedEvent:null,
 		timer:null,
 		team:null,
+		inGame:false,
 		resources: {}
 	}
 	

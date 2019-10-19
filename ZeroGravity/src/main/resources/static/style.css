@@ -115,7 +115,7 @@ body {
 
 .box {
 		  width: 300px;
-		  padding-left: 335px;
+		  left: 505px;
 		  top: -140px;
 		  /* Positioning */
 		  position: absolute;
@@ -197,19 +197,19 @@ body {
  *  STYLE 7
  */
 
-#style-7::-webkit-scrollbar-track
+#divPuntuaciones::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #F5F5F5;
 	border-radius: 10px;
 }
 
-#style-7::-webkit-scrollbar
+#divPuntuaciones::-webkit-scrollbar
 {
 	width: 10px;
 }
 
-#style-7::-webkit-scrollbar-thumb
+#divPuntuaciones::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	background-image: -webkit-gradient(linear,
@@ -219,6 +219,54 @@ body {
 									   color-stop(0.72, rgb(73,125,189)),
 									   color-stop(0.86, rgb(28,58,148)));
 }
+
+#divPuntuacionesV::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+#divPuntuacionesV::-webkit-scrollbar
+{
+	width: 10px;
+}
+
+#divPuntuacionesV::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+#divPuntuacionesO::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+#divPuntuacionesO::-webkit-scrollbar
+{
+	width: 10px;
+}
+
+#divPuntuacionesO::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+
 
 	
 		

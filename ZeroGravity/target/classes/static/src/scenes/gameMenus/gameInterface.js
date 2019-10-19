@@ -78,7 +78,20 @@ class GameInterface extends Phaser.Scene {
     	
     	
     	btnOpciones.on('pointerdown', function(pointer){
-    		console.log("HOLAAAAA");
+    		game.scene.run('OptionsScene');
+    		game.scene.stop('GameInterface');
+    		game.scene.stop('GameScene');
+    		game.scene.stop('CentroMandoMenu');
+    		game.scene.stop('CentroOperacionesMenu');
+    		game.scene.stop('BloqueViviendasMenu');
+    		game.scene.stop('CentroAdministrativoMenu');
+    		game.scene.stop('CentroComercioMenu');
+    		game.scene.stop('GeneradorMenu');
+    		game.scene.stop('LaboratorioInvestigacionMenu');
+    		game.scene.stop('PlataformaExtraccionMenu');
+    		game.scene.stop('RankingMenu');
+    		game.scene.stop('AnuncioMenu');
+    		game.scene.stop('TallerMenu');
     		
     	});
     }

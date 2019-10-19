@@ -72,6 +72,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
+		this.load.image('iconoComprar', 'assets/interface/iconoComprar.png');
+		this.load.image('iconoVender', 'assets/interface/iconoVender.png');
+		this.load.image('iconoOfertas', 'assets/interface/iconoOfertas.png');
+		
+		
+		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
+		this.load.image('intCDetalles', 'assets/interface/Comercio/DetallesComercio.png');
+		this.load.image('intCComprar', 'assets/interface/Comercio/ComprarComercio.png');
+		this.load.image('intCVender', 'assets/interface/Comercio/VenderComercio.png');
+		this.load.image('intCOfertas', 'assets/interface/Comercio/misOfertasComercio.png');
 		
 		//Robots
 		this.load.image('robotNv1', 'assets/sprites/robotNv1.png');
@@ -86,6 +96,9 @@ class PreloadGameScene extends Phaser.Scene {
 		
 		//Texts
 		this.load.html('rankingmenu', 'assets/text/rankingmenu.html');
+		this.load.html('centroComercioMenu', 'assets/text/centroComercioMenu.html');
+		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
+		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
     }
     create (data)  {
 		
