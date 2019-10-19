@@ -359,6 +359,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("resultado", canILevelUp.toString());
 				msg.put("id", node.get("id").asInt());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				
+
+				msg.put("event", "REFRESH MENU");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "ASK_LEVELUP_ROBOT":
 				canILevelUp = ((Taller) player.getEdificio(node.get("taller").asInt())).getRobot(node.get("id").asInt()).levelUp();
@@ -754,6 +758,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("y", e.getY());
 				if (e instanceof GeneradorRecursos) {
 					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+					jsonEdificio.put("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
 					jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
 					jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
 					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());

@@ -226,6 +226,12 @@ public class Player {
 					g.addColono();
 					colonos++;
 					puestosTrabajo--;
+					for (BloqueViviendas v : viviendas) {
+						if (v.getColonos() < v.getCapacidad()) {
+							v.setColonos(v.getColonos() + 1);
+							break;
+						}
+					}
 					break;
 				}
 			}
@@ -364,6 +370,8 @@ public class Player {
 				break;
 			case "bloqueViviendas":
 				edificio = new BloqueViviendas(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio.setLevel(e.getInteger("level", 1));
+				((BloqueViviendas) edificio).setColonos(e.getInteger("colonos", 0));
 				colonosMax += ((BloqueViviendas) edificio).getCapacidad();
 				viviendas.add((BloqueViviendas) edificio);
 				break;
@@ -384,6 +392,7 @@ public class Player {
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+				((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "generador":
@@ -393,8 +402,9 @@ public class Player {
 				generadores.add((Generador) edificio);
 				break;
 			case "laboratorioInvestigacion":
-				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+				((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "centroComercio":
@@ -509,6 +519,7 @@ public class Player {
 			if (e instanceof GeneradorRecursos) {
 				dbEdificio.append("lleno", ((GeneradorRecursos) e).isLleno());
 				dbEdificio.append("produciendo", ((GeneradorRecursos) e).isProduciendo());
+				dbEdificio.append("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
 				dbEdificio.append("colonos", ((GeneradorRecursos) e).getColonos());
 				if (e instanceof Taller) {
 					LinkedList<Document> dbRobots = new LinkedList<>(); // Bson para MongoDB
@@ -537,6 +548,9 @@ public class Player {
 				productionBeginTime.append("hour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
 				productionBeginTime.append("minute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
 				dbEdificio.append("productionBeginTime", productionBeginTime);
+			}
+			else if (e instanceof BloqueViviendas) {
+				dbEdificio.append("colonos", ((BloqueViviendas) e).getColonos());
 			}
 			dbEdificio.append("sprite", e.getSprite());
 			dbEdificio.append("level", e.getLevel());

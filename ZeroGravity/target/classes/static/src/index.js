@@ -219,6 +219,7 @@ window.onload = function() {
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
@@ -231,6 +232,7 @@ window.onload = function() {
 				case 'laboratorioInvestigacion':
 					edificio = new LaboratorioInvestigacion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
@@ -325,6 +327,7 @@ window.onload = function() {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
 					game.global.edificios.get(msg.id).inicioProduccion = Date.now();
 					game.global.edificios.get(msg.id).produciendo = true;
+					game.global.edificios.get(msg.id).levelProduciendo = game.global.edificios.get(msg.id).level;
 				}
 			}
 			break;
@@ -371,29 +374,8 @@ window.onload = function() {
 			}
 			let tallerLleno = game.global.edificios.get(msg.taller);
 			if (game.scene.isActive('TallerMenu')) {
-				var robot = game.global.edificios.get(msg.taller).robots.get(msg.id);
-				robot.ausente = false;
-				if (!robot.ausente) {
-					let btnRecolectar = game.scene.getScene("TallerMenu").add.image(robot.x + 160, robot.y + 70, 'btnRecolectar').setOrigin(0, 0.5).setInteractive();
-					btnRecolectar.id = robot.id;
-					btnRecolectar.on('pointerover',function(pointer){
-			    	    this.setFrame(1);
-			    	})
-			    	btnRecolectar.on('pointerout',function(pointer){
-			    	    this.setFrame(0);
-			    	})			    	
-			    	btnRecolectar.on('pointerdown', function(pointer, localX, localY, event){
-			    		let msgBack = new Object();
-			    		msgBack.event = 'RECOLECTAR ROBOT';
-			    		msgBack.id = msg.id;
-			    		msgBack.robotId = this.id;
-			    		game.global.socket.send(JSON.stringify(msgBack));
-			    		this.destroy();
-			    		if (tallerLleno.recolectIcon !== null) {
-			    			tallerLLeno.recolectIcon.destroy();
-			    		}
-			    	});
-				}
+				game.scene.stop('TallerMenu');
+				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
 			}
 			else {
 				tallerLleno.lleno = true;
@@ -472,7 +454,8 @@ window.onload = function() {
 				game.global.edificios.get(msg.id).robots.set(robot.id, robot);
 				robot.x = game.scene.getScene("TallerMenu").robotsX;
 				robot.y = game.scene.getScene("TallerMenu").robotsY[i];
-				game.scene.getScene("TallerMenu").add.image(robot.x, robot.y, robot.sprite + robot.nivel).setOrigin(0, 0);
+				//game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0);
+				game.scene.getScene("TallerMenu").edificiosContainer.add(game.scene.getScene("TallerMenu").add.image(robot.x, robot.y, robot.sprite + robot.nivel).setOrigin(0, 0));
 				if (!robot.ausente) {
 					if (robot.nivel < 3) {
 						let btnNivel = game.scene.getScene("TallerMenu").add.image(robot.x + 370, robot.y + 70, 'btnSubirNivelRobot').setOrigin(0, 0.5).setInteractive();
@@ -490,6 +473,7 @@ window.onload = function() {
 				    		msgBack.id = this.id;
 				    		game.global.socket.send(JSON.stringify(msgBack));
 				    	});
+						game.scene.getScene("TallerMenu").edificiosContainer.add(btnNivel);
 					}
 					if (msg.robots[i].carga > 0) {
 						let btnRecolectar = game.scene.getScene("TallerMenu").add.image(robot.x + 160, robot.y + 70, 'btnRecolectar').setOrigin(0, 0.5).setInteractive();
@@ -508,6 +492,7 @@ window.onload = function() {
 				    		game.global.socket.send(JSON.stringify(msgBack));
 				    		this.destroy();
 				    	});
+						game.scene.getScene("TallerMenu").edificiosContainer.add(btnRecolectar);
 					}
 					else {
 						robot.btnEnviar = game.scene.getScene("TallerMenu").add.image(robot.x + 160, robot.y + 70, 'btnEnviar').setOrigin(0, 0.5).setInteractive();
@@ -516,10 +501,10 @@ window.onload = function() {
 						if (msg.energia >= msg.energiaNecesaria && msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 							robot.btnEnviar.on('pointerover',function(pointer){
 					    	    this.setFrame(1);
-					    	})
+					    	});
 					    	robot.btnEnviar.on('pointerout',function(pointer){
 					    	    this.setFrame(0);
-					    	})			    	
+					    	});		    	
 					    	robot.btnEnviar.on('pointerdown', function(pointer, localX, localY, event){
 					    		let msgBack = new Object();
 					    		msgBack.event = 'ENVIAR';
@@ -540,6 +525,7 @@ window.onload = function() {
 						else {
 							robot.btnEnviar.alpha = 0.5;
 						}
+						game.scene.getScene("TallerMenu").edificiosContainer.add(robot.btnEnviar);
 					}
 				}
 				else {
@@ -547,7 +533,8 @@ window.onload = function() {
 		    		game.scene.getScene("TallerMenu").times[i].robot = game.global.edificios.get(msg.id).robots.get(robot.id);
 		    		game.scene.getScene("TallerMenu").times[i].timeLeftText = 
 		    			game.scene.getScene("TallerMenu").add.text(robot.x + 160, robot.y + 70, '', { fontFamily: '"Roboto Condensed"', color: 'white' });
-		    		console.log(game.scene.getScene("TallerMenu").times[i].robot);
+					game.scene.getScene("TallerMenu").edificiosContainer.add(game.scene.getScene("TallerMenu").times[i].timeLeftText);
+					console.log(game.scene.getScene("TallerMenu").times[i].robot);
 				}				
 			}
 			break;

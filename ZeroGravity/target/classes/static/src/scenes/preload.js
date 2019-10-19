@@ -57,6 +57,7 @@ class PreloadScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	//this.scale.startFullscreen();
 		if (game.global.ONLY_GAME_MODE) {
 			game.scene.run('PreloadGameScene');
 		}

@@ -33,7 +33,7 @@ public class BloqueViviendas extends Edificio {
 	}
 
 	public int getCapacidad() {
-		return capacidad[level-1];
+		return capacidad[this.getLevel()-1];
 	}
 
 	public int getColonos() {

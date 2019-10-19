@@ -4,6 +4,7 @@ class GeneradorRecursos extends Edificio{
 		super(x, y);
 		this.lleno = false;
 		this.produciendo = false;
+		this.levelProduciendo = super.level;
 		this.recolectIcon = null;
 		this.resourceSprite = '';
 		this.inicioProduccion = Date.now();

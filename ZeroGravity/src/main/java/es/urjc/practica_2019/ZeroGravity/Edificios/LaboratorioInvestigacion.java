@@ -23,7 +23,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		
 		//Establecemos los recursos que generan según su nivel
 		//recurso, tiempo(minutos), colonos
-		private final static int[] RECURSOS_NIVEL1 = {4, 1, 1};
+		private final static int[] RECURSOS_NIVEL1 = {4, 5, 1};
 		private final static int[] RECURSOS_NIVEL2 = {99, 330, 2};
 		private final static int[] RECURSOS_NIVEL3 = {225, 615, 3};
 		private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3};
@@ -104,7 +104,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 	
 	@Override
 	public void producir() {
-		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2] && !this.needsEnergy() && !this.getProduciendo()) {
+		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2] && !this.needsEnergy() && !this.getProduciendo() && !this.isLleno()) {
 			ObjectNode msg = mapper.createObjectNode();
 			msg.put("event", "EDIFICIO PRODUCIENDO");
 			msg.put("id", this.id);
@@ -124,6 +124,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			TASKMASTER.addTask(task);
 			this.setProduciendo(true);
 			this.setProductionBeginTime(task.getBeginDate());
+			this.setLevelProduciendo(this.getLevel());
 			player.saveEdificios();
 		}
 	}
@@ -156,7 +157,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			this.setLleno(false);	
 			ObjectNode msg = mapper.createObjectNode();			
 			msg.put("event", "CREDITOS RECOLECTADOS");
-			player.setCreditos(player.getCreditos() + this.RECURSOS_GENERADOS[this.level-1][0]);
+			player.setCreditos(player.getCreditos() + LaboratorioInvestigacion.RECURSOS_GENERADOS[this.getLevelProduciendo()-1][0]);
 			msg.put("creditos", player.getCreditos());
 			try {	
 				if (player.getSession().isOpen()) {				
