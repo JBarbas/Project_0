@@ -440,16 +440,17 @@ window.onload = function() {
 				game.global.edificios.get(msg.id).robots.set(robot.id, robot);
 				let robotX = game.scene.getScene("TallerMenu").robotsX;
 				let robotY = game.scene.getScene("TallerMenu").robotsY[i];
-				game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0);
+				//game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0);
+				game.scene.getScene("TallerMenu").edificiosContainer.add(game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0));
 				if (!robot.ausente) {
 					if (msg.robots[i].carga > 0) {
 						let btnRecolectar = game.scene.getScene("TallerMenu").add.image(robotX + 160, robotY + 70, 'btnRecolectar').setOrigin(0, 0.5).setInteractive();
 						btnRecolectar.on('pointerover',function(pointer){
 				    	    this.setFrame(1);
-				    	})
+				    	});
 				    	btnRecolectar.on('pointerout',function(pointer){
 				    	    this.setFrame(0);
-				    	})			    	
+				    	});	    	
 				    	btnRecolectar.on('pointerdown', function(pointer, localX, localY, event){
 				    		let msgBack = new Object();
 				    		msgBack.event = 'RECOLECT';
@@ -458,15 +459,16 @@ window.onload = function() {
 				    		game.global.socket.send(JSON.stringify(msgBack));
 				    		this.destroy();
 				    	});
+						game.scene.getScene("TallerMenu").edificiosContainer.add(btnRecolectar);
 					}
 					else {
 						let btnEnviar = game.scene.getScene("TallerMenu").add.image(robotX + 160, robotY + 70, 'btnEnviar').setOrigin(0, 0.5).setInteractive();
 						btnEnviar.on('pointerover',function(pointer){
 				    	    this.setFrame(1);
-				    	})
+				    	});
 				    	btnEnviar.on('pointerout',function(pointer){
 				    	    this.setFrame(0);
-				    	})			    	
+				    	});	    	
 				    	btnEnviar.on('pointerdown', function(pointer, localX, localY, event){
 				    		let msgBack = new Object();
 				    		msgBack.event = 'ENVIAR';
@@ -475,6 +477,7 @@ window.onload = function() {
 				    		game.global.socket.send(JSON.stringify(msgBack));
 				    		this.destroy();
 				    	});
+						game.scene.getScene("TallerMenu").edificiosContainer.add(btnEnviar);
 					}
 				}
 			}
@@ -492,6 +495,17 @@ window.onload = function() {
 				game.global.edificios.get(msg.id).produciendo = false;
 			}
 			break;
+		case 'REFRESH MENU':
+            if (game.global.DEBUG_MODE) {
+                console.log('[DEBUG] REFRESH MENU message recieved');
+                console.dir(msg);
+            }
+            let edificioMenu = game.global.edificios.get(msg.id);
+            if (edificioMenu !== null) {
+                game.scene.stop(edificioMenu.menuScene);
+                game.scene.start(edificioMenu.menuScene, {miEdificio: edificioMenu});
+            }
+            break;
 		case 'JOBS':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] JOBS message recieved');

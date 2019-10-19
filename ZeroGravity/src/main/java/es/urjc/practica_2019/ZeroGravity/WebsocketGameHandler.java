@@ -325,6 +325,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("resultado", canILevelUp.toString());
 				msg.put("id", node.get("id").asInt());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				
+
+				msg.put("event", "REFRESH MENU");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
 			case "RECOLECT":
