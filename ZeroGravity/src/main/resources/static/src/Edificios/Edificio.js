@@ -15,6 +15,7 @@ class Edificio {
 	}
 	
 	build(scene) {
+		pedirPuntuaciones()
 		if (this.gameObject !== null) {
 			this.gameObject.destroy();
 		}

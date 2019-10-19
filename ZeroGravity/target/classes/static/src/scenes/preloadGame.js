@@ -44,6 +44,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnMover', 'assets/sprites/Edificios/btnMover.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnExpandir', 'assets/sprites/Edificios/btnExpandir.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnSubirNivel', 'assets/sprites/Edificios/btnNivel.png', {frameWidth:200,frameHeight:50});
+		this.load.spritesheet('btnSubirNivelRobot', 'assets/sprites/Edificios/btnNivelRobot.png', {frameWidth:50,frameHeight:50});
 		this.load.spritesheet('btnColonos', 'assets/sprites/Edificios/btnColonos.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnEnviar', 'assets/sprites/Edificios/btnEnviar.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnRecolectar', 'assets/sprites/Edificios/btnRecolectar.png', {frameWidth:200,frameHeight:50});
@@ -66,6 +67,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
+		this.load.image('panelRanking', 'assets/interface/Gameplay/Ranking.png');
 		this.load.image('xAnuncio', 'assets/interface/Gameplay/x.png');
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
@@ -80,6 +82,10 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('clayIcon', 'assets/sprites/stone.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/sprites/stone.png');
+		this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
+		
+		//Texts
+		this.load.html('rankingmenu', 'assets/text/rankingmenu.html');
     }
     create (data)  {
 		

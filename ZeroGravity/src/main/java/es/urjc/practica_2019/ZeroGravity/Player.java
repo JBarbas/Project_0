@@ -52,9 +52,11 @@ public class Player {
 	private int colonos = 0;
 	private int colonosMax = 0;
 	private int puestosTrabajo = 0;
-	
+	private int puntuacion = 0;
 	private int costeCelda = 100;
 	private int celdasCompradas = 0;
+	
+	private boolean gameStarted = false;
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
@@ -129,8 +131,13 @@ public class Player {
 		ofertas.put(oferta.getId(), oferta);
 	}
 	
-	public Oferta getOferta(int id) {
-		return this.ofertas.get(id);
+	public Oferta getOferta(ObjectId id) {	
+		return ofertas.get(id);
+	}
+	
+	public void deleteOferta(ObjectId id) {
+		ofertas.remove(id);
+		
 	}
 
 	public int getMetal() {
@@ -195,6 +202,14 @@ public class Player {
 		this.colonos = colonos;
 	}
 
+	public int getPuntuacion() {
+		return this.puntuacion;
+	}
+	
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	
 	public int getColonosMax() {
 		return colonosMax;
 	}
@@ -218,7 +233,15 @@ public class Player {
 		saveEdificios();
 		saveRecursos();
 	}
-	
+		
+	public boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	public void setGameStarted(boolean gameStarted) {
+		this.gameStarted = gameStarted;
+	}
+
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
 		int minGridSide = Math.min(GRID_WIDTH - 2, GRID_HEIGHT - 2);
@@ -351,6 +374,7 @@ public class Player {
 					robot.setAusente(r.getBoolean("ausente"));
 					robot.setNivel(r.getInteger("nivel"));
 					robot.setCarga(r.getInteger("carga"));
+					robot.setProductionBeginTime((Document) e.get("productionBeginTime"));
 					((Taller) edificio).addRobot(robot);
 				}
 				((Taller) edificio).setRobotId(e.getInteger("robotId", 0));
@@ -369,7 +393,7 @@ public class Player {
 				generadores.add((Generador) edificio);
 				break;
 			case "laboratorioInvestigacion":
-				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
 				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
@@ -457,6 +481,7 @@ public class Player {
 		saveEdificios();
 		saveRecursos();
 		saveOfertas();
+		savePuntuacion();
 	}
 	
 	public void saveGrid() {
@@ -493,6 +518,13 @@ public class Player {
 						dbRobot.append("ausente", r.isAusente());
 						dbRobot.append("nivel", r.getNivel());
 						dbRobot.append("carga", r.getCarga());
+						Document productionBeginTime = new Document();
+						productionBeginTime.append("year", r.getProductionBeginTime().getYear());
+						productionBeginTime.append("month", r.getProductionBeginTime().getMonthValue());
+						productionBeginTime.append("day", r.getProductionBeginTime().getDayOfMonth());
+						productionBeginTime.append("hour", r.getProductionBeginTime().getHour());
+						productionBeginTime.append("minute", r.getProductionBeginTime().getMinute());
+						dbRobot.append("productionBeginTime", productionBeginTime);
 						dbRobots.add(dbRobot);
 					}
 					dbEdificio.append("robotId", ((Taller) e).getRobotId());
@@ -527,7 +559,13 @@ public class Player {
 				.append("celdasCompradas", this.celdasCompradas)
 				.append("colonos", this.colonos)
 				.append("colonosMax", this.colonosMax)
-				.append("puestosTrabajo", this.puestosTrabajo)));
+				.append("puestosTrabajo", this.puestosTrabajo)
+				.append("gameStarted", this.gameStarted)));
+	}
+	
+	public void savePuntuacion() {
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), new Document("$set", 
+				new Document("puntuacion", this.puntuacion)));
 	}
 	
 	public void saveOfertas() {
@@ -540,10 +578,8 @@ public class Player {
 			dbOferta.append("cantidad", o.getCantidad());
 			dbOferta.append("creditos", o.getCreditos());
 			dbOfertas.add(dbOferta);
-		}
-		
+		}	
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
 				new Document("$set", new Document("ofertas", dbOfertas)));
-		
 	}
 }

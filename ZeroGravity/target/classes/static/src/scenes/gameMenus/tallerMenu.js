@@ -10,6 +10,9 @@ class TallerMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **TALLER** menu");
 		} 	
+		if (data.miEdificio.recolectIcon !== null) {
+			data.miEdificio.recolectIcon.destroy();
+		}
     }
     
     preload () {
@@ -59,10 +62,15 @@ class TallerMenu extends Phaser.Scene {
     	});
     	
     	//  CONTENEDOR EDIFICIO
+		this.colonos = this.add.text(100, 170, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+		edificiosContainer.add(this.colonos);
+		this.energia = this.add.text(100, 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+		edificiosContainer.add(this.energia);
+
     	this.robotsX = 40;
-    	this.robotsY = [170, 370, 570];
-    	//edificiosContainer.add(this.robotsX);
-    	//edificiosContainer.add(this.robotsY);
+    	this.robotsY = [240, 390, 560];
+    	
+    	this.times = [];
     	
     	//  CONTENEDOR DETALLES
     	// Se añade la descripción del edificio
@@ -151,6 +159,18 @@ class TallerMenu extends Phaser.Scene {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();
+    	}
+    	
+    	for (var i = 0; i < this.times.length; i++) {
+    		if (typeof this.times[i] !== 'undefined') {
+	    		this.times[i].timeLeft = Math.floor(this.times[i].robot.recursos[this.times[i].robot.nivel-1][1] - (Date.now() - this.times[i].robot.inicioProduccion)/60000);
+	    		if (this.times[i].timeLeft < 1) {
+	        		this.times[i].timeLeftText.text = 'Almacenando el metal...';
+	        	}
+	        	else {
+	        		this.times[i].timeLeftText.text = 'Quedan ' + this.times[i].timeLeft + ' minutos';
+	        	}
+    		}
     	}
     }
 

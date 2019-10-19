@@ -3,9 +3,13 @@ package es.urjc.practica_2019.ZeroGravity;
 import java.awt.List;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,8 +40,11 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
@@ -45,10 +52,14 @@ import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
+	/*Puntuaciones: construir edificio, subir de nivel edificio, recolectar recursos, ampliar la base, comprar una oferta*/
+	private static final int[] PUNTUACIONES = {1, 2, 3, 4, 5};
+	private static final int NIVEL_MAX_EDIFICIO = 3;
+	private static final int NUM_MAX_PUNTUACIONES_MOSTRAR = 15;
+	
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 	private ObjectMapper mapper = new ObjectMapper();
 	
-
 	private static MongoClientURI uri = new MongoClientURI(
 		    "mongodb+srv://ZeroGravity:webyrrss@polaris-u3pvb.mongodb.net/POLARIS?retryWrites=true&w=majority");
 
@@ -103,6 +114,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setEdificioId(myPlayer.getInteger("edificioId", 0));
 					player.updateEdificios((Collection<Document>) myPlayer.get("edificios"));
 					player.updateOfertas((Collection<Document>) myPlayer.get("ofertas"));
+					player.setPuntuacion(myPlayer.get("puntuacion", 0));
 					player.setEnergia(myPlayer.getInteger("energia", 0));
 					player.setMetal(myPlayer.getInteger("metal", 100));
 					player.setCeramica(myPlayer.getInteger("ceramica", 100));
@@ -111,8 +123,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setCosteCelda(myPlayer.getInteger("costeCelda", 0));
 					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas", 0));
 					player.setColonos(myPlayer.getInteger("colonos", 0));
+					player.setGameStarted(myPlayer.getBoolean("gameStarted", false));
 
 					msg.put("event", "LOGGED");
+					msg.put("playerId", player.getId().toString());
+					msg.put("gameStarted", player.isGameStarted());
 				}
 				else {
 					msg.put("event", "LOGIN FAILED");
@@ -145,13 +160,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						dbPlayer.append("password", player.getPassword());		
 						coll.insertOne(dbPlayer);				
 						msg.put("event", "LOGGED");
+						msg.put("playerId", player.getId().toString());
 						players.put(player.getId(), player);
+						player.saveAll();
 					}
 				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
 			case "ASK PLAYER INFO":
+				if (!player.isGameStarted()) {
+					player.setGameStarted(true);
+				}
 				updateInfo(player, "PLAYER INFO");
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("metal", player.getMetal());
@@ -159,6 +179,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -168,6 +189,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.build(node.get("x").asInt(), node.get("y").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
 				// Pedimos al cliente que refresque el grid con la nueva info
 				updateInfo(player, "REFRESH GRID");
+				/*actualizamos la puntuacion del jugador*/
+				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[0]);
+				player.savePuntuacion();
+				msg.put("event", "ACTUALIZAR PUNTUACION");
+				msg.put("punctuacion", player.getPuntuacion());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;	
 				
 			case "ASK_PLAYER_RESOURCES":
@@ -177,6 +204,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
 				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -191,7 +219,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= BloqueViviendas.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= BloqueViviendas.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= BloqueViviendas.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setColonosMax(player.getColonosMax() - BloqueViviendas.capacidad[edificio.getLevel()-1] + BloqueViviendas.capacidad[edificio.getLevel()]);
@@ -206,7 +234,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroAdministrativo.COSTS[edificio.getLevel()-1][1]);
@@ -220,7 +248,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= CentroComercio.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroComercio.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= CentroComercio.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroComercio.COSTS[edificio.getLevel()-1][1]);
@@ -234,7 +262,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= CentroMando.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroMando.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= CentroMando.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroMando.COSTS[edificio.getLevel()-1][1]);
@@ -248,7 +276,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= CentroOperaciones.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= CentroOperaciones.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= CentroOperaciones.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroOperaciones.COSTS[edificio.getLevel()-1][1]);
@@ -262,7 +290,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= Generador.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= Generador.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= Generador.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - Generador.COSTS[edificio.getLevel()-1][1]);
@@ -276,7 +304,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - LaboratorioInvestigacion.COSTS[edificio.getLevel()-1][1]);
@@ -290,7 +318,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(player.getMetal() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][1] &&
 					player.getCeramica() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][2] &&
 					player.getCreditos() >= PlataformaExtraccion.COSTS[edificio.getLevel()-1][3] &&
-					edificio.getLevel() < 3){
+					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - PlataformaExtraccion.COSTS[edificio.getLevel()-1][1]);
@@ -304,7 +332,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					if(	player.getMetal() >= Taller.COSTS[edificio.getLevel()-1][1] &&
 						player.getCeramica() >= Taller.COSTS[edificio.getLevel()-1][2] &&
 						player.getCreditos() >= Taller.COSTS[edificio.getLevel()-1][3] &&
-						edificio.getLevel() < 3){
+						edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 							
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - Taller.COSTS[edificio.getLevel()-1][1]);
@@ -320,6 +348,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					edificio.levelUp();	
 					player.saveEdificios();
 					player.saveRecursos();
+					/*actualizamos la puntuacion del jugador*/
+					player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[1]);
+					player.savePuntuacion();
+					msg.put("event", "ACTUALIZAR PUNTUACION");
+					msg.put("punctuacion", player.getPuntuacion());
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				msg.put("event", "ANSWER_LEVELUP_BUILDING");
 				msg.put("resultado", canILevelUp.toString());
@@ -330,12 +364,43 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("event", "REFRESH MENU");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
-				
+			case "ASK_LEVELUP_ROBOT":
+				canILevelUp = ((Taller) player.getEdificio(node.get("taller").asInt())).getRobot(node.get("id").asInt()).levelUp();
+				msg.put("event", "REFRESH MENU");
+				msg.put("id", node.get("taller").asInt());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
+				/*actualizamos la puntuacion del jugador*/
+				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[2]);
+				player.savePuntuacion();
+				msg.put("event", "ACTUALIZAR PUNTUACION");
+				msg.put("punctuacion", player.getPuntuacion());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "RECOLECTAR ROBOT":
+				((Taller)  player.getEdificio(node.get("id").asInt())).getRobot(node.get("robotId").asInt()).recolectar();		
+				msg.put("event", "METAL RECOLECTADO");
+				msg.put("id", node.get("id").asInt());
+				ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+				for (Robot r : ((Taller)  player.getEdificio(node.get("id").asInt())).getRobots()) {
+					ObjectNode jsonRobot = mapper.createObjectNode();
+					jsonRobot.put("id", r.getId());
+					jsonRobot.put("ausente", r.isAusente());					
+					jsonRobot.put("nivel", r.getNivel());	
+					jsonRobot.put("carga", r.getCarga());	
+					arrayNodeRobots.addPOJO(jsonRobot);
+				}
+				msg.putPOJO("robots", arrayNodeRobots);
+				msg.put("metal", player.getMetal());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "ENVIAR":
 				((Taller) player.getEdificio(node.get("tallerId").asInt())).getRobot(node.get("robotId").asInt()).producir();
+				msg.put("event", "REFRESH MENU");
+				msg.put("id", node.get("tallerId").asInt());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				player.saveEdificios();
 				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
@@ -371,16 +436,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "GET TALLER MENU":
 				msg.put("event", "TALLER MENU");
 				msg.put("id", node.get("id").asInt());
-				ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
+				msg.put("energiaNecesaria", PlataformaExtraccion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel()-1][0]);
+				ArrayNode arrayNodeRobots2 = mapper.createArrayNode(); // JSON para el cliente
 				for (Robot r : ((Taller) player.getEdificio(node.get("id").asInt())).getRobots()) {
 					ObjectNode jsonRobot = mapper.createObjectNode();
 					jsonRobot.put("id", r.getId());
 					jsonRobot.put("ausente", r.isAusente());					
 					jsonRobot.put("nivel", r.getNivel());	
 					jsonRobot.put("carga", r.getCarga());	
-					arrayNodeRobots.addPOJO(jsonRobot);
+					arrayNodeRobots2.addPOJO(jsonRobot);
 				}
-				msg.putPOJO("robots", arrayNodeRobots);
+				msg.putPOJO("robots", arrayNodeRobots2);
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
@@ -392,6 +460,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "BUY CELL":
 				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
 				updateInfo(player, "REFRESH GRID");
+				/*actualizamos la puntuacion del jugador*/
+				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[3]);
+				player.savePuntuacion();
+				msg.put("event", "ACTUALIZAR PUNTUACION");
+				msg.put("punctuacion", player.getPuntuacion());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "PEDIR COLONOS":
 				player.requestColonos();
@@ -405,29 +479,155 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("energia", player.getEnergia());
 				msg.put("ceramica", player.getCeramica());
 				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+				
 			case "CREATE AN OFFER":
-				//creamos una oferta con la info del cliente
-				Oferta oferta = new Oferta(ObjectId.get(), player.getId(), 
-						node.get("recurso").asText(), node.get("cantidad").asInt(), node.get("creditos").asInt());
-				//la guardamos en los atributos y bd del jugador
-				player.addOferta(oferta);
-				player.saveOfertas();
-				//la guardamos en la bd comun a todos los jugadores
-				Document dbOferta = new Document();
-				dbOferta.append("id", oferta.getId());
-				dbOferta.append("playerId", oferta.getPlayerId());
-				dbOferta.append("recurso", oferta.getRecurso());
-				dbOferta.append("cantidad", oferta.getCantidad());
-				dbOferta.append("creditos", oferta.getCreditos());
-				collOfertas.insertOne(dbOferta);
+				msg.put("event", "RESPUESTA CREAR OFERTA");
+				boolean ofertaAceptada = false;
+				
+				//comprobamos que se tienen los recursos para crear la oferta
+				//si es el caso restamos ese material al jugador
+				switch(node.get("recurso").asText()) {
+				
+				case "metal":
+					if(player.getMetal() >= node.get("cantidad").asInt()) {
+						ofertaAceptada = true;
+						player.setMetal(player.getMetal() - node.get("cantidad").asInt());
+						player.saveRecursos();
+					}
+					break;
+					
+				case "ceramica":
+					if(player.getCeramica() >= node.get("cantidad").asInt()) {
+						ofertaAceptada = true;
+						player.setCeramica(player.getCeramica() - node.get("cantidad").asInt());
+						player.saveRecursos();
+					}
+					break;
+					
+				default:
+					break;
+				}
+				
+				if(ofertaAceptada) {
+					//creamos una oferta con la info del cliente
+					Oferta oferta = new Oferta(ObjectId.get(), player.getId(), 
+							node.get("recurso").asText(), node.get("cantidad").asInt(), node.get("creditos").asInt());
+					//la guardamos en los atributos y bd del jugador
+					player.addOferta(oferta);
+					player.saveOfertas();
+					//la guardamos en la bd comun a todos los jugadores
+					Document dbOferta = new Document();
+					dbOferta.append("_id", oferta.getId());
+					dbOferta.append("playerId", oferta.getPlayerId());
+					dbOferta.append("recurso", oferta.getRecurso());
+					dbOferta.append("cantidad", oferta.getCantidad());
+					dbOferta.append("creditos", oferta.getCreditos());
+					collOfertas.insertOne(dbOferta);
+
+					//informamos al cliente
+					msg.put("respuesta", ofertaAceptada);
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}else {
+					
+					msg.put("respuesta", false);
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
+				
+			case "GIVE ME OFFERS":
+				sendOffers(player);
+				break;
+				
+			case "DELETE AN OFFER":
+				ObjectId miOfertaId = new ObjectId(node.get("idOferta").asText());
+				
+				/*primero devolvemos el valor de la oferta*/
+				Oferta oferta = player.getOferta(miOfertaId);
+				switch(oferta.getRecurso()) {
+				
+				case "metal":
+					player.setMetal(player.getMetal() + oferta.getCantidad());
+					break;
+				
+				case "ceramica":
+					player.setCeramica(player.getCeramica() + oferta.getCantidad());
+					break;
+				
+				default:
+					break;
+				}
+				player.saveRecursos();
+				
+				/*borramos la oferta de la base de datos del jugador*/
+				player.deleteOferta(miOfertaId);
+				player.saveOfertas();
+				
+				/*borramos la oferta de la base de datos comun a todos los jugadores*/
+				collOfertas.deleteOne(new Document("_id", miOfertaId));
+				
+				msg.put("event", "DELETED OFFER");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+				
+			case "BUY AN OFFER":
+				
+				msg.put("event", "ANSWER BUY AN OFFER");
+				boolean puedoComprar = false;
+				
+				ObjectId myOfferId = new ObjectId(node.get("idOferta").asText());
+				
+				/*recogemos la oferta de la bd*/			
+				Document myOffer = collOfertas.find(new Document("_id", myOfferId)).first();
+				
+				/*si puedo comprarla actualizo mis recursos*/
+				if(player.getCreditos() >= Integer.parseInt(myOffer.get("creditos").toString())) {
+					puedoComprar = true;
+					player.setCreditos(player.getCreditos() - Integer.parseInt(myOffer.get("creditos").toString()));
+					switch(myOffer.get("recurso").toString()) {					
+					case "metal":
+						player.setMetal(player.getMetal() + Integer.parseInt(myOffer.get("cantidad").toString()));
+						break;					
+					case "ceramica":
+						player.setCeramica(player.getCeramica() + Integer.parseInt(myOffer.get("cantidad").toString()));
+						break;			
+					default:
+						break;
+					}
+					player.saveRecursos();
+					
+					/*le doy el dinero al vendedor de la oferta*/
+					Player playerVendedor = players.get(new ObjectId(myOffer.get("playerId").toString())); 
+					playerVendedor.deleteOferta(myOfferId);
+					playerVendedor.setCreditos(playerVendedor.getCreditos() + Integer.parseInt(myOffer.get("creditos").toString()));
+					playerVendedor.saveOfertas();
+					playerVendedor.saveRecursos();
+					player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[4]);
+					player.savePuntuacion();
+					/*borramos la oferta de la base de datos comun a todos los jugadores*/
+					collOfertas.deleteOne(new Document("_id", myOfferId));
+					
+					msg.put("event", "OFFER PURCHASED");
+					msg.put("respuesta", puedoComprar);
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					
+				}else {
+					msg.put("respuesta", puedoComprar);
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
+				
 			case "I AM HERE":
 				msg.put("event", "OK");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			
+			case "GIVE ME PUNCTUATIONS":
+				sendPunctuations(player);
 				break;
 			default:
 				break;
@@ -437,6 +637,101 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			System.err.println("Exception processing message " + message.getPayload());
 			e.printStackTrace(System.err);
 		}
+	}
+	
+	/*Enviamos las ofertas al cliente*/
+	private void sendOffers(Player player) {
+		ObjectNode msg = mapper.createObjectNode();
+		try {
+			
+			ArrayNode offers = mapper.createArrayNode();
+			ObjectNode oferta;
+			MongoCursor<Document> cursor = collOfertas.find().iterator();
+			try {
+				while(cursor.hasNext()) {
+					oferta = mapper.createObjectNode();
+					Document next = cursor.next();
+					oferta.put("id", next.getObjectId("_id").toString());
+					oferta.put("playerId", next.getObjectId("playerId").toString());
+					oferta.put("recurso", next.getString("recurso"));
+					oferta.put("cantidad", next.getInteger("cantidad"));
+					oferta.put("creditos", next.getInteger("creditos"));
+					offers.addPOJO(oferta);
+				}
+			}finally {
+				cursor.close();
+			}
+			
+			msg.put("event", "SEND OFFERS");
+			msg.putPOJO("ofertas", offers);
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+
+		} catch (Exception e) {
+			System.err.println("Exception sending message " + msg.toString());
+			e.printStackTrace(System.err);
+		}
+	}
+	
+	/*Enviamos las puntuaciones maximas ordenas al jugador*/
+	private void sendPunctuations(Player player) {
+		
+		ObjectNode msg = mapper.createObjectNode();
+		HashMap<String, Integer>puntuaciones = new HashMap<>();
+		String todasLasPuntuaciones = "";
+        int numMaxPuntuaciones = 0;
+		
+		/*extraemos los nombres y las puntuaciones de los jugadores en un mapa*/
+		try {
+			MongoCursor<Document> cursor = coll.find().iterator();
+			try {
+				while(cursor.hasNext()) {
+					Document next = cursor.next();
+					puntuaciones.put(next.getString("name"), next.getInteger("puntuacion"));
+				}
+			}finally {
+				cursor.close();
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exception sending message " + msg.toString());
+			e.printStackTrace(System.err);
+		}
+		
+		/*ordenamos el mapa
+		 * solucion parcialmente sacada de: https://www.mkyong.com/java/how-to-sort-a-map-in-java/*/
+		LinkedList<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(puntuaciones.entrySet());
+		
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>(){
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return (o1.getValue()).compareTo(o2.getValue());
+			}
+		});
+		Collections.reverse(list);
+		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : list) {
+        	sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        
+        /*con las puntuaciones ordenadas se las mandamos al cliente en un String*/
+        for(Map.Entry<String, Integer> entry : sortedMap.entrySet()) {         
+        	if(numMaxPuntuaciones < NUM_MAX_PUNTUACIONES_MOSTRAR) {
+        		todasLasPuntuaciones += entry.getKey() + "\n" + entry.getValue() + "\n";
+                numMaxPuntuaciones++;
+        	}else {
+        		break;
+        	}
+        }
+                
+		try {
+			msg.put("event", "ALL PUNCTUATIONS");
+	        msg.put("todasLasPuntuaciones", todasLasPuntuaciones);
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			msg.put("event", "ACTUALIZAR PUNTUACION");
+			msg.put("punctuacion", player.getPuntuacion());
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}        
 	}
 	
 	// Informa al cliente y a la BDD de una actualizacion en la informacion del jugador (Grid y edificios)
@@ -468,6 +763,23 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
 					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
 					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+					if (e instanceof Taller) {
+						ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+						for (Robot r :  ((Taller) e).getRobots()) {
+							ObjectNode jsonRobot = mapper.createObjectNode();
+							jsonRobot.put("id", r.getId());
+							jsonRobot.put("ausente", r.isAusente());
+							jsonRobot.put("nivel", r.getNivel());
+							jsonRobot.put("carga", r.getCarga());
+							jsonRobot.put("dateYear", r.getProductionBeginTime().getYear());
+							jsonRobot.put("dateMonth", r.getProductionBeginTime().getMonthValue());
+							jsonRobot.put("dateDay", r.getProductionBeginTime().getDayOfMonth());
+							jsonRobot.put("dateHour", r.getProductionBeginTime().getHour());
+							jsonRobot.put("dateMinute", r.getProductionBeginTime().getMinute());
+							arrayNodeRobots.addPOJO(jsonRobot);
+						}
+						jsonEdificio.putPOJO("robots", arrayNodeRobots);
+					}
 				}
 				jsonEdificio.put("sprite", e.getSprite());
 				jsonEdificio.put("level", e.getLevel());
@@ -480,6 +792,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			msg.put("ceramica", player.getCeramica());
 			msg.put("creditos", player.getCreditos());
 			msg.put("unionCoins", player.getUnionCoins());
+			msg.put("puntuacion", player.getPuntuacion());
 			msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 			// Enviamos el mensaje al cliente
 			player.getSession().sendMessage(new TextMessage(msg.toString()));

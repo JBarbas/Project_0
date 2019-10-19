@@ -10,6 +10,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **CENTRO_COMERCIO** menu");
 		} 	
+    	
+    	pedirOfertas();
     }
     
     preload () {
@@ -70,6 +72,88 @@ class CentroComercioMenu extends Phaser.Scene {
     		crearOferta(25, 'metal', 100);
     	});
     	edificiosContainer.add(crearOfertabtn);
+    	/***********************************Botones ofrecer ofertas******************************************/
+    	/*ofrecer oferta*/
+    	var oferta25Metal = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	oferta25Metal.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	});
+    	oferta25Metal.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	});
+    	oferta25Metal.on('pointerdown', function(pointer, localX, localY, event){ 		
+    		//cantidad, recurso, creditos a cambio
+    		crearOferta(25, 'metal', 100);
+    	});
+    	edificiosContainer.add(oferta25Metal);
+    	
+    	/*pedir Ofertas*/
+    	var pedirOfertasbtn = this.add.image(game.global.buildingMenu.x + 65, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	pedirOfertasbtn.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	});
+    	pedirOfertasbtn.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	});
+    	pedirOfertasbtn.on('pointerdown', function(pointer, localX, localY, event){ 		
+    		//cantidad, recurso, creditos a cambio
+    		pedirOfertas();
+    	});
+    	edificiosContainer.add(pedirOfertasbtn);
+    	/*pedir Ofertas de mi jugador*/
+    	var pedirOfertas2btn = this.add.image(game.global.buildingMenu.x + 65, game.global.buildingMenu.y + 760, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	pedirOfertas2btn.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	});
+    	pedirOfertas2btn.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	});
+    	pedirOfertas2btn.on('pointerdown', function(pointer, localX, localY, event){ 		
+    		//cantidad, recurso, creditos a cambio
+    		console.log(pedirOfertasJugador());
+    	});
+    	edificiosContainer.add(pedirOfertas2btn);
+    	
+    	/*borrar una oferta de mi jugador*/
+    	/*en principio aquí recorro la lista de ofertas y con cada una 
+    	 * creo un boton con el que puedo pasar el id de la oferta a la 
+    	 * funcion de borrar*/
+    	var borrarOfertasbtn = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 760, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	borrarOfertasbtn.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	});
+    	borrarOfertasbtn.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	});
+    	borrarOfertasbtn.on('pointerdown', function(pointer, localX, localY, event){ 		
+    		let ofertasMiJugador = pedirOfertasJugador();
+    		//cantidad, recurso, creditos a cambio
+    		if(ofertasMiJugador[0] != null){
+    			borrarOferta(ofertasMiJugador[0].idOferta);
+    		}
+    	});
+    	edificiosContainer.add(borrarOfertasbtn);
+    	
+    	/*comprar una oferta*/
+    	var comprar = this.add.image(game.global.buildingMenu.x + 250, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	comprar.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	});
+    	comprar.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    	});
+    	comprar.on('pointerdown', function(pointer, localX, localY, event){ 		
+    		
+    		if(game.global.offers.length != 0){
+    			comprarOferta(game.global.offers[0].idOferta);
+    		}
+    	});
+    	edificiosContainer.add(comprar);
     	
     	//  CONTENEDOR DETALLES
     	// Se añade la descripción del edificio
@@ -111,15 +195,12 @@ class CentroComercioMenu extends Phaser.Scene {
     		mejorasContainer.add(this.descSigNivel);
         	
     		this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-	    		    	
 	    	this.subirNivel.on('pointerover',function(pointer){
 	    		this.setFrame(1);
-	    	})
-	    	
+	    	});
 	    	this.subirNivel.on('pointerout',function(pointer){
 	    		this.setFrame(0);
-	    	})
-	    	
+	    	});
 	    	this.subirNivel.on('pointerdown', function(pointer, localX, localY, event){
 	    		askLevelUpBuilding(data.miEdificio.id);	    		
 	    	});
@@ -147,7 +228,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	// Desactivamos al inicio los otros dos contenedores
 		detallesContainer.visible= false;
 		mejorasContainer.visible= false;
-		
+
     }
     update(time, delta) {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/

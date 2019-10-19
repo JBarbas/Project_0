@@ -49,7 +49,7 @@ class LogInScene extends Phaser.Scene {
     		registro.setFill(colorWhite);
     	});
         
-    	var element = this.add.dom(400, 600).createFromCache('loginform');
+    	var element = this.add.dom(420, 600).createFromCache('loginform');
 
         element.setPerspective(800);
         

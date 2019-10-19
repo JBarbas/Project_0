@@ -17,7 +17,7 @@ import es.urjc.practica_2019.ZeroGravity.Edificios.Taller;
 public class RobotEstandar extends Robot {
 
 	//coste Metal, coste UnionCoins, vidaMax, fuerza, capacidadCarga, duracion
-	private static final int[] nivel1 = {0, 0, 10, 3, 5, 1}; // t = 120 mins
+	private static final int[] nivel1 = {0, 0, 10, 3, 5, 5}; // t = 120 mins
 	private static final int[] nivel2 = {0, 0, 20, 7, 12, 300};
 	private static final int[] nivel3 = {0, 0, 30, 15, 20, 420};
 	private static final int[][] infoPorNivel = {nivel1, nivel2, nivel3};
@@ -33,17 +33,34 @@ public class RobotEstandar extends Robot {
 	}
 	
 	@Override
-	public void subirNivel() {
-		
+	public boolean levelUp() {
+		if (this.getNivel() < 3) {
+			this.setNivel(this.getNivel() + 1);
+			this.taller.getPlayer().saveEdificios();
+			this.taller.getPlayer().saveRecursos();;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	@Override
 	public void producir() {
-		if (!this.isAusente()) {
+		if (!this.isAusente() && !this.taller.needsEnergy() && !this.taller.needsColonos()) {
 			ObjectNode msg = mapper.createObjectNode();
-			msg.put("event", "ROBOT AUSENTE");
+			msg.put("event", "ROBOT PRODUCIENDO");
 			msg.put("id", this.getId());
 			msg.put("taller", this.taller.getId());
+			try {
+				if (this.taller.getPlayer().getSession().isOpen()) {				
+					this.taller.getPlayer().getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+			} catch (IOException e) {
+				System.err.println("Exception sending message " + msg.toString());
+				e.printStackTrace(System.err);
+			}
+			msg.put("event", "ROBOT AUSENTE");
 			try {
 				if (taller.getPlayer().getSession().isOpen()) {				
 					taller.getPlayer().getSession().sendMessage(new TextMessage(msg.toString()));
