@@ -470,10 +470,10 @@ window.onload = function() {
 				robot.ausente = msg.robots[i].ausente;
 				robot.nivel = msg.robots[i].nivel;
 				game.global.edificios.get(msg.id).robots.set(robot.id, robot);
-				let robotX = game.scene.getScene("TallerMenu").robotsX;
-				let robotY = game.scene.getScene("TallerMenu").robotsY[i];
+				robot.x = game.scene.getScene("TallerMenu").robotsX;
+				robot.y = game.scene.getScene("TallerMenu").robotsY[i];
 				//game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0);
-				game.scene.getScene("TallerMenu").edificiosContainer.add(game.scene.getScene("TallerMenu").add.image(robotX, robotY, robot.sprite).setOrigin(0, 0));
+				game.scene.getScene("TallerMenu").edificiosContainer.add(game.scene.getScene("TallerMenu").add.image(robot.x, robot.y, robot.sprite + robot.nivel).setOrigin(0, 0));
 				if (!robot.ausente) {
 					if (robot.nivel < 3) {
 						let btnNivel = game.scene.getScene("TallerMenu").add.image(robot.x + 370, robot.y + 70, 'btnSubirNivelRobot').setOrigin(0, 0.5).setInteractive();
@@ -519,10 +519,10 @@ window.onload = function() {
 						if (msg.energia >= msg.energiaNecesaria && msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 							robot.btnEnviar.on('pointerover',function(pointer){
 					    	    this.setFrame(1);
-					    	})
+					    	});
 					    	robot.btnEnviar.on('pointerout',function(pointer){
 					    	    this.setFrame(0);
-					    	})			    	
+					    	});		    	
 					    	robot.btnEnviar.on('pointerdown', function(pointer, localX, localY, event){
 					    		let msgBack = new Object();
 					    		msgBack.event = 'ENVIAR';
@@ -539,11 +539,11 @@ window.onload = function() {
 					    		game.scene.getScene("TallerMenu").times[this.i].timeLeftText = 
 					    			game.scene.getScene("TallerMenu").add.text(posX, posY, '', { fontFamily: '"Roboto Condensed"', color: 'white' });
 					    	});
-							game.scene.getScene("TallerMenu").edificiosContainer.add(btnEnviar);
 						}
 						else {
 							robot.btnEnviar.alpha = 0.5;
 						}
+						game.scene.getScene("TallerMenu").edificiosContainer.add(robot.btnEnviar);
 					}
 				}
 				else {

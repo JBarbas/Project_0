@@ -74,8 +74,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	edificiosContainer.add(crearOfertabtn);
     	/***********************************Botones ofrecer ofertas******************************************/
     	/*ofrecer oferta*/
-    	var oferta25Metal = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
-    	cerrar.setOrigin(0, 0);
+    	var oferta25Metal = this.add.image(505, 560, 'xBuilding').setInteractive();
+    	oferta25Metal.setOrigin(0, 0);
     	oferta25Metal.on('pointerover',function(pointer){
     		this.setFrame(1);
     	});
@@ -89,8 +89,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	edificiosContainer.add(oferta25Metal);
     	
     	/*pedir Ofertas*/
-    	var pedirOfertasbtn = this.add.image(game.global.buildingMenu.x + 65, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
-    	cerrar.setOrigin(0, 0);
+    	var pedirOfertasbtn = this.add.image(65, 560, 'xBuilding').setInteractive();
+    	pedirOfertasbtn.setOrigin(0, 0);
     	pedirOfertasbtn.on('pointerover',function(pointer){
     		this.setFrame(1);
     	});
@@ -103,8 +103,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	edificiosContainer.add(pedirOfertasbtn);
     	/*pedir Ofertas de mi jugador*/
-    	var pedirOfertas2btn = this.add.image(game.global.buildingMenu.x + 65, game.global.buildingMenu.y + 760, 'xBuilding').setInteractive();
-    	cerrar.setOrigin(0, 0);
+    	var pedirOfertas2btn = this.add.image(65, 760, 'xBuilding').setInteractive();
+    	pedirOfertas2btn.setOrigin(0, 0);
     	pedirOfertas2btn.on('pointerover',function(pointer){
     		this.setFrame(1);
     	});
@@ -121,8 +121,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	/*en principio aquí recorro la lista de ofertas y con cada una 
     	 * creo un boton con el que puedo pasar el id de la oferta a la 
     	 * funcion de borrar*/
-    	var borrarOfertasbtn = this.add.image(game.global.buildingMenu.x + 400, game.global.buildingMenu.y + 760, 'xBuilding').setInteractive();
-    	cerrar.setOrigin(0, 0);
+    	var borrarOfertasbtn = this.add.image(400, 760, 'xBuilding').setInteractive();
+    	borrarOfertasbtn.setOrigin(0, 0);
     	borrarOfertasbtn.on('pointerover',function(pointer){
     		this.setFrame(1);
     	});
@@ -139,8 +139,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	edificiosContainer.add(borrarOfertasbtn);
     	
     	/*comprar una oferta*/
-    	var comprar = this.add.image(game.global.buildingMenu.x + 250, game.global.buildingMenu.y + 560, 'xBuilding').setInteractive();
-    	cerrar.setOrigin(0, 0);
+    	var comprar = this.add.image(250, 560, 'xBuilding').setInteractive();
+    	comprar.setOrigin(0, 0);
     	comprar.on('pointerover',function(pointer){
     		this.setFrame(1);
     	});
