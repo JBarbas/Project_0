@@ -17,6 +17,13 @@ class OptionsScene extends Phaser.Scene {
     }
     create (data)  {
     	
+    	// Contenedor del panel de general
+    	var generalContainer = this.add.container(300, 300);
+    	// Contenedor del panel de sonido
+    	var soundContainer = this.add.container(300, 300);
+    	// Contenedor del panel de mejoras
+    	var languageContainer = this.add.container(300, 300);
+    	
     	
     	var background = this.add.image(960, 540, 'backgroundOptionsAccount');
     	
@@ -53,7 +60,9 @@ class OptionsScene extends Phaser.Scene {
     		txtCuenta.setVisible(true);
     		txtSonido.setVisible(false);
     		txtIdioma.setVisible(false);
-    		
+    		generalContainer.visible = true;
+    		soundContainer.visible = false;
+    		languageContainer.visible = false;
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
@@ -63,6 +72,9 @@ class OptionsScene extends Phaser.Scene {
     		txtCuenta.setVisible(false);
     		txtSonido.setVisible(true);
     		txtIdioma.setVisible(false);
+    		generalContainer.visible = false;
+    		soundContainer.visible = true;
+    		languageContainer.visible = false;
     	})
     	
     	btnIdioma.on('pointerdown',function(pointer){
@@ -72,6 +84,9 @@ class OptionsScene extends Phaser.Scene {
     		txtCuenta.setVisible(false);
     		txtSonido.setVisible(false);
     		txtIdioma.setVisible(true);
+    		generalContainer.visible = false;
+    		soundContainer.visible = false;
+    		languageContainer.visible = true;
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
@@ -86,11 +101,12 @@ class OptionsScene extends Phaser.Scene {
     		}
     	});
     	
-    	var element = this.add.dom(400, 600).createFromCache('optionsform');
+    	this.element = this.add.dom(100, 300).createFromCache('optionsform');
 
-        element.setPerspective(800);
+        this.element.setPerspective(800);
         
-        var fSYes = document.getElementById('fullScreenYes');
+        
+        /*var fSYes = document.getElementById('fullScreenYes');
 		var fSNo = document.getElementById('fullScreenNo');
 		
 		fSYes.addEventListener("click", function(){
@@ -100,6 +116,70 @@ class OptionsScene extends Phaser.Scene {
 				this.scale.startFullscreen();
 			}
 		}, this);
+		
+		//generalContainer.add(fSYes);
+		//generalContainer.add(fSNo);*/
+		generalContainer.add(this.element);
+
+		
+		this.elementS = this.add.dom(0, 200).createFromCache('optionsformS');
+        this.elementS.setPerspective(800);
+        
+        $("#volume").slider({
+		  	min: 0,
+		  	max: 100,
+		  	value: 0,
+				range: "min",
+		  	slide: function(event, ui) {
+		    	setVolume(ui.value / 100);
+		  	}
+		});
+        
+        $("#volume2").slider({
+		  	min: 0,
+		  	max: 100,
+		  	value: 0,
+				range: "min",
+		  	slide: function(event, ui) {
+		    	setVolume(ui.value / 100);
+		  	}
+		});
+			
+		var myMedia = document.createElement('audio');
+		$('#player').append(myMedia);
+		myMedia.id = "myMedia";
+		
+		var myMedia2 = document.createElement('audio');
+		$('#player2').append(myMedia2);
+		myMedia2.id = "myMedia2";
+
+		playAudio('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3', 0);
+		
+		function playAudio(fileName, myVolume) {
+				myMedia.src = fileName;
+				myMedia.setAttribute('loop', 'loop');
+	    	setVolume(myVolume);
+	    	myMedia.play();
+		}
+		
+		function setVolume(myVolume) {
+	    	var myMedia = document.getElementById('myMedia');
+	    	myMedia.volume = myVolume;
+		}       
+        
+        soundContainer.visible = false;
+        languageContainer.visible = false;
+		soundContainer.add(this.elementS);
+		
+		
+		
+
+		this.elementL = this.add.dom(0, 200).createFromCache('optionsformL');
+        this.elementL.setPerspective(800);
+        
+        languageContainer.add(this.elementL);
+		
+		
     
     	
     }
