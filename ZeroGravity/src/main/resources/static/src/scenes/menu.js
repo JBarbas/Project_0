@@ -19,9 +19,7 @@ class MenuScene extends Phaser.Scene {
     	var music = game.global.music;
     	console.log(music);
     	game.global.music.setVolume(0);
-    	game.global.musicMenu = game.sound.add('soundtrack');
-    	game.global.musicMenu.play();
-    	game.global.musicMenu.setLoop(true);
+    	
     	var backgroundM = this.add.image(960, 540, 'backgroundMenu');
     	
     	

@@ -165,6 +165,10 @@ window.onload = function() {
 				console.log('[DEBUG] LOGGED message recieved')
 				console.dir(msg);
 			}
+			game.global.musicMenu = game.sound.add('soundtrack');
+	    	game.global.musicMenu.play();
+	    	game.global.musicMenu.setLoop(true);
+	    	
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;

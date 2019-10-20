@@ -208,7 +208,7 @@ class OptionsScene extends Phaser.Scene {
 		$('#player2').append(myMedia2);
 		myMedia2.id = "myMedia2";
 
-		playAudio('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3', 0);
+		//playAudio('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3', 0);
 		
 		function playAudio(fileName, myVolume) {
 				myMedia.src = fileName;
