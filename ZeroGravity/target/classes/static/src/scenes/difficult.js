@@ -41,6 +41,7 @@ class DifficultScene extends Phaser.Scene {
     	document.getElementById("dificultad").style.visibility = 'visible';
     	
     	$( "#selectNivel" ).click(function() {
+    		game.global.sound = game.sound.play('dificultadMenu');
     		game.scene.run('PreloadGameScene');
     		game.scene.stop('DifficultScene');
     	});
@@ -55,6 +56,7 @@ class DifficultScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		document.getElementById("dificultad").style.visibility = 'hidden';
     		game.scene.run('MenuScene');
     		game.scene.stop('DifficultScene');

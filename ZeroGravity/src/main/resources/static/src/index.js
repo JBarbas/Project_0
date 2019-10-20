@@ -132,6 +132,7 @@ window.onload = function() {
 		resources: {},
 		music: null,
 		sound: null,
+		musicMenu: null,
 		idioma : "eng"
 	}
 	
@@ -164,6 +165,10 @@ window.onload = function() {
 				console.log('[DEBUG] LOGGED message recieved')
 				console.dir(msg);
 			}
+			game.global.musicMenu = game.sound.add('soundtrack');
+	    	game.global.musicMenu.play();
+	    	game.global.musicMenu.setLoop(true);
+	    	
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;
@@ -325,6 +330,7 @@ window.onload = function() {
 			break;
 		
 		case 'GET_PLAYER_RESOURCES':
+			game.global.sound = game.sound.play('cambianRecursos');
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
 				console.dir(msg);
@@ -373,8 +379,10 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO CONSTRUIDO message recieved');
 				console.dir(msg);
 			}
+			
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.sound = game.sound.play('construido');
 					game.global.edificios.get(msg.id).enConstruccion = false;
 					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
 					clearInterval(game.global.edificios.get(msg.id).interval);
@@ -427,6 +435,7 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO LLENO message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('recursosMaximos');
 			let edificioLleno = game.global.edificios.get(msg.id);
 			edificioLleno.lleno = true;
 			game.global.edificios.get(msg.id).produciendo = false;
@@ -449,10 +458,12 @@ window.onload = function() {
 			}
 			break;
 		case 'CERAMICA RECOLECTADA':
+			
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] CERAMICA RECOLECTADA message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.ceramica = msg.ceramica;
 			particulasRecurso("ceramica");
 			pedirPuntuaciones()
@@ -462,6 +473,7 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS RECOLECTADOS message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.creditos = msg.creditos;
 			particulasRecurso("creditos");
 			pedirPuntuaciones()
@@ -471,6 +483,7 @@ window.onload = function() {
 				console.log('[DEBUG] METAL RECOLECTADO message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.metal = msg.metal;
 			particulasRecurso("metal");
 			if (game.scene.isActive('TallerMenu')) {
@@ -671,6 +684,7 @@ window.onload = function() {
 				console.log('[DEBUG] ENVIO DE COLONOS message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.colonos = msg.colonos;
 			particulasRecurso("colonos");
 

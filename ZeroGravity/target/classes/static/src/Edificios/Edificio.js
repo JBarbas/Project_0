@@ -56,6 +56,7 @@ class Edificio {
 			    });
 				let e = this
 				this.recolectIcon.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+					game.global.sound = game.sound.play('recogerRecursos');
 		    		this.destroy();
 		    		e.lleno = false;
 		    		let msg = new Object();

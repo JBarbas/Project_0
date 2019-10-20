@@ -39,6 +39,7 @@ class RegisterScene extends Phaser.Scene {
     	})
     	
     	back.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.run('LogInScene');
     		game.scene.stop('RegisterScene');
     	});
@@ -52,6 +53,7 @@ class RegisterScene extends Phaser.Scene {
         boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('pass')[0].childNodes[0].nodeValue;
         
         buttonR.on('pointerdown', function(pointer, localX, localY, event){
+        	game.global.sound = game.sound.play('pulsarBoton');
         	var inputUsername = element.getChildByName('username');
         	var inputEmail = element.getChildByName('email');
             var inputPassword = element.getChildByName('password');

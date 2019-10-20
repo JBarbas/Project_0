@@ -44,11 +44,13 @@ class CreditsScene extends Phaser.Scene {
     
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.run('MenuScene');
     		game.scene.stop('CreditsScene');
     	});
     	
     	function openExternalLink(){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		window.open("https://marferfer.github.io/WebSitePortfolio/", "_blank"); 
     	}
     }
