@@ -19,6 +19,7 @@ class CentroComercioMenu extends Phaser.Scene {
     }
     
     create (data)  {
+    	game.global.sound = game.sound.play('seleccionarEdificio');
     	
     	this.miEdificio = data.miEdificio;
     	
@@ -53,7 +54,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 300, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
-    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= true;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= false;
@@ -63,6 +65,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= true;
     		comprarContainer.visible= false;
@@ -72,6 +75,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoOfertas = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoOfertas').setOrigin(0, 0);
     	this.iconoOfertas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= false;
@@ -81,6 +85,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoVender = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoVender').setOrigin(0, 0);
     	this.iconoVender.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= false;
@@ -90,6 +95,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoComprar').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= true;
@@ -123,9 +129,25 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	box.style.height = 'auto';
 	        	box.indice = i;
 	        	box.onclick = function(){
-	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	        		box.parentElement.style.visibility = "hidden";
+	        		swal({
+          	    	  title: "¿Quieres realizar esta compra?",          	
+          	    	  buttons: true,
+          	    	  dangerMode: false,
+          	    	})
+          	    	.then((willDelete) => {
+          	    	  if (willDelete) {         
+          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
+    	        		box.parentElement.style.visibility = "hidden";
+    	        		game.global.sound = game.sound.play('comprar');
+          	    	    swal("Compra realizada", {
+          	    	      icon: "success",
+          	    	      dangerMode: false,         	    	   
+          	    	      buttons: true,
+          	    	    }); 
+          	    	  }
+          	    	});     
 	        	}
+	        	
 	        	box.onmouseover = function(){
 	        		box.src = "assets/interface/Gameplay/boxComercioHover.png";
 	        	}
@@ -146,8 +168,23 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	metal.style.left = "180px";
 	            	metal.indice = i;
 	            	metal.onclick = function(){
-	            		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	            		box.parentElement.style.visibility = "hidden";
+	            		swal({
+	            	    	  title: "¿Quieres realizar esta compra?",          	
+	            	    	  buttons: true,
+	            	    	  dangerMode: false,
+	            	    	})
+	            	    	.then((willDelete) => {
+	            	    	  if (willDelete) {         
+	            	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	            	    		game.global.sound = game.sound.play('comprar');
+	            	    		box.parentElement.style.visibility = "hidden";
+	            	    	    swal("Compra realizada", {
+	            	    	      icon: "success",
+	            	    	      dangerMode: false,         	    	   
+	            	    	      buttons: true,
+	            	    	    }); 
+	            	    	  }
+	            	    	});	            			        
 	            	}
 	        	}else{
 	        		var ceramica = document.createElement("img");
@@ -156,8 +193,23 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	ceramica.style.left = "180px";
 	            	ceramica.indice = i;
 	            	ceramica.onclick = function(){
-	            		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	            		box.parentElement.style.visibility = "hidden";
+	            		swal({
+	            	    	  title: "¿Quieres realizar esta compra?",          	
+	            	    	  buttons: true,
+	            	    	  dangerMode: false,
+	            	    	})
+	            	    	.then((willDelete) => {
+	            	    	  if (willDelete) {         
+	            	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	            	    		game.global.sound = game.sound.play('comprar');	
+	            	    		box.parentElement.style.visibility = "hidden";
+	            	    	    swal("Compra realizada", {
+	            	    	      icon: "success",
+	            	    	      dangerMode: false,         	    	   
+	            	    	      buttons: true,
+	            	    	    }); 
+	            	    	  }
+	            	    	});	            		            		
 	            	}
 	        	}
 	        	
@@ -167,8 +219,23 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	creditos.style.left = "45px"; 
 	        	creditos.indice = i;
 	        	creditos.onclick = function(){
-	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	        		box.parentElement.style.visibility = "hidden";
+	        		swal({
+	          	    	  title: "¿Quieres realizar esta compra?",          	
+	          	    	  buttons: true,
+	          	    	  dangerMode: false,
+	          	    	})
+	          	    	.then((willDelete) => {
+	          	    	  if (willDelete) {         
+	          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	    	        		box.parentElement.style.visibility = "hidden";
+	    	        		game.global.sound = game.sound.play('comprar');	
+	          	    	    swal("Compra realizada", {
+	          	    	      icon: "success",
+	          	    	      dangerMode: false,         	    	   
+	          	    	      buttons: true,
+	          	    	    }); 
+	          	    	  }
+	          	    	});	        		        		
 	        	}      	 	
 	        	
 	        	/*los span, en orden cantidad del recurso, cantidad de creditos a la que se venden*/
@@ -217,8 +284,23 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	numRanking.style.left = "140px";
 	        	numRanking.indice = i;
 	        	numRanking.onclick = function(){
-	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	        		box.parentElement.style.visibility = "hidden";
+	        		swal({
+	          	    	  title: "¿Quieres realizar esta compra?",          	
+	          	    	  buttons: true,
+	          	    	  dangerMode: false,
+	          	    	})
+	          	    	.then((willDelete) => {
+	          	    	  if (willDelete) {         
+	          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	    	        		box.parentElement.style.visibility = "hidden";
+	    	        		game.global.sound = game.sound.play('comprar');
+	          	    	    swal("Compra realizada", {
+	          	    	      icon: "success",
+	          	    	      dangerMode: false,         	    	   
+	          	    	      buttons: true,
+	          	    	    }); 
+	          	    	  }
+	          	    	});	        		
 	        	}
 	        	numRanking.appendChild(numRankingValue);
 	        	
@@ -229,8 +311,23 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	numRanking2.style.top = "0px";
 	        	numRanking2.indice = i;
 	        	numRanking2.onclick = function(){
-	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	        		box.parentElement.style.visibility = "hidden";
+	        		swal({
+	          	    	  title: "¿Quieres realizar esta compra?",          	
+	          	    	  buttons: true,
+	          	    	  dangerMode: false,
+	          	    	})
+	          	    	.then((willDelete) => {
+	          	    	  if (willDelete) {         
+	          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	    	        		box.parentElement.style.visibility = "hidden";
+	    	        		game.global.sound = game.sound.play('comprar');
+	          	    	    swal("Compra realizada", {
+	          	    	      icon: "success",
+	          	    	      dangerMode: false,         	    	   
+	          	    	      buttons: true,
+	          	    	    }); 
+	          	    	  }
+	          	    	});	        		     		
 	        	}
 	        	numRanking2.appendChild(numRankingValue2);        
 	        	
@@ -275,7 +372,22 @@ class CentroComercioMenu extends Phaser.Scene {
         	boxV.style.height = 'auto';
         	boxV.indice = i;
         	boxV.onclick = function(){
-        		pasarAcrearOferta(boxV.indice);
+        		swal({
+        	    	  title: "¿Quieres poner estos recursos a la venta?",          	
+        	    	  buttons: true,
+        	    	  dangerMode: false,
+        	    	})
+        	    	.then((willDelete) => {
+        	    	  if (willDelete) {         
+        	    		  pasarAcrearOferta(boxV.indice);
+        	    		  game.global.sound = game.sound.play('comprar');
+        	    	    swal("Tu oferta está en el mercado", {
+        	    	      icon: "success",
+        	    	      dangerMode: false,         	    	   
+        	    	      buttons: true,
+        	    	    }); 
+        	    	  }
+        	    	});      		       		
         	}
         	boxV.onmouseover = function(){
         		boxV.src = "assets/interface/Gameplay/boxComercioHover.png";
@@ -296,7 +408,22 @@ class CentroComercioMenu extends Phaser.Scene {
             	metalV.style.left = "45px";
             	metalV.indice = i;
             	metalV.onclick = function(){
-            		pasarAcrearOferta(boxV.indice);
+            		swal({
+          	    	  title: "¿Quieres poner estos recursos a la venta?",          	
+          	    	  buttons: true,
+          	    	  dangerMode: false,
+          	    	})
+          	    	.then((willDelete) => {
+          	    	  if (willDelete) {         
+          	    		  pasarAcrearOferta(boxV.indice);
+          	    		game.global.sound = game.sound.play('comprar');
+          	    	    swal("Tu oferta está en el mercado", {
+          	    	      icon: "success",
+          	    	      dangerMode: false,         	    	   
+          	    	      buttons: true,
+          	    	    }); 
+          	    	  }
+          	    	});         		          	
             	}
         	}else{
         		var ceramicaV = document.createElement("img");
@@ -305,7 +432,22 @@ class CentroComercioMenu extends Phaser.Scene {
             	ceramicaV.style.left = "45px";
             	ceramicaV.indice = i;
             	ceramicaV.onclick = function(){
-            		pasarAcrearOferta(boxV.indice);
+            		swal({
+          	    	  title: "¿Quieres poner estos recursos a la venta?",          	
+          	    	  buttons: true,
+          	    	  dangerMode: false,
+          	    	})
+          	    	.then((willDelete) => {
+          	    	  if (willDelete) {         
+          	    		  pasarAcrearOferta(boxV.indice);  
+          	    		  game.global.sound = game.sound.play('comprar');  
+          	    	    swal("Tu oferta está en el mercado", {
+          	    	      icon: "success",
+          	    	      dangerMode: false,         	    	   
+          	    	      buttons: true,
+          	    	    }); 
+          	    	  }
+          	    	});           		         		
             	}
         	}
         	
@@ -315,7 +457,23 @@ class CentroComercioMenu extends Phaser.Scene {
         	creditosV.style.left = "170px"; 
         	creditosV.indice = i;
         	creditosV.onclick = function(){
-        		pasarAcrearOferta(boxV.indice);
+        		swal({
+      	    	  title: "¿Quieres poner estos recursos a la venta?",          	
+      	    	  buttons: true,
+      	    	  dangerMode: false,
+      	    	})
+      	    	.then((willDelete) => {
+      	    	  if (willDelete) {         
+      	    		  pasarAcrearOferta(boxV.indice);
+      	    		  game.global.sound = game.sound.play('comprar');
+      	    	    swal("Tu oferta está en el mercado", {
+      	    	      icon: "success",
+      	    	      dangerMode: false,         	    	   
+      	    	      buttons: true,
+      	    	    }); 
+      	    	  }
+      	    	});
+        		      		
         	}
         	
         	/*los span, en orden cantidad del recurso, cantidad de creditos a la que se venden*/
@@ -364,7 +522,23 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRankingV.style.left = "1px";
         	numRankingV.indice = i;
         	numRankingV.onclick = function(){
-        		pasarAcrearOferta(boxV.indice);
+        		swal({
+      	    	  title: "¿Quieres poner estos recursos a la venta?",          	
+      	    	  buttons: true,
+      	    	  dangerMode: false,
+      	    	})
+      	    	.then((willDelete) => {
+      	    	  if (willDelete) {         
+      	    		pasarAcrearOferta(boxV.indice);	
+      	    		game.global.sound = game.sound.play('comprar');
+      	    	    swal("Tu oferta está en el mercado", {
+      	    	      icon: "success",
+      	    	      dangerMode: false,         	    	   
+      	    	      buttons: true,
+      	    	    }); 
+      	    	  }
+      	    	});
+        		        		
         	}
         	numRankingV.appendChild(numRankingValueV);
         	
@@ -375,7 +549,23 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRanking2V.style.top = "00px";
         	numRanking2V.indice = i;
         	numRanking2V.onclick = function(){
-        		pasarAcrearOferta(boxV.indice);
+        		swal({
+      	    	  title: "¿Quieres poner estos recursos a la venta?",          	
+      	    	  buttons: true,
+      	    	  dangerMode: false,
+      	    	})
+      	    	.then((willDelete) => {
+      	    	  if (willDelete) {         
+      	    		pasarAcrearOferta(boxV.indice);
+      	    		game.global.sound = game.sound.play('comprar');
+      	    	    swal("Tu oferta está en el mercado", {
+      	    	      icon: "success",
+      	    	      dangerMode: false,         	    	   
+      	    	      buttons: true,
+      	    	    }); 
+      	    	  }
+      	    	});
+        		        	
         	}
         	numRanking2V.appendChild(numRankingValue2V);
         	
@@ -477,8 +667,26 @@ class CentroComercioMenu extends Phaser.Scene {
         	boxO.style.height = 'auto';
         	boxO.indice = i;
         	boxO.onclick = function(){
-        		boxO.parentElement.style.visibility = "hidden";
-        		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        		swal({
+      	    	  title: "¿Quieres retirar esta oferta del mercado?",
+      	    	  text: "Tus recursos te serán devueltos",
+      	    	  buttons: true,
+      	    	  dangerMode: false,
+      	    	})
+      	    	.then((willDelete) => {
+      	    	  if (willDelete) {         
+      	    		boxO.parentElement.style.visibility = "hidden";
+            		borrarOferta(oferta.idOferta, data.miEdificio.id);
+            		game.global.sound = game.sound.play('denegar');
+      	    	    swal("Tu oferta ha sido retirada de el mercado", {
+      	    	      icon: "success",
+      	    	      dangerMode: false,         	    	   
+      	    	      buttons: true,
+      	    	    }); 
+      	    	  }
+      	    	});
+
+        		        		
         	}
         	boxO.onmouseover = function(){
         		boxO.src = "assets/interface/Gameplay/boxComercioBorrar.png";
@@ -517,8 +725,25 @@ class CentroComercioMenu extends Phaser.Scene {
             	metalO.style.left = "180px";
             	metalO.indice = i;
             	metalO.onclick = function(){
-            		borrarOferta(oferta.idOferta, data.miEdificio.id);
-            		boxO.parentElement.style.visibility = "hidden";
+            		swal({
+            	    	  title: "¿Quieres retirar esta oferta del mercado?",
+            	    	  text: "Tus recursos te serán devueltos",
+            	    	  buttons: true,
+            	    	  dangerMode: false,
+            	    	})
+            	    	.then((willDelete) => {
+            	    	  if (willDelete) {         
+            	    		boxO.parentElement.style.visibility = "hidden";
+            	    		borrarOferta(oferta.idOferta, data.miEdificio.id); 
+            	    		game.global.sound = game.sound.play('denegar');
+            	    	    swal("Tu oferta ha sido retirada de el mercado", {
+            	    	      icon: "success",
+            	    	      dangerMode: false,         	    	   
+            	    	      buttons: true,
+            	    	    }); 
+            	    	  }
+            	    	});
+            		           		
             	}
             	
             }else{
@@ -528,8 +753,25 @@ class CentroComercioMenu extends Phaser.Scene {
             	ceramicaO.style.left = "180px";
             	ceramicaO.indice = i;
             	ceramicaO.onclick = function(){
-            		borrarOferta(oferta.idOferta, data.miEdificio.id);
-            		boxO.parentElement.style.visibility = "hidden";
+            		swal({
+            	    	  title: "¿Quieres retirar esta oferta del mercado?",
+            	    	  text: "Tus recursos te serán devueltos",
+            	    	  buttons: true,
+            	    	  dangerMode: false,
+            	    	})
+            	    	.then((willDelete) => {
+            	    	  if (willDelete) {         
+            	    		boxO.parentElement.style.visibility = "hidden";
+            	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
+            	    		game.global.sound = game.sound.play('denegar');  
+            	    	    swal("Tu oferta ha sido retirada de el mercado", {
+            	    	      icon: "success",
+            	    	      dangerMode: false,         	    	   
+            	    	      buttons: true,
+            	    	    }); 
+            	    	  }
+            	    	});
+            		         		
             	}
             }
         	
@@ -539,8 +781,25 @@ class CentroComercioMenu extends Phaser.Scene {
             creditosO.style.left = "45px"; 
             creditosO.indice = i;
             creditosO.onclick = function(){
-            	borrarOferta(oferta.idOferta, data.miEdificio.id);
-            	boxO.parentElement.style.visibility = "hidden";
+            	swal({
+        	    	  title: "¿Quieres retirar esta oferta del mercado?",
+        	    	  text: "Tus recursos te serán devueltos",
+        	    	  buttons: true,
+        	    	  dangerMode: false,
+        	    	})
+        	    	.then((willDelete) => {
+        	    	  if (willDelete) {         
+        	    		boxO.parentElement.style.visibility = "hidden";
+        	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        	    		game.global.sound = game.sound.play('denegar');
+        	    	    swal("Tu oferta ha sido retirada de el mercado", {
+        	    	      icon: "success",
+        	    	      dangerMode: false,         	    	   
+        	    	      buttons: true,
+        	    	    }); 
+        	    	  }
+        	    	});
+            	            	
             }     
         	
 
@@ -590,8 +849,25 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRankingO.style.left = "140px";
         	numRankingO.indice = i;
         	numRankingO.onclick = function(){
-        		borrarOferta(oferta.idOferta, data.miEdificio.id);
-        		boxO.parentElement.style.visibility = "hidden";
+        		swal({
+        	    	  title: "¿Quieres retirar esta oferta del mercado?",
+        	    	  text: "Tus recursos te serán devueltos",
+        	    	  buttons: true,
+        	    	  dangerMode: false,
+        	    	})
+        	    	.then((willDelete) => {
+        	    	  if (willDelete) {         
+        	    		boxO.parentElement.style.visibility = "hidden";
+        	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        	    		game.global.sound = game.sound.play('denegar');
+        	    	    swal("Tu oferta ha sido retirada de el mercado", {
+        	    	      icon: "success",
+        	    	      dangerMode: false,         	    	   
+        	    	      buttons: true,
+        	    	    }); 
+        	    	  }
+        	    	});
+        		        		
         	}
         	numRankingO.appendChild(numRankingValueO);
         	
@@ -602,8 +878,25 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRanking2O.style.top = "0px";
         	numRanking2O.indice = i;
         	numRanking2O.onclick = function(){
-        		borrarOferta(oferta.idOferta, data.miEdificio.id);
-        		boxO.parentElement.style.visibility = "hidden";
+        		swal({
+        	    	  title: "¿Quieres retirar esta oferta del mercado?",
+        	    	  text: "Tus recursos te serán devueltos",
+        	    	  buttons: true,
+        	    	  dangerMode: false,
+        	    	})
+        	    	.then((willDelete) => {
+        	    	  if (willDelete) {         
+        	    		boxO.parentElement.style.visibility = "hidden";
+        	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        	    		game.global.sound = game.sound.play('denegar');
+        	    	    swal("Tu oferta ha sido retirada de el mercado", {
+        	    	      icon: "success",
+        	    	      dangerMode: false,         	    	   
+        	    	      buttons: true,
+        	    	    }); 
+        	    	  }
+        	    	});
+        		        		
         	}
         	numRanking2O.appendChild(numRankingValue2O); 
         	
@@ -644,6 +937,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	    mover.setFrame(0);
     	})
     	mover.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		if(!game.global.construyendo){
 				game.scene.pause();
 				data.miEdificio.move();
@@ -697,6 +991,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	    this.setFrame(0);
     	});
     	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
 			game.scene.stop(data.miEdificio.menuScene);
 			game.global.inMenu = false;
     	});

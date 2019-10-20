@@ -16,6 +16,10 @@ class MenuScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	var music = game.global.music;
+    	console.log(music);
+    	game.global.music.setVolume(0);
+    	
     	var backgroundM = this.add.image(960, 540, 'backgroundMenu');
     	
     	
@@ -51,6 +55,7 @@ class MenuScene extends Phaser.Scene {
     	creditos.style.visibility = "visible";
     	
     	jugar.addEventListener("click", function(){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		anim.style.visibility = "hidden";
     		jugar.style.visibility = "hidden";
         	opciones.style.visibility = "hidden";
@@ -65,6 +70,7 @@ class MenuScene extends Phaser.Scene {
     	});
     	
     	opciones.addEventListener("click", function(){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		anim.style.visibility = "hidden";
     		jugar.style.visibility = "hidden";
         	opciones.style.visibility = "hidden";
@@ -75,6 +81,7 @@ class MenuScene extends Phaser.Scene {
     	
     	
     	creditos.addEventListener("click", function(){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		anim.style.visibility = "hidden";
     		jugar.style.visibility = "hidden";
         	opciones.style.visibility = "hidden";

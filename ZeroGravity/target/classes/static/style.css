@@ -608,5 +608,33 @@ li {
 .btn-group button:hover {
   background-color: #5050af;
 }
- 
+
+/*alerts*/
+.swal-modal {
+	/*position:absolute;*/
+	top: 400px;
+	left:455px;
+    background-color: rgba(4, 72, 99, 0.83);
+    font-family: Oswald;
+}
+
+.swal-title {
+    color: white;
+}
+
+.swal-text {
+    color: white;
+}
+
+.swal-icon--success__ring {
+    background-color: transparent;
+}
+
+.swal-icon--success:after, .swal-icon--success:before {
+    background: rgba(4, 72, 99, 0.0);
+}
+
+.swal-icon--success__hide-corners {
+    background-color: rgba(4, 72, 99, 0.0);
+}
  

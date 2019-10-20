@@ -132,6 +132,7 @@ window.onload = function() {
 		resources: {},
 		music: null,
 		sound: null,
+		musicMenu: null,
 		idioma : "eng"
 	}
 	
@@ -164,6 +165,10 @@ window.onload = function() {
 				console.log('[DEBUG] LOGGED message recieved')
 				console.dir(msg);
 			}
+			game.global.musicMenu = game.sound.add('soundtrack');
+	    	game.global.musicMenu.play();
+	    	game.global.musicMenu.setLoop(true);
+	    	
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;
@@ -184,14 +189,14 @@ window.onload = function() {
 				console.log('[DEBUG] LOGIN FAILED message recieved')
 				console.dir(msg);
 			}
-			alert(msg.data);
+			swal(msg.data);
 			break;
 		case 'UPDATE USERNAME RESPONSE':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
 				console.dir(msg);
 			}
-			alert(msg.resultado);
+			swal(msg.resultado);
 			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
@@ -325,34 +330,42 @@ window.onload = function() {
 			break;
 		
 		case 'GET_PLAYER_RESOURCES':
+			
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
 				console.dir(msg);
+				
 			}
 			
 			if(game.global.resources.energia != msg.energia){
 				game.global.resources.energia = msg.energia;
 				particulasRecurso("energia");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.metal != msg.metal){
 				game.global.resources.metal = msg.metal;
 				particulasRecurso("metal");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.ceramica != msg.ceramica){
 				game.global.resources.ceramica = msg.ceramica;
 				particulasRecurso("ceramica");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.creditos != msg.creditos){
 				game.global.resources.creditos = msg.creditos;
 				particulasRecurso("creditos");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.unionCoins != msg.unionCoins){
 				game.global.resources.unionCoins = msg.unionCoins;
 				particulasRecurso("unionCoins");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.colonos != msg.colonos){
 				game.global.resources.colonos = msg.colonos;
 				particulasRecurso("colonos");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			game.global.puntuacion = msg.punctuacion;
 			break;			
@@ -373,8 +386,10 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO CONSTRUIDO message recieved');
 				console.dir(msg);
 			}
+			
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.sound = game.sound.play('construido');
 					game.global.edificios.get(msg.id).enConstruccion = false;
 					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
 					clearInterval(game.global.edificios.get(msg.id).interval);
@@ -417,6 +432,8 @@ window.onload = function() {
 			if(msg.resultado){
 				levelUp(game.global.edificios.get(msg.id));
 				pedirPuntuaciones()
+			}else{
+				swal("No dispones de los recursos para aumentar de nivel a este edificio");
 			}	
 			break;		
 		
@@ -425,6 +442,7 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO LLENO message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('recursosMaximos');
 			let edificioLleno = game.global.edificios.get(msg.id);
 			edificioLleno.lleno = true;
 			game.global.edificios.get(msg.id).produciendo = false;
@@ -447,12 +465,14 @@ window.onload = function() {
 			}
 			break;
 		case 'CERAMICA RECOLECTADA':
+			
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] CERAMICA RECOLECTADA message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.ceramica = msg.ceramica;
-			particulasRecursos("ceramica");
+			particulasRecurso("ceramica");
 			pedirPuntuaciones()
 			break;
 		case 'CREDITOS RECOLECTADOS':
@@ -460,8 +480,9 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS RECOLECTADOS message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.creditos = msg.creditos;
-			particulasRecursos("creditos");
+			particulasRecurso("creditos");
 			pedirPuntuaciones()
 			break;
 		case 'METAL RECOLECTADO':
@@ -469,8 +490,9 @@ window.onload = function() {
 				console.log('[DEBUG] METAL RECOLECTADO message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.metal = msg.metal;
-			particulasRecursos("metal");
+			particulasRecurso("metal");
 			if (game.scene.isActive('TallerMenu')) {
 				game.scene.stop('TallerMenu');
 				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
@@ -669,6 +691,7 @@ window.onload = function() {
 				console.log('[DEBUG] ENVIO DE COLONOS message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.colonos = msg.colonos;
 			particulasRecurso("colonos");
 
@@ -685,7 +708,8 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS INSUFICIENTES message recieved');
 				console.dir(msg);
 			}
-			alert("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
+			swal("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
+			
 			break;
 		case 'RESPUESTA CREAR OFERTA':
 			if (game.global.DEBUG_MODE) {
@@ -693,7 +717,7 @@ window.onload = function() {
 				console.log(msg.respuesta);
 			}
 			if(!msg.respuesta){
-				alert("Necesitas más recursos para enviar esta oferta al mercado");
+				swal("Necesitas más recursos para enviar esta oferta al mercado");
 			}else{
 				let message = {		
 						event: 'ASK_PLAYER_RESOURCES',
@@ -732,6 +756,9 @@ window.onload = function() {
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] RESPUESTA COMPRAR OFERTA message recieved');
 				console.log(msg.respuesta);
+			}
+			if(!msg.respuesta){
+				swal("Lo sentimos, esta oferta ya no está disponible");
 			}
 			let messag = {		
 				event: 'ASK_PLAYER_RESOURCES'

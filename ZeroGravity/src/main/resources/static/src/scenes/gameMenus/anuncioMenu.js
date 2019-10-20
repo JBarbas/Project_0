@@ -16,6 +16,7 @@ class AnuncioMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	this.panelAnuncio = this.add.image(560, 300, 'panelAnuncio').setOrigin(0, 0);
     	
@@ -38,7 +39,12 @@ class AnuncioMenu extends Phaser.Scene {
     		btnAnuncio.setFrame(0);
     	})
     	
+    	btnAnuncio.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
+    	})
+    	
     	btnX.on('pointerdown', function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;

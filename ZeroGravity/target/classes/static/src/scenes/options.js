@@ -62,6 +62,7 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnCuenta.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		btnCuenta.setFrame(1);
     		btnSonido.setFrame(0);
     		btnIdioma.setFrame(0);
@@ -76,6 +77,7 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(1);
     		btnIdioma.setFrame(0);
@@ -90,6 +92,7 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnIdioma.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(0);
     		btnIdioma.setFrame(1);
@@ -104,6 +107,7 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		if(game.global.inGame){
     			game.scene.run('GameInterface');
     			game.scene.run('GameScene');
@@ -141,6 +145,7 @@ class OptionsScene extends Phaser.Scene {
     	var textUsuario = this.element.getChildByName("username");
     	
     	btnModificar.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		if (textUsuario.value !== '') {
 	    		let msg = new Object();
 	    		msg.event = 'UPDATE USERNAME';
@@ -161,6 +166,7 @@ class OptionsScene extends Phaser.Scene {
     	var textNewPassword = this.element.getChildByName("password1");
     	
     	btnModificar2.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		if (textPassword.value !== '' && textNewPassword.value !== '') {
 	    		let msg = new Object();
 	    		msg.event = 'UPDATE PASSWORD';
@@ -202,7 +208,7 @@ class OptionsScene extends Phaser.Scene {
 		$('#player2').append(myMedia2);
 		myMedia2.id = "myMedia2";
 
-		playAudio('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3', 0);
+		//playAudio('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3', 0);
 		
 		function playAudio(fileName, myVolume) {
 				myMedia.src = fileName;
