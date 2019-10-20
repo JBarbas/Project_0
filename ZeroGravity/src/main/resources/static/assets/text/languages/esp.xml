@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patata>
+	<login>
+		<reg>REGÍSTRATE</reg>
+	</login>
+	<edificios>
+		<taller>Taller</taller>
+		<plataformaExtraccion>Plataforma de Extracción</plataformaExtraccion>
+		<laboratorioInvestigacion>Laboratorio de Investigación</laboratorioInvestigacion>
+		<bloqueViviendas>Bloque de Viviendas</bloqueViviendas>
+		<generador>Generador</generador>
+		<centroOperaciones>Centro de Operaciones</centroOperaciones>
+		<centroAdministrativo>Centro Administrativo</centroAdministrativo>
+		<centroComercio>Centro de Comercio</centroComercio>
+		<centroMando>Centro de Mando</centroMando>
+	</edificios>
+	<menusEdificios>
+		<general>
+			<edificiosTitulo>EDIFICIOS</edificiosTitulo>
+			<mejorasTitulo>MEJORAS</mejorasTitulo>
+			<detallesTitulo>DETALLES</detallesTitulo>
+			<comercioTitulo>COMERCIO</comercioTitulo>
+			<solicitarTitulo>SOLICITAR</solicitarTitulo>
+			<robotsTitulo>ROBOTS</robotsTitulo>
+			<viviendasTitulo>VIVIENDAS</viviendasTitulo>
+			<produccionTitulo>PRODUCCIÓN</produccionTitulo>
+			<sigMejora>SIGUIENTE MEJORA:</sigMejora>
+			<colonos>Colonos:</colonos>
+			<energia>Energía:</energia>
+			<tiemporestante>Quedan </tiemporestante>
+			<tiempominutos> minutos</tiempominutos>
+			<almMetal>Almacenando el metal...</almMetal>
+			<almCera>Almacenando la cerámica...</almCera>
+			<almCred>Almacenando los créditos...</almCred>
+			<recoCera> unidades de cerámica listas para recolectar</recoCera>
+			<recoCred> créditos listos para recolectar</recoCred>
+		</general>
+		<centroMando>
+			<cmdetalles>El Centro de Mando es el edificio principal de tu base. Mejorarlo permite desbloquear las mejoras de Centro Administrativo, Centro de Comercio y Centro de Operaciones.
+Accede al panel Edificios para construir nuevos edificios. Puedes construir Bloque de Viviendas, Generador, Laboratorio de Investigación, Plataforma de Extracción y Taller.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro de Mando.
+Este edificio no se puede construir, pero puedes posicionarlo donde desees con el botón mover.
+			</cmdetalles>
+			<cmmejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Centro Administrativo, Centro de Comercio y Centro de Operaciones.
+Coste:
+    500 unidades de Metal.
+    500 unidades de Cerámica.
+    5000 Créditos.
+Tiempo requerido:
+    4 días y 16 horas.
+			</cmmejoraNivel2>
+			<cmmejoraNivel3>Permite adquirir las mejoras de Nivel 3 a Centro Administrativo, Centro de Comercio y Centro de Operaciones.
+Coste:
+    10000 unidades de Metal.
+    10000 unidades de Cerámica.
+    50000 Créditos.
+Tiempo requerido:
+    2 semanas.
+			</cmmejoraNivel3>
+			<cmmejoraNivel4>N/D</cmmejoraNivel4>
+		</centroMando>
+		<centroComercio>
+			<ccdetalles>El Centro de Comercio es el edificio en el que gestionas el comercio de tu base. Desde aquí puedes intercambiar Créditos a cambio de recursos de otros jugadores u ofrecer los tuyos a cambio de los Créditos que creas justos. Mejorarlo permite desbloquear las mejoras de Laboratorio de Investigación y Planta de Extracción.
+Accede al panel Comercio para ver una lista de ofertas, aceptar algún intercambio, publicar tus ofertas o retirarlas si no han sido aceptadas y necesitas tus recursos de vuelta.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro de Comercio.
+Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón mover.
+			</ccdetalles>
+			<ccmejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Laboratorio de Investigación y Planta de Extracción.
+Coste:
+    900 unidades de Metal.
+    1500 unidades de Cerámica.
+    9000 Créditos.
+Tiempo requerido:
+    2 días y 5 horas.
+			</ccmejoraNivel2>
+			<ccmejoraNivel3>Permite adquirir las mejoras de Nivel 3 a Laboratorio de Investigación y Planta de Extracción.
+Coste:
+    11000 unidades de Metal.
+    14200 unidades de Cerámica.
+    62000 Créditos.
+Tiempo requerido:
+    6 días y 10 horas.
+			</ccmejoraNivel3>
+			<ccmejoraNivel4>N/D</ccmejoraNivel4>
+		</centroComercio>
+		<centroAdministrativo>
+			<capuestos>Puestos de trabajo disponibles:</capuestos>
+			<caviviendas>Viviendas disponibles:</caviviendas>
+			<cadetalles>El Centro Administrativo es el edificio desde el que administras a tus Colonos. Cuando cuentes con puestos de trabajo y tengas suficientes viviendas disponibles en tus Bloques de Viviendas, podrás solicitar Colonos para ocupar esos puestos. También puedes expandir tu base desde aquí, por un módico precio. Mejorarlo permite desbloquear las mejoras del Bloque de Viviendas.
+Accede al panel Solicitar para ver cuantos puestos de trabajo hay disponibles y cuantas viviendas vacantes. Usa el botón Colonos para solicitar trabajadores, y el botón Expandir para expandir tu base.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro Administrativo.
+Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón Mover.
+			</cadetalles>
+			<camejoraNivel2>Permite adquirir las mejoras de Nivel 2 al Bloque de Viviendas.
+Coste:
+    1000 unidades de Metal.
+    1700 unidades de Cerámica.
+    10000 Créditos.
+Tiempo requerido:
+    2 días y 5 horas.
+			</camejoraNivel2>
+			<camejoraNivel3>Permite adquirir las mejoras de Nivel 3 al Bloque de Viviendas.
+Coste:
+    10000 unidades de Metal.
+    12000 unidades de Cerámica.
+    55000 Créditos.
+Tiempo requerido:
+    6 días y 10 horas.
+			</camejoraNivel3>
+			<camejoraNivel4>N/D</camejoraNivel4>
+		</centroAdministrativo>
+		<centroOperaciones>
+			<codetalles>El Centro de Operaciones es el edificio desde el que gestionas la Energía y tus Robots. Mejorarlo permite desbloquear las mejoras del Generador y el Taller.
+Accede al panel Robots para ver tus robots.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro de Operaciones.
+Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón Mover.
+			</codetalles>
+			<comejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Generador y a Taller.
+Coste:
+    1500 unidades de Metal.
+    1600 unidades de Cerámica.
+    12000 Créditos.
+Tiempo requerido:
+    2 días y 5 horas.
+			</comejoraNivel2>
+			<comejoraNivel3>Permite adquirir las mejoras de Nivel 3 a Generador y a Taller.
+Coste:
+    14000 unidades de Metal.
+    17300 unidades de Cerámica.
+    70000 Créditos.
+Tiempo requerido:
+    6 días y 10 horas.
+			</comejoraNivel3>
+			<comejoraNivel4>N/D</comejoraNivel4>
+		</centroOperaciones>
+		<bloqueViviendas>
+			<bvdetalles>El Bloque de Viviendas es el edificio en el que residen tus Colonos. Depende del Centro Administrativo.
+Accede al panel Viviendas para ver cuantos Colonos residen en el edificio.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Bloque de Viviendas.
+Puedes tener tantos como desees. Utiliza el botón Mover si quieres recolocarlo.
+Número de viviendas a Nivel 1: 5. 
+Número de viviendas a Nivel 2: 10.
+Número de viviendas a Nivel 3: 15.
+			</bvdetalles>
+			<bvmejoraNivel2>Permite ampliar a 10 el límite de Colonos.
+Coste:
+    1050 unidades de Metal.
+    1800 unidades de Cerámica.
+    9000 Créditos.
+Tiempo requerido:
+    1 día y 5 horas.
+			</bvmejoraNivel2>
+			<bvmejoraNivel3>Permite ampliar a 15 el límite de Colonos.
+Coste:
+    15000 unidades de Metal.
+    20500 unidades de Cerámica.
+    80500 Créditos.
+Tiempo requerido:
+    5 días y 20 horas.
+			</bvmejoraNivel3>
+			<bvmejoraNivel4>N/D</bvmejoraNivel4>
+		</bloqueViviendas>
+		<generador>
+			<gendetalles>El Generador suministra Energía a los edificios que producen recursos. Sin el suministro eléctrico tus edificios no pueden producir. Necesita Colonos trabajando en él para producir Energía. Depende del Centro de Operaciones.
+Accede al panel Producción para ver cuantos Colonos están trabajando en el edificio.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Generador.
+Puedes tener tantos como desees. Utiliza el botón Mover si quieres recolocarlo.
+Suministro a Nivel 1: 5 unidades de Energía.
+Suministro a Nivel 2: 12 unidades de Energía.
+Suministro a Nivel 3: 16 unidades de Energía.
+			</gendetalles>
+			<genmejoraNivel2>Requiere 2 Colonos. 
+Suministra 12 unidades de Energía.
+Coste:
+    800 unidades de Metal.
+    1200 unidades de Cerámica.
+    8500 Créditos.
+Tiempo requerido:
+    1 día y 5 horas.
+			</genmejoraNivel2>
+			<genmejoraNivel3>Requiere 3 Colonos. 
+Suministra 16 unidades de Energía.
+Coste:
+    7000 unidades de Metal.
+    12000 unidades de Cerámica.
+    35000 Créditos.
+Tiempo requerido:
+    5 días y 20 horas.
+			</genmejoraNivel3>
+			<genmejoraNivel4>N/D</genmejoraNivel4>
+		</generador>
+		<laboratorio>
+			<labdetalles>El Laboratorio de Investigación es dónde se desarrollan múltiples investigaciones sobre la terraformación del planeta. Recibirás Créditos a cambio de tenerlo en marcha. Necesita Colonos y Energía para producir. Depende del Centro de Comercio.
+Accede al panel Producción para ver cuantos Colonos están trabajando en el edificio y cuanto suministro de Energía tiene.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Laboratorio de Investigación.
+Puedes tener tantos como desees. Utiliza el botón Mover si quieres recolocarlo.
+Producción a Nivel 1: 60 Créditos por hora. 
+Producción a Nivel 2: 180 Créditos por hora.
+Producción a Nivel 3: 360 Créditos por hora. 
+			</labdetalles>
+			<labmejoraNivel2>Requiere 2 Colonos. 
+Requiere 2 unidades de Energía.
+Genera 180 Créditos por hora. 
+Almacena cada 4 horas.
+Coste:
+    90 unidades de Metal.
+    230 unidades de Cerámica.
+    3200 Créditos.
+Tiempo requerido:
+    1 día y 5 horas.
+			</labmejoraNivel2>
+			<labmejoraNivel3>Requiere 3 Colonos. 
+Requiere 3 unidades de Energía. 
+Genera 360 Créditos por hora. 
+Almacena cada 9 horas.
+Coste:
+    850 unidades de Metal.
+    1900 unidades de Cerámica.
+    32000 Créditos.
+Tiempo requerido:
+    5 días y 20 horas.
+			</labmejoraNivel3>
+			<labmejoraNivel4>N/D</labmejoraNivel4>
+		</laboratorio>
+		<plataforma>
+			<pedetalles>La Plataforma de Extracción extrae Cerámica desde el subsuelo para usar como aislante térmico en tus edificios. Necesita Colonos y Energía para producir. Depende del Centro de Comercio.
+Accede al panel Producción para ver cuantos Colonos están trabajando en el edificio y cuanto suministro de Energía tiene.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar la Plataforma de Extracción.
+Puedes tener tantos como desees. Utiliza el botón Mover si quieres recolocarlo.
+Producción a Nivel 1: 12 unidades de Cerámica por hora.
+Producción a Nivel 2: 18 unidades de Cerámica por hora.
+Producción a Nivel 3: 22 unidades de Cerámica por hora.
+			</pedetalles>
+			<pemejoraNivel2>Requiere 2 Colonos. 
+Requiere 4 unidades de Energía.
+Genera 18 unidades de Cerámica por hora. 
+Almacena cada 5 horas y 30 minutos.
+Coste:
+    120 unidades de Metal.
+    200 unidades de Cerámica.
+    4500 Créditos.
+Tiempo requerido:
+    1 día y 5 horas.
+			</pemejoraNivel2>
+			<pemejoraNivel3>Requiere 3 Colonos. 
+Requiere 8 unidades de Energía. 
+Genera 22 unidades de Cerámica por hora. 
+Almacena cada 10 horas y 15 minutos.
+Coste:
+    1050 unidades de Metal.
+    1800 unidades de Cerámica.
+    36500 Créditos.
+Tiempo requerido:
+    5 días y 20 horas.
+			</pemejoraNivel3>
+			<pemejoraNivel4>N/D</pemejoraNivel4>
+		</plataforma>
+		<taller>
+			<tdetalles>El Taller alberga a tus Robots. Puedes mandarlos a recolectar Metal y regresarán cuando llenen su depósito, aunque en el futuro te servirán para más cosas. Necesita Colonos y Energía para producir. Depende del Centro de Operaciones.
+Accede al panel Producción para ver cuantos Colonos están trabajando en el edificio, cuanto suministro de Energía tiene y a tus Robots. Podrás enviarlos a Recolectar y subirlos de nivel, según el nivel del Taller.
+Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Taller.
+Puedes tener tantos como desees. Utiliza el botón Mover si quieres recolocarlo.
+Producción a Nivel 1: 5 unidades de Metal por hora y por Robot de nivel 1.
+Producción a Nivel 2: 8 unidades de Metal por hora y por Robot de nivel 2.
+Producción a Nivel 3: 12 unidades de Metal por hora y por Robot de nivel 3.
+			</tdetalles>
+			<tmejoraNivel2>Requiere 2 Colonos. 
+Requiere 3 unidades de Energía.
+Puede almacenar hasta 2 Robots
+Cada Robot de Nivel 2 recolecta 8 unidades de Metal por hora. 
+Vuelve cada 4 horas y 10 minutos.
+Coste:
+    180 unidades de Metal.
+    250 unidades de Cerámica.
+    6000 Créditos.
+Tiempo requerido:
+    1 día y 5 horas.
+			</tmejoraNivel2>
+			<tmejoraNivel3>Requiere 3 Colonos. 
+Requiere 5 unidades de Energía.
+Puede almacenar hasta 3 Robots
+Cada Robot de Nivel 3 recolecta 12 unidades de Metal por hora. 
+Vuelve cada 9 horas y 45 minutos.
+Coste:
+    1100 unidades de Metal.
+    2000 unidades de Cerámica.
+    40000 Créditos.
+Tiempo requerido:
+    5 días y 20 horas.
+			</tmejoraNivel3>
+			<tmejoraNivel4>N/D</tmejoraNivel4>
+		</taller>
+		
+	</menusEdificios>
+</patata>
