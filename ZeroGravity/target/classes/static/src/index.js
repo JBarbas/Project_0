@@ -51,7 +51,8 @@ window.onload = function() {
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu,
 				  		AnuncioMenu,
-				  		RankingMenu]
+				  		RankingMenu,
+				  		HalloweenMenu]
 			};
 			
 	
