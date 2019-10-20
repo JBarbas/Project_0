@@ -114,7 +114,7 @@ body {
 
 
 .box {
-		  width: 300px;
+		  width: 230px;
 		  left: 505px;
 		  top: -140px;
 		  /* Positioning */
@@ -132,7 +132,7 @@ body {
 		  border-style: none;
 		  background: transparent;
 		  /*border-bottom: 1px solid white;*/
-		  width: 100%;
+		  width: 80%;
 		  position: relative;
 		  outline: none;
 		  padding: 10px 0;

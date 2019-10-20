@@ -32,6 +32,8 @@ class OptionsScene extends Phaser.Scene {
     	var btnSonido = this.add.image(960, 250, 'btnSonido').setInteractive();
     	var btnCuenta = this.add.image(550, 250, 'btnCuenta').setInteractive();
     	
+    	
+    	
     	var txtCuenta = this.add.image(950, 650, 'txtCuenta');
     	var txtSonido = this.add.image(650, 650, 'txtSonido');
     	var txtIdioma = this.add.image(650, 650, 'txtIdioma');
@@ -39,6 +41,12 @@ class OptionsScene extends Phaser.Scene {
     	txtCuenta.setVisible(true);
 		txtSonido.setVisible(false);
 		txtIdioma.setVisible(false);
+		
+		var btnModificar = this.add.image(1650, 550, 'btnModificar').setInteractive();
+    	btnModificar.setScale(.4);
+    	
+    	var btnModificar2 = this.add.image(1650, 800, 'btnModificar').setInteractive();
+    	btnModificar2.setScale(.4);
     	
 		
 		
@@ -53,6 +61,22 @@ class OptionsScene extends Phaser.Scene {
     	    button.setFrame(0);
     	})
     	
+    	btnModificar.on('pointerover',function(pointer){
+    		btnModificar.setFrame(1);
+    	})
+
+    	btnModificar.on('pointerout',function(pointer){
+    		btnModificar.setFrame(0);
+    	})
+    	
+    	btnModificar2.on('pointerover',function(pointer){
+    		btnModificar2.setFrame(1);
+    	})
+
+    	btnModificar2.on('pointerout',function(pointer){
+    		btnModificar2.setFrame(0);
+    	})
+    	
     	btnCuenta.on('pointerdown',function(pointer){
     		btnCuenta.setFrame(1);
     		btnSonido.setFrame(0);
@@ -63,6 +87,8 @@ class OptionsScene extends Phaser.Scene {
     		generalContainer.visible = true;
     		soundContainer.visible = false;
     		languageContainer.visible = false;
+    		btnModificar.visible = true;
+    		btnModificar2.visible = true;
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
@@ -75,6 +101,8 @@ class OptionsScene extends Phaser.Scene {
     		generalContainer.visible = false;
     		soundContainer.visible = true;
     		languageContainer.visible = false;
+    		btnModificar.visible = false;
+    		btnModificar2.visible = false;
     	})
     	
     	btnIdioma.on('pointerdown',function(pointer){
@@ -87,6 +115,8 @@ class OptionsScene extends Phaser.Scene {
     		generalContainer.visible = false;
     		soundContainer.visible = false;
     		languageContainer.visible = true;
+    		btnModificar.visible = false;
+    		btnModificar2.visible = false;
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
@@ -119,6 +149,7 @@ class OptionsScene extends Phaser.Scene {
 		
 		//generalContainer.add(fSYes);
 		//generalContainer.add(fSNo);*/
+        
 		generalContainer.add(this.element);
 
 		
