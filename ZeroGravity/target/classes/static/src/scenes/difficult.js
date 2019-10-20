@@ -27,12 +27,6 @@ class DifficultScene extends Phaser.Scene {
         element.setPerspective(800);
     	
     	document.getElementById("dificultad").style.visibility = 'visible';
-    	//$("dificultad").css("z-index", "2000");
-    	
-    	/*document.getElementById("selectNivel").onclick(){
-    		game.scene.run('PreloadGameScene');
-    		game.scene.stop('DifficultScene');
-    	}*/
     	
     	$( "#selectNivel" ).click(function() {
     		game.scene.run('PreloadGameScene');
