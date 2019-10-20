@@ -13,6 +13,10 @@ class PreloadScene extends Phaser.Scene {
 	}
 	
 	preload () {
+		// Cargamos los ficheros de idioma
+		this.load.xml('esp', 'assets/text/languages/esp.xml');
+		this.load.xml('eng', 'assets/text/languages/eng.xml');
+		
 		// Backgrounds
 		this.load.image('backgroundLoadGame', 'assets/background/loadGame.png');
 		this.load.image('backgroundLogIn', 'assets/background/InicioSesionV.1.png');
@@ -54,22 +58,44 @@ class PreloadScene extends Phaser.Scene {
 		this.load.html('optionsformS', 'assets/text/options-formS.html');
 		this.load.html('optionsformL', 'assets/text/options-formL.html');
 		
+		
+		
 		this.load.image('load', 'assets/interface/Cargando.png');
 		
 		this.load.atlas('title', 'assets/atlas/title.png', 'assets/atlas/title.json');
 		
-		//this.load.spritesheet('title', 'assets/atlas/title.png', { frameWidth: 375, frameHeight: 120 });
+		//Sound
+		this.load.audio('soundtrack', ['assets/sound/soundtrack.mp3', '']);
+		this.load.audio('cambianRecursos', ['assets/sound/cambianRecursos.wav', '']);
+		this.load.audio('comprar', ['assets/sound/comprar.wav', '']);
+		this.load.audio('confirmar', ['assets/sound/confirmar.wav', '']);
+		this.load.audio('construido', ['assets/sound/construido.wav', '']);
+		this.load.audio('construyendo', ['assets/sound/construyendo.wav', '']);
+		this.load.audio('denegar', ['assets/sound/denegar.wav', '']);
+		this.load.audio('dificultadMenu', ['assets/sound/dificultadMenu.wav', '']);
+		this.load.audio('mensaje', ['assets/sound/mensaje.wav', '']);
+		this.load.audio('menuEdificios', ['assets/sound/menuEdificios.wav', '']);
+		this.load.audio('pulsarBoton', ['assets/sound/pulsarBoton.wav', '']);
+		this.load.audio('puntuacion', ['assets/sound/puntuacion.wav', '']);
+		this.load.audio('recogerRecursos', ['assets/sound/recogerRecursos.wav', '']);
+		this.load.audio('recursosMaximos', ['assets/sound/recursosMaximos.wav', '']);
+		this.load.audio('seleccionarEdificio', ['assets/sound/seleccionarEdificio.wav', '']);
 		
     }
     create (data)  {
     	//this.scale.startFullscreen();
 		if (game.global.ONLY_GAME_MODE) {
+			game.global.music = game.sound.play('soundtrack');
 			game.scene.run('PreloadGameScene');
 		}
 		else if (game.global.SKIP_INTRO) {
+			game.global.music = game.sound.play('soundtrack');
+			
 			game.scene.run('LogInScene');
 		}
 		else {
+			game.global.sound = game.sound.play('pulsarBoton');
+			game.global.music = game.sound.play('soundtrack');
 			game.scene.run('IntroScene');
 		}
 		game.scene.stop('PreloadScene');

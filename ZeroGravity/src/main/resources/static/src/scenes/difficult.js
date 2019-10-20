@@ -25,14 +25,20 @@ class DifficultScene extends Phaser.Scene {
     	var element = this.add.dom(400, 600).createFromCache('difficultform');
 
         element.setPerspective(800);
+        
+        var boxe = element.node.children[1];
+        boxe.children[0].children[0].children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('prin')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[0].children[1].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('prinDesc')[0].childNodes[0].nodeValue;
     	
+        var boxe = element.node.children[1];
+        boxe.children[0].children[1].children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('vet')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[1].children[1].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('vetDesc')[0].childNodes[0].nodeValue;
+    	
+        var boxe = element.node.children[1];
+        boxe.children[0].children[2].children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('exp')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[2].children[1].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('expDesc')[0].childNodes[0].nodeValue;
+        
     	document.getElementById("dificultad").style.visibility = 'visible';
-    	//$("dificultad").css("z-index", "2000");
-    	
-    	/*document.getElementById("selectNivel").onclick(){
-    		game.scene.run('PreloadGameScene');
-    		game.scene.stop('DifficultScene');
-    	}*/
     	
     	$( "#selectNivel" ).click(function() {
     		game.scene.run('PreloadGameScene');

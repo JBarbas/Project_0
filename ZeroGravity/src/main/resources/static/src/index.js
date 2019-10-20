@@ -72,11 +72,13 @@ window.onload = function() {
 		myPlayerId: "",
 		puntuacion: 0,
 		mejoresPuntuaciones:[],
+		ofertasListas : false,
 		construyendo : false,
 		expandiendo : false,
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
+		comercioMenuLast: 'edificio',
 		inZoom : false,
 		menu : null,
 		offers: [],
@@ -127,7 +129,10 @@ window.onload = function() {
 		timer:null,
 		team:null,
 		inGame:false,
-		resources: {}
+		resources: {},
+		music: null,
+		sound: null,
+		idioma : "eng"
 	}
 	
 	//WEBSOCKET CONFIGURATOR
@@ -170,8 +175,9 @@ window.onload = function() {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('RegisterScene');
 			}
-			/*y yo aprovecho para precargar las puntuaciones*/
-			pedirPuntuaciones()
+			/*y yo aprovecho para precargar las puntuaciones y las ofertas disponibles*/
+			pedirPuntuaciones();
+			pedirOfertas();
 			break;
 		case 'LOGIN FAILED':
 			if (game.global.DEBUG_MODE) {
@@ -455,8 +461,8 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			if (!game.global.edificios.get(msg.id).enConstruccion) {
-				game.scene.getScene("PlataformaExtraccionMenu").colonos.text = "Colonos: " + msg.colonos;
-				game.scene.getScene("PlataformaExtraccionMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+				game.scene.getScene("PlataformaExtraccionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+				game.scene.getScene("PlataformaExtraccionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
 			}
 			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
 			break;
@@ -465,8 +471,8 @@ window.onload = function() {
 				console.log('[DEBUG] LABORATORIO INVESTIGACION MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("LaboratorioInvestigacionMenu").colonos.text = "Colonos: " + msg.colonos;
-			game.scene.getScene("LaboratorioInvestigacionMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.scene.getScene("LaboratorioInvestigacionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			game.scene.getScene("LaboratorioInvestigacionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
 			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
 			break;
 		case 'BLOQUE VIVIENDAS MENU':
@@ -475,7 +481,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			if (!game.global.edificios.get(msg.id).enConstruccion) {
-				game.scene.getScene("BloqueViviendasMenu").colonos.text = "Colonos: " + msg.colonos;
+				game.scene.getScene("BloqueViviendasMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
 			}
 			break;
 		case 'TALLER MENU':
@@ -483,8 +489,8 @@ window.onload = function() {
 				console.log('[DEBUG] TALLER MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("TallerMenu").colonos.text = "Colonos: " + msg.colonos;
-			game.scene.getScene("TallerMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.scene.getScene("TallerMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			game.scene.getScene("TallerMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
 			for (var i = 0; i < msg.robots.length; i++) {
 				var robot = game.global.edificios.get(msg.id).robots.get(msg.robots[i].id);
 				if (typeof robot === "undefined") {
@@ -586,7 +592,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			if (!game.global.edificios.get(msg.id).enConstruccion) {
-				game.scene.getScene("GeneradorMenu").colonos.text = "Colonos: " + msg.colonos;
+				game.scene.getScene("GeneradorMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
 			}
 			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 				game.global.edificios.get(msg.id).produciendo = true;
@@ -606,13 +612,31 @@ window.onload = function() {
 				game.scene.start(edificioMenu.menuScene, {miEdificio: edificioMenu});
 			}
 			break;
+		case 'REFRESH COMERCIO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] REFRESH COMERCIO message recieved');
+				console.dir(msg);
+			}
+			pedirOfertas();
+			refrescarMenuComercio();
+			/*si tiene abierto el centro de comercio lo refresca*/
+			function refrescarMenuComercio() {
+				  setTimeout(function(){ 
+					  if(game.scene.isActive('CentroComercioMenu')){
+						game.scene.stop('CentroComercioMenu');
+						game.scene.start('CentroComercioMenu', {miEdificio: game.scene.getScene("CentroComercioMenu").miEdificio});
+					} }, 1000);
+			}
+			
+			break;
 		case 'JOBS':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] JOBS message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = "Puestos de trabajo disponibles: " + msg.jobs;
+			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('capuestos')[0].childNodes[0].nodeValue + msg.jobs;
 			let viviendas = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
+			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('caviviendas')[0].childNodes[0].nodeValue + viviendas;
 			if (msg.jobs >= 1 && viviendas >= 1) {
 				game.scene.getScene("CentroAdministrativoMenu").colonos.canRequest = true;
 				game.scene.getScene("CentroAdministrativoMenu").colonos.alpha = 1;
@@ -624,9 +648,9 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.colonos = msg.colonos;
-			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = "Puestos de trabajo disponibles: " + msg.jobs;
+			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('capuestos')[0].childNodes[0].nodeValue + msg.jobs;
 			let viviendas2 = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
-			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = "Viviendas disponibles: " + viviendas2;
+			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('caviviendas')[0].childNodes[0].nodeValue + viviendas2;
 			if (msg.jobs < 1 || viviendas2 < 1) {
 				game.scene.getScene("CentroAdministrativoMenu").colonos.canRequest = false;
 				game.scene.getScene("CentroAdministrativoMenu").colonos.alpha = 0.5;
@@ -652,13 +676,14 @@ window.onload = function() {
 				}
 				game.global.socket.send(JSON.stringify(message));
 			}
+			pedirOfertas();
 			break;
 			
 		case 'SEND OFFERS':
 			/*vaciamos las ofertas anteriores*/
 			game.global.offers = [];
 			/*guardamos las nuevas ofertas*/
-			for(var i = 0; i < msg.ofertas.length; i++){
+			for(let i = 0; i < msg.ofertas.length; i++){
 				let id = i;
 				let idOferta = msg.ofertas[i].id;
 				let playerId = msg.ofertas[i].playerId;
@@ -667,6 +692,7 @@ window.onload = function() {
 				let creditos = msg.ofertas[i].creditos;
 				let oferta = new Oferta(idOferta, playerId, cantidad, recurso, creditos);
 				game.global.offers[i] = oferta;
+				game.global.ofertasListas = true;
 			}
 			break;
 		
@@ -675,6 +701,7 @@ window.onload = function() {
 				event: 'ASK_PLAYER_RESOURCES'
 			}
 			game.global.socket.send(JSON.stringify(message));
+			pedirOfertas();
 			break;
 		
 		case 'OFFER PURCHASED':
@@ -686,7 +713,8 @@ window.onload = function() {
 				event: 'ASK_PLAYER_RESOURCES'
 			}
 			game.global.socket.send(JSON.stringify(messag));
-			pedirPuntuaciones()
+			pedirPuntuaciones();
+			pedirOfertas();
 			break;
 		
 		case 'ACTUALIZAR PUNTUACION':
