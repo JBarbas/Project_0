@@ -173,14 +173,20 @@ function previsualizarExpansion(scene) {
 
 // Control del zoom
 window.addEventListener("wheel", event => {
-    const delta = zoomSpeed*(-Math.sign(event.deltaY));
-    zoom += delta;
-    if (zoom < minZoom) {
-    	zoom = minZoom;
-    }
-    else if (zoom > maxZoom) {
-    	zoom = maxZoom;
-    }
+	if (!game.global.inMenu || !(game.scene.getScene('GameScene').game.input.activePointer.position.x > game.global.buildingMenu.x && 
+			game.scene.getScene('GameScene').game.input.activePointer.position.x < game.global.buildingMenu.x + game.global.buildingMenu.width && 
+			game.scene.getScene('GameScene').game.input.activePointer.position.y > game.global.buildingMenu.y && 
+			game.scene.getScene('GameScene').game.input.activePointer.position.y < game.global.buildingMenu.y + game.global.buildingMenu.height &&
+            !game.global.inZoom)) {
+				const delta = zoomSpeed*(-Math.sign(event.deltaY));
+			    zoom += delta;
+			    if (zoom < minZoom) {
+			    	zoom = minZoom;
+			    }
+			    else if (zoom > maxZoom) {
+			    	zoom = maxZoom;
+			    }
+	}
 });
 
 /* Codigo extraido de https://gamedevelopment.tutsplus.com/tutorials/creating-isometric-worlds-primer-for-game-developers-updated--cms-28392

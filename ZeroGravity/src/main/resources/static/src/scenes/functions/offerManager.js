@@ -1,4 +1,4 @@
-function crearOferta(cantidad, recurso, creditos){
+function crearOferta(cantidad, recurso, creditos, myIdEdificio){
 	
 	if (game.global.DEBUG_MODE) {
 		console.log("[DEBUG] Asking the server to create an offer");
@@ -13,6 +13,11 @@ function crearOferta(cantidad, recurso, creditos){
 	}
 	game.global.socket.send(JSON.stringify(message));
 	pedirOfertas();
+	message = {
+			event: 'REFRESH MY MENU',
+			edificioId: myIdEdificio
+	}
+	game.global.socket.send(JSON.stringify(message));
 }
 
 function pedirOfertasJugador(){
@@ -20,6 +25,19 @@ function pedirOfertasJugador(){
 	let j = 0;
 	for(var i = 0; i < game.global.offers.length; i++){
 		if(game.global.offers[i].idPlayer === game.global.myPlayerId){
+			ofertasJugador[j] = game.global.offers[i];
+			j++;
+		}
+	}
+	return ofertasJugador;
+}
+
+//pedir las ofertas que no son de mi jugador
+function pedirOfertasNoJugador(){
+	let ofertasJugador = [];
+	let j = 0;
+	for(var i = 0; i < game.global.offers.length; i++){
+		if(game.global.offers[i].idPlayer !== game.global.myPlayerId){
 			ofertasJugador[j] = game.global.offers[i];
 			j++;
 		}
@@ -37,9 +55,11 @@ function pedirOfertas(){
 			event: 'GIVE ME OFFERS'
 	}
 	game.global.socket.send(JSON.stringify(message));
+	
+	return game.global.offers;
 }
 
-function borrarOferta(id){
+function borrarOferta(id, myIdEdificio){
 	if (game.global.DEBUG_MODE) {
 		console.log("[DEBUG] Asking the server to delete an offer");
 	}
@@ -51,9 +71,14 @@ function borrarOferta(id){
 	}
 	game.global.socket.send(JSON.stringify(message));
 	pedirOfertas();
+	message = {
+			event: 'REFRESH MY MENU',
+			edificioId: myIdEdificio
+	}
+	game.global.socket.send(JSON.stringify(message));
 }
 
-function comprarOferta(id){
+function comprarOferta(id, myEdificioId){
 	
 	if (game.global.DEBUG_MODE) {
 		console.log("[DEBUG] Asking the server to buy an offer");
@@ -66,4 +91,9 @@ function comprarOferta(id){
 	}
 	game.global.socket.send(JSON.stringify(message));
 	pedirOfertas();
+	message = {
+			event: 'REFRESH MY MENU',
+			edificioId: myEdificioId
+	}
+	game.global.socket.send(JSON.stringify(message));
 }
