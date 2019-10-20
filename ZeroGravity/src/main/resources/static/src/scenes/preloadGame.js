@@ -22,7 +22,10 @@ class PreloadGameScene extends Phaser.Scene {
 		game.global.socket.send(JSON.stringify(msg));
 		
 		this.load.image('fondo', 'assets/sprites/Fondo/fondo2.jpg');
-		this.load.image('fondo-lite', 'assets/sprites/Fondo/fondo-lite.jpg');
+		this.load.image('bg0', 'assets/sprites/0.jpg');
+		this.load.image('bg1', 'assets/sprites/1.jpg');
+		this.load.image('bg2', 'assets/sprites/2.jpg');
+		this.load.image('bg3', 'assets/sprites/3.jpg');
 		this.load.image('tile_0', 'assets/sprites/Tiles_prototipo/tile_0.png');
 		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		
@@ -52,8 +55,10 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnOpciones', 'assets/interface/Gameplay/btnOpcionesSprite.png', {frameWidth:78,frameHeight:78});
 		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
 		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
+		this.load.spritesheet('btnSusto', 'assets/interface/Gameplay/btnProximoSprite.png', {frameWidth:300,frameHeight:54});
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
+		this.load.spritesheet('xSusto', 'assets/interface/Gameplay/xSusto.png', {frameWidth:38,frameHeight:40});
 		
 		
 		//Interfaz
@@ -68,6 +73,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
+		this.load.image('panelSusto', 'assets/interface/Gameplay/halloween.png');
 		this.load.image('panelRanking', 'assets/interface/Gameplay/Ranking.png');
 		this.load.image('xAnuncio', 'assets/interface/Gameplay/x.png');
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');
@@ -76,6 +82,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoComprar', 'assets/interface/iconoComprar.png');
 		this.load.image('iconoVender', 'assets/interface/iconoVender.png');
 		this.load.image('iconoOfertas', 'assets/interface/iconoOfertas.png');
+		
+		this.load.image('panelCExtraccion', 'assets/interface/Secciones/panelCExtraccion.png');
+		this.load.image('panelCMando', 'assets/interface/Secciones/panelCMando.png');
+		this.load.image('panelCOperaciones', 'assets/interface/Secciones/panelCOperaciones.png');
+		this.load.image('panelGenerador', 'assets/interface/Secciones/panelGenerador.png');
+		this.load.image('panelLInvestigacion', 'assets/interface/Secciones/panelLInvestigacion.png');
+		this.load.image('panelTaller', 'assets/interface/Secciones/panelTaller.png');
+		this.load.image('panelBViviendas', 'assets/interface/Secciones/panelBViviendas.png');
+		this.load.image('panelCAdministrativo', 'assets/interface/Secciones/panelCAdministrativo.png');
+		this.load.image('panelCComercio', 'assets/interface/Secciones/panelCComercio.png');
 		
 		
 		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
@@ -97,9 +113,10 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('robotNv3', 'assets/sprites/robotNv3.png');
 				
 		//Iconos
-		this.load.image('clayIcon', 'assets/sprites/stone.png');
+		this.load.image('metalIcon', 'assets/interface/Gameplay/metalFloat.png');
+		this.load.image('clayIcon', 'assets/interface/Gameplay/arcillaFloat.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
-		this.load.image('creditIcon', 'assets/sprites/stone.png');
+		this.load.image('creditIcon', 'assets/interface/Gameplay/creditosFloat.png');
 		this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
 		
 		//Texts
@@ -107,6 +124,11 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenu', 'assets/text/centroComercioMenu.html');
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
+		
+
+		var url;		  
+        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/plugins/dist/rexpinchplugin.min.js';
+        this.load.plugin('rexpinchplugin', url, true);
     }
     create (data)  {
 		

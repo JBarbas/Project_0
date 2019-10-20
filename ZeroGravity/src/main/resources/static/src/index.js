@@ -51,7 +51,8 @@ window.onload = function() {
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu,
 				  		AnuncioMenu,
-				  		RankingMenu]
+				  		RankingMenu,
+				  		HalloweenMenu]
 			};
 			
 	
@@ -60,7 +61,7 @@ window.onload = function() {
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : true,
+		DEBUG_MODE : false,
 		ONLY_GAME_MODE : false,
 		SKIP_INTRO: false,
 		socket : null,
@@ -78,6 +79,7 @@ window.onload = function() {
 		edificioSubiendoNivel: null,
 		inMenu : false,
 		comercioMenuLast: 'edificio',
+		inZoom : false,
 		menu : null,
 		offers: [],
 		buildingMenu: {
@@ -127,11 +129,12 @@ window.onload = function() {
 		timer:null,
 		team:null,
 		inGame:false,
-		resources: {}
+		resources: {},
+		idioma : "eng"
 	}
 	
 	//WEBSOCKET CONFIGURATOR
-	game.global.socket = new WebSocket("ws://" + location.href.substring(7) + "/polaris")
+	game.global.socket = new WebSocket("ws://" + location.href.substring(7).split("/")[0] + "/polaris")
 	
 	game.global.socket.onopen = () => {
 		if (game.global.DEBUG_MODE) {
@@ -180,6 +183,14 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			alert(msg.data);
+			break;
+		case 'UPDATE USERNAME RESPONSE':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
+				console.dir(msg);
+			}
+			alert(msg.resultado);
+			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] PLAYER INFO message recieved')
@@ -216,7 +227,6 @@ window.onload = function() {
 						r.ausente = e.robots[j].ausente;
 						r.carga = e.robots[j].carga;
 						r.nivel = e.robots[j].nivel;
-						console.log(r.inicioProduccion + ", " + Date.UTC(e.robots[j].dateYear, e.robots[j].dateMonth-1, e.robots[j].dateDay, e.robots[j].dateHour-2, e.robots[j].dateMinute+1, 0));
 						edificio.robots.set(r.id, r);
 					}
 					break;
@@ -420,8 +430,8 @@ window.onload = function() {
 				console.log('[DEBUG] PLATAFORMA EXTRACCION MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("PlataformaExtraccionMenu").colonos.text = "Colonos: " + msg.colonos;
-			game.scene.getScene("PlataformaExtraccionMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.scene.getScene("PlataformaExtraccionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			game.scene.getScene("PlataformaExtraccionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
 			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
 			break;
 		case 'LABORATORIO INVESTIGACION MENU':
@@ -429,8 +439,8 @@ window.onload = function() {
 				console.log('[DEBUG] LABORATORIO INVESTIGACION MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("LaboratorioInvestigacionMenu").colonos.text = "Colonos: " + msg.colonos;
-			game.scene.getScene("LaboratorioInvestigacionMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.scene.getScene("LaboratorioInvestigacionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			game.scene.getScene("LaboratorioInvestigacionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
 			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
 			break;
 		case 'BLOQUE VIVIENDAS MENU':
@@ -438,15 +448,15 @@ window.onload = function() {
 				console.log('[DEBUG] BLOQUE VIVIENDAS MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("BloqueViviendasMenu").colonos.text = "Colonos: " + msg.colonos;
+			game.scene.getScene("BloqueViviendasMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
 			break;
 		case 'TALLER MENU':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] TALLER MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("TallerMenu").colonos.text = "Colonos: " + msg.colonos;
-			game.scene.getScene("TallerMenu").energia.text = "Energia: " + msg.energia + "/" + msg.energiaNecesaria;
+			game.scene.getScene("TallerMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			game.scene.getScene("TallerMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
 			for (var i = 0; i < msg.robots.length; i++) {
 				var robot = game.global.edificios.get(msg.id).robots.get(msg.robots[i].id);
 				if (typeof robot === "undefined") {
@@ -547,7 +557,7 @@ window.onload = function() {
 				console.log('[DEBUG] GENERADOR MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("GeneradorMenu").colonos.text = "Colonos: " + msg.colonos;
+			game.scene.getScene("GeneradorMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
 			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 				game.global.edificios.get(msg.id).produciendo = true;
 			}
@@ -588,8 +598,9 @@ window.onload = function() {
 				console.log('[DEBUG] JOBS message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = "Puestos de trabajo disponibles: " + msg.jobs;
+			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('capuestos')[0].childNodes[0].nodeValue + msg.jobs;
 			let viviendas = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
+			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('caviviendas')[0].childNodes[0].nodeValue + viviendas;
 			if (msg.jobs >= 1 && viviendas >= 1) {
 				game.scene.getScene("CentroAdministrativoMenu").colonos.canRequest = true;
 				game.scene.getScene("CentroAdministrativoMenu").colonos.alpha = 1;
@@ -601,9 +612,9 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.colonos = msg.colonos;
-			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = "Puestos de trabajo disponibles: " + msg.jobs;
+			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('capuestos')[0].childNodes[0].nodeValue + msg.jobs;
 			let viviendas2 = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
-			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = "Viviendas disponibles: " + viviendas2;
+			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('caviviendas')[0].childNodes[0].nodeValue + viviendas2;
 			if (msg.jobs < 1 || viviendas2 < 1) {
 				game.scene.getScene("CentroAdministrativoMenu").colonos.canRequest = false;
 				game.scene.getScene("CentroAdministrativoMenu").colonos.alpha = 0.5;

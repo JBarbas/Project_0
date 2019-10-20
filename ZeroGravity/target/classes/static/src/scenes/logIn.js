@@ -21,7 +21,7 @@ class LogInScene extends Phaser.Scene {
     	
     	var button = this.add.image(960, 800, 'btn').setInteractive();
 
-    	var registro = this.add.text(920, 900, 'REGÍSTRATE', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' });
+    	var registro = this.add.text(920, 900, game.cache.xml.get(game.global.idioma).getElementsByTagName('reg')[0].childNodes[0].nodeValue, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' });
     	
     	button.on('pointerover',function(pointer){
     	    button.setFrame(1);
@@ -53,7 +53,9 @@ class LogInScene extends Phaser.Scene {
     	var element = this.add.dom(420, 600).createFromCache('loginform');
 
         element.setPerspective(800);
+        
         var scene = this;
+
         button.on('pointerdown', function(pointer, localX, localY, event){
         	var inputUsername = element.getChildByName('username');
             var inputPassword = element.getChildByName('password');

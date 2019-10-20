@@ -17,6 +17,13 @@ class OptionsScene extends Phaser.Scene {
     }
     create (data)  {
     	
+    	// Contenedor del panel de general
+    	var generalContainer = this.add.container(300, 300);
+    	// Contenedor del panel de sonido
+    	var soundContainer = this.add.container(300, 300);
+    	// Contenedor del panel de mejoras
+    	var languageContainer = this.add.container(300, 300);
+    	
     	
     	var background = this.add.image(960, 540, 'backgroundOptionsAccount');
     	
@@ -25,6 +32,8 @@ class OptionsScene extends Phaser.Scene {
     	var btnSonido = this.add.image(960, 250, 'btnSonido').setInteractive();
     	var btnCuenta = this.add.image(550, 250, 'btnCuenta').setInteractive();
     	
+    	
+    	
     	var txtCuenta = this.add.image(950, 650, 'txtCuenta');
     	var txtSonido = this.add.image(650, 650, 'txtSonido');
     	var txtIdioma = this.add.image(650, 650, 'txtIdioma');
@@ -32,6 +41,12 @@ class OptionsScene extends Phaser.Scene {
     	txtCuenta.setVisible(true);
 		txtSonido.setVisible(false);
 		txtIdioma.setVisible(false);
+		
+		var btnModificar = this.add.image(1650, 550, 'btnModificar').setInteractive();
+    	btnModificar.setScale(.4);
+    	
+    	var btnModificar2 = this.add.image(1650, 800, 'btnModificar').setInteractive();
+    	btnModificar2.setScale(.4);
     	
 		
 		
@@ -53,7 +68,11 @@ class OptionsScene extends Phaser.Scene {
     		txtCuenta.setVisible(true);
     		txtSonido.setVisible(false);
     		txtIdioma.setVisible(false);
-    		
+    		generalContainer.visible = true;
+    		soundContainer.visible = false;
+    		languageContainer.visible = false;
+    		btnModificar.visible = true;
+    		btnModificar2.visible = true;
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
@@ -63,6 +82,11 @@ class OptionsScene extends Phaser.Scene {
     		txtCuenta.setVisible(false);
     		txtSonido.setVisible(true);
     		txtIdioma.setVisible(false);
+    		generalContainer.visible = false;
+    		soundContainer.visible = true;
+    		languageContainer.visible = false;
+    		btnModificar.visible = false;
+    		btnModificar2.visible = false;
     	})
     	
     	btnIdioma.on('pointerdown',function(pointer){
@@ -72,6 +96,11 @@ class OptionsScene extends Phaser.Scene {
     		txtCuenta.setVisible(false);
     		txtSonido.setVisible(false);
     		txtIdioma.setVisible(true);
+    		generalContainer.visible = false;
+    		soundContainer.visible = false;
+    		languageContainer.visible = true;
+    		btnModificar.visible = false;
+    		btnModificar2.visible = false;
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
@@ -86,20 +115,111 @@ class OptionsScene extends Phaser.Scene {
     		}
     	});
     	
-    	var element = this.add.dom(400, 600).createFromCache('optionsform');
+    	this.element = this.add.dom(100, 300).createFromCache('optionsform');
 
-        element.setPerspective(800);
+        this.element.setPerspective(800);
         
-        var fSYes = document.getElementById('fullScreenYes');
-		var fSNo = document.getElementById('fullScreenNo');
+		generalContainer.add(this.element);
 		
-		fSYes.addEventListener("click", function(){
-			if(this.scale.isFullscreen){
-				this.scale.stopFullscreen();
-			}else{
-				this.scale.startFullscreen();
-			}
-		}, this);
+		btnModificar.on('pointerover',function(pointer){
+    		btnModificar.setFrame(1);
+    	})
+
+    	btnModificar.on('pointerout',function(pointer){
+    		btnModificar.setFrame(0);
+    	})
+    	
+    	var textUsuario = this.element.getChildByName("username");
+    	
+    	btnModificar.on('pointerdown',function(pointer){
+    		if (textUsuario.value !== '') {
+	    		let msg = new Object();
+	    		msg.event = 'UPDATE USERNAME';
+	    		msg.name = textUsuario.value;
+	    		game.global.socket.send(JSON.stringify(msg));
+    		}
+    	});
+    	
+    	btnModificar2.on('pointerover',function(pointer){
+    		btnModificar2.setFrame(1);
+    	})
+
+    	btnModificar2.on('pointerout',function(pointer){
+    		btnModificar2.setFrame(0);
+    	})
+    	
+    	var textPassword = this.element.getChildByName("password");    	
+    	var textNewPassword = this.element.getChildByName("password1");    	2
+    	
+    	btnModificar2.on('pointerdown',function(pointer){
+    		if (textPassword.value !== '' && textNewPassword.value !== '') {
+	    		let msg = new Object();
+	    		msg.event = 'UPDATE PASSWORD';
+	    		msg.oldPassword = textPassword.value;
+	    		msg.newPassword = textNewPassword.value;
+	    		game.global.socket.send(JSON.stringify(msg));
+    		}
+    	});
+
+		
+		this.elementS = this.add.dom(0, 200).createFromCache('optionsformS');
+        this.elementS.setPerspective(800);
+        
+        $("#volume").slider({
+		  	min: 0,
+		  	max: 100,
+		  	value: 0,
+				range: "min",
+		  	slide: function(event, ui) {
+		    	setVolume(ui.value / 100);
+		  	}
+		});
+        
+        $("#volume2").slider({
+		  	min: 0,
+		  	max: 100,
+		  	value: 0,
+				range: "min",
+		  	slide: function(event, ui) {
+		    	setVolume(ui.value / 100);
+		  	}
+		});
+			
+		var myMedia = document.createElement('audio');
+		$('#player').append(myMedia);
+		myMedia.id = "myMedia";
+		
+		var myMedia2 = document.createElement('audio');
+		$('#player2').append(myMedia2);
+		myMedia2.id = "myMedia2";
+
+		playAudio('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3', 0);
+		
+		function playAudio(fileName, myVolume) {
+				myMedia.src = fileName;
+				myMedia.setAttribute('loop', 'loop');
+	    	setVolume(myVolume);
+	    	myMedia.play();
+		}
+		
+		function setVolume(myVolume) {
+	    	var myMedia = document.getElementById('myMedia');
+	    	myMedia.volume = myVolume;
+		}       
+        
+        soundContainer.visible = false;
+        languageContainer.visible = false;
+		soundContainer.add(this.elementS);
+		
+		
+		
+
+		this.elementL = this.add.dom(0, 200).createFromCache('optionsformL');
+        this.elementL.setPerspective(800);
+        
+        languageContainer.add(this.elementL);
+		
+		
     
     	
     }

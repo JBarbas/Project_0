@@ -32,7 +32,6 @@ class Edificio {
 					this.recolectIcon.destroy();
 				}
 				this.recolectIcon = scene.add.image(position.x, position.y - 100, this.resourceSprite).setOrigin(0.5, 1);
-				this.recolectIcon.setScale(0.25, 0.25);
 				this.recolectIcon.depth = this.y + this.x + 1/Math.max(this.height, this.width);		
 				scene.tweens.add({
 			        targets: this.recolectIcon,

@@ -17,8 +17,14 @@ class GameInterface extends Phaser.Scene {
     }
     create (data)  {
     	
+    	this.panel = this.add.image(660,-200, 'panelCMando').setOrigin(0,0);
+    	this.panel.setScale(.7);
+    	this.panel.depth = -1;
+    	this.panel.visible = false;
+    	
+    	
     	this.intPrincipal = this.add.image(game.global.intPrincipal.x, game.global.intPrincipal.y, 'intPrincipal').setOrigin(0, 0); 
-    	this.btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
+    	var btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
     	
     	var btnRanking = this.add.image(game.global.btnRanking.x, game.global.btnRanking.y, 'intRanking').setOrigin(0, 0); 
     	
@@ -40,13 +46,10 @@ class GameInterface extends Phaser.Scene {
 
     	this.e1.setFrame(1);
 
-    	
-    
-    	
     	var btnAnuncios = this.add.image(game.global.btnAnuncios.x, game.global.btnAnuncios.y, 'intAnuncios').setOrigin(0, 0); 
     	btnAnuncios.setInteractive();
     	btnRanking.setInteractive();
-    	
+    	btnMision.setInteractive();
     	
     	btnOpciones.on('pointerover',function(pointer){
     		btnOpciones.setFrame(1);
@@ -57,6 +60,7 @@ class GameInterface extends Phaser.Scene {
     	})
     	
     	btnRanking.on('pointerdown', function(pointer){
+    		game.scene.getScene('GameInterface').panel.alpha = 0.0;
     		//start scene
     		game.global.inMenu = true;
 			if (game.global.menu !== null) {
@@ -64,9 +68,13 @@ class GameInterface extends Phaser.Scene {
 			}
 			game.global.menu = 'RankingMenu';
 			game.scene.run('RankingMenu');
+			
+					
     	});
     	
     	btnAnuncios.on('pointerdown', function(pointer){
+    		game.scene.getScene('GameInterface').panel.alpha = 0.0;
+    		
     		//start scene
     		game.global.inMenu = true;
 			if (game.global.menu !== null) {
@@ -74,6 +82,23 @@ class GameInterface extends Phaser.Scene {
 			}
 			game.global.menu = 'AnuncioMenu';
 			game.scene.run('AnuncioMenu');
+			
+			
+    	});
+    	
+
+    	btnMision.on('pointerdown', function(pointer){
+    		game.scene.getScene('GameInterface').panel.alpha = 0.0;
+    		
+    		//start scene
+    		game.global.inMenu = true;
+			if (game.global.menu !== null) {
+				game.scene.stop(game.global.menu);
+			}
+			game.global.menu = 'HalloweenMenu';
+			game.scene.run('HalloweenMenu');
+			
+			
     	});
     	
     	
@@ -99,6 +124,13 @@ class GameInterface extends Phaser.Scene {
     	//particulasRecurso();
     }
     update(time, delta) {
+    	if(game.global.inMenu){
+    		this.panel.visible = true;
+    	}
+    	else{
+    		this.panel.visible = false;
+    	}
+    	
     	this.energia.text = game.global.resources.energia;
     	this.metal.text = game.global.resources.metal;
     	this.ceramica.text = game.global.resources.ceramica;

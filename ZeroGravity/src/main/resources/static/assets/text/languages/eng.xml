@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patata>
+	<login>
+		<reg>SIGN UP</reg>
+	</login>
+	<edificios>
+		<taller>Workshop</taller>
+		<plataformaExtraccion>Extraction Platform</plataformaExtraccion>
+		<laboratorioInvestigacion>Research Laboratory</laboratorioInvestigacion>
+		<bloqueViviendas>Block of Apartments</bloqueViviendas>
+		<generador>Generator</generador>
+		<centroOperaciones>Operations Center</centroOperaciones>
+		<centroAdministrativo>Administrative Center</centroAdministrativo>
+		<centroComercio>Trade Center</centroComercio>
+		<centroMando>Command Center</centroMando>
+	</edificios>
+	<menusEdificios>
+		<general>
+			<edificiosTitulo>BUILDINGS</edificiosTitulo>
+			<mejorasTitulo>UPGRADES</mejorasTitulo>
+			<detallesTitulo>DETAILS</detallesTitulo>
+			<comercioTitulo>TRADING</comercioTitulo>
+			<solicitarTitulo>REQUEST</solicitarTitulo>
+			<robotsTitulo>ROBOTS</robotsTitulo>
+			<viviendasTitulo>APARTMENTS</viviendasTitulo>
+			<produccionTitulo>PRODUCTION</produccionTitulo>
+			<sigMejora>NEXT UPGRADE:</sigMejora>
+			<colonos>Colonists:</colonos>
+			<energia>Energy:</energia>
+			<tiemporestante>Time left: </tiemporestante>
+			<tiempominutos> minutes</tiempominutos>
+			<almMetal>Storing metal...</almMetal>
+			<almCera>Storing ceramic...</almCera>
+			<almCred>Storing credits...</almCred>
+			<recoCera> ceramic units ready to collect</recoCera>
+			<recoCred> credits ready to collect</recoCred>
+		</general>
+		<centroMando>
+			<cmdetalles>The Command Center is the main building of your base. Upgrading it allows you to unlock the upgrades of Administrative Center, Trade Center and Operations Center.
+Access the Buildings panel to put up new buildings. You can build Block of Apartment, Generator, Research Laboratory, Extraction Platform and Workshop.
+Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Command Center.
+This building cannot be built, but you can position it where you wish with the Move button.
+			</cmdetalles>
+			<cmmejoraNivel2>Allows you to acquire the level 2 upgrades to Administrative Center, Trade Center and Operations Center.
+Cost:
+    500 Metal units.
+    500 Ceramic units.
+    5000 Credits.
+Required time: 
+    4 days and 16 hours.
+			</cmmejoraNivel2>
+			<cmmejoraNivel3>Allows you to acquire the level 3 upgrades to Administrative Center, Trade Center and Operations Center.
+Cost:
+    10000 Metal units.
+    10000 Ceramic units.
+    50000 Credits.
+Required time: 
+    2 weeks.
+			</cmmejoraNivel3>
+			<cmmejoraNivel4>N/A</cmmejoraNivel4>
+		</centroMando>
+		<centroComercio>
+			<ccdetalles>The Trade Center is the building in which you manage your base trade. From here you can trade Credits in exchange for other players' resources or offer yours in exchange of the Credits you consider fair. Upgrading it allows you to unlock the upgrades of Research Laboratory and Extraction Platform.
+Access the Trading panel to see a list of offers, accept some trade, post your offers or withdraw them if they have not been accepted and you need your resources back.
+Access the Upgrades panel to visualize the next level, advantages, cost and upgrade the Trading Center.
+There can only be one building of this kind, but you can position it where you wish with the Move button.
+			</ccdetalles>
+			<ccmejoraNivel2>Allows you to acquire the level 2 upgrades to Research Laboratory and Extraction Platform.
+Cost:
+    900 Metal units.
+    1500 Ceramic units.
+    9000 Credits.
+Required time:
+    2 days and 5 hours.
+			</ccmejoraNivel2>
+			<ccmejoraNivel3>Allows you to acquire the level 3 upgrades to Research Laboratory and Extraction Platform.
+Cost:
+    11000 Metal units.
+    14200 Ceramic units.
+    62000 Credits.
+Required time:
+    6 days and 10 hours.
+			</ccmejoraNivel3>
+			<ccmejoraNivel4>N/A</ccmejoraNivel4>
+		</centroComercio>
+		<centroAdministrativo>
+			<capuestos>Available job positions:</capuestos>
+			<caviviendas>Available Apartments:</caviviendas>
+			<cadetalles>The Administrative Center is the building from which you manage your Colonists. When you have job openings and enough available apartments in your Blocks of Apartments, you can apply for Colonists to fill these vacant posts. You can also expand your base from here, for a small price. Upgrading it allows you to unlock the upgrades of the Block of Apartments. 
+Access the Request panel to see how may job openings and vacant apartments are there. Use the Colonists button to apply for workers, and the Expand button to expand your base. 
+Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Administrative Center.
+There can only be one building of this kind, but you can position it where you wish with the Move button.
+			</cadetalles>
+			<camejoraNivel2>Allows you to acquire the Level 2 upgrades to the Block of Apartments.
+Cost:
+    1000 Metal units.
+    1700 Ceramic units.
+    10000 Credits.
+Required time:
+    2 days and 5 hours.
+			</camejoraNivel2>
+			<camejoraNivel3>Allows you to acquire the Level 3 upgrades to the Block of Apartments.
+Cost:
+    10000 Metal units.
+    12000 Ceramic units.
+    55000 Credits.
+Required time:
+    6 days and 10 hours.
+			</camejoraNivel3>
+			<camejoraNivel4>N/A</camejoraNivel4>
+		</centroAdministrativo>
+		<centroOperaciones>
+			<codetalles>The Operatons Center is the building from which you manage the Energy and your Robots. Upgrading it allows you to unlock the upgrades of the Generator and the Workshop. 
+Access the Robots panel to see your robots.
+Access the Upgrades panel to visualize the next level, advantages, cost and upgrade the Operations Center.
+There can only be one building of this kind, but you can position it where you wish with the Move button.
+			</codetalles>
+			<comejoraNivel2>Allows you to acquire the Level 2 upgrades to Generator and Workshop.
+Cost:
+    1500 Metal units.
+    1600 Ceramic units.
+    12000 Credits.
+Required time:
+    2 days and 5 hours.
+			</comejoraNivel2>
+			<comejoraNivel3>Allows you to acquire the Level 3 upgrades to Generator and Workshop.
+Cost:
+    14000 Metal units.
+    17300 Ceramic units.
+    70000 Credits.
+Required time:
+    6 days and 10 hours.
+			</comejoraNivel3>
+			<comejoraNivel4>N/A</comejoraNivel4>
+		</centroOperaciones>
+		<bloqueViviendas>
+			<bvdetalles>The Block of Apartments is the building in which your Colonists reside. It answers to the Administrative Center.
+Access the Apartments panel to see how many Colonists reside in the building.
+Access the Upgrades panel to visualize the next level, advantages, cost and upgrade the Block of Apartments
+You can have as many as you wish. Use the Move button if you want to reposition it.
+Number of Apartments at Level 1: 5.
+Number of Apartments at Level 2: 10.
+Number of Apartments at Level 3: 15.
+			</bvdetalles>
+			<bvmejoraNivel2>Allows you to increase the Colonists limit to 10.
+Cost:
+    1050 Metal units.
+    1800 Ceramic units.
+    9000 Credits.
+Required time:
+    1 day and 5 hours.
+			</bvmejoraNivel2>
+			<bvmejoraNivel3>Allows you to increase the Colonists limit to 15.
+Cost:
+    15000 Metal units.
+    20500 Ceramic units.
+    80500 Credits.
+Required time:
+    5 days and 20 hours.
+			</bvmejoraNivel3>
+			<bvmejoraNivel4>N/A</bvmejoraNivel4>
+		</bloqueViviendas>
+		<generador>
+			<gendetalles>The Generator supplies Energy to the buildings that produce resources. Without the electric supply your buildings cannot produce. Colonists working in it are needed to produce Energy. It answers to the Operations Center.
+Access the Production panel to see how many Colonists are working in the building.
+Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Generator.
+You can have as many as you wish. Use the Move button if you want to reposition it.
+Supply at Level 1: 5 Energy units.
+Supply at Level 2: 12 Energy units.
+Supply at Level 3: 16 Energy units.
+			</gendetalles>
+			<genmejoraNivel2>Requires 2 Colonists. 
+Supplies 12 Energy units.
+Cost:
+    800 Metal units.
+    1200 Ceramic units.
+    8500 Credits.
+Required time:
+    1 day and 5 hours.
+			</genmejoraNivel2>
+			<genmejoraNivel3>Requires 3 Colonists. 
+Supplies 16 Energy units.
+Cost:
+    7000 Metal units.
+    12000 Ceramic units.
+    35000 Credits.
+Required time:
+    5 days and 20 hours.
+			</genmejoraNivel3>
+			<genmejoraNivel4>N/A</genmejoraNivel4>
+		</generador>
+		<laboratorio>
+			<labdetalles>The Research Laboratory is where multiple investigations about the terraformation of the planet are carried out. You will receive Credits in exchange for keeping it going. Colonists and Energy are needed to produce. It answers to the Trading Center.
+Access the Production panel to see how many Colonists are working in the building and how high the Energy supply is.
+Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Research Laboratory.
+You can have as many as you wish. Use the Move button if you want to reposition it.
+Production at Level 1: 60 Credits per hour.
+Production at Level 2: 180 Credits per hour.
+Production at Level 3: 360 Credits per hour.
+			</labdetalles>
+			<labmejoraNivel2>Requires 2 Colonists. 
+Requires 2 Energy units.
+Generates 180 Credits per hour. 
+Stores every 4 hours.
+Cost:
+    90 Metal units.
+    230 Ceramic units.
+    3200 Credits.
+Required time:
+    1 day and 5 hours.
+			</labmejoraNivel2>
+			<labmejoraNivel3>Requires 3 Colonists. 
+Requires 3 Energy units. 
+Generates 360 Credits per hour. 
+Stores every 9 hours.
+Cost:
+    850 Metal units.
+    1900 Ceramic units.
+    32000 Credits.
+Required time:
+    5 days and 20 hours.
+			</labmejoraNivel3>
+			<labmejoraNivel4>N/A</labmejoraNivel4>
+		</laboratorio>
+		<plataforma>
+			<pedetalles>The Extraction Platform extracts Ceramic from the underground to use it as thermal insulator for your buildings. Colonists and Energy are needed to produce. It answers to the Trading Center.
+Access the Production Center to see how many Colonists are working in the building and how high the Energy supply is.
+Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Extraction Platform.
+You can have as many as you wish. Use the Move button if you want to reposition it.
+Production at Level 1: 12 Ceramic per hour.
+Production at Level 2: 18 Ceramic per hour.
+Production at Level 3: 22 Ceramic per hour.
+			</pedetalles>
+			<pemejoraNivel2>Requires 2 Colonists. 
+Requires 4 Energy units.
+Generates 18 Ceramic units per hour. 
+Stores every 5 hours and 30 minutes.
+Cost:
+    120 Metal units.
+    200 Ceramic units.
+    4500 Credits.
+Required time:
+    1 day and 5 hours.
+			</pemejoraNivel2>
+			<pemejoraNivel3>Requires 3 Colonists. 
+Requires 8 Energy units. 
+Genera 22 Ceramic units per hour. 
+Stores every 10 hours and 15 minutes.
+Cost:
+    1050 Metal units.
+    1800 Ceramic units.
+    36500 Credits.
+Required time:
+    5 days and 20 hours.
+			</pemejoraNivel3>
+			<pemejoraNivel4>N/A</pemejoraNivel4>
+		</plataforma>
+		<taller>
+			<tdetalles>The Workshop houses your Robots. You can send them to gather Metal and they will return when they fill their deposit, though in the future they will be useful for more things. Colonists and Energy are needed to produce. It answers to the Operations Center.
+Access the Production panel to see how many Colonists are working in the building, how high the Energy supply is and your Robots. You will be able to send them to Gather and upgrade their level, according the Workshop Level.
+Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Workshop.
+You can have as many as you wish. Use the Move button if you want to reposition it.
+Production at Level 1: 5 Metal units per hour and per Robot of Level 1.
+Production at Level 2: 8 Metal units per hour and per Robot of Level 2.
+Production at Level 3: 12 Metal units per hour and per Robot of Level 3.
+			</tdetalles>
+			<tmejoraNivel2>Requires 2 Colonists. 
+Requires 3 Energy units.
+Can house up to 2 Robots
+Each level 2 Robot gathers 8 Metal units per hour. 
+Comes back every 4 hours and 10 minutes.
+Cost:
+    180 Metal units.
+    250 Ceramic units.
+    6000 Credits.
+Required time:
+    1 day and 5 hours.
+			</tmejoraNivel2>
+			<tmejoraNivel3>Requires 3 Colonists. 
+Requires 5 Energy units.
+Can house up to 3 Robots
+Each level 3 Robot gathers 12 Metal units per hour. 
+Comes back every 9 hours and 45 minutes.
+Cost:
+    1100 Metal units.
+    2000 Ceramic units.
+    40000 Credits.
+Required time:
+    5 days and 20 hours.
+			</tmejoraNivel3>
+			<tmejoraNivel4>N/D</tmejoraNivel4>
+		</taller>
+		
+	</menusEdificios>
+</patata>
