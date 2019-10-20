@@ -7,6 +7,10 @@ class BloqueViviendas extends Edificio{
 		super.width = 1;
 		super.level = 1;
 		super.sprite = 'bloqueViviendas';
+		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'BloqueViviendasMenu';
+		this.costes = [[5, 0],
+			[5, 0],
+			[5, 0]];
 	}
 }

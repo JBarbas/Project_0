@@ -7,6 +7,10 @@ class CentroComercio extends Edificio {
 		super.width = 1;
 		super.level = 1;
 		super.sprite = 'centroComercio';
+		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'CentroComercioMenu';
+		this.costes = [[5, 0],
+			[5, 0],
+			[5, 0]];
 	}
 }

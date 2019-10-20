@@ -815,6 +815,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}
 				jsonEdificio.put("sprite", e.getSprite());
 				jsonEdificio.put("level", e.getLevel());
+				jsonEdificio.put("enConstruccion", e.isEnConstruccion());
+				jsonEdificio.put("construccionDateYear", e.getBuildingBeginTime().getYear());
+				jsonEdificio.put("construccionDateMonth", e.getBuildingBeginTime().getMonthValue());
+				jsonEdificio.put("construccionDateDay", e.getBuildingBeginTime().getDayOfMonth());
+				jsonEdificio.put("construccionDateHour", e.getBuildingBeginTime().getHour());
+				jsonEdificio.put("construccionDateMinute", e.getBuildingBeginTime().getMinute());
 				arrayNodeEdificios.addPOJO(jsonEdificio);
 
 			}
