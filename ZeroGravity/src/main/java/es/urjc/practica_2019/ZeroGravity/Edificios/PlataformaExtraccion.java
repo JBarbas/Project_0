@@ -20,9 +20,9 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 1, 0, 0, 0, 5};
-	public static final int[] NIVEL2 = { 2, 0, 0, 0, 5};
-	public static final int[] NIVEL3 = { 3, 0, 0, 0, 5};
+	public static final int[] NIVEL1 = { 1, 10, 15, 300, 5};
+	public static final int[] NIVEL2 = { 4, 120, 200, 4500, 5};
+	public static final int[] NIVEL3 = { 8, 1050, 1800, 36500, 5};
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 	
 	//Establecemos los recursos que generan según su nivel
