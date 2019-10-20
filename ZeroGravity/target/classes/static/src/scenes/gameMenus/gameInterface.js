@@ -67,9 +67,7 @@ class GameInterface extends Phaser.Scene {
 				game.scene.stop(game.global.menu);
 			}
 			game.global.menu = 'RankingMenu';
-			game.scene.run('RankingMenu');
-			
-					
+			game.scene.run('RankingMenu');		
     	});
     	
     	btnAnuncios.on('pointerdown', function(pointer){
