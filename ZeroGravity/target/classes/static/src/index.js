@@ -184,14 +184,14 @@ window.onload = function() {
 				console.log('[DEBUG] LOGIN FAILED message recieved')
 				console.dir(msg);
 			}
-			alert(msg.data);
+			swal(msg.data);
 			break;
 		case 'UPDATE USERNAME RESPONSE':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
 				console.dir(msg);
 			}
-			alert(msg.resultado);
+			swal(msg.resultado);
 			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
@@ -417,6 +417,8 @@ window.onload = function() {
 			if(msg.resultado){
 				levelUp(game.global.edificios.get(msg.id));
 				pedirPuntuaciones()
+			}else{
+				swal("No dispones de los recursos para aumentar de nivel a este edificio");
 			}	
 			break;		
 		
@@ -452,7 +454,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.ceramica = msg.ceramica;
-			particulasRecursos("ceramica");
+			particulasRecurso("ceramica");
 			pedirPuntuaciones()
 			break;
 		case 'CREDITOS RECOLECTADOS':
@@ -461,7 +463,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.creditos = msg.creditos;
-			particulasRecursos("creditos");
+			particulasRecurso("creditos");
 			pedirPuntuaciones()
 			break;
 		case 'METAL RECOLECTADO':
@@ -470,7 +472,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.resources.metal = msg.metal;
-			particulasRecursos("metal");
+			particulasRecurso("metal");
 			if (game.scene.isActive('TallerMenu')) {
 				game.scene.stop('TallerMenu');
 				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
@@ -685,7 +687,8 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS INSUFICIENTES message recieved');
 				console.dir(msg);
 			}
-			alert("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
+			swal("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
+			
 			break;
 		case 'RESPUESTA CREAR OFERTA':
 			if (game.global.DEBUG_MODE) {
@@ -693,7 +696,7 @@ window.onload = function() {
 				console.log(msg.respuesta);
 			}
 			if(!msg.respuesta){
-				alert("Necesitas más recursos para enviar esta oferta al mercado");
+				swal("Necesitas más recursos para enviar esta oferta al mercado");
 			}else{
 				let message = {		
 						event: 'ASK_PLAYER_RESOURCES',
@@ -732,6 +735,9 @@ window.onload = function() {
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] RESPUESTA COMPRAR OFERTA message recieved');
 				console.log(msg.respuesta);
+			}
+			if(!msg.respuesta){
+				swal("Lo sentimos, esta oferta ya no está disponible");
 			}
 			let messag = {		
 				event: 'ASK_PLAYER_RESOURCES'
