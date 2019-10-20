@@ -72,11 +72,13 @@ window.onload = function() {
 		myPlayerId: "",
 		puntuacion: 0,
 		mejoresPuntuaciones:[],
+		ofertasListas : false,
 		construyendo : false,
 		expandiendo : false,
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
+		comercioMenuLast: 'edificio',
 		inZoom : false,
 		menu : null,
 		offers: [],
@@ -128,6 +130,8 @@ window.onload = function() {
 		team:null,
 		inGame:false,
 		resources: {},
+		music: null,
+		sound: null,
 		idioma : "eng"
 	}
 	
@@ -171,8 +175,9 @@ window.onload = function() {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('RegisterScene');
 			}
-			/*y yo aprovecho para precargar las puntuaciones*/
-			pedirPuntuaciones()
+			/*y yo aprovecho para precargar las puntuaciones y las ofertas disponibles*/
+			pedirPuntuaciones();
+			pedirOfertas();
 			break;
 		case 'LOGIN FAILED':
 			if (game.global.DEBUG_MODE) {
@@ -573,6 +578,23 @@ window.onload = function() {
 				game.scene.start(edificioMenu.menuScene, {miEdificio: edificioMenu});
 			}
 			break;
+		case 'REFRESH COMERCIO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] REFRESH COMERCIO message recieved');
+				console.dir(msg);
+			}
+			pedirOfertas();
+			refrescarMenuComercio();
+			/*si tiene abierto el centro de comercio lo refresca*/
+			function refrescarMenuComercio() {
+				  setTimeout(function(){ 
+					  if(game.scene.isActive('CentroComercioMenu')){
+						game.scene.stop('CentroComercioMenu');
+						game.scene.start('CentroComercioMenu', {miEdificio: game.scene.getScene("CentroComercioMenu").miEdificio});
+					} }, 1000);
+			}
+			
+			break;
 		case 'JOBS':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] JOBS message recieved');
@@ -620,13 +642,14 @@ window.onload = function() {
 				}
 				game.global.socket.send(JSON.stringify(message));
 			}
+			pedirOfertas();
 			break;
 			
 		case 'SEND OFFERS':
 			/*vaciamos las ofertas anteriores*/
 			game.global.offers = [];
 			/*guardamos las nuevas ofertas*/
-			for(var i = 0; i < msg.ofertas.length; i++){
+			for(let i = 0; i < msg.ofertas.length; i++){
 				let id = i;
 				let idOferta = msg.ofertas[i].id;
 				let playerId = msg.ofertas[i].playerId;
@@ -635,6 +658,7 @@ window.onload = function() {
 				let creditos = msg.ofertas[i].creditos;
 				let oferta = new Oferta(idOferta, playerId, cantidad, recurso, creditos);
 				game.global.offers[i] = oferta;
+				game.global.ofertasListas = true;
 			}
 			break;
 		
@@ -643,6 +667,7 @@ window.onload = function() {
 				event: 'ASK_PLAYER_RESOURCES'
 			}
 			game.global.socket.send(JSON.stringify(message));
+			pedirOfertas();
 			break;
 		
 		case 'OFFER PURCHASED':
@@ -654,7 +679,8 @@ window.onload = function() {
 				event: 'ASK_PLAYER_RESOURCES'
 			}
 			game.global.socket.send(JSON.stringify(messag));
-			pedirPuntuaciones()
+			pedirPuntuaciones();
+			pedirOfertas();
 			break;
 		
 		case 'ACTUALIZAR PUNTUACION':

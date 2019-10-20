@@ -39,12 +39,6 @@ class DifficultScene extends Phaser.Scene {
         boxe.children[0].children[2].children[1].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('expDesc')[0].childNodes[0].nodeValue;
         
     	document.getElementById("dificultad").style.visibility = 'visible';
-    	//$("dificultad").css("z-index", "2000");
-    	
-    	/*document.getElementById("selectNivel").onclick(){
-    		game.scene.run('PreloadGameScene');
-    		game.scene.stop('DifficultScene');
-    	}*/
     	
     	$( "#selectNivel" ).click(function() {
     		game.scene.run('PreloadGameScene');

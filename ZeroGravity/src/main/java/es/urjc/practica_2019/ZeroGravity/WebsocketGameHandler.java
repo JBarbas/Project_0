@@ -607,7 +607,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				
 			case "BUY AN OFFER":
 				
-				msg.put("event", "ANSWER BUY AN OFFER");
 				boolean puedoComprar = false;
 				
 				ObjectId myOfferId = new ObjectId(node.get("idOferta").asText());
@@ -632,19 +631,38 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.saveRecursos();
 					
 					/*le doy el dinero al vendedor de la oferta*/
-					Player playerVendedor = players.get(new ObjectId(myOffer.get("playerId").toString())); 
+					Player playerVendedor = players.get(new ObjectId(myOffer.get("playerId").toString()));
 					playerVendedor.deleteOferta(myOfferId);
 					playerVendedor.setCreditos(playerVendedor.getCreditos() + Integer.parseInt(myOffer.get("creditos").toString()));
 					playerVendedor.saveOfertas();
 					playerVendedor.saveRecursos();
 					player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[4]);
 					player.savePuntuacion();
+					/*si el usuario al que le han comprado está conectado hay darle retroalimentacion*/
+					if(playerVendedor.getSession().isOpen()) {
+						msg.put("event", "GET_PLAYER_RESOURCES");
+						msg.put("energia", playerVendedor.getEnergia());
+						msg.put("metal", playerVendedor.getMetal());
+						msg.put("ceramica", playerVendedor.getCeramica());
+						msg.put("creditos", playerVendedor.getCreditos());
+						msg.put("unionCoins", playerVendedor.getUnionCoins());
+						msg.put("colonos", playerVendedor.getColonos());
+						msg.put("punctuacion", playerVendedor.getPuntuacion());
+						playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
+						
+						msg = mapper.createObjectNode();
+						msg.put("event", "REFRESH COMERCIO");
+						playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
+
+					}
 					/*borramos la oferta de la base de datos comun a todos los jugadores*/
 					collOfertas.deleteOne(new Document("_id", myOfferId));
 					
+					msg = mapper.createObjectNode();
 					msg.put("event", "OFFER PURCHASED");
 					msg.put("respuesta", puedoComprar);
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					msg = mapper.createObjectNode();
 					
 				}else {
 					msg.put("respuesta", puedoComprar);
@@ -660,6 +678,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "GIVE ME PUNCTUATIONS":
 				sendPunctuations(player);
 				break;
+			case "REFRESH MY MENU":
+				msg.put("event", "REFRESH MENU");
+				msg.put("id", node.get("edificioId").asInt());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 			default:
 				break;
 			}
@@ -757,6 +779,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			msg.put("event", "ALL PUNCTUATIONS");
 	        msg.put("todasLasPuntuaciones", todasLasPuntuaciones);
 			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			msg = mapper.createObjectNode();
 			msg.put("event", "ACTUALIZAR PUNTUACION");
 			msg.put("punctuacion", player.getPuntuacion());
 			player.getSession().sendMessage(new TextMessage(msg.toString()));
