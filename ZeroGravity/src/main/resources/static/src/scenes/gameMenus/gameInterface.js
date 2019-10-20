@@ -22,48 +22,9 @@ class GameInterface extends Phaser.Scene {
     	this.panel.depth = -1;
     	this.panel.visible = false;
     	
-    	/*this.panelViviendas = this.add.image(660,-200, 'panelBViviendas').setOrigin(0,0);
-    	this.panelViviendas.setScale(.7);
-    	this.panelViviendas.depth = -1;
-    	this.panelViviendas.visible = false;
-    	
-    	this.panelAdmin = this.add.image(660,-200, 'panelCAdministrativo').setOrigin(0,0);
-    	this.panelAdmin.setScale(.7);
-    	this.panelAdmin.depth = -1;
-    	this.panelAdmin.visible = false;
-    	
-    	this.panelComercio = this.add.image(660,-200, 'panelCComercio').setOrigin(0,0);
-    	this.panelComercio.setScale(.7);
-    	this.panelComercio.depth = -1;
-    	this.panelComercio.visible = false;
-    	
-    	this.panelOperaciones = this.add.image(660,-200, 'panelCOperaciones').setOrigin(0,0);
-    	this.panelOperaciones.setScale(.7);
-    	this.panelOperaciones.depth = -1;
-    	this.panelOperaciones.visible = false;
-    	
-    	this.panelGen = this.add.image(660,-200, 'panelGenerador').setOrigin(0,0);
-    	this.panelGen.setScale(.7);
-    	this.panelGen.depth = -1;
-    	this.panelGen.visible = false;
-    	
-    	this.panelLab = this.add.image(660,-200, 'panelLInvestivacion').setOrigin(0,0);
-    	this.panelLab.setScale(.7);
-    	this.panelLab.depth = -1;
-    	this.panelLab.visible = false;
-    	
-    	this.panelExt = this.add.image(660,-200, 'panelCExtraccion').setOrigin(0,0);
-    	this.panelExt.setScale(.7);
-    	this.panelExt.depth = -1;
-    	this.panelExt.visible = false;
-    	
-    	this.panelTaller = this.add.image(660,-200, 'panelTaller').setOrigin(0,0);
-    	this.panelTaller.setScale(.7);
-    	this.panelTaller.depth = -1;
-    	this.panelTaller.visible = false;*/
     	
     	this.intPrincipal = this.add.image(game.global.intPrincipal.x, game.global.intPrincipal.y, 'intPrincipal').setOrigin(0, 0); 
-    	this.btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
+    	var btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
     	
     	var btnRanking = this.add.image(game.global.btnRanking.x, game.global.btnRanking.y, 'intRanking').setOrigin(0, 0); 
     	
@@ -85,13 +46,10 @@ class GameInterface extends Phaser.Scene {
 
     	this.e1.setFrame(1);
 
-    	
-    
-    	
     	var btnAnuncios = this.add.image(game.global.btnAnuncios.x, game.global.btnAnuncios.y, 'intAnuncios').setOrigin(0, 0); 
     	btnAnuncios.setInteractive();
     	btnRanking.setInteractive();
-    	
+    	btnMision.setInteractive();
     	
     	btnOpciones.on('pointerover',function(pointer){
     		btnOpciones.setFrame(1);
@@ -103,15 +61,6 @@ class GameInterface extends Phaser.Scene {
     	
     	btnRanking.on('pointerdown', function(pointer){
     		game.scene.getScene('GameInterface').panel.alpha = 0.0;
-    		/*this.panelExt.visible = false;
-			this.panel.visible = false;
-			this.panelViviendas.visible = false;
-			this.panelAdmin.visible = false;
-			this.panelComercio.visible = false;
-			this.panelOperaciones.visible = false;
-			this.panelGen.visible = false;
-			this.panelLab.visible = false;
-			this.panelTaller.visible = false;*/	
     		//start scene
     		game.global.inMenu = true;
 			if (game.global.menu !== null) {
@@ -133,6 +82,21 @@ class GameInterface extends Phaser.Scene {
 			}
 			game.global.menu = 'AnuncioMenu';
 			game.scene.run('AnuncioMenu');
+			
+			
+    	});
+    	
+
+    	btnMision.on('pointerdown', function(pointer){
+    		game.scene.getScene('GameInterface').panel.alpha = 0.0;
+    		
+    		//start scene
+    		game.global.inMenu = true;
+			if (game.global.menu !== null) {
+				game.scene.stop(game.global.menu);
+			}
+			game.global.menu = 'HalloweenMenu';
+			game.scene.run('HalloweenMenu');
 			
 			
     	});

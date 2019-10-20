@@ -10,6 +10,6 @@ class Taller extends GeneradorRecursos {
 		super.menuScene = 'TallerMenu';
 		super.originX = 0.32;
 		this.robots = new Map();
-		super.resourceSprite = 'clayIcon';
+		super.resourceSprite = 'metalIcon';
 	}
 }
