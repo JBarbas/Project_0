@@ -128,6 +128,8 @@ window.onload = function() {
 		team:null,
 		inGame:false,
 		resources: {},
+		music: null,
+		sound: null,
 		idioma : "eng"
 	}
 	
