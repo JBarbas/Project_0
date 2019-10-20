@@ -19,6 +19,7 @@ class CentroComercioMenu extends Phaser.Scene {
     }
     
     create (data)  {
+    	
     	this.miEdificio = data.miEdificio;
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
@@ -36,6 +37,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	var venderContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	// Contenedor del panel de comprar
     	var comprarContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	this.comprarContainer = comprarContainer;
     	
     	//Se añade a cada contenedor su imagen de fondo
     	this.intMejoras = this.add.image(0, 0, 'intCMejoras').setOrigin(0, 0); 
@@ -49,9 +51,6 @@ class CentroComercioMenu extends Phaser.Scene {
     	this.intOfertas = this.add.image(0, 0, 'intCOfertas').setOrigin(0, 0);
     	ofertasContainer.add(this.intOfertas);
     	
-    	
-    	
-
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 300, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
     	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
@@ -60,6 +59,7 @@ class CentroComercioMenu extends Phaser.Scene {
     		comprarContainer.visible= false;
     		venderContainer.visible= false;
     		ofertasContainer.visible= false;
+    		game.global.comercioMenuLast = 'detalles';
     	});
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -68,6 +68,7 @@ class CentroComercioMenu extends Phaser.Scene {
     		comprarContainer.visible= false;
     		venderContainer.visible= false;
     		ofertasContainer.visible= false;
+    		game.global.comercioMenuLast = 'mejoras';
     	});
     	this.iconoOfertas = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoOfertas').setOrigin(0, 0);
     	this.iconoOfertas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -76,6 +77,7 @@ class CentroComercioMenu extends Phaser.Scene {
     		comprarContainer.visible= false;
     		venderContainer.visible= false;
     		ofertasContainer.visible= true;
+    		game.global.comercioMenuLast = 'ofertas';
     	});
     	this.iconoVender = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoVender').setOrigin(0, 0);
     	this.iconoVender.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -84,6 +86,7 @@ class CentroComercioMenu extends Phaser.Scene {
     		comprarContainer.visible= false;
     		venderContainer.visible= true;
     		ofertasContainer.visible= false;
+    		game.global.comercioMenuLast = 'vender';
     	});
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoComprar').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -92,111 +95,8 @@ class CentroComercioMenu extends Phaser.Scene {
     		comprarContainer.visible= true;
     		venderContainer.visible= false;
     		ofertasContainer.visible= false;
+    		game.global.comercioMenuLast = 'edificio';
     	});
-    	
-
-    	//  CONTENEDOR EDIFICIO
-    	// Añadimos el boton para crear ofertas
-    	/*
-    	 * var crearOfertabtn = this.add.image(505, 560, 'xBuilding').setInteractive();
-    	crearOfertabtn.setOrigin(0, 0);
-    	crearOfertabtn.on('pointerover',function(pointer){
-    		this.setFrame(1);
-    	});
-    	crearOfertabtn.on('pointerout',function(pointer){
-    		this.setFrame(0);
-    	});
-    	crearOfertabtn.on('pointerdown', function(pointer, localX, localY, event){
-    		//cantidad, recurso, creditos a cambio
-    		crearOferta(25, 'metal', 100);
-    	});
-    	comprarContainer.add(crearOfertabtn);
-    	///Botones ofrecer ofertas
-    	//ofrecer oferta
-    	var oferta25Metal = this.add.image(505, 560, 'xBuilding').setInteractive();
-    	oferta25Metal.setOrigin(0, 0);
-    	oferta25Metal.on('pointerover',function(pointer){
-    		this.setFrame(1);
-    	});
-    	oferta25Metal.on('pointerout',function(pointer){
-    		this.setFrame(0);
-    	});
-    	oferta25Metal.on('pointerdown', function(pointer, localX, localY, event){ 		
-    		//cantidad, recurso, creditos a cambio
-    		crearOferta(25, 'metal', 100);
-    	});
-    	comprarContainer.add(oferta25Metal);
-    	
-    	//pedir Ofertas
-    	var pedirOfertasbtn = this.add.image(65, 560, 'xBuilding').setInteractive();
-    	pedirOfertasbtn.setOrigin(0, 0);
-    	pedirOfertasbtn.on('pointerover',function(pointer){
-    		this.setFrame(1);
-    	});
-    	pedirOfertasbtn.on('pointerout',function(pointer){
-    		this.setFrame(0);
-    	});
-    	pedirOfertasbtn.on('pointerdown', function(pointer, localX, localY, event){ 		
-    		//cantidad, recurso, creditos a cambio
-    		pedirOfertas();
-    	});
-    	comprarContainer.add(pedirOfertasbtn);
-    	//pedir Ofertas de mi jugador
-    	var pedirOfertas2btn = this.add.image(65, 760, 'xBuilding').setInteractive();
-    	pedirOfertas2btn.setOrigin(0, 0);
-    	pedirOfertas2btn.on('pointerover',function(pointer){
-    		this.setFrame(1);
-    	});
-    	pedirOfertas2btn.on('pointerout',function(pointer){
-    		this.setFrame(0);
-    	});
-    	pedirOfertas2btn.on('pointerdown', function(pointer, localX, localY, event){ 		
-    		//cantidad, recurso, creditos a cambio
-    		console.log(pedirOfertasJugador());
-    	});
-    	comprarContainer.add(pedirOfertas2btn);
-    	
-    	//borrar una oferta de mi jugador
-    	//en principio aquí recorro la lista de ofertas y con cada una 
-    	// creo un boton con el que puedo pasar el id de la oferta a la 
-    	// funcion de borrar
-    	var borrarOfertasbtn = this.add.image(400, 760, 'xBuilding').setInteractive();
-    	borrarOfertasbtn.setOrigin(0, 0);
-    	borrarOfertasbtn.on('pointerover',function(pointer){
-    		this.setFrame(1);
-    	});
-    	borrarOfertasbtn.on('pointerout',function(pointer){
-    		this.setFrame(0);
-    	});
-    	borrarOfertasbtn.on('pointerdown', function(pointer, localX, localY, event){ 		
-    		let ofertasMiJugador = pedirOfertasJugador();
-    		//cantidad, recurso, creditos a cambio
-    		if(ofertasMiJugador[0] != null){
-    			borrarOferta(ofertasMiJugador[0].idOferta);
-    		}
-    	});
-    	comprarContainer.add(borrarOfertasbtn);
-    	
-    	//comprar una oferta
-    	var comprar = this.add.image(250, 560, 'xBuilding').setInteractive();
-    	comprar.setOrigin(0, 0);
-    	comprar.on('pointerover',function(pointer){
-    		this.setFrame(1);
-    	});
-    	comprar.on('pointerout',function(pointer){
-    		this.setFrame(0);
-    	});
-    	comprar.on('pointerdown', function(pointer, localX, localY, event){ 		
-    		
-    		if(game.global.offers.length != 0){
-    			comprarOferta(game.global.offers[0].idOferta);
-    		}
-    	});
-    	comprarContainer.add(comprar);
-    	
-    	*
-    	*/
-    	
     	
     	// CONTAINER COMPRAR
     	var element = this.add.dom(-370, 280).createFromCache('centroComercioMenu');
@@ -204,109 +104,292 @@ class CentroComercioMenu extends Phaser.Scene {
         
         var divPuntuaciones = document.getElementById("divPuntuaciones");
       	
-    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
-    		
-    		let divPuesto = document.createElement("div");
-    		
-    		/*la imagen*/
-    		var box = document.createElement("img");
-        	box.src = "assets/interface/Gameplay/boxComercio.png";
-        	box.style.marginLeft ="0px";
-        	box.style.marginTop = "16px";
-        	box.style.width = '100%';
-        	box.style.height = 'auto';
-        	
-        	/*el div de los span*/
-        	var contenido = document.createElement("div");
-        	contenido.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
-        	/*LOS ICONOS */
-        	var metal = document.createElement("img");
-        	metal.src = "assets/interface/Gameplay/metal.png";
-        	metal.style.marginLeft = "20px";
-        	
-        	var creditos = document.createElement("img");
-        	creditos.src = "assets/interface/Gameplay/creditos.png";
-        	creditos.style.marginLeft = "20px";
-        	
-        	/*var arcilla = document.createElement("img");
-        	arcilla.src = "assets/interface/Gameplay/arcilla.png";*/
-        	
-        	/*los span*/
-        	var numRankingValue = document.createTextNode((Math.round(i/2)+1));
-        	var numRanking = document.createElement("span");
-        	numRanking.style.marginTop = "00px";
-        	numRanking.appendChild(numRankingValue);
-        	
-        	var numRankingValue2 = document.createTextNode((Math.round(i/2)+1));
-        	var numRanking2 = document.createElement("span");
-        	numRanking2.style.marginLeft = "95px";
-        	numRanking2.style.marginTop = "00px";
-        	numRanking2.appendChild(numRankingValue2);
-        	
-        	
-        	contenido.appendChild(numRanking);
-        	contenido.appendChild(metal);
-        	contenido.appendChild(numRanking2);
-        	contenido.appendChild(creditos);
-        	
-        	divPuesto.appendChild(box);
-        	divPuesto.appendChild(contenido);
-        	
-        	divPuntuaciones.appendChild(divPuesto);
-    	}
+        if(game.global.offers.length == 0){
+        	console.log("NO HAY OFERTAS PARA COMPRAR");
+        }
         
-    	comprarContainer.add(element);
-    	
-    	
+        var ofertas = pedirOfertasNoJugador();
+        
+	    	for(var i = 0; i < ofertas.length; i++){
+	    		
+	    		let oferta = ofertas[i];
+	    		
+	    		let divPuesto = document.createElement("div");
+	    		divPuesto.style.marginTop = "35px";
+	    		divPuesto.style.cursor = "pointer";
+	    		
+	    		/*la imagen*/
+	    		let box = document.createElement("img");
+	        	box.src = "assets/interface/Gameplay/boxComercio.png";
+	        	box.style.marginLeft ="0px";
+	        	box.style.marginTop = "0px";
+	        	box.style.width = '100%';
+	        	box.style.height = 'auto';
+	        	box.indice = i;
+	        	box.onclick = function(){
+	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	        		box.parentElement.style.visibility = "hidden";
+	        	}
+	        	box.onmouseover = function(){
+	        		box.src = "assets/interface/Gameplay/boxComercioHover.png";
+	        	}
+	        	box.onmouseout = function(){
+	        		box.src = "assets/interface/Gameplay/boxComercio.png";
+	        	}
+	        	
+	        	
+	        	/*el div de los span*/
+	        	var contenido = document.createElement("div");
+	        	contenido.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+	        	
+	        	/*LOS ICONOS */
+	        	if(oferta.material == "metal"){
+	        		var metal = document.createElement("img");
+	            	metal.src = "assets/interface/Gameplay/metal.png";
+	            	metal.style.position = "absolute";
+	            	metal.style.left = "180px";
+	            	metal.indice = i;
+	            	metal.onclick = function(){
+	            		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	            		box.parentElement.style.visibility = "hidden";
+	            	}
+	        	}else{
+	        		var ceramica = document.createElement("img");
+	            	ceramica.src = "assets/interface/Gameplay/arcilla.png";
+	            	ceramica.style.position = "absolute";
+	            	ceramica.style.left = "180px";
+	            	ceramica.indice = i;
+	            	ceramica.onclick = function(){
+	            		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	            		box.parentElement.style.visibility = "hidden";
+	            	}
+	        	}
+	        	
+	        	var creditos = document.createElement("img");
+	        	creditos.src = "assets/interface/Gameplay/creditos.png";
+	        	creditos.style.position = "absolute";
+	        	creditos.style.left = "45px"; 
+	        	creditos.indice = i;
+	        	creditos.onclick = function(){
+	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	        		box.parentElement.style.visibility = "hidden";
+	        	}      	 	
+	        	
+	        	/*los span, en orden cantidad del recurso, cantidad de creditos a la que se venden*/
+	        	switch(i){
+	        	case 0:
+	        	case 7:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	case 1:
+	        	case 8:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	case 2:
+	        	case 9:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	case 3:
+	        	case 10:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	case 4:
+	        	case 11:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	case 5:
+	        	case 12:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	case 6:
+	        	case 13:
+	        		var numRankingValue = document.createTextNode(oferta.cantidad);
+	        		var numRankingValue2 = document.createTextNode(oferta.creditos);
+	        		break;
+	        	default:
+	        		break;
+	        	}
+	        	var numRanking = document.createElement("span");
+	        	numRanking.style.position = "absolute";
+	        	numRanking.style.top = "0px";
+	        	numRanking.style.left = "140px";
+	        	numRanking.indice = i;
+	        	numRanking.onclick = function(){
+	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	        		box.parentElement.style.visibility = "hidden";
+	        	}
+	        	numRanking.appendChild(numRankingValue);
+	        	
+	        	
+	        	var numRanking2 = document.createElement("span");
+	        	numRanking2.style.position = "absolute";
+	        	numRanking2.style.left = "0px";
+	        	numRanking2.style.top = "0px";
+	        	numRanking2.indice = i;
+	        	numRanking2.onclick = function(){
+	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
+	        		box.parentElement.style.visibility = "hidden";
+	        	}
+	        	numRanking2.appendChild(numRankingValue2);        
+	        	
+	        	contenido.appendChild(numRanking);
+	        	if(oferta.material == "metal"){
+	        		contenido.appendChild(metal);
+	        	}else{
+	        		contenido.appendChild(ceramica);
+	        	} 	
+	        	contenido.appendChild(numRanking2);
+	        	contenido.appendChild(creditos);
+	        	
+	        	divPuesto.appendChild(box);
+	        	divPuesto.appendChild(contenido);
+	        	
+	        	divPuntuaciones.appendChild(divPuesto);
+	    	}
+	        
+	    	this.comprarContainer.add(element);
+        
+        
     	
     	// CONTAINER VENDER
+    	
     	var elementV = this.add.dom(-370, 280).createFromCache('centroComercioMenuV');
         elementV.setPerspective(800);
         
         var divPuntuacionesV = document.getElementById("divPuntuacionesV");
-      	
-    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
-    		
+      	        
+    	for(var i = 0; i < 14; i++){   		
+    			    		
     		let divPuestoV = document.createElement("div");
+    		divPuestoV.style.marginTop = "35px";
+    		divPuestoV.style.cursor = "pointer";
     		
     		/*la imagen*/
-    		var boxV = document.createElement("img");
+    		let boxV = document.createElement("img");
         	boxV.src = "assets/interface/Gameplay/boxComercio.png";
         	boxV.style.marginLeft ="0px";
-        	boxV.style.marginTop = "16px";
+        	boxV.style.marginTop = "0px";
         	boxV.style.width = '100%';
         	boxV.style.height = 'auto';
+        	boxV.indice = i;
+        	boxV.onclick = function(){
+        		pasarAcrearOferta(boxV.indice);
+        	}
+        	boxV.onmouseover = function(){
+        		boxV.src = "assets/interface/Gameplay/boxComercioHover.png";
+        	}
+        	boxV.onmouseout = function(){
+        		boxV.src = "assets/interface/Gameplay/boxComercio.png";
+        	}
         	
         	/*el div de los span*/
         	var contenidoV = document.createElement("div");
         	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+        	
         	/*LOS ICONOS */
-        	var metalV = document.createElement("img");
-        	metalV.src = "assets/interface/Gameplay/metal.png";
-        	metalV.style.marginLeft = "20px";
+        	if(i < 14/2){
+        		var metalV = document.createElement("img");
+            	metalV.src = "assets/interface/Gameplay/metal.png";
+            	metalV.style.position = "absolute";
+            	metalV.style.left = "45px";
+            	metalV.indice = i;
+            	metalV.onclick = function(){
+            		pasarAcrearOferta(boxV.indice);
+            	}
+        	}else{
+        		var ceramicaV = document.createElement("img");
+            	ceramicaV.src = "assets/interface/Gameplay/arcilla.png";
+            	ceramicaV.style.position = "absolute";
+            	ceramicaV.style.left = "45px";
+            	ceramicaV.indice = i;
+            	ceramicaV.onclick = function(){
+            		pasarAcrearOferta(boxV.indice);
+            	}
+        	}
         	
         	var creditosV = document.createElement("img");
         	creditosV.src = "assets/interface/Gameplay/creditos.png";
-        	creditosV.style.marginLeft = "20px";
+        	creditosV.style.position = "absolute";
+        	creditosV.style.left = "170px"; 
+        	creditosV.indice = i;
+        	creditosV.onclick = function(){
+        		pasarAcrearOferta(boxV.indice);
+        	}
         	
-        	/*var arcillaV = document.createElement("img");
-        	arcillaV.src = "assets/interface/Gameplay/arcilla.png";*/
-        	
-        	/*los span*/
-        	var numRankingValueV = document.createTextNode((Math.round(i/2)+1));
+        	/*los span, en orden cantidad del recurso, cantidad de creditos a la que se venden*/
+        	switch(i){
+        	case 0:
+        	case 7:
+        		var numRankingValueV = document.createTextNode(25);
+        		var numRankingValue2V = document.createTextNode(100);
+        		break;
+        	case 1:
+        	case 8:
+        		var numRankingValueV = document.createTextNode(50);
+        		var numRankingValue2V = document.createTextNode(200);
+        		break;
+        	case 2:
+        	case 9:
+        		var numRankingValueV = document.createTextNode(75);
+        		var numRankingValue2V = document.createTextNode(300);
+        		break;
+        	case 3:
+        	case 10:
+        		var numRankingValueV = document.createTextNode(100);
+        		var numRankingValue2V = document.createTextNode(400);
+        		break;
+        	case 4:
+        	case 11:
+        		var numRankingValueV = document.createTextNode(200);
+        		var numRankingValue2V = document.createTextNode(800);
+        		break;
+        	case 5:
+        	case 12:
+        		var numRankingValueV = document.createTextNode(500);
+        		var numRankingValue2V = document.createTextNode(2000);
+        		break;
+        	case 6:
+        	case 13:
+        		var numRankingValueV = document.createTextNode(1000);
+        		var numRankingValue2V = document.createTextNode(4000);
+        		break;
+        	default:
+        		break;
+        	}
         	var numRankingV = document.createElement("span");
-        	numRankingV.style.marginTop = "00px";
+        	numRankingV.style.position = "absolute";
+        	numRankingV.style.top = "0px";
+        	numRankingV.style.left = "1px";
+        	numRankingV.indice = i;
+        	numRankingV.onclick = function(){
+        		pasarAcrearOferta(boxV.indice);
+        	}
         	numRankingV.appendChild(numRankingValueV);
         	
-        	var numRankingValue2V = document.createTextNode((Math.round(i/2)+1));
+        	
         	var numRanking2V = document.createElement("span");
-        	numRanking2V.style.marginLeft = "95px";
-        	numRanking2V.style.marginTop = "00px";
+        	numRanking2V.style.position = "absolute";
+        	numRanking2V.style.left = "130px";
+        	numRanking2V.style.top = "00px";
+        	numRanking2V.indice = i;
+        	numRanking2V.onclick = function(){
+        		pasarAcrearOferta(boxV.indice);
+        	}
         	numRanking2V.appendChild(numRankingValue2V);
         	
         	
         	contenidoV.appendChild(numRankingV);
-        	contenidoV.appendChild(metalV);
+        	if(i < 14/2){
+        		contenidoV.appendChild(metalV);
+        	}else{
+        		contenidoV.appendChild(ceramicaV);
+        	} 	
         	contenidoV.appendChild(numRanking2V);
         	contenidoV.appendChild(creditosV);
         	
@@ -319,6 +402,63 @@ class CentroComercioMenu extends Phaser.Scene {
     	venderContainer.add(elementV);
     	venderContainer.visible = false;
     	
+    	function pasarAcrearOferta(indice){
+    		
+    		let oferta = [];
+    		
+    		console.log("INDICEEEEEEE" +indice);
+    		
+    		switch(indice){
+        	case 0:
+        	case 7:
+        		oferta[0] = 25;
+        		oferta[1] = 100;
+        		break;
+        	case 1:
+        	case 8:
+        		oferta[0] = 50;
+        		oferta[1] = 200;
+        		break;
+        	case 2:
+        	case 9:
+        		oferta[0] = 75;
+        		oferta[1] = 300;
+        		break;
+        	case 3:
+        	case 10:
+        		oferta[0] = 100;
+        		oferta[1] = 400;
+        		break;
+        	case 4:
+        	case 11:
+        		oferta[0] = 200;
+        		oferta[1] = 800;
+        		break;
+        	case 5:
+        	case 12:
+        		oferta[0] = 500;
+        		oferta[1] = 2000;
+        		break;
+        	case 6:
+        	case 13:
+        		oferta[0] = 1000;
+        		oferta[1] = 4000;
+        		break;
+        	default:
+        		break;
+        	}
+    		
+    		if(indice < 14/2){
+    			oferta[2] = "metal";
+    		}else{
+    			oferta[2] = "ceramica";
+    		}
+		
+    		console.log(oferta[0]+", "+oferta[1]+", "+oferta[2])
+    		//cantidad, recurso, creditos a cambio
+        	crearOferta(oferta[0], oferta[2], oferta[1], data.miEdificio.id);
+    	}
+    	
     	
     	// CONTAINER OFERTAS
     	var elementO = this.add.dom(-370, 280).createFromCache('centroComercioMenuO');
@@ -326,57 +466,168 @@ class CentroComercioMenu extends Phaser.Scene {
         
         var divPuntuacionesO = document.getElementById("divPuntuacionesO");
       	
-    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
+        if(game.global.offers.length == 0){
+        	console.log("NO HAY OFERTAS PARA ELIMINAR");
+        }
+        
+        var ofertasJugador = pedirOfertasJugador();
+        
+    	for(var i = 0; i < ofertasJugador.length; i++){
+    		
+    		let oferta = ofertasJugador[i];
     		
     		let divPuestoO = document.createElement("div");
+    		divPuestoO.style.marginTop = "35px";
+    		divPuestoO.style.cursor = "pointer";       	
     		
-    		/*la imagen*/
-    		var boxO = document.createElement("img");
-        	boxO.src = "assets/interface/Gameplay/boxComercio2.png";
+    		let boxO = document.createElement("img");
+        	boxO.src = "assets/interface/Gameplay/boxComercio.png";
         	boxO.style.marginLeft ="0px";
-        	boxO.style.marginTop = "16px";
+        	boxO.style.marginTop = "0px";
         	boxO.style.width = '100%';
         	boxO.style.height = 'auto';
+        	boxO.indice = i;
+        	boxO.onclick = function(){
+        		boxO.parentElement.style.visibility = "hidden";
+        		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        	}
+        	boxO.onmouseover = function(){
+        		boxO.src = "assets/interface/Gameplay/boxComercioBorrar.png";
+        		if(metalO != undefined){
+        			metalO.style.visible = "hidden";
+        		}
+        		if(ceramicaO != undefined){
+        			ceramicaO.style.visible = "hidden";
+        		}
+        		creditosO.style.visible = "hidden";
+        		numRankingO.style.visible = "hidden";
+        		numRanking2O.style.visible = "hidden";
+        	}
+        	boxO.onmouseout = function(){
+        		boxO.src = "assets/interface/Gameplay/boxComercio.png";
+        		if(metalO != undefined){
+        			metalO.style.visible = "visible";
+        		}
+        		if(ceramicaO != undefined){
+        			ceramicaO.style.visible = "visible";
+        		}
+        		creditosO.style.visible = "visible";
+        		numRankingO.style.visible = "visible";
+        		numRanking2O.style.visible = "visible";
+        	}
         	
         	/*el div de los span*/
         	var contenidoO = document.createElement("div");
         	contenidoO.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+        	
         	/*LOS ICONOS */
-        	var metalO = document.createElement("img");
-        	metalO.src = "assets/interface/Gameplay/metal.png";
-        	metalO.style.marginLeft = "10px";
+        	if(oferta.material == "metal"){
+        		var metalO = document.createElement("img");
+            	metalO.src = "assets/interface/Gameplay/metal.png";
+            	metalO.style.position = "absolute";
+            	metalO.style.left = "180px";
+            	metalO.indice = i;
+            	metalO.onclick = function(){
+            		borrarOferta(oferta.idOferta, data.miEdificio.id);
+            		boxO.parentElement.style.visibility = "hidden";
+            	}
+            	
+            }else{
+        		var ceramicaO = document.createElement("img");
+            	ceramicaO.src = "assets/interface/Gameplay/arcilla.png";
+            	ceramicaO.style.position = "absolute";
+            	ceramicaO.style.left = "180px";
+            	ceramicaO.indice = i;
+            	ceramicaO.onclick = function(){
+            		borrarOferta(oferta.idOferta, data.miEdificio.id);
+            		boxO.parentElement.style.visibility = "hidden";
+            	}
+            }
         	
-        	var creditosO = document.createElement("img");
-        	creditosO.src = "assets/interface/Gameplay/creditos.png";
-        	creditosO.style.marginLeft = "10px";
+            var creditosO = document.createElement("img");
+            creditosO.src = "assets/interface/Gameplay/creditos.png";
+            creditosO.style.position = "absolute";
+            creditosO.style.left = "45px"; 
+            creditosO.indice = i;
+            creditosO.onclick = function(){
+            	borrarOferta(oferta.idOferta, data.miEdificio.id);
+            	boxO.parentElement.style.visibility = "hidden";
+            }     
         	
-        	/*var arcillaO = document.createElement("img");
-        	arcillaO.src = "assets/interface/Gameplay/arcilla.png";*/
-        	
-        	/*los span*/
-        	var numRankingValueO = document.createTextNode((Math.round(i/2)+1));
+
+            /*los span*/
+        	switch(i){
+        	case 0:
+        	case 7:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	case 1:
+        	case 8:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	case 2:
+        	case 9:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	case 3:
+        	case 10:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	case 4:
+        	case 11:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	case 5:
+        	case 12:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	case 6:
+        	case 13:
+        		var numRankingValueO = document.createTextNode(oferta.cantidad);
+        		var numRankingValue2O = document.createTextNode(oferta.creditos);
+        		break;
+        	default:
+        		break;
+        	}
         	var numRankingO = document.createElement("span");
-        	numRankingO.style.marginTop = "00px";
+        	numRankingO.style.position = "absolute";
+        	numRankingO.style.top = "0px";
+        	numRankingO.style.left = "140px";
+        	numRankingO.indice = i;
+        	numRankingO.onclick = function(){
+        		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        		boxO.parentElement.style.visibility = "hidden";
+        	}
         	numRankingO.appendChild(numRankingValueO);
         	
-        	var numRankingValue2O = document.createTextNode((Math.round(i/2)+1));
+        	
         	var numRanking2O = document.createElement("span");
-        	numRanking2O.style.marginLeft = "40px";
-        	numRanking2O.style.marginTop = "00px";
-        	numRanking2O.appendChild(numRankingValue2O);
-        	 
-        	var cancelar = document.createElement("img");
-        	cancelar.src = "assets/interface/Gameplay/cancelar.png";
-        	cancelar.style.marginLeft = "15px";
-        	cancelar.style.width = "70px";
-        	cancelar.style.height = "auto";
+        	numRanking2O.style.position = "absolute";
+        	numRanking2O.style.left = "0px";
+        	numRanking2O.style.top = "0px";
+        	numRanking2O.indice = i;
+        	numRanking2O.onclick = function(){
+        		borrarOferta(oferta.idOferta, data.miEdificio.id);
+        		boxO.parentElement.style.visibility = "hidden";
+        	}
+        	numRanking2O.appendChild(numRankingValue2O); 
+        	
         	
         	
         	contenidoO.appendChild(numRankingO);
-        	contenidoO.appendChild(metalO);
+        	if(oferta.material == "metal"){
+        		contenidoO.appendChild(metalO);
+        	}else{
+        		contenidoO.appendChild(ceramicaO);
+        	} 	
         	contenidoO.appendChild(numRanking2O);
         	contenidoO.appendChild(creditosO);
-        	contenidoO.appendChild(cancelar);
         	
         	divPuestoO.appendChild(boxO);
         	divPuestoO.appendChild(contenidoO);
@@ -471,6 +722,5 @@ class CentroComercioMenu extends Phaser.Scene {
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();
     	}
-    }
-
+    }  
 }
