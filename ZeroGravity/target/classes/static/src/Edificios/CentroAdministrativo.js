@@ -7,7 +7,11 @@ class CentroAdministrativo extends Edificio{
 		super.width = 2;
 		super.level = 1;
 		super.sprite = 'centroAdministrativo';
+		super.buildingSprite = 'enConstruccion2';
 		super.menuScene = 'CentroAdministrativoMenu';
 		super.originX = 0.67;
+		this.costes = [[5, 0],
+			[5, 0],
+			[5, 0]];
 	}
 }

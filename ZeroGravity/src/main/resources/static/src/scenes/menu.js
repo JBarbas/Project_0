@@ -25,11 +25,16 @@ class MenuScene extends Phaser.Scene {
 
         element.setPerspective(800);
     	
-    	
-    	
-    	var jugar = document.getElementById("jugartxt");
+    	var jugar = document.getElementById("jugartxt")
+        var boxe = element.node.children[1];
+        boxe.children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('jugar')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[0].dataset.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('jugar')[0].childNodes[0].nodeValue;
     	var opciones = document.getElementById("opcionestxt");
+        boxe.children[1].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('opciones')[0].childNodes[0].nodeValue;
+        boxe.children[1].children[0].dataset.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('opciones')[0].childNodes[0].nodeValue;
     	var creditos = document.getElementById("creditostxt");
+        boxe.children[2].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue;
+        boxe.children[2].children[0].dataset.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue;
 
     	var size = '50px';
     	

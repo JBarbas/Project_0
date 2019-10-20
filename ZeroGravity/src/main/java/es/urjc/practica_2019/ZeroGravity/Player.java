@@ -44,6 +44,9 @@ public class Player {
 	private LinkedList<BloqueViviendas> viviendas = new LinkedList<>();
 	private LinkedList<Generador> generadores = new LinkedList<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
+	private CentroAdministrativo centroAdministrativo = new CentroAdministrativo(this, 8, 8, centroMando, edificioId.incrementAndGet());
+	private CentroComercio centroComercio = new CentroComercio(this, 8, 12, centroMando, edificioId.incrementAndGet());
+	private CentroOperaciones centroOperaciones = new CentroOperaciones(this, 10, 7, centroMando, edificioId.incrementAndGet());
 	
 	private int energia = 0;
 	private int metal = 100;
@@ -172,7 +175,7 @@ public class Player {
 		this.ceramica = ceramica;
 	}
 
-	public int getEnergia() {
+	public synchronized int getEnergia() {
 		energia = 0;
 		for (Generador g : generadores) {
 			energia += g.getEnergy();
@@ -283,7 +286,16 @@ public class Player {
 		
 		//Introducimos el Centro de Mando
 		edificios.put(this.centroMando.getId(), this.centroMando);
-		grid = this.centroMando.build(grid, this.centroMando.getX(), this.centroMando.getY());		
+		grid = this.centroMando.build(grid, this.centroMando.getX(), this.centroMando.getY());	
+		
+		edificios.put(this.centroAdministrativo.getId(), this.centroAdministrativo);
+		grid = this.centroAdministrativo.build(grid, this.centroAdministrativo.getX(), this.centroAdministrativo.getY());	
+
+		edificios.put(this.centroComercio.getId(), this.centroComercio);
+		grid = this.centroComercio.build(grid, this.centroComercio.getX(), this.centroComercio.getY());	
+		
+		edificios.put(this.centroOperaciones.getId(), this.centroOperaciones);
+		grid = this.centroOperaciones.build(grid, this.centroOperaciones.getX(), this.centroOperaciones.getY());	
 		return grid;
 	}
 	
@@ -379,13 +391,13 @@ public class Player {
 				edificio = new CentroMando(e.getInteger("x"), e.getInteger("y"), e.getInteger("id"));
 				break;
 			case "centroOperaciones":
-				edificio = new CentroOperaciones(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new CentroOperaciones(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
 			case "centroAdministrativo":
-				edificio = new CentroAdministrativo(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new CentroAdministrativo(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
 			case "bloqueViviendas":
-				edificio = new BloqueViviendas(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new BloqueViviendas(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				edificio.setLevel(e.getInteger("level", 1));
 				((BloqueViviendas) edificio).setColonos(e.getInteger("colonos", 0));
 				colonosMax += ((BloqueViviendas) edificio).getCapacidad();
@@ -424,14 +436,17 @@ public class Player {
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "centroComercio":
-				edificio = new CentroComercio(e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
+				edificio = new CentroComercio(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
 				break;
 			default:
 				break;
 			}
 			edificio.setLevel(e.getInteger("level", 1));
+			edificio.setEnConstruccion(e.getBoolean("enConstruccion", false));
+			edificio.setBuildingBeginTime((Document) e.get("buildingBeginTime")); 
 			this.edificios.put(edificio.getId(), edificio);
 		}
+		saveEdificios();
 	}
 	
 	public void build(int x, int y, String sprite, int id) {
@@ -443,14 +458,14 @@ public class Player {
 				edificio = new CentroMando(x, y, edificioId.incrementAndGet());
 				break;
 			case "centroOperaciones":
-				edificio = new CentroOperaciones(x, y, this.centroMando, edificioId.incrementAndGet());
+				edificio = new CentroOperaciones(this, x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			case "centroAdministrativo":
-				edificio = new CentroAdministrativo(x, y, this.centroMando, edificioId.incrementAndGet());
+				edificio = new CentroAdministrativo(this, x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			case "bloqueViviendas":
-				edificio = new BloqueViviendas(x, y, this.centroMando, edificioId.incrementAndGet());
-				colonosMax += ((BloqueViviendas) edificio).getCapacidad();
+				edificio = new BloqueViviendas(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				//colonosMax += ((BloqueViviendas) edificio).getCapacidad();
 				viviendas.add((BloqueViviendas) edificio);
 				break;
 			case "taller":
@@ -472,7 +487,7 @@ public class Player {
 				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "centroComercio":
-				edificio = new CentroComercio(x, y, this.centroMando, edificioId.incrementAndGet());
+				edificio = new CentroComercio(this, x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			default:
 				break;
@@ -570,6 +585,14 @@ public class Player {
 			}
 			dbEdificio.append("sprite", e.getSprite());
 			dbEdificio.append("level", e.getLevel());
+			dbEdificio.append("enConstruccion", e.isEnConstruccion());
+			Document buildingBeginTime = new Document();
+			buildingBeginTime.append("year", e.getBuildingBeginTime().getYear());
+			buildingBeginTime.append("month", e.getBuildingBeginTime().getMonthValue());
+			buildingBeginTime.append("day", e.getBuildingBeginTime().getDayOfMonth());
+			buildingBeginTime.append("hour", e.getBuildingBeginTime().getHour());
+			buildingBeginTime.append("minute", e.getBuildingBeginTime().getMinute());
+			dbEdificio.append("buildingBeginTime", buildingBeginTime);
 			dbEdificios.add(dbEdificio);
 		}
 		// Actualizamos la info en la BDD

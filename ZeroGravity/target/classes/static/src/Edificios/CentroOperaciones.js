@@ -7,6 +7,10 @@ class CentroOperaciones extends Edificio{
 		super.width = 1;
 		super.level = 1;
 		super.sprite = 'centroOperaciones';
+		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'CentroOperacionesMenu';
+		this.costes = [[5, 0],
+			[5, 0],
+			[5, 0]];
 	}
 }

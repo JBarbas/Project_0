@@ -108,11 +108,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	var element = this.add.dom(-370, 280).createFromCache('centroComercioMenu');
         element.setPerspective(800);
         
-        var divPuntuaciones = document.getElementById("divPuntuaciones");
-      	
-        if(game.global.offers.length == 0){
-        	console.log("NO HAY OFERTAS PARA COMPRAR");
-        }
+        var divPuntuaciones = document.getElementById("divPuntuaciones");     	       
         
         var ofertas = pedirOfertasNoJugador();
         
@@ -423,9 +419,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	function pasarAcrearOferta(indice){
     		
     		let oferta = [];
-    		
-    		console.log("INDICEEEEEEE" +indice);
-    		
+    		    		
     		switch(indice){
         	case 0:
         	case 7:
@@ -472,7 +466,6 @@ class CentroComercioMenu extends Phaser.Scene {
     			oferta[2] = "ceramica";
     		}
 		
-    		console.log(oferta[0]+", "+oferta[1]+", "+oferta[2])
     		//cantidad, recurso, creditos a cambio
         	crearOferta(oferta[0], oferta[2], oferta[1], data.miEdificio.id);
     	}
@@ -483,10 +476,6 @@ class CentroComercioMenu extends Phaser.Scene {
         elementO.setPerspective(800);
         
         var divPuntuacionesO = document.getElementById("divPuntuacionesO");
-      	
-        if(game.global.offers.length == 0){
-        	console.log("NO HAY OFERTAS PARA ELIMINAR");
-        }
         
         var ofertasJugador = pedirOfertasJugador();
         

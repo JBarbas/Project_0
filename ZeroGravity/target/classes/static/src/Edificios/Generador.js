@@ -7,10 +7,14 @@ class Generador extends GeneradorRecursos {
 		super.width = 1;
 		super.level = 1;
 		super.sprite = 'generador';
+		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'GeneradorMenu';
 		super.resourceSprite = '';
 		this.recursos = [[0, 0],
 						[0, 0],
 						[0, 0]];
+		this.costes = [[5, 0],
+						[5, 0],
+						[5, 0]];
 	}
 }

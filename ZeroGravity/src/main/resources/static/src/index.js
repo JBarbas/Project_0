@@ -61,7 +61,7 @@ window.onload = function() {
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : false,
+		DEBUG_MODE : true,
 		ONLY_GAME_MODE : false,
 		SKIP_INTRO: false,
 		socket : null,
@@ -257,6 +257,8 @@ window.onload = function() {
 				}
 				edificio.level = e.level;
 				edificio.id = e.id;
+				edificio.enConstruccion = e.enConstruccion;
+				edificio.inicioConstruccion = Date.UTC(e.construccionDateYear, e.construccionDateMonth-1, e.construccionDateDay, e.construccionDateHour-2, e.construccionDateMinute+1, 0);
 				game.global.edificios.set(edificio.id, edificio);
 			}
 			game.global.loaded = true;
@@ -303,6 +305,8 @@ window.onload = function() {
 						break;
 					}
 					edificio.id = e.id;
+					edificio.enConstruccion = e.enConstruccion;
+					edificio.inicioConstruccion = Date.UTC(e.construccionDateYear, e.construccionDateMonth-1, e.construccionDateDay, e.construccionDateHour-2, e.construccionDateMinute+1, 0);
 					game.global.edificios.set(edificio.id, edificio);
 				}
 				else {
@@ -326,15 +330,58 @@ window.onload = function() {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
 				console.dir(msg);
 			}
-			game.global.resources.energia = msg.energia;
-			game.global.resources.metal = msg.metal;
-			game.global.resources.ceramica = msg.ceramica;
-			game.global.resources.creditos = msg.creditos;
-			game.global.resources.unionCoins = msg.unionCoins;
-			game.global.resources.colonos = msg.colonos;
-			game.global.puntuacion = msg.punctuacion;
-			break;
 			
+			if(game.global.resources.energia != msg.energia){
+				game.global.resources.energia = msg.energia;
+				particulasRecurso("energia");
+			}
+			if(game.global.resources.metal != msg.metal){
+				game.global.resources.metal = msg.metal;
+				particulasRecurso("metal");
+			}
+			if(game.global.resources.ceramica != msg.ceramica){
+				game.global.resources.ceramica = msg.ceramica;
+				particulasRecurso("ceramica");
+			}
+			if(game.global.resources.creditos != msg.creditos){
+				game.global.resources.creditos = msg.creditos;
+				particulasRecurso("creditos");
+			}
+			if(game.global.resources.unionCoins != msg.unionCoins){
+				game.global.resources.unionCoins = msg.unionCoins;
+				particulasRecurso("unionCoins");
+			}
+			if(game.global.resources.colonos != msg.colonos){
+				game.global.resources.colonos = msg.colonos;
+				particulasRecurso("colonos");
+			}
+			game.global.puntuacion = msg.punctuacion;
+			break;			
+		case 'CONSTRUYENDO EDIFICIO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CONSTRUYENDO EDIFICIO message recieved');
+				console.dir(msg);
+			}
+			if (typeof game.global.edificios !== 'undefined') {
+				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.edificios.get(msg.id).enConstruccion = true;
+					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
+				}
+			}
+			break;
+		case 'EDIFICIO CONSTRUIDO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] EDIFICIO CONSTRUIDO message recieved');
+				console.dir(msg);
+			}
+			if (typeof game.global.edificios !== 'undefined') {
+				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.edificios.get(msg.id).enConstruccion = false;
+					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
+					clearInterval(game.global.edificios.get(msg.id).interval);
+				}
+			}
+			break;
 		case 'EDIFICIO PRODUCIENDO':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] EDIFICIO PRODUCIENDO message recieved');
@@ -408,6 +455,7 @@ window.onload = function() {
 			}
 			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.ceramica = msg.ceramica;
+			particulasRecursos("ceramica");
 			pedirPuntuaciones()
 			break;
 		case 'CREDITOS RECOLECTADOS':
@@ -417,6 +465,7 @@ window.onload = function() {
 			}
 			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.creditos = msg.creditos;
+			particulasRecursos("creditos");
 			pedirPuntuaciones()
 			break;
 		case 'METAL RECOLECTADO':
@@ -426,6 +475,7 @@ window.onload = function() {
 			}
 			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.metal = msg.metal;
+			particulasRecursos("metal");
 			if (game.scene.isActive('TallerMenu')) {
 				game.scene.stop('TallerMenu');
 				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
@@ -437,8 +487,10 @@ window.onload = function() {
 				console.log('[DEBUG] PLATAFORMA EXTRACCION MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("PlataformaExtraccionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
-			game.scene.getScene("PlataformaExtraccionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
+			if (!game.global.edificios.get(msg.id).enConstruccion) {
+				game.scene.getScene("PlataformaExtraccionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+				game.scene.getScene("PlataformaExtraccionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
+			}
 			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
 			break;
 		case 'LABORATORIO INVESTIGACION MENU':
@@ -455,7 +507,9 @@ window.onload = function() {
 				console.log('[DEBUG] BLOQUE VIVIENDAS MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("BloqueViviendasMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			if (!game.global.edificios.get(msg.id).enConstruccion) {
+				game.scene.getScene("BloqueViviendasMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			}
 			break;
 		case 'TALLER MENU':
 			if (game.global.DEBUG_MODE) {
@@ -564,7 +618,9 @@ window.onload = function() {
 				console.log('[DEBUG] GENERADOR MENU message recieved');
 				console.dir(msg);
 			}
-			game.scene.getScene("GeneradorMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			if (!game.global.edificios.get(msg.id).enConstruccion) {
+				game.scene.getScene("GeneradorMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+			}
 			if (msg.colonos.split("/")[0] >= msg.colonos.split("/")[1]) {
 				game.global.edificios.get(msg.id).produciendo = true;
 			}
@@ -620,6 +676,8 @@ window.onload = function() {
 			}
 			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.colonos = msg.colonos;
+			particulasRecurso("colonos");
+
 			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('capuestos')[0].childNodes[0].nodeValue + msg.jobs;
 			let viviendas2 = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
 			game.scene.getScene("CentroAdministrativoMenu").viviendas.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('caviviendas')[0].childNodes[0].nodeValue + viviendas2;
@@ -699,7 +757,6 @@ window.onload = function() {
 		case 'ALL PUNCTUATIONS':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] ALL PUNCTUATIONS message recieved');
-				console.log('PUNTUACIONES:' + msg.todasLasPuntuaciones);
 			}
 			game.global.mejoresPuntuaciones = [];
 			let arrayAux = msg.todasLasPuntuaciones.split("\n");

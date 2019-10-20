@@ -48,6 +48,10 @@ class RegisterScene extends Phaser.Scene {
 
         element.setPerspective(800);
         
+        var boxe = element.node.children[1];
+        boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('user')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('pass')[0].childNodes[0].nodeValue;
+        
         buttonR.on('pointerdown', function(pointer, localX, localY, event){
         	game.global.sound = game.sound.play('pulsarBoton');
         	var inputUsername = element.getChildByName('username');

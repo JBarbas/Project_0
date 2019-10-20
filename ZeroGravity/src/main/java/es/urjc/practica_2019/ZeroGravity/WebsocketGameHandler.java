@@ -53,7 +53,7 @@ import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 public class WebsocketGameHandler extends TextWebSocketHandler{
 	
 	/*Puntuaciones: construir edificio, subir de nivel edificio, recolectar recursos, ampliar la base, comprar una oferta*/
-	private static final int[] PUNTUACIONES = {1, 2, 3, 4, 5};
+	private static final int[] PUNTUACIONES = {2, 4, 1, 10, 2};
 	private static final int NIVEL_MAX_EDIFICIO = 3;
 	private static final int NUM_MAX_PUNTUACIONES_MOSTRAR = 15;
 	
@@ -838,6 +838,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}
 				jsonEdificio.put("sprite", e.getSprite());
 				jsonEdificio.put("level", e.getLevel());
+				jsonEdificio.put("enConstruccion", e.isEnConstruccion());
+				jsonEdificio.put("construccionDateYear", e.getBuildingBeginTime().getYear());
+				jsonEdificio.put("construccionDateMonth", e.getBuildingBeginTime().getMonthValue());
+				jsonEdificio.put("construccionDateDay", e.getBuildingBeginTime().getDayOfMonth());
+				jsonEdificio.put("construccionDateHour", e.getBuildingBeginTime().getHour());
+				jsonEdificio.put("construccionDateMinute", e.getBuildingBeginTime().getMinute());
 				arrayNodeEdificios.addPOJO(jsonEdificio);
 
 			}
