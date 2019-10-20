@@ -119,6 +119,15 @@ class OptionsScene extends Phaser.Scene {
 
         this.element.setPerspective(800);
         
+        var boxe = this.element.node.children[1];
+        boxe.children[0].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('si')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('no')[0].childNodes[0].nodeValue;
+
+        boxe.children[0].children[1].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('user')[0].childNodes[0].nodeValue;
+        
+        boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('conact')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[3].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('connueva')[0].childNodes[0].nodeValue;
+        
 		generalContainer.add(this.element);
 		
 		btnModificar.on('pointerover',function(pointer){
@@ -149,7 +158,7 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	var textPassword = this.element.getChildByName("password");    	
-    	var textNewPassword = this.element.getChildByName("password1");    	2
+    	var textNewPassword = this.element.getChildByName("password1");
     	
     	btnModificar2.on('pointerdown',function(pointer){
     		if (textPassword.value !== '' && textNewPassword.value !== '') {
@@ -210,17 +219,41 @@ class OptionsScene extends Phaser.Scene {
         soundContainer.visible = false;
         languageContainer.visible = false;
 		soundContainer.add(this.elementS);
-		
-		
-		
 
 		this.elementL = this.add.dom(0, 200).createFromCache('optionsformL');
         this.elementL.setPerspective(800);
+
+        // Se cambian los textos al contenido xml y se cambia de idioma al seleccionar el boton
+        var boxe = this.elementL.node.children[1];
+        boxe.children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('esp')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[0].onclick = function(){
+        	game.global.idioma = "esp";
+        	if(game.global.inGame){
+    			game.scene.run('GameInterface');
+    			game.scene.run('GameScene');
+        		game.scene.stop('OptionsScene');
+    		}
+    		else{
+    			game.scene.run('MenuScene');
+    			game.scene.stop('OptionsScene');
+    		}
+        };
+        boxe.children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('eng')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[1].onclick = function(){
+        	game.global.idioma = "eng";
+        	if(game.global.inGame){
+    			game.scene.run('GameInterface');
+    			game.scene.run('GameScene');
+        		game.scene.stop('OptionsScene');
+    		}
+    		else{
+    			game.scene.run('MenuScene');
+    			game.scene.stop('OptionsScene');
+    		}
+        };
         
         languageContainer.add(this.elementL);
 		
-		
-    
     	
     }
     update(time, delta) {

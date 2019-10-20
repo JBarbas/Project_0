@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <patata>
+	<dificultad>
+		<prin>PRINCIPIANTE</prin>
+		<prinDesc>DESACTIVADO</prinDesc>
+		<vet>VETERANO</vet>
+		<vetDesc>¿Quieres que Polaris no sea tan solo un paseo espacial? Elige esta dificultad y gestiona tus recursos mientras luchas contra las catástrofes de este peculiar planeta.</vetDesc>
+		<exp>EXPERTO</exp>
+		<expDesc>DESACTIVADO</expDesc>
+	</dificultad>
+	<menu>
+		<jugar>JUGAR</jugar>
+		<opciones>OPCIONES</opciones>
+		<creditos>CRÉDITOS</creditos>
+	</menu>
+	<opciones>
+		<esp>Español</esp>
+		<eng>Inglés</eng>
+		<si>Si</si>
+		<no>No</no>
+		<conact>Contraseña actual</conact>
+		<connueva>Contraseña nueva</connueva>
+	</opciones>
 	<login>
 		<reg>REGÍSTRATE</reg>
+		<user>Nombre de Usuario</user>
+		<pass>Contraseña</pass>
 	</login>
 	<edificios>
 		<taller>Taller</taller>

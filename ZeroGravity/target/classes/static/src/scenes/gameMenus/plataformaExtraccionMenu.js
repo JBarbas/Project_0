@@ -163,10 +163,10 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 	    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.level-1][0] + this.cache.xml.get(game.global.idioma).getElementsByTagName('recoCera')[0].childNodes[0].nodeValue;
 	    	}
 	    	else if (this.timeLeft < 1) {
-	    		this.times[i].timeLeftText.text = this.cache.xml.get(game.global.idioma).getElementsByTagName('almCera')[0].childNodes[0].nodeValue;
+	    		this.timeLeftText.text = this.cache.xml.get(game.global.idioma).getElementsByTagName('almCera')[0].childNodes[0].nodeValue;
 	    	}
 	    	else {
-	    		this.times[i].timeLeftText.text = this.cache.xml.get(game.global.idioma).getElementsByTagName('tiemporestante')[0].childNodes[0].nodeValue + this.times[i].timeLeft + this.cache.xml.get(game.global.idioma).getElementsByTagName('tiempominutos')[0].childNodes[0].nodeValue;
+	    		this.timeLeftText.text = this.cache.xml.get(game.global.idioma).getElementsByTagName('tiemporestante')[0].childNodes[0].nodeValue + this.timeLeft + this.cache.xml.get(game.global.idioma).getElementsByTagName('tiempominutos')[0].childNodes[0].nodeValue;
 	    	}
 	    	this.timeLeftText.visible = !this.miEdificio.lleno;
     	}

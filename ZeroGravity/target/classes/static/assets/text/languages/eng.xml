@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <patata>
+	<dificultad>
+		<prin>BEGINNER</prin>
+		<prinDesc>DISABLED</prinDesc>
+		<vet>VETERAN</vet>
+		<vetDesc>Do you want Polaris to be more than just a spacewalk? Choose this difficulty and manage your resources while fighting the catastrophes of this peculiar planet.</vetDesc>
+		<exp>EXPERT</exp>
+		<expDesc>DISABLED</expDesc>
+	</dificultad>
+	<menu>
+		<jugar>PLAY</jugar>
+		<opciones>OPTIONS</opciones>
+		<creditos>CREDITS</creditos>
+	</menu>
+	<opciones>
+		<esp>Spanish</esp>
+		<eng>English</eng>
+		<si>Yes</si>
+		<no>No</no>
+		<conact>Current password</conact>
+		<connueva>New password</connueva>
+	</opciones>
 	<login>
 		<reg>SIGN UP</reg>
+		<user>Username</user>
+		<pass>Password</pass>
 	</login>
 	<edificios>
 		<taller>Workshop</taller>
