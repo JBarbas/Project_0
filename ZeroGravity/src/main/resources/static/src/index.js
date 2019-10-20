@@ -130,7 +130,7 @@ window.onload = function() {
 	}
 	
 	//WEBSOCKET CONFIGURATOR
-	game.global.socket = new WebSocket("ws://" + location.href.substring(7) + "/polaris")
+	game.global.socket = new WebSocket("ws://" + location.href.substring(7).split("/")[0] + "/polaris")
 	
 	game.global.socket.onopen = () => {
 		if (game.global.DEBUG_MODE) {
@@ -178,6 +178,14 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			alert(msg.data);
+			break;
+		case 'UPDATE USERNAME RESPONSE':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
+				console.dir(msg);
+			}
+			alert(msg.resultado);
+			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] PLAYER INFO message recieved')
