@@ -60,6 +60,7 @@ class GameInterface extends Phaser.Scene {
     	})
     	
     	btnRanking.on('pointerdown', function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.getScene('GameInterface').panel.alpha = 0.0;
     		//start scene
     		game.global.inMenu = true;
@@ -73,6 +74,7 @@ class GameInterface extends Phaser.Scene {
     	});
     	
     	btnAnuncios.on('pointerdown', function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.getScene('GameInterface').panel.alpha = 0.0;
     		
     		//start scene
@@ -88,6 +90,7 @@ class GameInterface extends Phaser.Scene {
     	
 
     	btnMision.on('pointerdown', function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.getScene('GameInterface').panel.alpha = 0.0;
     		
     		//start scene
@@ -104,6 +107,7 @@ class GameInterface extends Phaser.Scene {
     	
     	
     	btnOpciones.on('pointerdown', function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.run('OptionsScene');
     		game.scene.stop('GameInterface');
     		game.scene.stop('GameScene');

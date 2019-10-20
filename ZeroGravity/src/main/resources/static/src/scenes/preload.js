@@ -66,6 +66,7 @@ class PreloadScene extends Phaser.Scene {
 		
 		//Sound
 		this.load.audio('soundtrack', ['assets/sound/soundtrack.mp3', '']);
+		this.load.audio('intro', ['assets/sound/Intro.mp3', '']);
 		this.load.audio('cambianRecursos', ['assets/sound/cambianRecursos.wav', '']);
 		this.load.audio('comprar', ['assets/sound/comprar.wav', '']);
 		this.load.audio('confirmar', ['assets/sound/confirmar.wav', '']);
@@ -89,12 +90,12 @@ class PreloadScene extends Phaser.Scene {
 			game.scene.run('PreloadGameScene');
 		}
 		else if (game.global.SKIP_INTRO) {
+			game.global.sound = game.sound.play('pulsarBoton');
 			game.global.music = game.sound.play('soundtrack');
 			
 			game.scene.run('LogInScene');
 		}
 		else {
-			game.global.sound = game.sound.play('pulsarBoton');
 			game.global.music = game.sound.play('soundtrack');
 			game.scene.run('IntroScene');
 		}

@@ -24,6 +24,7 @@ class LogInScene extends Phaser.Scene {
     	var registro = this.add.text(920, 900, game.cache.xml.get(game.global.idioma).getElementsByTagName('reg')[0].childNodes[0].nodeValue, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' });
     	
     	button.on('pointerover',function(pointer){
+    		
     	    button.setFrame(1);
     	})
 
@@ -39,6 +40,7 @@ class LogInScene extends Phaser.Scene {
     	registro.setFontSize(size);
     	
     	registro.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.run('RegisterScene');
     		game.scene.stop('LogInScene');
     	});
@@ -57,6 +59,7 @@ class LogInScene extends Phaser.Scene {
         var scene = this;
 
         button.on('pointerdown', function(pointer, localX, localY, event){
+        	game.global.sound = game.sound.play('pulsarBoton');
         	var inputUsername = element.getChildByName('username');
             var inputPassword = element.getChildByName('password');
 

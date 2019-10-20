@@ -39,6 +39,7 @@ class RegisterScene extends Phaser.Scene {
     	})
     	
     	back.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		game.scene.run('LogInScene');
     		game.scene.stop('RegisterScene');
     	});
@@ -48,6 +49,7 @@ class RegisterScene extends Phaser.Scene {
         element.setPerspective(800);
         
         buttonR.on('pointerdown', function(pointer, localX, localY, event){
+        	game.global.sound = game.sound.play('pulsarBoton');
         	var inputUsername = element.getChildByName('username');
         	var inputEmail = element.getChildByName('email');
             var inputPassword = element.getChildByName('password');

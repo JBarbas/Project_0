@@ -20,7 +20,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	
     }
     create (data)  {
-    	//
+    	game.global.sound = game.sound.play('seleccionarEdificio');
     	this.miEdificio = data.miEdificio;
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
@@ -45,19 +45,22 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
-    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= true;
     		mejorasContainer.visible= false;
     		edificiosContainer.visible= false;
     	});
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= true;
     		edificiosContainer.visible= false;
     	});
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		edificiosContainer.visible= true;
@@ -83,6 +86,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	    mover.setFrame(0);
     	})
     	mover.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		if(!game.global.construyendo){
 				game.scene.pause();
 				data.miEdificio.move();
@@ -119,6 +123,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
 	    	})
 	    	
 	    	this.subirNivel.on('pointerdown', function(pointer, localX, localY, event){
+	    		game.global.sound = game.sound.play('pulsarBoton');
 	    		askLevelUpBuilding(data.miEdificio.id);	    		
 	    	});
 			mejorasContainer.add(this.subirNivel);
@@ -139,6 +144,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	    this.setFrame(0);
     	});
     	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
 			game.scene.stop(data.miEdificio.menuScene);
 			game.global.inMenu = false;
     	});

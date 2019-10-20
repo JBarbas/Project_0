@@ -321,6 +321,7 @@ window.onload = function() {
 			break;
 		
 		case 'GET_PLAYER_RESOURCES':
+			game.global.sound = game.sound.play('cambianRecursos');
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
 				console.dir(msg);
@@ -400,10 +401,12 @@ window.onload = function() {
 			}
 			break;
 		case 'CERAMICA RECOLECTADA':
+			
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] CERAMICA RECOLECTADA message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.ceramica = msg.ceramica;
 			pedirPuntuaciones()
 			break;
@@ -412,6 +415,7 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS RECOLECTADOS message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.creditos = msg.creditos;
 			pedirPuntuaciones()
 			break;
@@ -420,6 +424,7 @@ window.onload = function() {
 				console.log('[DEBUG] METAL RECOLECTADO message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.metal = msg.metal;
 			if (game.scene.isActive('TallerMenu')) {
 				game.scene.stop('TallerMenu');
@@ -613,6 +618,7 @@ window.onload = function() {
 				console.log('[DEBUG] ENVIO DE COLONOS message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('cambianRecursos');
 			game.global.resources.colonos = msg.colonos;
 			game.scene.getScene("CentroAdministrativoMenu").puestosTrabajo.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('capuestos')[0].childNodes[0].nodeValue + msg.jobs;
 			let viviendas2 = game.global.resources.colonos.split("/")[1] - game.global.resources.colonos.split("/")[0];
