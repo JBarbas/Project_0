@@ -1,5 +1,9 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
+import java.time.LocalDateTime;
+
+import org.bson.Document;
+
 import es.urjc.practica_2019.ZeroGravity.Player;
 import es.urjc.practica_2019.ZeroGravity.Interfaces.EdificioInterface;
 
@@ -14,6 +18,8 @@ public class Edificio  implements EdificioInterface{
 	protected int level;
 	protected String sprite;
 	protected Edificio buildingDependsOn;	
+	protected boolean enConstruccion;
+	protected LocalDateTime buildingBeginTime = LocalDateTime.now();
 	protected int energia;
 	
 	public int[] getPosition() {
@@ -175,5 +181,31 @@ public class Edificio  implements EdificioInterface{
 	
 	public void setEnergia(int energia) {
 		this.energia = energia;
+	}
+
+	public boolean isEnConstruccion() {
+		return enConstruccion;
+	}
+
+	public void setEnConstruccion(boolean enConstruccion) {
+		this.enConstruccion = enConstruccion;
+	}
+
+	public LocalDateTime getBuildingBeginTime() {
+		return buildingBeginTime;
+	}
+
+	public void setBuildingBeginTime(LocalDateTime buildingBeginTime) {
+		this.buildingBeginTime = buildingBeginTime;
+	}
+	
+	public void setBuildingBeginTime(Document buildingDate) {
+
+		int year = buildingDate.getInteger("year");
+		int month = buildingDate.getInteger("month");
+		int day = buildingDate.getInteger("day");
+		int hour = buildingDate.getInteger("hour");
+		int minute = buildingDate.getInteger("minute");
+		this.setBuildingBeginTime(LocalDateTime.of(year, month, day, hour, minute));
 	}
 }

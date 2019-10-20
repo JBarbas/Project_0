@@ -7,9 +7,13 @@ class Taller extends GeneradorRecursos {
 		super.width = 1;
 		super.level = 1;
 		super.sprite = 'taller';
+		super.buildingSprite = 'enConstruccion3';
 		super.menuScene = 'TallerMenu';
 		super.originX = 0.32;
 		this.robots = new Map();
 		super.resourceSprite = 'metalIcon';
+		this.costes = [[5, 0],
+			[5, 0],
+			[5, 0]];
 	}
 }
