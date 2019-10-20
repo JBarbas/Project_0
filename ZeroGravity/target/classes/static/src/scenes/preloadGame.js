@@ -14,6 +14,8 @@ class PreloadGameScene extends Phaser.Scene {
 	}
 	
 	preload () {
+		var musicMenu = game.global.musicMenu;
+		musicMenu.stop();
 		game.scene.run('LoadGameplayScene');
 		
 		// Pedimos la info del jugador, como su map grid o sus recursos

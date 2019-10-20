@@ -132,6 +132,7 @@ window.onload = function() {
 		resources: {},
 		music: null,
 		sound: null,
+		musicMenu: null,
 		idioma : "eng"
 	}
 	
@@ -374,8 +375,10 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO CONSTRUIDO message recieved');
 				console.dir(msg);
 			}
+			
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.sound = game.sound.play('construido');
 					game.global.edificios.get(msg.id).enConstruccion = false;
 					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
 					clearInterval(game.global.edificios.get(msg.id).interval);
@@ -426,6 +429,7 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO LLENO message recieved');
 				console.dir(msg);
 			}
+			game.global.sound = game.sound.play('recursosMaximos');
 			let edificioLleno = game.global.edificios.get(msg.id);
 			edificioLleno.lleno = true;
 			game.global.edificios.get(msg.id).produciendo = false;
