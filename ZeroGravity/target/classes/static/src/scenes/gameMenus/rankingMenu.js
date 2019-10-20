@@ -40,6 +40,7 @@ class RankingMenu extends Phaser.Scene {
     	panelR.scale = 0.6;
     	
     	cerrar.on('pointerdown', function(pointer){
+    		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
     		game.scene.stop('RankingMenu');

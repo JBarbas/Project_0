@@ -21,6 +21,8 @@ class CentroComercioMenu extends Phaser.Scene {
     create (data)  {
     	this.miEdificio = data.miEdificio;
     	
+    	game.scene.getScene('GameInterface').panel.setTexture('panelCComercio');
+    	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	// Contenedor del panel de detalles

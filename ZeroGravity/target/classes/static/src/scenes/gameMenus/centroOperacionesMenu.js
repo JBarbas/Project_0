@@ -19,6 +19,8 @@ class CentroOperacionesMenu extends Phaser.Scene {
     	//
     	this.miEdificio = data.miEdificio;
     	
+    	game.scene.getScene('GameInterface').panel.setTexture('panelCOperaciones');
+    	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	// Contenedor del panel de detalles

@@ -80,6 +80,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoVender', 'assets/interface/iconoVender.png');
 		this.load.image('iconoOfertas', 'assets/interface/iconoOfertas.png');
 		
+		this.load.image('panelCExtraccion', 'assets/interface/Secciones/panelCExtraccion.png');
+		this.load.image('panelCMando', 'assets/interface/Secciones/panelCMando.png');
+		this.load.image('panelCOperaciones', 'assets/interface/Secciones/panelCOperaciones.png');
+		this.load.image('panelGenerador', 'assets/interface/Secciones/panelGenerador.png');
+		this.load.image('panelLInvestigacion', 'assets/interface/Secciones/panelLInvestigacion.png');
+		this.load.image('panelTaller', 'assets/interface/Secciones/panelTaller.png');
+		this.load.image('panelBViviendas', 'assets/interface/Secciones/panelBViviendas.png');
+		this.load.image('panelCAdministrativo', 'assets/interface/Secciones/panelCAdministrativo.png');
+		this.load.image('panelCComercio', 'assets/interface/Secciones/panelCComercio.png');
+		
 		
 		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
 		this.load.image('intCDetalles', 'assets/interface/Comercio/DetallesComercio.png');
