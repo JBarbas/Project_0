@@ -330,35 +330,42 @@ window.onload = function() {
 			break;
 		
 		case 'GET_PLAYER_RESOURCES':
-			game.global.sound = game.sound.play('cambianRecursos');
+			
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] Recibiendo recursos del jugador');
 				console.dir(msg);
+				
 			}
 			
 			if(game.global.resources.energia != msg.energia){
 				game.global.resources.energia = msg.energia;
 				particulasRecurso("energia");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.metal != msg.metal){
 				game.global.resources.metal = msg.metal;
 				particulasRecurso("metal");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.ceramica != msg.ceramica){
 				game.global.resources.ceramica = msg.ceramica;
 				particulasRecurso("ceramica");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.creditos != msg.creditos){
 				game.global.resources.creditos = msg.creditos;
 				particulasRecurso("creditos");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.unionCoins != msg.unionCoins){
 				game.global.resources.unionCoins = msg.unionCoins;
 				particulasRecurso("unionCoins");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			if(game.global.resources.colonos != msg.colonos){
 				game.global.resources.colonos = msg.colonos;
 				particulasRecurso("colonos");
+				game.global.sound = game.sound.play('cambianRecursos');
 			}
 			game.global.puntuacion = msg.punctuacion;
 			break;			
