@@ -19,6 +19,7 @@ class CentroComercioMenu extends Phaser.Scene {
     }
     
     create (data)  {
+    	game.global.sound = game.sound.play('seleccionarEdificio');
     	
     	this.miEdificio = data.miEdificio;
     	
@@ -53,7 +54,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 300, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
-    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
+    	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= true;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= false;
@@ -63,6 +65,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= true;
     		comprarContainer.visible= false;
@@ -72,6 +75,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoOfertas = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoOfertas').setOrigin(0, 0);
     	this.iconoOfertas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= false;
@@ -81,6 +85,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoVender = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoVender').setOrigin(0, 0);
     	this.iconoVender.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= false;
@@ -90,6 +95,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	});
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoComprar').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		game.global.sound = game.sound.play('pulsarBoton');
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
     		comprarContainer.visible= true;
@@ -123,6 +129,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	box.style.height = 'auto';
 	        	box.indice = i;
 	        	box.onclick = function(){
+	        		game.global.sound = game.sound.play('comprar');
 	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	        		box.parentElement.style.visibility = "hidden";
 	        	}
@@ -146,6 +153,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	metal.style.left = "180px";
 	            	metal.indice = i;
 	            	metal.onclick = function(){
+	            		game.global.sound = game.sound.play('comprar');
 	            		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	            		box.parentElement.style.visibility = "hidden";
 	            	}
@@ -156,6 +164,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	ceramica.style.left = "180px";
 	            	ceramica.indice = i;
 	            	ceramica.onclick = function(){
+	            		game.global.sound = game.sound.play('comprar');
 	            		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	            		box.parentElement.style.visibility = "hidden";
 	            	}
@@ -167,6 +176,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	creditos.style.left = "45px"; 
 	        	creditos.indice = i;
 	        	creditos.onclick = function(){
+	        		game.global.sound = game.sound.play('comprar');
 	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	        		box.parentElement.style.visibility = "hidden";
 	        	}      	 	
@@ -217,6 +227,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	numRanking.style.left = "140px";
 	        	numRanking.indice = i;
 	        	numRanking.onclick = function(){
+	        		game.global.sound = game.sound.play('comprar');
 	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	        		box.parentElement.style.visibility = "hidden";
 	        	}
@@ -229,6 +240,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	numRanking2.style.top = "0px";
 	        	numRanking2.indice = i;
 	        	numRanking2.onclick = function(){
+	        		game.global.sound = game.sound.play('comprar');
 	        		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	        		box.parentElement.style.visibility = "hidden";
 	        	}
@@ -275,6 +287,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	boxV.style.height = 'auto';
         	boxV.indice = i;
         	boxV.onclick = function(){
+        		game.global.sound = game.sound.play('comprar');
         		pasarAcrearOferta(boxV.indice);
         	}
         	boxV.onmouseover = function(){
@@ -296,6 +309,7 @@ class CentroComercioMenu extends Phaser.Scene {
             	metalV.style.left = "45px";
             	metalV.indice = i;
             	metalV.onclick = function(){
+            		game.global.sound = game.sound.play('comprar');
             		pasarAcrearOferta(boxV.indice);
             	}
         	}else{
@@ -305,6 +319,7 @@ class CentroComercioMenu extends Phaser.Scene {
             	ceramicaV.style.left = "45px";
             	ceramicaV.indice = i;
             	ceramicaV.onclick = function(){
+            		game.global.sound = game.sound.play('comprar');
             		pasarAcrearOferta(boxV.indice);
             	}
         	}
@@ -315,6 +330,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	creditosV.style.left = "170px"; 
         	creditosV.indice = i;
         	creditosV.onclick = function(){
+        		game.global.sound = game.sound.play('comprar');
         		pasarAcrearOferta(boxV.indice);
         	}
         	
@@ -364,6 +380,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRankingV.style.left = "1px";
         	numRankingV.indice = i;
         	numRankingV.onclick = function(){
+        		game.global.sound = game.sound.play('comprar');
         		pasarAcrearOferta(boxV.indice);
         	}
         	numRankingV.appendChild(numRankingValueV);
@@ -375,6 +392,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRanking2V.style.top = "00px";
         	numRanking2V.indice = i;
         	numRanking2V.onclick = function(){
+        		game.global.sound = game.sound.play('comprar');
         		pasarAcrearOferta(boxV.indice);
         	}
         	numRanking2V.appendChild(numRankingValue2V);
@@ -477,6 +495,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	boxO.style.height = 'auto';
         	boxO.indice = i;
         	boxO.onclick = function(){
+        		game.global.sound = game.sound.play('denegar');
         		boxO.parentElement.style.visibility = "hidden";
         		borrarOferta(oferta.idOferta, data.miEdificio.id);
         	}
@@ -517,6 +536,7 @@ class CentroComercioMenu extends Phaser.Scene {
             	metalO.style.left = "180px";
             	metalO.indice = i;
             	metalO.onclick = function(){
+            		game.global.sound = game.sound.play('denegar');
             		borrarOferta(oferta.idOferta, data.miEdificio.id);
             		boxO.parentElement.style.visibility = "hidden";
             	}
@@ -528,6 +548,7 @@ class CentroComercioMenu extends Phaser.Scene {
             	ceramicaO.style.left = "180px";
             	ceramicaO.indice = i;
             	ceramicaO.onclick = function(){
+            		game.global.sound = game.sound.play('denegar');
             		borrarOferta(oferta.idOferta, data.miEdificio.id);
             		boxO.parentElement.style.visibility = "hidden";
             	}
@@ -539,6 +560,7 @@ class CentroComercioMenu extends Phaser.Scene {
             creditosO.style.left = "45px"; 
             creditosO.indice = i;
             creditosO.onclick = function(){
+            	game.global.sound = game.sound.play('denegar');
             	borrarOferta(oferta.idOferta, data.miEdificio.id);
             	boxO.parentElement.style.visibility = "hidden";
             }     
@@ -590,6 +612,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRankingO.style.left = "140px";
         	numRankingO.indice = i;
         	numRankingO.onclick = function(){
+        		game.global.sound = game.sound.play('denegar');
         		borrarOferta(oferta.idOferta, data.miEdificio.id);
         		boxO.parentElement.style.visibility = "hidden";
         	}
@@ -602,6 +625,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	numRanking2O.style.top = "0px";
         	numRanking2O.indice = i;
         	numRanking2O.onclick = function(){
+        		game.global.sound = game.sound.play('denegar');
         		borrarOferta(oferta.idOferta, data.miEdificio.id);
         		boxO.parentElement.style.visibility = "hidden";
         	}
@@ -644,6 +668,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	    mover.setFrame(0);
     	})
     	mover.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
     		if(!game.global.construyendo){
 				game.scene.pause();
 				data.miEdificio.move();
@@ -697,6 +722,7 @@ class CentroComercioMenu extends Phaser.Scene {
     	    this.setFrame(0);
     	});
     	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
 			game.scene.stop(data.miEdificio.menuScene);
 			game.global.inMenu = false;
     	});
