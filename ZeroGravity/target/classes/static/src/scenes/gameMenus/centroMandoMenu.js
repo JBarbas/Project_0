@@ -110,7 +110,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	/*
     	 *    EDIFICIOS QUE NO SE PUEDEN CONSTRUIR FUERA DEL TUTORIAL PARA PODER TRASTEAR
     	 * 
-    	 */
+    	 *
 		this.borde = this.add.image(-350, 160 + 196 * 0.65 * 0, 'intEdificioRec').setOrigin(0, 0).setScale(0.65, 0.65);
 		this.borde.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux('centroOperaciones'); });
 		edificiosContainer.add(this.borde);

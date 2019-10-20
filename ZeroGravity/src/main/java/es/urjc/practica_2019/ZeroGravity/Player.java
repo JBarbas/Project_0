@@ -154,7 +154,7 @@ public class Player {
 		return ofertas.get(id);
 	}
 	
-	public void deleteOferta(ObjectId id) {
+	public synchronized void deleteOferta(ObjectId id) {
 		ofertas.remove(id);
 		
 	}

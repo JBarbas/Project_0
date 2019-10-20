@@ -545,24 +545,26 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}
 				
 				if(ofertaAceptada) {
-					//creamos una oferta con la info del cliente
-					Oferta oferta = new Oferta(ObjectId.get(), player.getId(), 
-							node.get("recurso").asText(), node.get("cantidad").asInt(), node.get("creditos").asInt());
-					//la guardamos en los atributos y bd del jugador
-					player.addOferta(oferta);
-					player.saveOfertas();
-					//la guardamos en la bd comun a todos los jugadores
-					Document dbOferta = new Document();
-					dbOferta.append("_id", oferta.getId());
-					dbOferta.append("playerId", oferta.getPlayerId());
-					dbOferta.append("recurso", oferta.getRecurso());
-					dbOferta.append("cantidad", oferta.getCantidad());
-					dbOferta.append("creditos", oferta.getCreditos());
-					collOfertas.insertOne(dbOferta);
-
-					//informamos al cliente
-					msg.put("respuesta", ofertaAceptada);
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (this) {
+						//creamos una oferta con la info del cliente
+						Oferta oferta = new Oferta(ObjectId.get(), player.getId(), 
+								node.get("recurso").asText(), node.get("cantidad").asInt(), node.get("creditos").asInt());
+						//la guardamos en los atributos y bd del jugador
+						player.addOferta(oferta);
+						player.saveOfertas();
+						//la guardamos en la bd comun a todos los jugadores
+						Document dbOferta = new Document();
+						dbOferta.append("_id", oferta.getId());
+						dbOferta.append("playerId", oferta.getPlayerId());
+						dbOferta.append("recurso", oferta.getRecurso());
+						dbOferta.append("cantidad", oferta.getCantidad());
+						dbOferta.append("creditos", oferta.getCreditos());
+						collOfertas.insertOne(dbOferta);
+	
+						//informamos al cliente
+						msg.put("respuesta", ofertaAceptada);
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}else {
 					
 					msg.put("respuesta", false);
@@ -575,98 +577,101 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				break;
 				
 			case "DELETE AN OFFER":
-				ObjectId miOfertaId = new ObjectId(node.get("idOferta").asText());
+				synchronized (this) {
+					ObjectId miOfertaId = new ObjectId(node.get("idOferta").asText());
+					
+					/*primero devolvemos el valor de la oferta*/
+					Oferta oferta = player.getOferta(miOfertaId);
+					switch(oferta.getRecurso()) {
+					
+					case "metal":
+						player.setMetal(player.getMetal() + oferta.getCantidad());
+						break;
+					
+					case "ceramica":
+						player.setCeramica(player.getCeramica() + oferta.getCantidad());
+						break;
+					
+					default:
+						break;
+					}
+					player.saveRecursos();
+					
+					/*borramos la oferta de la base de datos del jugador*/
+					player.deleteOferta(miOfertaId);
+					player.saveOfertas();
 				
-				/*primero devolvemos el valor de la oferta*/
-				Oferta oferta = player.getOferta(miOfertaId);
-				switch(oferta.getRecurso()) {
-				
-				case "metal":
-					player.setMetal(player.getMetal() + oferta.getCantidad());
-					break;
-				
-				case "ceramica":
-					player.setCeramica(player.getCeramica() + oferta.getCantidad());
-					break;
-				
-				default:
-					break;
+					/*borramos la oferta de la base de datos comun a todos los jugadores*/
+					collOfertas.deleteOne(new Document("_id", miOfertaId));
 				}
-				player.saveRecursos();
-				
-				/*borramos la oferta de la base de datos del jugador*/
-				player.deleteOferta(miOfertaId);
-				player.saveOfertas();
-				
-				/*borramos la oferta de la base de datos comun a todos los jugadores*/
-				collOfertas.deleteOne(new Document("_id", miOfertaId));
 				
 				msg.put("event", "DELETED OFFER");
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 				
 			case "BUY AN OFFER":
-				
-				boolean puedoComprar = false;
-				
-				ObjectId myOfferId = new ObjectId(node.get("idOferta").asText());
-				
-				/*recogemos la oferta de la bd*/			
-				Document myOffer = collOfertas.find(new Document("_id", myOfferId)).first();
-				
-				/*si puedo comprarla actualizo mis recursos*/
-				if(player.getCreditos() >= Integer.parseInt(myOffer.get("creditos").toString())) {
-					puedoComprar = true;
-					player.setCreditos(player.getCreditos() - Integer.parseInt(myOffer.get("creditos").toString()));
-					switch(myOffer.get("recurso").toString()) {					
-					case "metal":
-						player.setMetal(player.getMetal() + Integer.parseInt(myOffer.get("cantidad").toString()));
-						break;					
-					case "ceramica":
-						player.setCeramica(player.getCeramica() + Integer.parseInt(myOffer.get("cantidad").toString()));
-						break;			
-					default:
-						break;
-					}
-					player.saveRecursos();
+				synchronized (this) {
+					boolean puedoComprar = false;
 					
-					/*le doy el dinero al vendedor de la oferta*/
-					Player playerVendedor = players.get(new ObjectId(myOffer.get("playerId").toString()));
-					playerVendedor.deleteOferta(myOfferId);
-					playerVendedor.setCreditos(playerVendedor.getCreditos() + Integer.parseInt(myOffer.get("creditos").toString()));
-					playerVendedor.saveOfertas();
-					playerVendedor.saveRecursos();
-					player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[4]);
-					player.savePuntuacion();
-					/*si el usuario al que le han comprado está conectado hay darle retroalimentacion*/
-					if(playerVendedor.getSession().isOpen()) {
-						msg.put("event", "GET_PLAYER_RESOURCES");
-						msg.put("energia", playerVendedor.getEnergia());
-						msg.put("metal", playerVendedor.getMetal());
-						msg.put("ceramica", playerVendedor.getCeramica());
-						msg.put("creditos", playerVendedor.getCreditos());
-						msg.put("unionCoins", playerVendedor.getUnionCoins());
-						msg.put("colonos", playerVendedor.getColonos());
-						msg.put("punctuacion", playerVendedor.getPuntuacion());
-						playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
+					ObjectId myOfferId = new ObjectId(node.get("idOferta").asText());
+					
+					/*recogemos la oferta de la bd*/			
+					Document myOffer = collOfertas.find(new Document("_id", myOfferId)).first();
+					
+					/*si puedo comprarla actualizo mis recursos*/
+					if(player.getCreditos() >= Integer.parseInt(myOffer.get("creditos").toString())) {
+						puedoComprar = true;
+						player.setCreditos(player.getCreditos() - Integer.parseInt(myOffer.get("creditos").toString()));
+						switch(myOffer.get("recurso").toString()) {					
+						case "metal":
+							player.setMetal(player.getMetal() + Integer.parseInt(myOffer.get("cantidad").toString()));
+							break;					
+						case "ceramica":
+							player.setCeramica(player.getCeramica() + Integer.parseInt(myOffer.get("cantidad").toString()));
+							break;			
+						default:
+							break;
+						}
+						player.saveRecursos();
+						
+						/*le doy el dinero al vendedor de la oferta*/
+						Player playerVendedor = players.get(new ObjectId(myOffer.get("playerId").toString()));
+						playerVendedor.deleteOferta(myOfferId);
+						playerVendedor.setCreditos(playerVendedor.getCreditos() + Integer.parseInt(myOffer.get("creditos").toString()));
+						playerVendedor.saveOfertas();
+						playerVendedor.saveRecursos();
+						player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[4]);
+						player.savePuntuacion();
+						/*si el usuario al que le han comprado está conectado hay darle retroalimentacion*/
+						if(playerVendedor.getSession().isOpen()) {
+							msg.put("event", "GET_PLAYER_RESOURCES");
+							msg.put("energia", playerVendedor.getEnergia());
+							msg.put("metal", playerVendedor.getMetal());
+							msg.put("ceramica", playerVendedor.getCeramica());
+							msg.put("creditos", playerVendedor.getCreditos());
+							msg.put("unionCoins", playerVendedor.getUnionCoins());
+							msg.put("colonos", playerVendedor.getColonos());
+							msg.put("punctuacion", playerVendedor.getPuntuacion());
+							playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
+							
+							msg = mapper.createObjectNode();
+							msg.put("event", "REFRESH COMERCIO");
+							playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
+	
+						}
+						/*borramos la oferta de la base de datos comun a todos los jugadores*/
+						collOfertas.deleteOne(new Document("_id", myOfferId));
 						
 						msg = mapper.createObjectNode();
-						msg.put("event", "REFRESH COMERCIO");
-						playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
-
+						msg.put("event", "OFFER PURCHASED");
+						msg.put("respuesta", puedoComprar);
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+						msg = mapper.createObjectNode();
+						
+					}else {
+						msg.put("respuesta", puedoComprar);
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
 					}
-					/*borramos la oferta de la base de datos comun a todos los jugadores*/
-					collOfertas.deleteOne(new Document("_id", myOfferId));
-					
-					msg = mapper.createObjectNode();
-					msg.put("event", "OFFER PURCHASED");
-					msg.put("respuesta", puedoComprar);
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
-					msg = mapper.createObjectNode();
-					
-				}else {
-					msg.put("respuesta", puedoComprar);
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
 				
@@ -693,7 +698,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	}
 	
 	/*Enviamos las ofertas al cliente*/
-	private void sendOffers(Player player) {
+	private synchronized void sendOffers(Player player) {
 		ObjectNode msg = mapper.createObjectNode();
 		try {
 			
