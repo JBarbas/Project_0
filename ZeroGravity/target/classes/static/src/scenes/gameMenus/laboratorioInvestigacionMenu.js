@@ -26,6 +26,8 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
+
+    	game.scene.getScene('GameInterface').panel.setTexture('panelLInvestigacion');
     	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
@@ -161,9 +163,9 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
     	}
     	
     	if (this.miEdificio.produciendo) {
-	    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
+	    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.levelProduciendo-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
 	    	if (this.miEdificio.lleno) {
-	    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.level-1][0] + this.cache.xml.get(game.global.idioma).getElementsByTagName('recoCred')[0].childNodes[0].nodeValue;
+	    		this.timeLeftText.text = this.miEdificio.recursos[this.miEdificio.levelProduciendo-1][0] + this.cache.xml.get(game.global.idioma).getElementsByTagName('recoCred')[0].childNodes[0].nodeValue;
 	    	}
 	    	else if (this.timeLeft < 1) {
 	    		this.timeLeftText.text = this.cache.xml.get(game.global.idioma).getElementsByTagName('almCred')[0].childNodes[0].nodeValue;

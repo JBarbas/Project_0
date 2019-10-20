@@ -51,7 +51,8 @@ window.onload = function() {
 				  		PlataformaExtraccionMenu,
 				  		TallerMenu,
 				  		AnuncioMenu,
-				  		RankingMenu]
+				  		RankingMenu,
+				  		HalloweenMenu]
 			};
 			
 	
@@ -60,7 +61,7 @@ window.onload = function() {
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : true,
+		DEBUG_MODE : false,
 		ONLY_GAME_MODE : false,
 		SKIP_INTRO: false,
 		socket : null,
@@ -76,6 +77,7 @@ window.onload = function() {
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
+		inZoom : false,
 		menu : null,
 		offers: [],
 		buildingMenu: {
@@ -124,12 +126,13 @@ window.onload = function() {
 		timedEvent:null,
 		timer:null,
 		team:null,
+		inGame:false,
 		resources: {},
 		idioma : "eng"
 	}
 	
 	//WEBSOCKET CONFIGURATOR
-	game.global.socket = new WebSocket("ws://" + location.href.substring(7) + "/polaris")
+	game.global.socket = new WebSocket("ws://" + location.href.substring(7).split("/")[0] + "/polaris")
 	
 	game.global.socket.onopen = () => {
 		if (game.global.DEBUG_MODE) {
@@ -177,6 +180,14 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			alert(msg.data);
+			break;
+		case 'UPDATE USERNAME RESPONSE':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
+				console.dir(msg);
+			}
+			alert(msg.resultado);
+			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] PLAYER INFO message recieved')
@@ -213,13 +224,13 @@ window.onload = function() {
 						r.ausente = e.robots[j].ausente;
 						r.carga = e.robots[j].carga;
 						r.nivel = e.robots[j].nivel;
-						console.log(r.inicioProduccion + ", " + Date.UTC(e.robots[j].dateYear, e.robots[j].dateMonth-1, e.robots[j].dateDay, e.robots[j].dateHour-2, e.robots[j].dateMinute+1, 0));
 						edificio.robots.set(r.id, r);
 					}
 					break;
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
@@ -232,6 +243,7 @@ window.onload = function() {
 				case 'laboratorioInvestigacion':
 					edificio = new LaboratorioInvestigacion(e.x, e.y);
 					edificio.lleno = e.lleno;
+					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
 					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
 					break;
@@ -326,6 +338,7 @@ window.onload = function() {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
 					game.global.edificios.get(msg.id).inicioProduccion = Date.now();
 					game.global.edificios.get(msg.id).produciendo = true;
+					game.global.edificios.get(msg.id).levelProduciendo = game.global.edificios.get(msg.id).level;
 				}
 			}
 			break;
@@ -647,7 +660,6 @@ window.onload = function() {
 		case 'ACTUALIZAR PUNTUACION':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] ACTUALIZAR PUNTUACION message recieved');
-				console.log('PUNTUACION:' + msg.punctuacion);
 			}
 			game.global.puntuacion = msg.punctuacion;
 			break;
@@ -659,10 +671,7 @@ window.onload = function() {
 			}
 			game.global.mejoresPuntuaciones = [];
 			let arrayAux = msg.todasLasPuntuaciones.split("\n");
-			arrayAux.pop();
-			for(let i = 0; i < arrayAux.length; i++){
-			console.log(arrayAux[i]);
-			}
+			arrayAux.pop(); //por alguna razón mete un undefined al final
 			game.global.mejoresPuntuaciones = arrayAux;
 			break;
 			

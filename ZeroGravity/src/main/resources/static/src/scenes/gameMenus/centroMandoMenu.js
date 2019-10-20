@@ -30,6 +30,8 @@ class CentroMandoMenu extends Phaser.Scene {
     	var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
     	
+    	game.scene.getScene('GameInterface').panel.setTexture('panelCMando');
+    	
     	//Se añade a cada contenedor su imagen de fondo
     	this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
     	mejorasContainer.add(this.intMejoras);

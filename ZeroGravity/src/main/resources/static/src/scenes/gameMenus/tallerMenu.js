@@ -25,6 +25,8 @@ class TallerMenu extends Phaser.Scene {
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
+
+    	game.scene.getScene('GameInterface').panel.setTexture('panelTaller');
     	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);

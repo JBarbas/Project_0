@@ -23,46 +23,82 @@ class CentroComercioMenu extends Phaser.Scene {
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
+
+    	game.scene.getScene('GameInterface').panel.setTexture('panelCComercio');
     	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	// Contenedor del panel de detalles
     	var detallesContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
-    	// Contenedor del panel de gestion
-    	var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de ofertas
+    	var ofertasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de vender
+    	var venderContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de comprar
+    	var comprarContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
     	//Se añade a cada contenedor su imagen de fondo
-    	this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
+    	this.intMejoras = this.add.image(0, 0, 'intCMejoras').setOrigin(0, 0); 
     	mejorasContainer.add(this.intMejoras);
-    	this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
+    	this.intDetalles = this.add.image(0, 0, 'intCDetalles').setOrigin(0, 0); 
     	detallesContainer.add(this.intDetalles);
-    	this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
-    	edificiosContainer.add(this.intEdificios);
+    	this.intComprar = this.add.image(0, 0, 'intCComprar').setOrigin(0, 0);
+    	comprarContainer.add(this.intComprar);
+    	this.intVender = this.add.image(0, 0, 'intCVender').setOrigin(0, 0);
+    	venderContainer.add(this.intVender);
+    	this.intOfertas = this.add.image(0, 0, 'intCOfertas').setOrigin(0, 0);
+    	ofertasContainer.add(this.intOfertas);
     	
+    	
+    	
+
     	//Se alterna entre contenedores según el icono seleccionado
-    	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
+    	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 300, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
     	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
     		detallesContainer.visible= true;
     		mejorasContainer.visible= false;
-    		edificiosContainer.visible= false;
+    		comprarContainer.visible= false;
+    		venderContainer.visible= false;
+    		ofertasContainer.visible= false;
     	});
-    	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
+    	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		detallesContainer.visible= false;
     		mejorasContainer.visible= true;
-    		edificiosContainer.visible= false;
+    		comprarContainer.visible= false;
+    		venderContainer.visible= false;
+    		ofertasContainer.visible= false;
     	});
-    	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
+    	this.iconoOfertas = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoOfertas').setOrigin(0, 0);
+    	this.iconoOfertas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		detallesContainer.visible= false;
+    		mejorasContainer.visible= false;
+    		comprarContainer.visible= false;
+    		venderContainer.visible= false;
+    		ofertasContainer.visible= true;
+    	});
+    	this.iconoVender = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoVender').setOrigin(0, 0);
+    	this.iconoVender.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+    		detallesContainer.visible= false;
+    		mejorasContainer.visible= false;
+    		comprarContainer.visible= false;
+    		venderContainer.visible= true;
+    		ofertasContainer.visible= false;
+    	});
+    	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoComprar').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		detallesContainer.visible= false;
     		mejorasContainer.visible= false;
-    		edificiosContainer.visible= true;
+    		comprarContainer.visible= true;
+    		venderContainer.visible= false;
+    		ofertasContainer.visible= false;
     	});
     	
 
     	//  CONTENEDOR EDIFICIO
     	// Añadimos el boton para crear ofertas
-    	var crearOfertabtn = this.add.image(505, 560, 'xBuilding').setInteractive();
+    	/*
+    	 * var crearOfertabtn = this.add.image(505, 560, 'xBuilding').setInteractive();
     	crearOfertabtn.setOrigin(0, 0);
     	crearOfertabtn.on('pointerover',function(pointer){
     		this.setFrame(1);
@@ -74,9 +110,9 @@ class CentroComercioMenu extends Phaser.Scene {
     		//cantidad, recurso, creditos a cambio
     		crearOferta(25, 'metal', 100);
     	});
-    	edificiosContainer.add(crearOfertabtn);
-    	/***********************************Botones ofrecer ofertas******************************************/
-    	/*ofrecer oferta*/
+    	comprarContainer.add(crearOfertabtn);
+    	///Botones ofrecer ofertas
+    	//ofrecer oferta
     	var oferta25Metal = this.add.image(505, 560, 'xBuilding').setInteractive();
     	oferta25Metal.setOrigin(0, 0);
     	oferta25Metal.on('pointerover',function(pointer){
@@ -89,9 +125,9 @@ class CentroComercioMenu extends Phaser.Scene {
     		//cantidad, recurso, creditos a cambio
     		crearOferta(25, 'metal', 100);
     	});
-    	edificiosContainer.add(oferta25Metal);
+    	comprarContainer.add(oferta25Metal);
     	
-    	/*pedir Ofertas*/
+    	//pedir Ofertas
     	var pedirOfertasbtn = this.add.image(65, 560, 'xBuilding').setInteractive();
     	pedirOfertasbtn.setOrigin(0, 0);
     	pedirOfertasbtn.on('pointerover',function(pointer){
@@ -104,8 +140,8 @@ class CentroComercioMenu extends Phaser.Scene {
     		//cantidad, recurso, creditos a cambio
     		pedirOfertas();
     	});
-    	edificiosContainer.add(pedirOfertasbtn);
-    	/*pedir Ofertas de mi jugador*/
+    	comprarContainer.add(pedirOfertasbtn);
+    	//pedir Ofertas de mi jugador
     	var pedirOfertas2btn = this.add.image(65, 760, 'xBuilding').setInteractive();
     	pedirOfertas2btn.setOrigin(0, 0);
     	pedirOfertas2btn.on('pointerover',function(pointer){
@@ -118,12 +154,12 @@ class CentroComercioMenu extends Phaser.Scene {
     		//cantidad, recurso, creditos a cambio
     		console.log(pedirOfertasJugador());
     	});
-    	edificiosContainer.add(pedirOfertas2btn);
+    	comprarContainer.add(pedirOfertas2btn);
     	
-    	/*borrar una oferta de mi jugador*/
-    	/*en principio aquí recorro la lista de ofertas y con cada una 
-    	 * creo un boton con el que puedo pasar el id de la oferta a la 
-    	 * funcion de borrar*/
+    	//borrar una oferta de mi jugador
+    	//en principio aquí recorro la lista de ofertas y con cada una 
+    	// creo un boton con el que puedo pasar el id de la oferta a la 
+    	// funcion de borrar
     	var borrarOfertasbtn = this.add.image(400, 760, 'xBuilding').setInteractive();
     	borrarOfertasbtn.setOrigin(0, 0);
     	borrarOfertasbtn.on('pointerover',function(pointer){
@@ -139,9 +175,9 @@ class CentroComercioMenu extends Phaser.Scene {
     			borrarOferta(ofertasMiJugador[0].idOferta);
     		}
     	});
-    	edificiosContainer.add(borrarOfertasbtn);
+    	comprarContainer.add(borrarOfertasbtn);
     	
-    	/*comprar una oferta*/
+    	//comprar una oferta
     	var comprar = this.add.image(250, 560, 'xBuilding').setInteractive();
     	comprar.setOrigin(0, 0);
     	comprar.on('pointerover',function(pointer){
@@ -156,7 +192,202 @@ class CentroComercioMenu extends Phaser.Scene {
     			comprarOferta(game.global.offers[0].idOferta);
     		}
     	});
-    	edificiosContainer.add(comprar);
+    	comprarContainer.add(comprar);
+    	
+    	*
+    	*/
+    	
+    	
+    	// CONTAINER COMPRAR
+    	var element = this.add.dom(-370, 280).createFromCache('centroComercioMenu');
+        element.setPerspective(800);
+        
+        var divPuntuaciones = document.getElementById("divPuntuaciones");
+      	
+    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
+    		
+    		let divPuesto = document.createElement("div");
+    		
+    		/*la imagen*/
+    		var box = document.createElement("img");
+        	box.src = "assets/interface/Gameplay/boxComercio.png";
+        	box.style.marginLeft ="0px";
+        	box.style.marginTop = "16px";
+        	box.style.width = '100%';
+        	box.style.height = 'auto';
+        	
+        	/*el div de los span*/
+        	var contenido = document.createElement("div");
+        	contenido.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+        	/*LOS ICONOS */
+        	var metal = document.createElement("img");
+        	metal.src = "assets/interface/Gameplay/metal.png";
+        	metal.style.marginLeft = "20px";
+        	
+        	var creditos = document.createElement("img");
+        	creditos.src = "assets/interface/Gameplay/creditos.png";
+        	creditos.style.marginLeft = "20px";
+        	
+        	/*var arcilla = document.createElement("img");
+        	arcilla.src = "assets/interface/Gameplay/arcilla.png";*/
+        	
+        	/*los span*/
+        	var numRankingValue = document.createTextNode((Math.round(i/2)+1));
+        	var numRanking = document.createElement("span");
+        	numRanking.style.marginTop = "00px";
+        	numRanking.appendChild(numRankingValue);
+        	
+        	var numRankingValue2 = document.createTextNode((Math.round(i/2)+1));
+        	var numRanking2 = document.createElement("span");
+        	numRanking2.style.marginLeft = "95px";
+        	numRanking2.style.marginTop = "00px";
+        	numRanking2.appendChild(numRankingValue2);
+        	
+        	
+        	contenido.appendChild(numRanking);
+        	contenido.appendChild(metal);
+        	contenido.appendChild(numRanking2);
+        	contenido.appendChild(creditos);
+        	
+        	divPuesto.appendChild(box);
+        	divPuesto.appendChild(contenido);
+        	
+        	divPuntuaciones.appendChild(divPuesto);
+    	}
+        
+    	comprarContainer.add(element);
+    	
+    	
+    	
+    	// CONTAINER VENDER
+    	var elementV = this.add.dom(-370, 280).createFromCache('centroComercioMenuV');
+        elementV.setPerspective(800);
+        
+        var divPuntuacionesV = document.getElementById("divPuntuacionesV");
+      	
+    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
+    		
+    		let divPuestoV = document.createElement("div");
+    		
+    		/*la imagen*/
+    		var boxV = document.createElement("img");
+        	boxV.src = "assets/interface/Gameplay/boxComercio.png";
+        	boxV.style.marginLeft ="0px";
+        	boxV.style.marginTop = "16px";
+        	boxV.style.width = '100%';
+        	boxV.style.height = 'auto';
+        	
+        	/*el div de los span*/
+        	var contenidoV = document.createElement("div");
+        	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+        	/*LOS ICONOS */
+        	var metalV = document.createElement("img");
+        	metalV.src = "assets/interface/Gameplay/metal.png";
+        	metalV.style.marginLeft = "20px";
+        	
+        	var creditosV = document.createElement("img");
+        	creditosV.src = "assets/interface/Gameplay/creditos.png";
+        	creditosV.style.marginLeft = "20px";
+        	
+        	/*var arcillaV = document.createElement("img");
+        	arcillaV.src = "assets/interface/Gameplay/arcilla.png";*/
+        	
+        	/*los span*/
+        	var numRankingValueV = document.createTextNode((Math.round(i/2)+1));
+        	var numRankingV = document.createElement("span");
+        	numRankingV.style.marginTop = "00px";
+        	numRankingV.appendChild(numRankingValueV);
+        	
+        	var numRankingValue2V = document.createTextNode((Math.round(i/2)+1));
+        	var numRanking2V = document.createElement("span");
+        	numRanking2V.style.marginLeft = "95px";
+        	numRanking2V.style.marginTop = "00px";
+        	numRanking2V.appendChild(numRankingValue2V);
+        	
+        	
+        	contenidoV.appendChild(numRankingV);
+        	contenidoV.appendChild(metalV);
+        	contenidoV.appendChild(numRanking2V);
+        	contenidoV.appendChild(creditosV);
+        	
+        	divPuestoV.appendChild(boxV);
+        	divPuestoV.appendChild(contenidoV);
+        	
+        	divPuntuacionesV.appendChild(divPuestoV);
+    	}
+        
+    	venderContainer.add(elementV);
+    	venderContainer.visible = false;
+    	
+    	
+    	// CONTAINER OFERTAS
+    	var elementO = this.add.dom(-370, 280).createFromCache('centroComercioMenuO');
+        elementO.setPerspective(800);
+        
+        var divPuntuacionesO = document.getElementById("divPuntuacionesO");
+      	
+    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
+    		
+    		let divPuestoO = document.createElement("div");
+    		
+    		/*la imagen*/
+    		var boxO = document.createElement("img");
+        	boxO.src = "assets/interface/Gameplay/boxComercio2.png";
+        	boxO.style.marginLeft ="0px";
+        	boxO.style.marginTop = "16px";
+        	boxO.style.width = '100%';
+        	boxO.style.height = 'auto';
+        	
+        	/*el div de los span*/
+        	var contenidoO = document.createElement("div");
+        	contenidoO.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+        	/*LOS ICONOS */
+        	var metalO = document.createElement("img");
+        	metalO.src = "assets/interface/Gameplay/metal.png";
+        	metalO.style.marginLeft = "10px";
+        	
+        	var creditosO = document.createElement("img");
+        	creditosO.src = "assets/interface/Gameplay/creditos.png";
+        	creditosO.style.marginLeft = "10px";
+        	
+        	/*var arcillaO = document.createElement("img");
+        	arcillaO.src = "assets/interface/Gameplay/arcilla.png";*/
+        	
+        	/*los span*/
+        	var numRankingValueO = document.createTextNode((Math.round(i/2)+1));
+        	var numRankingO = document.createElement("span");
+        	numRankingO.style.marginTop = "00px";
+        	numRankingO.appendChild(numRankingValueO);
+        	
+        	var numRankingValue2O = document.createTextNode((Math.round(i/2)+1));
+        	var numRanking2O = document.createElement("span");
+        	numRanking2O.style.marginLeft = "40px";
+        	numRanking2O.style.marginTop = "00px";
+        	numRanking2O.appendChild(numRankingValue2O);
+        	 
+        	var cancelar = document.createElement("img");
+        	cancelar.src = "assets/interface/Gameplay/cancelar.png";
+        	cancelar.style.marginLeft = "15px";
+        	cancelar.style.width = "70px";
+        	cancelar.style.height = "auto";
+        	
+        	
+        	contenidoO.appendChild(numRankingO);
+        	contenidoO.appendChild(metalO);
+        	contenidoO.appendChild(numRanking2O);
+        	contenidoO.appendChild(creditosO);
+        	contenidoO.appendChild(cancelar);
+        	
+        	divPuestoO.appendChild(boxO);
+        	divPuestoO.appendChild(contenidoO);
+        	
+        	divPuntuacionesO.appendChild(divPuestoO);
+    	}
+        
+    	ofertasContainer.add(elementO);
+    	ofertasContainer.visible = false;
+        
+        
     	
     	//  CONTENEDOR DETALLES
     	// Se añade la descripción del edificio

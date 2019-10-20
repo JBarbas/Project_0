@@ -16,6 +16,7 @@ class LogInScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	game.config.scaleMode = Phaser.Scale.NONE;
     	var background = this.add.image(960, 540, 'backgroundLogIn');
     	
     	var button = this.add.image(960, 800, 'btn').setInteractive();
@@ -53,14 +54,8 @@ class LogInScene extends Phaser.Scene {
 
         element.setPerspective(800);
         
-        
-        
-        var a = element.getChildByName('usernamelb');
-        if (a != null) {
-			alert("a")
-		}
-        
-        
+        var scene = this;
+
         button.on('pointerdown', function(pointer, localX, localY, event){
         	var inputUsername = element.getChildByName('username');
             var inputPassword = element.getChildByName('password');

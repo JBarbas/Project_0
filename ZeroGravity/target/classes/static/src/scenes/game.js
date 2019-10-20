@@ -28,12 +28,22 @@ class GameScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	game.global.inGame = true;
     	this.main_camera = this.cameras.main;
     	zoom = 1; // reset del zoom
     	// Establecemos los limites del mapa donde puede ver la camara
     	this.main_camera.setBounds(0-world_bounds_marginX, 0-world_bounds_marginY, tileMap_width*tile_width + 2*world_bounds_marginX, tileMap_height*tile_height - 2*tile_height + 2*world_bounds_marginY, true);
     	
-    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg0').setOrigin(1, 1).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg1').setOrigin(0, 1).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg2').setOrigin(1, 0).setScale(2, 2);
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg3').setOrigin(0, 0).setScale(2, 2);    	
+
+		var mediaQuery = window.matchMedia("(max-width: 700px)")
+		if (!mediaQuery.matches) { 
+			this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
+		}
+    	//this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
     	
     	// Creamos la malla isometrica
     	this.gridContainer = this.add.container(0, 0);
@@ -47,6 +57,7 @@ class GameScene extends Phaser.Scene {
     	// Evento de click para construir edificio
     	let scene = this;
     	this.input.on('pointerup', function(pointer){
+    		game.global.inZoom = false;
     		// No permite construir si se esta haciendo scroll/drag en la pantalla
     	    if (!scene.isDragging) {
     	    	
@@ -86,6 +97,27 @@ class GameScene extends Phaser.Scene {
     	    	scene.isDragging = false;
     	    }
     	});
+    	var dragScale = this.plugins.get('rexpinchplugin').add(this);
+    	var camera = this.cameras.main;
+        dragScale
+            .on('drag1', function (dragScale) {
+            	//game.scene.getScene('GameScene').isDragging = true;
+                var drag1Vector = dragScale.drag1Vector;
+                camera.scrollX -= drag1Vector.x / camera.zoom;
+                camera.scrollY -= drag1Vector.y / camera.zoom;
+            })
+            .on('pinch', function (dragScale) {
+            	game.scene.getScene('GameScene').isDragging = true;
+            	game.global.inZoom = true;
+                var scaleFactor = dragScale.scaleFactor;
+                zoom *= scaleFactor;
+                if (zoom < minZoom) {
+                	zoom = minZoom;
+                }
+                else if (zoom > maxZoom) {
+                	zoom = maxZoom;
+                }
+            }, this);
     }
     update(time, delta) {
 
@@ -137,12 +169,13 @@ class GameScene extends Phaser.Scene {
     		if (!game.global.inMenu || !(this.game.input.activePointer.position.x > game.global.buildingMenu.x && 
     				this.game.input.activePointer.position.x < game.global.buildingMenu.x + game.global.buildingMenu.width && 
     				this.game.input.activePointer.position.y > game.global.buildingMenu.y && 
-    				this.game.input.activePointer.position.y < game.global.buildingMenu.y + game.global.buildingMenu.height)) {
+    				this.game.input.activePointer.position.y < game.global.buildingMenu.y + game.global.buildingMenu.height &&
+    				!game.global.inZoom)) {
     			
 	    		if (this.game.origDragPoint) {
 					// move the camera by the amount the mouse has moved since last update
-					this.cameras.main.scrollX += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
-					this.cameras.main.scrollY += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
+					//this.cameras.main.scrollX += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
+					//this.cameras.main.scrollY += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
 					if (Math.abs(this.game.origDragPoint.x - this.game.input.activePointer.position.x) > 3 || Math.abs(this.game.origDragPoint.y - this.game.input.activePointer.position.y) > 3) {
 						this.isDragging = true;
 					}

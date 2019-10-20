@@ -34,12 +34,15 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('txtSonido', 'assets/interface/Opciones/sonidoTextos.png');
 		this.load.image('txtIdioma', 'assets/interface/Opciones/idiomaTextos.png');
 		
+		
+		
 		//Buttons
     	this.load.image('session', 'assets/background/btnInicioSesion.png');
     	this.load.spritesheet( 'btn' , 'assets/background/btnInicioSesionSprite.png' ,{frameWidth:596,frameHeight:142});
     	this.load.spritesheet( 'btnCuenta' , 'assets/interface/Opciones/CuentaSprite.png' ,{frameWidth:131,frameHeight:131});
     	this.load.spritesheet( 'btnSonido' , 'assets/interface/Opciones/EqualizerSprite.png' ,{frameWidth:131,frameHeight:131});
     	this.load.spritesheet( 'btnIdioma' , 'assets/interface/Opciones/IdiomaSprite.png' ,{frameWidth:131,frameHeight:131});
+    	this.load.spritesheet('btnModificar', 'assets/interface/btnModificar.png',{frameWidth:594,frameHeight:142});
     	
     	this.load.spritesheet( 'btnRegister' , 'assets/interface/btnRegistrar.png' ,{frameWidth:596,frameHeight:142});
     	this.load.image('btnAmigos', 'assets/background/btnMenuAmigos.png');
@@ -52,6 +55,8 @@ class PreloadScene extends Phaser.Scene {
 		this.load.html('difficultform', 'assets/text/difficult-form.html');
 		this.load.html('menuform', 'assets/text/menu-form.html');
 		this.load.html('optionsform', 'assets/text/options-form.html');
+		this.load.html('optionsformS', 'assets/text/options-formS.html');
+		this.load.html('optionsformL', 'assets/text/options-formL.html');
 		
 		this.load.image('load', 'assets/interface/Cargando.png');
 		
@@ -61,6 +66,7 @@ class PreloadScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	//this.scale.startFullscreen();
 		if (game.global.ONLY_GAME_MODE) {
 			game.scene.run('PreloadGameScene');
 		}

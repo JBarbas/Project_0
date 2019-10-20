@@ -128,6 +128,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			TASKMASTER.addTask(task);
 			this.setProduciendo(true);
 			this.setProductionBeginTime(task.getBeginDate());
+			this.setLevelProduciendo(this.getLevel());
 			player.saveEdificios();
 		}
 	}
@@ -160,7 +161,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			this.setLleno(false);	
 			ObjectNode msg = mapper.createObjectNode();			
 			msg.put("event", "CERAMICA RECOLECTADA");
-			player.setCeramica(player.getCeramica() + this.RECURSOS_GENERADOS[this.level-1][0]);
+			player.setCeramica(player.getCeramica() + PlataformaExtraccion.RECURSOS_GENERADOS[this.getLevelProduciendo()-1][0]);
 			msg.put("ceramica", player.getCeramica());
 			try {	
 				if (player.getSession().isOpen()) {				

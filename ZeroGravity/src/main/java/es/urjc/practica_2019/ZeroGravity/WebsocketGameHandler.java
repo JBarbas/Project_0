@@ -167,7 +167,38 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
-				
+			case "UPDATE USERNAME":
+				filter = new Document("name", node.get("name").asText());
+				myPlayer = coll.find(filter).first();
+				if (myPlayer != null) {
+					msg.put("event", "UPDATE USERNAME RESPONSE");
+					msg.put("resultado", "Ese nombre de usuario ya ha sido utilizado");		
+				}
+				else if (node.get("name").asText() != "") {
+					player.setUsername(node.get("name").asText());
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("name", player.getUsername())));
+					msg.put("event", "UPDATE USERNAME RESPONSE");
+					msg.put("resultado", "Tu nuevo nombre de usuario es: " + player.getUsername());					
+				}
+				else {
+					msg.put("event", "UPDATE USERNAME RESPONSE");
+					msg.put("data", "Nombre de usuario no válido");	
+				}
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "UPDATE PASSWORD":
+				if (player.passwordMatches(node.get("oldPassword").asText()) && node.get("newPassword").asText() != "") {
+					player.setPassword(node.get("newPassword").asText());
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("password", player.getPassword())));
+					msg.put("event", "UPDATE USERNAME RESPONSE");
+					msg.put("resultado", "Contraseña cambiada correctamente");
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					System.out.println("Hola");
+				}
+				System.out.println("Ciao");
+				break;
 			case "ASK PLAYER INFO":
 				if (!player.isGameStarted()) {
 					player.setGameStarted(true);
@@ -758,6 +789,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("y", e.getY());
 				if (e instanceof GeneradorRecursos) {
 					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+					jsonEdificio.put("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
 					jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
 					jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
 					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());

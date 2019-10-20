@@ -39,6 +39,7 @@ class AnuncioMenu extends Phaser.Scene {
     	})
     	
     	btnX.on('pointerdown', function(pointer){
+    		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
     		game.scene.stop('AnuncioMenu');
