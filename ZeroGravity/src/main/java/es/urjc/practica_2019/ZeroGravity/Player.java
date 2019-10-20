@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.crypto.Cipher;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.web.socket.TextMessage;
@@ -97,6 +98,21 @@ public class Player {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean passwordMatches(String password) {
+		byte[] oldPassword = password.getBytes();
+		try {
+			oldPassword = MessageDigest.getInstance("MD5").digest(oldPassword);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		Bson filter = new Document("name", this.getUsername()).append("password", oldPassword);
+		Document myPlayer = WebsocketGameHandler.getColl().find(filter).first();
+		if (myPlayer != null) {
+			return true;
+		}
+		return false;
 	}
 
 	public String getEmail() {

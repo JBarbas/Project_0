@@ -61,22 +61,6 @@ class OptionsScene extends Phaser.Scene {
     	    button.setFrame(0);
     	})
     	
-    	btnModificar.on('pointerover',function(pointer){
-    		btnModificar.setFrame(1);
-    	})
-
-    	btnModificar.on('pointerout',function(pointer){
-    		btnModificar.setFrame(0);
-    	})
-    	
-    	btnModificar2.on('pointerover',function(pointer){
-    		btnModificar2.setFrame(1);
-    	})
-
-    	btnModificar2.on('pointerout',function(pointer){
-    		btnModificar2.setFrame(0);
-    	})
-    	
     	btnCuenta.on('pointerdown',function(pointer){
     		btnCuenta.setFrame(1);
     		btnSonido.setFrame(0);
@@ -135,22 +119,47 @@ class OptionsScene extends Phaser.Scene {
 
         this.element.setPerspective(800);
         
-        
-        /*var fSYes = document.getElementById('fullScreenYes');
-		var fSNo = document.getElementById('fullScreenNo');
-		
-		fSYes.addEventListener("click", function(){
-			if(this.scale.isFullscreen){
-				this.scale.stopFullscreen();
-			}else{
-				this.scale.startFullscreen();
-			}
-		}, this);
-		
-		//generalContainer.add(fSYes);
-		//generalContainer.add(fSNo);*/
-        
 		generalContainer.add(this.element);
+		
+		btnModificar.on('pointerover',function(pointer){
+    		btnModificar.setFrame(1);
+    	})
+
+    	btnModificar.on('pointerout',function(pointer){
+    		btnModificar.setFrame(0);
+    	})
+    	
+    	var textUsuario = this.element.getChildByName("username");
+    	
+    	btnModificar.on('pointerdown',function(pointer){
+    		if (textUsuario.value !== '') {
+	    		let msg = new Object();
+	    		msg.event = 'UPDATE USERNAME';
+	    		msg.name = textUsuario.value;
+	    		game.global.socket.send(JSON.stringify(msg));
+    		}
+    	});
+    	
+    	btnModificar2.on('pointerover',function(pointer){
+    		btnModificar2.setFrame(1);
+    	})
+
+    	btnModificar2.on('pointerout',function(pointer){
+    		btnModificar2.setFrame(0);
+    	})
+    	
+    	var textPassword = this.element.getChildByName("password");    	
+    	var textNewPassword = this.element.getChildByName("password1");    	2
+    	
+    	btnModificar2.on('pointerdown',function(pointer){
+    		if (textPassword.value !== '' && textNewPassword.value !== '') {
+	    		let msg = new Object();
+	    		msg.event = 'UPDATE PASSWORD';
+	    		msg.oldPassword = textPassword.value;
+	    		msg.newPassword = textNewPassword.value;
+	    		game.global.socket.send(JSON.stringify(msg));
+    		}
+    	});
 
 		
 		this.elementS = this.add.dom(0, 200).createFromCache('optionsformS');

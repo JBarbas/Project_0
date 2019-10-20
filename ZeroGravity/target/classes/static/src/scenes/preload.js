@@ -13,6 +13,10 @@ class PreloadScene extends Phaser.Scene {
 	}
 	
 	preload () {
+		// Cargamos los ficheros de idioma
+		this.load.xml('esp', 'assets/text/languages/esp.xml');
+		this.load.xml('eng', 'assets/text/languages/eng.xml');
+		
 		// Backgrounds
 		this.load.image('backgroundLoadGame', 'assets/background/loadGame.png');
 		this.load.image('backgroundLogIn', 'assets/background/InicioSesionV.1.png');
