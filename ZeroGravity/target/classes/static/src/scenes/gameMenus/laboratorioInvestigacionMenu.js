@@ -121,13 +121,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 					textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('labmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;let textoEntrante2 = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
 					this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 					mejorasContainer.add(this.descSigNivel);
-					
-					this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-								
-					this.subirNivel.on('pointerover',function(pointer){
-						this.setFrame(1);
-					})
-					
+									
 					//Se añade a cada contenedor su imagen de fondo
 					this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
 					mejorasContainer.add(this.intMejoras);
@@ -207,12 +201,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 						textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('labmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;let textoEntrante2 = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
 						this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 						mejorasContainer.add(this.descSigNivel);
-						
-						this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-									
-						this.subirNivel.on('pointerover',function(pointer){
-							this.setFrame(1);
-						})
+										
 						
 						//Se añade a cada contenedor su imagen de fondo
 						this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
