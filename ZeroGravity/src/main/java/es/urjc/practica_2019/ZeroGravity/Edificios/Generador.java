@@ -20,9 +20,9 @@ public class Generador extends GeneradorRecursos {
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos,
 	// Duracion (mins)
-	public static final int[] NIVEL1 = { 0, 120, 200, 1600, 5 };
-	public static final int[] NIVEL2 = { 0, 800, 1200, 8500, 5 };
-	public static final int[] NIVEL3 = { 0, 7000, 12000, 35000, 5 };
+	public static final int[] NIVEL1 = { 0, 120, 200, 1600, 2};
+	public static final int[] NIVEL2 = { 0, 800, 1200, 8500, 2};
+	public static final int[] NIVEL3 = { 0, 7000, 12000, 35000, 2};
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3 };
 
 	// Establecemos los recursos que generan según su nivel

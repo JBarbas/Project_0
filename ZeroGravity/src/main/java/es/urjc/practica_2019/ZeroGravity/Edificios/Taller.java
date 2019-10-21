@@ -25,9 +25,9 @@ public class Taller extends GeneradorRecursos{
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 1, 12, 20, 400, 5};
-	public static final int[] NIVEL2 = { 3, 180, 250, 6000, 5};
-	public static final int[] NIVEL3 = { 5, 1100, 2000, 40000, 5};
+	public static final int[] NIVEL1 = { 1, 12, 20, 400, 2};
+	public static final int[] NIVEL2 = { 3, 180, 250, 6000, 2};
+	public static final int[] NIVEL3 = { 5, 1100, 2000, 40000, 2};
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 	
 	//Establecemos los recursos que generan según su nivel
@@ -117,7 +117,7 @@ public class Taller extends GeneradorRecursos{
 	@Override
 	public boolean needsEnergy() {		
 		if (!this.isEnConstruccion()) {
-			return this.getEnergia() < Taller.COSTS[this.level-1][0];
+			return this.getEnergia() < Taller.COSTS[this.getLevel()-1][0];
 		}
 		else {
 			return false;

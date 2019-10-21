@@ -123,6 +123,12 @@ class TallerMenu extends Phaser.Scene {
 				this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 				mejorasContainer.add(this.descSigNivel);
 				
+				this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
+							
+				this.subirNivel.on('pointerover',function(pointer){
+					this.setFrame(1);
+				})
+				
 				//
 				this.edificiosContainer = edificiosContainer;
 				
@@ -204,7 +210,7 @@ class TallerMenu extends Phaser.Scene {
 					// Se añade la descripción del siguiente nivel
 					textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('tmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
 					this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
-					mejorasContainer.add(this.descSigNivel);				
+					mejorasContainer.add(this.descSigNivel);
 					
 					//
 					this.edificiosContainer = edificiosContainer;
@@ -250,8 +256,8 @@ class TallerMenu extends Phaser.Scene {
 					
 					//  CONTENEDOR DETALLES
 					// Se añade la descripción del edificio
-			    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('tdetalles')[0].childNodes[0].nodeValue;
-					this.descEdificio = this.add.text(80, 180, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
+					let textoEntrante = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
+					this.descEdificio = this.add.text(80, 180, justifica(textoEntrante), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 					detallesContainer.add(this.descEdificio);
 					
 					// Se añade el botón mover al contenedor de detalles
@@ -283,8 +289,8 @@ class TallerMenu extends Phaser.Scene {
 						mejorasContainer.add(this.edificioSigNivel);
 						
 						// Se añade la descripción del siguiente nivel
-			    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('tmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
-						this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
+						let textoEntrante2 = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
+						this.descSigNivel = this.add.text(80, 360, justifica(textoEntrante2), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 						mejorasContainer.add(this.descSigNivel);
 						
 						this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();

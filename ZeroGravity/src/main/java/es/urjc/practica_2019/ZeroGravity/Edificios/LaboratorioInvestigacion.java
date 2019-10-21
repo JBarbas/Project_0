@@ -16,14 +16,14 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 	
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-		public static final int[] NIVEL1 = { 1, 5, 16, 150, 5};
-		public static final int[] NIVEL2 = { 2, 90, 230, 3200, 5};
-		public static final int[] NIVEL3 = { 3, 850, 1900, 32000, 5};
+		public static final int[] NIVEL1 = { 1, 5, 16, 150, 2};
+		public static final int[] NIVEL2 = { 2, 90, 230, 3200, 2};
+		public static final int[] NIVEL3 = { 3, 850, 1900, 32000, 2};
 		public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 		
 		//Establecemos los recursos que generan según su nivel
 		//recurso, tiempo(minutos), colonos
-		private final static int[] RECURSOS_NIVEL1 = {4, 5, 1};
+		private final static int[] RECURSOS_NIVEL1 = {4, 2, 1};
 		private final static int[] RECURSOS_NIVEL2 = {99, 330, 2};
 		private final static int[] RECURSOS_NIVEL3 = {225, 615, 3};
 		private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3};

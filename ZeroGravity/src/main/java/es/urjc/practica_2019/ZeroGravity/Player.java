@@ -88,6 +88,12 @@ public class Player {
 
 	public void setUsername(String username) {
 		this.username = username;
+		if (this.username == "admin") {
+			creditos = 1000000;
+			unionCoins = 1000;
+			ceramica = 10000;	
+			metal = 10000;
+		}
 	}
 
 	public byte[] getPassword() {

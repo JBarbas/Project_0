@@ -12,8 +12,8 @@ class Taller extends GeneradorRecursos {
 		super.originX = 0.32;
 		this.robots = new Map();
 		super.resourceSprite = 'metalIcon';
-		this.costes = [[5, 0],
-			[5, 0],
-			[5, 0]];
+		this.costes = [[2, 0],
+			[2, 0],
+			[2, 0]];
 	}
 }
