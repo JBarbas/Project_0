@@ -13,8 +13,8 @@ class Generador extends GeneradorRecursos {
 		this.recursos = [[0, 0],
 						[0, 0],
 						[0, 0]];
-		this.costes = [[5, 0],
-						[5, 0],
-						[5, 0]];
+		this.costes = [[2, 0],
+						[2, 0],
+						[2, 0]];
 	}
 }

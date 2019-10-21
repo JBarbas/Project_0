@@ -14,8 +14,8 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.recursos = [[4, 5],
 						[4, 20],
 						[4, 20]];
-		this.costes = [[5, 0],
-			[5, 0],
-			[5, 0]];
+		this.costes = [[2, 0],
+			[2, 0],
+			[2, 0]];
 	}
 }
