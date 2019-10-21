@@ -17,9 +17,9 @@ public class CentroAdministrativo extends Edificio {
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 0, 0, 0, 0, 5};
-	public static final int[] NIVEL2 = { 0, 100, 170, 1000, 5};
-	public static final int[] NIVEL3 = { 0, 1000, 1200, 5500, 5};
+	public static final int[] NIVEL1 = { 0, 0, 0, 0, 2};
+	public static final int[] NIVEL2 = { 0, 100, 170, 1000, 2};
+	public static final int[] NIVEL3 = { 0, 1000, 1200, 5500, 2};
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 	
 	private ObjectMapper mapper = new ObjectMapper();
