@@ -212,12 +212,6 @@ class TallerMenu extends Phaser.Scene {
 					this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 					mejorasContainer.add(this.descSigNivel);
 					
-					this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-								
-					this.subirNivel.on('pointerover',function(pointer){
-						this.setFrame(1);
-					})
-					
 					//
 					this.edificiosContainer = edificiosContainer;
 					

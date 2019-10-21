@@ -230,7 +230,7 @@ window.onload = function() {
 				case 'taller':
 					edificio = new Taller(e.x, e.y);
 					for (var j = 0; j < e.robots.length; j++) {
-						var r = new Robot(e.robots[j].id, Date.UTC(e.robots[j].dateYear, e.robots[j].dateMonth-1, e.robots[j].dateDay, e.robots[j].dateHour-2, e.robots[j].dateMinute+1, 0));
+						var r = new Robot(e.robots[j].id, Date.UTC(e.robots[j].dateYear, e.robots[j].dateMonth-1, e.robots[j].dateDay, e.robots[j].dateHour, e.robots[j].dateMinute+1, 0));
 						r.ausente = e.robots[j].ausente;
 						r.carga = e.robots[j].carga;
 						r.nivel = e.robots[j].nivel;
@@ -242,7 +242,7 @@ window.onload = function() {
 					edificio.lleno = e.lleno;
 					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
-					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
+					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour, e.dateMinute+1, 0);
 					break;
 				case 'centroComercio':
 					edificio = new CentroComercio(e.x, e.y);
@@ -255,7 +255,7 @@ window.onload = function() {
 					edificio.lleno = e.lleno;
 					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
-					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour-2, e.dateMinute+1, 0);
+					edificio.inicioProduccion = Date.UTC(e.dateYear, e.dateMonth-1, e.dateDay, e.dateHour, e.dateMinute+1, 0);
 					break;
 				default:
 					break;
@@ -263,7 +263,7 @@ window.onload = function() {
 				edificio.level = e.level;
 				edificio.id = e.id;
 				edificio.enConstruccion = e.enConstruccion;
-				edificio.inicioConstruccion = Date.UTC(e.construccionDateYear, e.construccionDateMonth-1, e.construccionDateDay, e.construccionDateHour-2, e.construccionDateMinute+1, 0);
+				edificio.inicioConstruccion = Date.UTC(e.construccionDateYear, e.construccionDateMonth-1, e.construccionDateDay, e.construccionDateHour, e.construccionDateMinute+1, 0);
 				game.global.edificios.set(edificio.id, edificio);
 			}
 			game.global.loaded = true;
@@ -311,7 +311,7 @@ window.onload = function() {
 					}
 					edificio.id = e.id;
 					edificio.enConstruccion = e.enConstruccion;
-					edificio.inicioConstruccion = Date.UTC(e.construccionDateYear, e.construccionDateMonth-1, e.construccionDateDay, e.construccionDateHour-2, e.construccionDateMinute+1, 0);
+					edificio.inicioConstruccion = Date.UTC(e.construccionDateYear, e.construccionDateMonth-1, e.construccionDateDay, e.construccionDateHour, e.construccionDateMinute+1, 0);
 					game.global.edificios.set(edificio.id, edificio);
 				}
 				else {

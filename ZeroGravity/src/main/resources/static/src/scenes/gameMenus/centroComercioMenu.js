@@ -122,7 +122,7 @@ class CentroComercioMenu extends Phaser.Scene {
 	    		
 	    		/*la imagen*/
 	    		let box = document.createElement("img");
-	        	box.src = "assets/interface/Gameplay/boxComercio.png";
+	        	box.src = "assets/interface/boxComercio.png";
 	        	box.style.marginLeft ="0px";
 	        	box.style.marginTop = "0px";
 	        	box.style.width = '100%';
@@ -149,10 +149,10 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	}
 	        	
 	        	box.onmouseover = function(){
-	        		box.src = "assets/interface/Gameplay/boxComercioHover.png";
+	        		box.src = "assets/interface/boxComercioHover.png";
 	        	}
 	        	box.onmouseout = function(){
-	        		box.src = "assets/interface/Gameplay/boxComercio.png";
+	        		box.src = "assets/interface/boxComercio.png";
 	        	}
 	        	
 	        	
@@ -365,7 +365,7 @@ class CentroComercioMenu extends Phaser.Scene {
     		
     		/*la imagen*/
     		let boxV = document.createElement("img");
-        	boxV.src = "assets/interface/Gameplay/boxComercio.png";
+        	boxV.src = "assets/interface/boxComercio.png";
         	boxV.style.marginLeft ="0px";
         	boxV.style.marginTop = "0px";
         	boxV.style.width = '100%';
@@ -390,10 +390,10 @@ class CentroComercioMenu extends Phaser.Scene {
         	    	});      		       		
         	}
         	boxV.onmouseover = function(){
-        		boxV.src = "assets/interface/Gameplay/boxComercioHover.png";
+        		boxV.src = "assets/interface/boxComercioHover.png";
         	}
         	boxV.onmouseout = function(){
-        		boxV.src = "assets/interface/Gameplay/boxComercio.png";
+        		boxV.src = "assets/interface/boxComercio.png";
         	}
         	
         	/*el div de los span*/
@@ -660,7 +660,7 @@ class CentroComercioMenu extends Phaser.Scene {
     		divPuestoO.style.cursor = "pointer";       	
     		
     		let boxO = document.createElement("img");
-        	boxO.src = "assets/interface/Gameplay/boxComercio.png";
+        	boxO.src = "assets/interface/boxComercio.png";
         	boxO.style.marginLeft ="0px";
         	boxO.style.marginTop = "0px";
         	boxO.style.width = '100%';
@@ -689,7 +689,7 @@ class CentroComercioMenu extends Phaser.Scene {
         		        		
         	}
         	boxO.onmouseover = function(){
-        		boxO.src = "assets/interface/Gameplay/boxComercioBorrar.png";
+        		boxO.src = "assets/interface/boxComercioBorrar.png";
         		if(metalO != undefined){
         			metalO.style.visible = "hidden";
         		}
@@ -701,7 +701,7 @@ class CentroComercioMenu extends Phaser.Scene {
         		numRanking2O.style.visible = "hidden";
         	}
         	boxO.onmouseout = function(){
-        		boxO.src = "assets/interface/Gameplay/boxComercio.png";
+        		boxO.src = "assets/interface/boxComercio.png";
         		if(metalO != undefined){
         			metalO.style.visible = "visible";
         		}

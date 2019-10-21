@@ -15,7 +15,7 @@ class PreloadGameScene extends Phaser.Scene {
 	
 	preload () {
 		var musicMenu = game.global.musicMenu;
-		musicMenu.stop();
+		//musicMenu.stop();
 		game.scene.run('LoadGameplayScene');
 		
 		// Pedimos la info del jugador, como su map grid o sus recursos
@@ -42,9 +42,9 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet( 'generador' , 'assets/sprites/Edificios/Generador.png', {frameWidth:127,frameHeight:102});
 		this.load.spritesheet( 'laboratorioInvestigacion' , 'assets/sprites/Edificios/LaboratorioInvestigacion.png', {frameWidth:194,frameHeight:154});
 		this.load.spritesheet( 'centroComercio' , 'assets/sprites/Edificios/CentroComercio.png', {frameWidth:128,frameHeight:169});
-		this.load.image('enConstruccion1', 'assets/sprites/Edificios/enConstruccion1.png');
-		this.load.image('enConstruccion2', 'assets/sprites/Edificios/enConstruccion2.png');
-		this.load.image('enConstruccion3', 'assets/sprites/Edificios/enConstruccion3.png');
+		this.load.image('enConstruccion1', 'assets/sprites/Edificios/modulo1.png');
+		this.load.image('enConstruccion2', 'assets/sprites/Edificios/modulo2.png');
+		this.load.image('enConstruccion3', 'assets/sprites/Edificios/modulo3.png');
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');

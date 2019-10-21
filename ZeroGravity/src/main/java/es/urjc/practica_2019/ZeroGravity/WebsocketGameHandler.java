@@ -262,15 +262,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					
 				case "centroAdministrativo":		
 					//energia, metal, ceramica, creditos
-					if(player.getMetal() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][1] &&
-					player.getCeramica() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][2] &&
-					player.getCreditos() >= CentroAdministrativo.COSTS[edificio.getLevel()-1][3] &&
+					if(player.getMetal() >= CentroAdministrativo.COSTS[edificio.getLevel()][1] &&
+					player.getCeramica() >= CentroAdministrativo.COSTS[edificio.getLevel()][2] &&
+					player.getCreditos() >= CentroAdministrativo.COSTS[edificio.getLevel()][3] &&
 					edificio.getLevel() < NIVEL_MAX_EDIFICIO){
 						
 						canILevelUp = true;
-						player.setMetal(player.getMetal() - CentroAdministrativo.COSTS[edificio.getLevel()-1][1]);
-						player.setCeramica(player.getCeramica() - CentroAdministrativo.COSTS[edificio.getLevel()-1][2]);
-						player.setCreditos(player.getCreditos() - CentroAdministrativo.COSTS[edificio.getLevel()-1][3]);
+						player.setMetal(player.getMetal() - CentroAdministrativo.COSTS[edificio.getLevel()][1]);
+						player.setCeramica(player.getCeramica() - CentroAdministrativo.COSTS[edificio.getLevel()][2]);
+						player.setCreditos(player.getCreditos() - CentroAdministrativo.COSTS[edificio.getLevel()][3]);
+						System.out.println(CentroAdministrativo.COSTS[edificio.getLevel()][1]);
 					}
 					break;
 					
@@ -393,6 +394,17 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				
 
 				msg.put("event", "REFRESH MENU");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				
+				msg = mapper.createObjectNode();
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
+				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "ASK_LEVELUP_ROBOT":
