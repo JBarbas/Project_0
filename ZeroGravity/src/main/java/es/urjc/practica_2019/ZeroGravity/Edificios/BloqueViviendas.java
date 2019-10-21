@@ -121,6 +121,21 @@ public class BloqueViviendas extends Edificio {
 				this.player.setColonosMax(this.player.getColonosMax() + this.getCapacidad());
 				this.player.saveRecursos();
 				this.player.saveEdificios();
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
+				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
+				try {
+					this.player.getSession().sendMessage(new TextMessage(msg.toString()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else {
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
@@ -128,6 +143,21 @@ public class BloqueViviendas extends Edificio {
 					p.setColonosMax(this.player.getColonosMax() + this.getCapacidad());
 					p.saveRecursos();
 					p.saveEdificios();
+					ObjectNode msg = mapper.createObjectNode();
+					msg.put("event", "GET_PLAYER_RESOURCES");
+					msg.put("metal", p.getMetal());
+					msg.put("energia", p.getEnergia());
+					msg.put("ceramica", p.getCeramica());
+					msg.put("creditos", p.getCreditos());
+					msg.put("punctuacion", p.getPuntuacion());
+					msg.put("unionCoins", p.getUnionCoins());
+					msg.put("colonos", p.getColonos() + "/" + player.getColonosMax());
+					try {
+						p.getSession().sendMessage(new TextMessage(msg.toString()));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		}

@@ -61,7 +61,7 @@ window.onload = function() {
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : true,
+		DEBUG_MODE : false,
 		ONLY_GAME_MODE : false,
 		SKIP_INTRO: false,
 		socket : null,

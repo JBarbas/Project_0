@@ -481,7 +481,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("id", node.get("id").asInt());
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
 				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
-				msg.put("energiaNecesaria", PlataformaExtraccion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel()-1][0]);
+				msg.put("energiaNecesaria", Taller.COSTS[player.getEdificio(node.get("id").asInt()).getLevel()-1][0]);
 				ArrayNode arrayNodeRobots2 = mapper.createArrayNode(); // JSON para el cliente
 				for (Robot r : ((Taller) player.getEdificio(node.get("id").asInt())).getRobots()) {
 					ObjectNode jsonRobot = mapper.createObjectNode();
@@ -662,7 +662,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 							msg.put("ceramica", playerVendedor.getCeramica());
 							msg.put("creditos", playerVendedor.getCreditos());
 							msg.put("unionCoins", playerVendedor.getUnionCoins());
-							msg.put("colonos", playerVendedor.getColonos());
+							msg.put("colonos", playerVendedor.getColonos() + "/" + playerVendedor.getColonosMax());
 							msg.put("punctuacion", playerVendedor.getPuntuacion());
 							playerVendedor.getSession().sendMessage(new TextMessage(msg.toString()));
 							

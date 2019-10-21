@@ -161,7 +161,6 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	contenido.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
 	        	
 	        	/*LOS ICONOS */
-	        	console.log(oferta.recurso);
 	        	if(oferta.recurso === "metal"){
 	        		var metal = document.createElement("img");
 	            	metal.src = "assets/interface/Gameplay/metal.png";
@@ -719,7 +718,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	contenidoO.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
         	
         	/*LOS ICONOS */
-        	if(oferta.material == "metal"){
+        	if(oferta.recurso == "metal"){
         		var metalO = document.createElement("img");
             	metalO.src = "assets/interface/Gameplay/metal.png";
             	metalO.style.position = "absolute";
@@ -904,7 +903,7 @@ class CentroComercioMenu extends Phaser.Scene {
         	
         	
         	contenidoO.appendChild(numRankingO);
-        	if(oferta.material == "metal"){
+        	if(oferta.recurso == "metal"){
         		contenidoO.appendChild(metalO);
         	}else{
         		contenidoO.appendChild(ceramicaO);

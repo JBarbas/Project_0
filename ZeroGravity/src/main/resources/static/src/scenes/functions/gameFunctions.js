@@ -92,7 +92,6 @@ function construir(i, j, scene, edificio) {
 		msg.x = j;
 		msg.y = i;
 		msg.edificio = edificio.sprite;
-		console.log(edificio.sprite);
 		msg.id = edificio.id;
 		game.global.socket.send(JSON.stringify(msg));
 	}
