@@ -10,6 +10,7 @@ class RankingMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **RANKING** menu");
 		}
+    	game.global.inMenu = true;
     }
     
     preload () {

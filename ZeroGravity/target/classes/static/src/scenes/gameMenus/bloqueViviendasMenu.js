@@ -28,7 +28,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
 
     	game.scene.getScene('GameInterface').panel.setTexture('panelBViviendas');
     	
-if (!this.miEdificio.enConstruccion) {
+    if (!this.miEdificio.enConstruccion) {
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	// Contenedor del panel de detalles
@@ -220,8 +220,8 @@ if (!this.miEdificio.enConstruccion) {
 		    	
 		    	//  CONTENEDOR DETALLES
 		    	// Se añade la descripción del edificio
-		    	let textoEntrante = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
-				this.descEdificio = this.add.text(80, 180, justifica(textoEntrante), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
+		    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('bvdetalles')[0].childNodes[0].nodeValue;
+		    	this.descEdificio = this.add.text(80, 180, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 				detallesContainer.add(this.descEdificio);
 				
 		    	// Se añade el botón mover al contenedor de detalles
@@ -253,8 +253,8 @@ if (!this.miEdificio.enConstruccion) {
 		    		mejorasContainer.add(this.edificioSigNivel);
 		    		
 		    		// Se añade la descripción del siguiente nivel
-		        	let textoEntrante2 = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
-		    		this.descSigNivel = this.add.text(80, 360, justifica(textoEntrante2), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
+		    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('bvmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
+		    		this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 		    		mejorasContainer.add(this.descSigNivel);
 		        	
 		    		this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
