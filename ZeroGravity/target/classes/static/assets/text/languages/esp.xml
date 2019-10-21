@@ -228,21 +228,19 @@ Almacena cada 4 horas.
 Coste:
     90 unidades de Metal.
     230 unidades de Cerámica.
-    3200 Créditos.
+    320 Créditos.
 Tiempo requerido:
-    1 día y 5 horas.
-			</labmejoraNivel2>
+    1 día y 5 horas.</labmejoraNivel2>
 			<labmejoraNivel3>Requiere 3 Colonos. 
 Requiere 3 unidades de Energía. 
 Genera 360 Créditos por hora. 
 Almacena cada 9 horas.
 Coste:
-    850 unidades de Metal.
-    1900 unidades de Cerámica.
-    32000 Créditos.
+    550 unidades de Metal.
+    900 unidades de Cerámica.
+    1200 Créditos.
 Tiempo requerido:
-    5 días y 20 horas.
-			</labmejoraNivel3>
+    5 días y 20 horas.</labmejoraNivel3>
 			<labmejoraNivel4>N/D</labmejoraNivel4>
 		</laboratorio>
 		<plataforma>
@@ -261,21 +259,19 @@ Almacena cada 5 horas y 30 minutos.
 Coste:
     120 unidades de Metal.
     200 unidades de Cerámica.
-    4500 Créditos.
+    450 Créditos.
 Tiempo requerido:
-    1 día y 5 horas.
-			</pemejoraNivel2>
+    1 día y 5 horas.</pemejoraNivel2>
 			<pemejoraNivel3>Requiere 3 Colonos. 
 Requiere 8 unidades de Energía. 
 Genera 22 unidades de Cerámica por hora. 
 Almacena cada 10 horas y 15 minutos.
 Coste:
-    1050 unidades de Metal.
-    1800 unidades de Cerámica.
-    36500 Créditos.
+    550 unidades de Metal.
+    800 unidades de Cerámica.
+    1650 Créditos.
 Tiempo requerido:
-    5 días y 20 horas.
-			</pemejoraNivel3>
+    5 días y 20 horas.</pemejoraNivel3>
 			<pemejoraNivel4>N/D</pemejoraNivel4>
 		</plataforma>
 		<taller>
@@ -295,22 +291,20 @@ Vuelve cada 4 horas y 10 minutos.
 Coste:
     180 unidades de Metal.
     250 unidades de Cerámica.
-    6000 Créditos.
+    600 Créditos.
 Tiempo requerido:
-    1 día y 5 horas.
-			</tmejoraNivel2>
+    1 día y 5 horas.</tmejoraNivel2>
 			<tmejoraNivel3>Requiere 3 Colonos. 
 Requiere 5 unidades de Energía.
 Puede almacenar hasta 3 Robots
 Cada Robot de Nivel 3 recolecta 12 unidades de Metal por hora. 
 Vuelve cada 9 horas y 45 minutos.
 Coste:
-    1100 unidades de Metal.
-    2000 unidades de Cerámica.
-    40000 Créditos.
+    600 unidades de Metal.
+    1000 unidades de Cerámica.
+    1000 Créditos.
 Tiempo requerido:
-    5 días y 20 horas.
-			</tmejoraNivel3>
+    5 días y 20 horas.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
 		

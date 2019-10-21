@@ -12,8 +12,8 @@ class Robot {
 		else {
 			this.inicioProduccion = date;
 		}
-		this.recursos = [[5, 5],
-						[12, 300],
-						[20, 420]];
+		this.recursos = [[4, 2],
+						[40, 15],
+						[100, 30]];
 	}
 }

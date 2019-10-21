@@ -26,8 +26,8 @@ public class Taller extends GeneradorRecursos{
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
 	public static final int[] NIVEL1 = { 1, 12, 20, 400, 2};
-	public static final int[] NIVEL2 = { 3, 180, 250, 6000, 2};
-	public static final int[] NIVEL3 = { 5, 1100, 2000, 40000, 2};
+	public static final int[] NIVEL2 = { 3, 180, 250, 600, 2};
+	public static final int[] NIVEL3 = { 5, 600, 1000, 1000, 2};
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 	
 	//Establecemos los recursos que generan según su nivel
@@ -251,8 +251,8 @@ public class Taller extends GeneradorRecursos{
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
 					p.getEdificio(this.getId()).setEnConstruccion(false);
-					p.saveEdificios();
 					p.getEnergia();
+					p.saveEdificios();
 				}
 			}
 		}

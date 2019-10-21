@@ -10,9 +10,9 @@ class PlataformaExtraccion extends GeneradorRecursos{
 		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'PlataformaExtraccionMenu';
 		super.resourceSprite = 'clayIcon';
-		this.recursos = [[4, 20],
-						[4, 20],
-						[4, 20]];
+		this.recursos = [[4, 2],
+						[100, 30],
+						[225, 60]];
 		this.costes = [[2, 0],
 			[2, 0],
 			[2, 0]];

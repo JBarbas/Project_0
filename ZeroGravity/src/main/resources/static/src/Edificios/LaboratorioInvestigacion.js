@@ -11,9 +11,9 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.menuScene = 'LaboratorioInvestigacionMenu';
 		super.resourceSprite = 'creditIcon';
 		super.originX = 0.67;
-		this.recursos = [[4, 5],
-						[4, 20],
-						[4, 20]];
+		this.recursos = [[4, 2],
+						[100, 30],
+						[225, 60]];
 		this.costes = [[2, 0],
 			[2, 0],
 			[2, 0]];

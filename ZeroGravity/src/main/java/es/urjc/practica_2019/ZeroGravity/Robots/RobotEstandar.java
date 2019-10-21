@@ -17,9 +17,9 @@ import es.urjc.practica_2019.ZeroGravity.Edificios.Taller;
 public class RobotEstandar extends Robot {
 
 	//coste Metal, coste UnionCoins, vidaMax, fuerza, capacidadCarga, duracion
-	private static final int[] nivel1 = {0, 0, 10, 3, 5, 5}; // t = 120 mins
-	private static final int[] nivel2 = {0, 0, 20, 7, 12, 300};
-	private static final int[] nivel3 = {0, 0, 30, 15, 20, 420};
+	private static final int[] nivel1 = {0, 0, 10, 3, 4, 2}; // t = 120 mins
+	private static final int[] nivel2 = {0, 0, 20, 7, 40, 15};
+	private static final int[] nivel3 = {0, 0, 30, 15, 100, 30};
 	private static final int[][] infoPorNivel = {nivel1, nivel2, nivel3};
 	
 	private ObjectMapper mapper = new ObjectMapper();

@@ -388,7 +388,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				msg.put("event", "ANSWER_LEVELUP_BUILDING");
-				msg.put("resultado", canILevelUp.toString());
+				msg.put("resultado", canILevelUp);
 				msg.put("id", node.get("id").asInt());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				

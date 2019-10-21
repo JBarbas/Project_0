@@ -228,21 +228,19 @@ Stores every 4 hours.
 Cost:
     90 Metal units.
     230 Ceramic units.
-    3200 Credits.
+    320 Credits.
 Required time:
-    1 day and 5 hours.
-			</labmejoraNivel2>
+    1 day and 5 hours.</labmejoraNivel2>
 			<labmejoraNivel3>Requires 3 Colonists. 
 Requires 3 Energy units. 
 Generates 360 Credits per hour. 
 Stores every 9 hours.
 Cost:
-    850 Metal units.
-    1900 Ceramic units.
-    32000 Credits.
+    550 Metal units.
+    900 Ceramic units.
+    1200 Credits.
 Required time:
-    5 days and 20 hours.
-			</labmejoraNivel3>
+    5 days and 20 hours.</labmejoraNivel3>
 			<labmejoraNivel4>N/A</labmejoraNivel4>
 		</laboratorio>
 		<plataforma>
@@ -261,21 +259,19 @@ Stores every 5 hours and 30 minutes.
 Cost:
     120 Metal units.
     200 Ceramic units.
-    4500 Credits.
+    450 Credits.
 Required time:
-    1 day and 5 hours.
-			</pemejoraNivel2>
+    1 day and 5 hours.</pemejoraNivel2>
 			<pemejoraNivel3>Requires 3 Colonists. 
 Requires 8 Energy units. 
 Genera 22 Ceramic units per hour. 
 Stores every 10 hours and 15 minutes.
 Cost:
-    1050 Metal units.
-    1800 Ceramic units.
-    36500 Credits.
+    550 Metal units.
+    800 Ceramic units.
+    1650 Credits.
 Required time:
-    5 days and 20 hours.
-			</pemejoraNivel3>
+    5 days and 20 hours.</pemejoraNivel3>
 			<pemejoraNivel4>N/A</pemejoraNivel4>
 		</plataforma>
 		<taller>
@@ -295,22 +291,20 @@ Comes back every 4 hours and 10 minutes.
 Cost:
     180 Metal units.
     250 Ceramic units.
-    6000 Credits.
+    600 Credits.
 Required time:
-    1 day and 5 hours.
-			</tmejoraNivel2>
+    1 day and 5 hours.</tmejoraNivel2>
 			<tmejoraNivel3>Requires 3 Colonists. 
 Requires 5 Energy units.
 Can house up to 3 Robots
 Each level 3 Robot gathers 12 Metal units per hour. 
 Comes back every 9 hours and 45 minutes.
 Cost:
-    1100 Metal units.
-    2000 Ceramic units.
-    40000 Credits.
+    600 Metal units.
+    1000 Ceramic units.
+    1000 Credits.
 Required time:
-    5 days and 20 hours.
-			</tmejoraNivel3>
+    5 days and 20 hours.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
 		
