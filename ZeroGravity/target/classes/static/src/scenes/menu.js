@@ -47,6 +47,8 @@ class MenuScene extends Phaser.Scene {
     	
     	this.anims.create({ key: 'everything', frames: this.anims.generateFrameNames('title'), repeat: -1 });
     	this.add.sprite(game.config.width/2, 200, 'title').play('everything').setOrigin(0.5,0.5).setScale(1.2);    	
+    	var version = this.add.text(400, 1028, 'VERSION 1.0.0', { fontFamily: '"Roboto"', fontSize: 25 });
+    	version.style.fontSize = '80px';
     	
     	var anim = document.getElementById("animacion");
     	anim.style.visibility = "visible";
@@ -56,6 +58,7 @@ class MenuScene extends Phaser.Scene {
     	
     	jugar.addEventListener("click", function(){
     		game.global.sound = game.sound.play('pulsarBoton');
+    		
     		anim.style.visibility = "hidden";
     		jugar.style.visibility = "hidden";
         	opciones.style.visibility = "hidden";
@@ -91,7 +94,7 @@ class MenuScene extends Phaser.Scene {
     	});
 
     }
+    
     update(time, delta) {
-    	
     }
 }

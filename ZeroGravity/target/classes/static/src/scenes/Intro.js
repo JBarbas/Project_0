@@ -16,7 +16,9 @@ class IntroScene extends Phaser.Scene {
 		
     }
     create (data)  {
-    	game.global.sound = game.sound.play('intro');
+    	game.global.musicMenu = game.sound.add('intro');
+    	var intro = game.global.musicMenu;    	
+    	intro.pause();
     	this.scale.startFullscreen();
     	var background = this.add.image(960, 540, 'backgroundLoadGame');
     	background.alpha = 0;
