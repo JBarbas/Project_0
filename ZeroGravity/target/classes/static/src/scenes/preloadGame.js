@@ -133,7 +133,7 @@ class PreloadGameScene extends Phaser.Scene {
 		
 
 		var url;		  
-        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/plugins/dist/rexpinchplugin.min.js';
+        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpinchplugin.min.js';
         this.load.plugin('rexpinchplugin', url, true);
     }
     create (data)  {
