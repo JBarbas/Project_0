@@ -43,6 +43,7 @@ class PreloadScene extends Phaser.Scene {
     	this.load.spritesheet( 'btnSonido' , 'assets/interface/Opciones/EqualizerSprite.png' ,{frameWidth:131,frameHeight:131});
     	this.load.spritesheet( 'btnIdioma' , 'assets/interface/Opciones/IdiomaSprite.png' ,{frameWidth:131,frameHeight:131});
     	this.load.spritesheet('btnModificar', 'assets/interface/btnModificar.png',{frameWidth:594,frameHeight:142});
+    	this.load.spritesheet('btnModify', 'assets/interface/btnModify.png',{frameWidth:594,frameHeight:142});
     	
     	this.load.spritesheet( 'btnRegister' , 'assets/interface/btnRegistrar.png' ,{frameWidth:596,frameHeight:142});
     	this.load.image('btnAmigos', 'assets/background/btnMenuAmigos.png');

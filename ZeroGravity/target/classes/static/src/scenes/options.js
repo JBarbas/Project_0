@@ -59,6 +59,12 @@ class OptionsScene extends Phaser.Scene {
     	var btnModificar2 = this.add.image(1650, 800, 'btnModificar').setInteractive();
     	btnModificar2.setScale(.4);
     	
+    	var btnModify = this.add.image(1650, 550, 'btnModify').setInteractive();
+    	btnModify.setScale(.4);
+    	
+    	var btnModify2 = this.add.image(1650, 800, 'btnMody').setInteractive();
+    	btnModify2.setScale(.4);
+    	
 		
 		
     	//Default cuenta
@@ -91,8 +97,13 @@ class OptionsScene extends Phaser.Scene {
     		generalContainer.visible = true;
     		soundContainer.visible = false;
     		languageContainer.visible = false;
-    		btnModificar.visible = true;
-    		btnModificar2.visible = true;
+    		if(game.global.idioma == 'eng'){
+    			btnModify.visible = true;
+        		btnModify2.visible = true;
+    		}else{
+    			btnModificar.visible = true;
+    			btnModificar2.visible = true;
+    		}
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
@@ -108,6 +119,8 @@ class OptionsScene extends Phaser.Scene {
     		languageContainer.visible = false;
     		btnModificar.visible = false;
     		btnModificar2.visible = false;
+    		btnModify.visible = false;
+    		btnModify2.visible = false;
     	})
     	
     	btnIdioma.on('pointerdown',function(pointer){
@@ -123,6 +136,8 @@ class OptionsScene extends Phaser.Scene {
     		languageContainer.visible = true;
     		btnModificar.visible = false;
     		btnModificar2.visible = false;
+    		btnModify.visible = false;
+    		btnModify2.visible = false;
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
@@ -174,9 +189,27 @@ class OptionsScene extends Phaser.Scene {
     		btnModificar.setFrame(0);
     	})
     	
+    	btnModify.on('pointerover',function(pointer){
+    		btnModify.setFrame(1);
+    	})
+
+    	btnModify.on('pointerout',function(pointer){
+    		btnModify.setFrame(0);
+    	})
+    	
     	var textUsuario = this.element.getChildByName("username");
     	
     	btnModificar.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
+    		if (textUsuario.value !== '') {
+	    		let msg = new Object();
+	    		msg.event = 'UPDATE USERNAME';
+	    		msg.name = textUsuario.value;
+	    		game.global.socket.send(JSON.stringify(msg));
+    		}
+    	});
+    	
+    	btnModify.on('pointerdown',function(pointer){
     		game.global.sound = game.sound.play('pulsarBoton');
     		if (textUsuario.value !== '') {
 	    		let msg = new Object();
@@ -194,6 +227,14 @@ class OptionsScene extends Phaser.Scene {
     		btnModificar2.setFrame(0);
     	})
     	
+    	btnModify2.on('pointerover',function(pointer){
+    		btnModify2.setFrame(1);
+    	})
+
+    	btnModify2.on('pointerout',function(pointer){
+    		btnModify2.setFrame(0);
+    	})
+    	
     	var textPassword = this.element.getChildByName("password");    	
     	var textNewPassword = this.element.getChildByName("password1");
     	
@@ -208,6 +249,16 @@ class OptionsScene extends Phaser.Scene {
     		}
     	});
 
+    	btnModify2.on('pointerdown',function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
+    		if (textPassword.value !== '' && textNewPassword.value !== '') {
+	    		let msg = new Object();
+	    		msg.event = 'UPDATE PASSWORD';
+	    		msg.oldPassword = textPassword.value;
+	    		msg.newPassword = textNewPassword.value;
+	    		game.global.socket.send(JSON.stringify(msg));
+    		}
+    	});
 		
 		this.elementS = this.add.dom(0, 200).createFromCache('optionsformS');
         this.elementS.setPerspective(800);
