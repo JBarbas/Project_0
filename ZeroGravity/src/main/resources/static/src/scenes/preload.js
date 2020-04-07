@@ -47,7 +47,8 @@ class PreloadScene extends Phaser.Scene {
     	this.load.spritesheet( 'btnRegister' , 'assets/interface/btnRegistrar.png' ,{frameWidth:596,frameHeight:142});
     	this.load.image('btnAmigos', 'assets/background/btnMenuAmigos.png');
 		this.load.image('link', 'assets/interface/link.png');
-		this.load.spritesheet('back', 'assets/interface/back.png',{frameWidth:165,frameHeight:63});
+		this.load.spritesheet('back', 'assets/interface/volver.png',{frameWidth:165,frameHeight:63});
+		this.load.spritesheet('backEng', 'assets/interface/back.png',{frameWidth:165,frameHeight:63});
 		
 		//Texts
 		this.load.html('loginform', 'assets/text/login-form.html');

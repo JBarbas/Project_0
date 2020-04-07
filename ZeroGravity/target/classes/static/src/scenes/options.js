@@ -28,6 +28,7 @@ class OptionsScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundOptionsAccount');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
+    	var buttonEng = this.add.image(150, 100, 'backEng').setInteractive();
     	var btnIdioma = this.add.image(1400, 250, 'btnIdioma').setInteractive();
     	var btnSonido = this.add.image(960, 250, 'btnSonido').setInteractive();
     	var btnCuenta = this.add.image(550, 250, 'btnCuenta').setInteractive();
@@ -41,6 +42,16 @@ class OptionsScene extends Phaser.Scene {
     	txtCuenta.setVisible(true);
 		txtSonido.setVisible(false);
 		txtIdioma.setVisible(false);
+		
+		//Dependiendo del idioma del usuario se cambia a un boton de back o a otro
+		
+		if(game.global.idioma == 'eng'){
+			buttonEng.setVisible(true);
+			button.setVisible(false);
+		}else{
+			buttonEng.setVisible(false);
+			button.setVisible(true);
+		}
 		
 		var btnModificar = this.add.image(1650, 550, 'btnModificar').setInteractive();
     	btnModificar.setScale(.4);
@@ -59,6 +70,14 @@ class OptionsScene extends Phaser.Scene {
 
     	button.on('pointerout',function(pointer){
     	    button.setFrame(0);
+    	})
+    	
+    	buttonEng.on('pointerover',function(pointer){
+    	    buttonEng.setFrame(1);
+    	})
+
+    	buttonEng.on('pointerout',function(pointer){
+    	    buttonEng.setFrame(0);
     	})
     	
     	btnCuenta.on('pointerdown',function(pointer){
@@ -107,6 +126,19 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
+    		if(game.global.inGame){
+    			game.scene.run('GameInterface');
+    			game.scene.run('GameScene');
+        		game.scene.stop('OptionsScene');
+    		}
+    		else{
+    			game.scene.run('MenuScene');
+    			game.scene.stop('OptionsScene');
+    		}
+    	});
+    	
+    	buttonEng.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.global.sound = game.sound.play('pulsarBoton');
     		if(game.global.inGame){
     			game.scene.run('GameInterface');
