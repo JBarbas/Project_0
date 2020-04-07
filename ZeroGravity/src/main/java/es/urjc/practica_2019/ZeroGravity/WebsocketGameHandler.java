@@ -174,6 +174,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						msg.put("playerId", player.getId().toString());
 						players.put(player.getId(), player);
 						player.saveAll();
+						
+						ObjectNode jsonConfig = mapper.createObjectNode();
+						jsonConfig.put("volMusic", player.getConfig().getVolMusic());
+						jsonConfig.put("volEffects", player.getConfig().getVolEffects());
+						jsonConfig.put("lang", player.getConfig().getLang());
+						msg.putPOJO("config", jsonConfig);
 					}
 				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
