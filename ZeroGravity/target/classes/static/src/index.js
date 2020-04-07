@@ -67,7 +67,11 @@ window.onload = function() {
 		socket : null,
 		loaded : false,
 		myPlayer : {
-			gameStarted : false
+			gameStarted : false,
+			config : {
+				volMusic : 100,
+				volEffects : 100
+			}
 		},
 		myPlayerId: "",
 		puntuacion: 0,
@@ -172,7 +176,13 @@ window.onload = function() {
 	    	
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
-			game.global.myPlayer.gameStarted = msg.gameStarted;
+			game.global.myPlayer.gameStarted = msg.gameStarted;			
+			game.global.myPlayer.config.volMusic = msg.config.volMusic;
+			game.global.myPlayer.config.volEffects = msg.config.volEffects;
+			game.global.idioma = msg.config.lang;
+			if (typeof game.global.idioma === 'undefined' || game.global.idioma === null) {
+				game.global.idioma = "eng";
+			}
 			if (game.scene.isActive('LogInScene')) {
 				game.scene.run('MenuScene');
 	    		game.scene.stop('LogInScene');
@@ -183,7 +193,7 @@ window.onload = function() {
 			}
 			/*y yo aprovecho para precargar las puntuaciones y las ofertas disponibles*/
 			pedirPuntuaciones();
-			pedirOfertas();
+			pedirOfertas();			
 			break;
 		case 'LOGIN FAILED':
 			if (game.global.DEBUG_MODE) {

@@ -247,6 +247,7 @@ class OptionsScene extends Phaser.Scene {
         boxe.children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('esp')[0].childNodes[0].nodeValue;
         boxe.children[0].children[0].onclick = function(){
         	game.global.idioma = "esp";
+        	updatePlayerConfig();
         	if(game.global.inGame){
     			game.scene.run('GameInterface');
     			game.scene.run('GameScene');
@@ -260,6 +261,7 @@ class OptionsScene extends Phaser.Scene {
         boxe.children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('eng')[0].childNodes[0].nodeValue;
         boxe.children[0].children[1].onclick = function(){
         	game.global.idioma = "eng";
+        	updatePlayerConfig();
         	if(game.global.inGame){
     			game.scene.run('GameInterface');
     			game.scene.run('GameScene');

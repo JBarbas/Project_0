@@ -34,6 +34,7 @@ public class Player {
 	private String username;
 	private String email;
 	private byte[] password;
+	private Config config;
 	private static final int GRID_WIDTH = 20;
 	private static final int GRID_HEIGHT = 20;
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
@@ -68,6 +69,7 @@ public class Player {
 		this.session = session;
 		this.id = id;
 		this.grid = createGrid(this.grid);
+		this.config = new Config();
 	}
 
 	public WebSocketSession getSession() {
@@ -132,6 +134,14 @@ public class Player {
 		this.email = email;
 	}
 	
+	public Config getConfig() {
+		return config;
+	}
+
+	public void setConfig(Config config) {
+		this.config = config;
+	}
+
 	public int getEdificioId() {
 		return edificioId.get();
 	}
@@ -640,5 +650,14 @@ public class Player {
 		}	
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
 				new Document("$set", new Document("ofertas", dbOfertas)));
+	}
+	
+	public void saveConfig() {
+		Document dbConfig = new Document();
+		dbConfig.append("volMusic", config.getVolMusic());
+		dbConfig.append("volEffects", config.getVolEffects());
+		dbConfig.append("Language", config.getLang());
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
+				new Document("$set", new Document("config", dbConfig)));
 	}
 }
