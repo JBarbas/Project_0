@@ -124,10 +124,21 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas", 0));
 					player.setColonos(myPlayer.getInteger("colonos", 0));
 					player.setGameStarted(myPlayer.getBoolean("gameStarted", false));
+					
+					Config config = new Config();
+					config.setVolMusic(((Document)myPlayer.get("config")).getInteger("volMusic", 100));
+					config.setVolEffects(((Document)myPlayer.get("config")).getInteger("volEffects", 100));
+					config.setLang(((Document)myPlayer.get("config")).getString("Language"));
+					player.setConfig(config);
 
 					msg.put("event", "LOGGED");
 					msg.put("playerId", player.getId().toString());
-					msg.put("gameStarted", player.isGameStarted());
+					msg.put("gameStarted", player.isGameStarted());					
+					ObjectNode jsonConfig = mapper.createObjectNode();
+					jsonConfig.put("volMusic", config.getVolMusic());
+					jsonConfig.put("volEffects", config.getVolEffects());
+					jsonConfig.put("lang", config.getLang());
+					msg.putPOJO("config", jsonConfig);
 				}
 				else {
 					msg.put("event", "LOGIN FAILED");
@@ -198,6 +209,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					System.out.println("Hola");
 				}
 				System.out.println("Ciao");
+				break;
+			case "UPDATE CONFIG":
+				Config config = new Config();
+				config.setVolMusic(node.get("volMusic").asInt());
+				config.setVolEffects(node.get("volEffects").asInt());
+				config.setLang(node.get("lang").asText());
+				player.setConfig(config);
+				player.saveConfig();
 				break;
 			case "ASK PLAYER INFO":
 				if (!player.isGameStarted()) {
