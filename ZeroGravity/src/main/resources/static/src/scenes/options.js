@@ -62,7 +62,7 @@ class OptionsScene extends Phaser.Scene {
     	var btnModify = this.add.image(1650, 550, 'btnModify').setInteractive();
     	btnModify.setScale(.4);
     	
-    	var btnModify2 = this.add.image(1650, 800, 'btnMody').setInteractive();
+    	var btnModify2 = this.add.image(1650, 800, 'btnModify').setInteractive();
     	btnModify2.setScale(.4);
     	
 		
@@ -266,7 +266,7 @@ class OptionsScene extends Phaser.Scene {
         $("#volume").slider({
 		  	min: 0,
 		  	max: 100,
-		  	value: getVolumeEffects()*100,
+		  	value: getVolumeEffects(),
 				range: "min",
 		  	slide: function(event, ui) {
 		    	setVolume(ui.value / 100);
@@ -276,7 +276,7 @@ class OptionsScene extends Phaser.Scene {
         $("#volume2").slider({
 		  	min: 0,
 		  	max: 100,
-		  	value: getVolumeMusic()*100,
+		  	value: getVolumeMusic(),
 				range: "min",
 		  	slide: function(event, ui) {
 		    	setVolume(ui.value / 100);
@@ -305,16 +305,18 @@ class OptionsScene extends Phaser.Scene {
 	    	var myMedia = document.getElementById('myMedia');
 	    	myMedia.volume = myVolume;
 	    	game.global.musicMenu.volume = myVolume;
+	    	game.global.myPlayer.config.volMusic = myVolume*100;
+	    	updatePlayerConfig();
 	    	//game.global.effects.volume = myVolume;
 		}       
 		
 		function getVolumeMusic(){
-			var vol = game.global.musicMenu.volume;
+			var vol = game.global.myPlayer.config.volMusic;
 			return vol;
 		}
 		
 		function getVolumeEffects(){
-			var vol = 1;
+			var vol = game.global.myPlayer.config.volEffects;
 			return vol;
 		}
         
