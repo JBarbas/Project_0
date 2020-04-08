@@ -97,8 +97,8 @@ class PreloadScene extends Phaser.Scene {
 		}
 		else {
 			game.global.music = game.sound.add('intro');
-			
 			game.global.music.play();
+			game.global.music.setVolume(0.2);
 			game.scene.run('IntroScene');
 		}
 		game.scene.stop('PreloadScene');

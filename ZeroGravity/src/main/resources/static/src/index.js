@@ -138,9 +138,18 @@ window.onload = function() {
 		sound: null,
 		effects: null,
 		musicMenu: null,
-		idioma : "eng"
+		idioma : navigator.language
 	}
 	
+	console.log(navigator.language);
+	
+	if(navigator.language == "es-ES" || navigator.language == "es-AR"|| navigator.language == "es-CL"|| navigator.language == "es-BO"|| navigator.language == "es-CO"|| navigator.language == "es-CR"|| navigator.language == "es-DO" || navigator.language == "es-EC"|| navigator.language == "es-SV"|| navigator.language == "es-GT" || navigator.language == "es-HN"|| navigator.language == "es-MX"|| navigator.language == "es-NI"|| navigator.language == "es-PA"|| navigator.language == "es-PY"|| navigator.language == "es-PR"|| navigator.language == "es-UY"|| navigator.language == "es-VE"){
+		game.global.idioma = "esp";
+	}else{
+		game.global.idioma = "eng";
+	}
+	
+	console.log(game.global.idioma);
 	//WEBSOCKET CONFIGURATOR
 	game.global.socket = new WebSocket("ws://" + location.href.substring(7).split("/")[0] + "/polaris")
 	
@@ -171,7 +180,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.musicMenu = game.sound.add('soundtrack');
-	    	game.global.musicMenu.play();
+	    	game.global.musicMenu.play();	    	
 	    	game.global.musicMenu.setLoop(true);
 	    	
 			/*al hacer el login aprovecho para tener en el cliente su id*/
@@ -180,6 +189,9 @@ window.onload = function() {
 			game.global.myPlayer.config.volMusic = msg.config.volMusic;
 			game.global.myPlayer.config.volEffects = msg.config.volEffects;
 			game.global.idioma = msg.config.lang;
+			
+			game.global.musicMenu.setVolume(game.global.myPlayer.config.volMusic/100);
+			console.log(game.global.musicMenu.volume);
 			if (typeof game.global.idioma === 'undefined' || game.global.idioma === null) {
 				game.global.idioma = "eng";
 			}
@@ -348,6 +360,7 @@ window.onload = function() {
 				
 			}
 			
+			game.global.effects.setVolume(game.global.myPlayer.config.volEffects);
 			if(game.global.resources.energia != msg.energia){
 				game.global.resources.energia = msg.energia;
 				particulasRecurso("energia");
@@ -367,6 +380,7 @@ window.onload = function() {
 				game.global.resources.creditos = msg.creditos;
 				particulasRecurso("creditos");
 				game.global.effects = game.sound.play('cambianRecursos');
+
 			}
 			if(game.global.resources.unionCoins != msg.unionCoins){
 				game.global.resources.unionCoins = msg.unionCoins;
