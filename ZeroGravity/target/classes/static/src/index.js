@@ -61,7 +61,7 @@ window.onload = function() {
 	// GLOBAL VARIABLES
 	game.global = {
 		FPS : 30,
-		DEBUG_MODE : false,
+		DEBUG_MODE : true,
 		ONLY_GAME_MODE : false,
 		SKIP_INTRO: false,
 		socket : null,
@@ -360,7 +360,7 @@ window.onload = function() {
 				
 			}
 			
-			game.global.effects.setVolume(game.global.myPlayer.config.volEffects);
+			//game.global.effects.setVolume(game.global.myPlayer.config.volEffects);
 			if(game.global.resources.energia != msg.energia){
 				game.global.resources.energia = msg.energia;
 				particulasRecurso("energia");

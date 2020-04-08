@@ -100,4 +100,8 @@ public class Robot {
 	public void setLleno(boolean lleno) {
 		this.lleno = lleno;
 	}
+	
+	public void logInUpdate() {
+		
+	}
 }

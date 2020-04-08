@@ -74,6 +74,7 @@ public class RobotEstandar extends Robot {
 			Thread callback = new Thread(() -> this.callbackProducir());
 			callback.start();
 			task = new Task(this.taller.getPlayer(), RobotEstandar.infoPorNivel[this.getNivel()-1][5], msg, callback);
+			task.setId(this.taller.getPlayer().getId().toString() + this.taller.getId() + 1 + this.getId()); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 			TASKMASTER.addTask(task);
 			this.setAusente(true);
 			this.setProductionBeginTime(task.getBeginDate());
@@ -107,5 +108,31 @@ public class RobotEstandar extends Robot {
 	public synchronized void recolectar() {
 		this.taller.getPlayer().setMetal(this.taller.getPlayer().getMetal() + this.getCarga());
 		this.setCarga(0);
+	}
+	
+	@Override
+	public void logInUpdate() {
+		if (this.isAusente()) {
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "ROBOT DE VUELTA");
+			msg.put("id", this.getId());
+			msg.put("taller", this.taller.getId());
+			try {
+				if (this.taller.getPlayer().getSession().isOpen()) {				
+					this.taller.getPlayer().getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+			} catch (IOException e) {
+				System.err.println("Exception sending message " + msg.toString());
+				e.printStackTrace(System.err);
+			}
+			Task task = null;
+			Thread callback = new Thread(() -> this.callbackProducir());
+			task = new Task(this.taller.getPlayer(), RobotEstandar.infoPorNivel[this.getNivel()-1][5], msg, callback);
+			task.setId(this.taller.getPlayer().getId().toString() + this.taller.getId() + 1 + this.getId()); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+			task.setBeginDate(this.getProductionBeginTime());
+			if (TASKMASTER.addTask(task)) {
+				callback.start();				
+			}
+		}
 	}
 }

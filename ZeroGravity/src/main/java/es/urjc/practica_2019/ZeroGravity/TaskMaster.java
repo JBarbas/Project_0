@@ -26,7 +26,7 @@ public class TaskMaster {
 	public static final TaskMaster INSTANCE = new TaskMaster();
 	private final static long TICK_DELAY = 10000;
 	private AtomicInteger taskId = new AtomicInteger();
-	private HashMap<Integer, Task> tasks = new HashMap<>(); 
+	private HashMap<String, Task> tasks = new HashMap<>(); 
 	
 	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	
@@ -34,12 +34,15 @@ public class TaskMaster {
 		startLoop();
 	}
 	
-	public void addTask(Task task) {
+	public synchronized boolean addTask(Task task) {
 		if (task != null) {
-			task.setId(taskId.incrementAndGet());
-			tasks.put(task.getId(), task);	
-			System.out.println("tarea añadida");
+			if (!tasks.containsKey(task.getId())) {
+				tasks.put(task.getId(), task);	
+				System.out.println("tarea añadida");
+				return true;
+			}			
 		}
+		return false;
 	}
 	
 	public void startLoop() {

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Task {
 
-		private int id;
+		private String id;
 		private Player player;
 		private LocalDateTime beginDate;
 		private int duration;
@@ -30,16 +30,20 @@ public class Task {
 			this.callback = callback;
 		}
 
-		public int getId() {
+		public String getId() {
 			return id;
 		}
 
-		public void setId(int id) {
+		public void setId(String id) {
 			this.id = id;
 		}
 
 		public LocalDateTime getBeginDate() {
 			return beginDate;
+		}
+		
+		public void setBeginDate(LocalDateTime beginDate) {
+			this.beginDate = beginDate;
 		}
 
 		public int getDuration() {

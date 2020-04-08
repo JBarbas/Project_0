@@ -208,4 +208,8 @@ public class Edificio  implements EdificioInterface{
 		int minute = buildingDate.getInteger("minute");
 		this.setBuildingBeginTime(LocalDateTime.of(year, month, day, hour, minute));
 	}
+	
+	public void logInUpdate() {
+		
+	}
 }
