@@ -19,12 +19,23 @@ class DifficultScene extends Phaser.Scene {
     	
     	
     	var background = this.add.image(960, 540, 'backgroundDifficulty');
+    	var backgroundEng = this.add.image(960, 540, 'backgroundDifficultyEng');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
+    	var buttonEng = this.add.image(150, 100, 'backEng').setInteractive();
     	
     	var element = this.add.dom(400, 600).createFromCache('difficultform');
 
         element.setPerspective(800);
+        
+
+    	if(game.global.idioma === "eng"){
+    		background.setVisible(false);
+    		button.setVisible(false);
+    	}else{
+    		backgroundEng.setVisible(false);
+    		buttonEng.setVisible(false);
+    	}
         
         var boxe = element.node.children[1];
         boxe.children[0].children[0].children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('prin')[0].childNodes[0].nodeValue;
@@ -55,7 +66,22 @@ class DifficultScene extends Phaser.Scene {
     	    button.setFrame(0);
     	})
     	
+    	buttonEng.on('pointerover',function(pointer){
+    		buttonEng.setFrame(1);
+    	})
+
+    	buttonEng.on('pointerout',function(pointer){
+    		buttonEng.setFrame(0);
+    	})
+    	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.sound = game.sound.play('pulsarBoton');
+    		document.getElementById("dificultad").style.visibility = 'hidden';
+    		game.scene.run('MenuScene');
+    		game.scene.stop('DifficultScene');
+    	});
+    	
+    	buttonEng.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.global.sound = game.sound.play('pulsarBoton');
     		document.getElementById("dificultad").style.visibility = 'hidden';
     		game.scene.run('MenuScene');

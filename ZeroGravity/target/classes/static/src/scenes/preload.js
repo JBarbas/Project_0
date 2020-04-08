@@ -30,6 +30,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('creditosHover', 'assets/background/CreditosHover.png');
 		this.load.image('creditosHoverEng', 'assets/background/CreditosHoverEng.png');
 		this.load.image('backgroundDifficulty', 'assets/background/ElegirDificultad.png');
+		this.load.image('backgroundDifficultyEng', 'assets/background/ElegirDificultadEng.png');
 		this.load.image('bckCargando', 'assets/background/backload.png');
 		
 		//Elements

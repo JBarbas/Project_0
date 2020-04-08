@@ -34,7 +34,7 @@ class CreditsScene extends Phaser.Scene {
     	var creditosHover = this.add.image(960, 160, 'creditosHover');
     	var creditosHoverEng = this.add.image(960, 160, 'creditosHoverEng');
 
-    	console.log(game.global.idioma);
+    	
     	if(game.global.idioma === "eng"){
     		game.global.team.setVisible(false);
     		link.setVisible(false);
