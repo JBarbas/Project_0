@@ -25,6 +25,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('backgroundRegisterEng', 'assets/background/RegistrarEng.png');
 		this.load.image('backgroundMenu', 'assets/background/MenuPrincipal.png');
 		this.load.image('backgroundOptionsAccount', 'assets/background/OpcionesCuenta.png');
+		this.load.image('backgroundOptionsAccountEng', 'assets/background/SettingsCuenta.png');
 		this.load.image('backgroundCredits', 'assets/background/Creditos.png');
 		this.load.image('backgroundCreditsEng', 'assets/background/CreditosEng.png');
 		this.load.image('creditosHover', 'assets/background/CreditosHover.png');
@@ -39,6 +40,9 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('txtCuenta', 'assets/interface/Opciones/cuentaTextos.png');
 		this.load.image('txtSonido', 'assets/interface/Opciones/sonidoTextos.png');
 		this.load.image('txtIdioma', 'assets/interface/Opciones/idiomaTextos.png');
+		this.load.image('txtCount', 'assets/interface/Opciones/countTexts.png');
+		this.load.image('txtSound', 'assets/interface/Opciones/soundTexts.png');
+		this.load.image('txtLang', 'assets/interface/Opciones/langTexts.png');
 		
 		
 		

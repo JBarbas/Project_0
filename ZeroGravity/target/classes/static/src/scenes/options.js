@@ -26,6 +26,7 @@ class OptionsScene extends Phaser.Scene {
     	
     	
     	var background = this.add.image(960, 540, 'backgroundOptionsAccount');
+    	var backgroundEng = this.add.image(960, 540, 'backgroundOptionsAccountEng');
     	
     	var button = this.add.image(150, 100, 'back').setInteractive();
     	var buttonEng = this.add.image(150, 100, 'backEng').setInteractive();
@@ -38,19 +39,34 @@ class OptionsScene extends Phaser.Scene {
     	var txtCuenta = this.add.image(950, 650, 'txtCuenta');
     	var txtSonido = this.add.image(650, 650, 'txtSonido');
     	var txtIdioma = this.add.image(650, 650, 'txtIdioma');
+    	var txtCount = this.add.image(950, 650, 'txtCount');
+    	var txtSound = this.add.image(650, 650, 'txtSound');
+    	var txtLang = this.add.image(650, 650, 'txtLang');
     	
-    	txtCuenta.setVisible(true);
-		txtSonido.setVisible(false);
-		txtIdioma.setVisible(false);
+    	
 		
 		//Dependiendo del idioma del usuario se cambia a un boton de back o a otro
 		
 		if(game.global.idioma == 'eng'){
+			txtCount.setVisible(true);
+			txtCuenta.setVisible(false);
+			txtSonido.setVisible(false);
+			txtIdioma.setVisible(false);
+			txtSound.setVisible(false);
+			txtLang.setVisible(false);
 			buttonEng.setVisible(true);
 			button.setVisible(false);
+			background.setVisible(false);
 		}else{
+			txtCuenta.setVisible(true);
+			txtCount.setVisible(false);
+			txtSonido.setVisible(false);
+			txtIdioma.setVisible(false);
+			txtSound.setVisible(false);
+			txtLang.setVisible(false);
 			buttonEng.setVisible(false);
 			button.setVisible(true);
+			backgroundEng.setVisible(false);
 		}
 		
 		var btnModificar = this.add.image(1650, 550, 'btnModificar').setInteractive();
@@ -91,9 +107,7 @@ class OptionsScene extends Phaser.Scene {
     		btnCuenta.setFrame(1);
     		btnSonido.setFrame(0);
     		btnIdioma.setFrame(0);
-    		txtCuenta.setVisible(true);
-    		txtSonido.setVisible(false);
-    		txtIdioma.setVisible(false);
+    		detectarIdioma(0,game.global.idioma);
     		generalContainer.visible = true;
     		soundContainer.visible = false;
     		languageContainer.visible = false;
@@ -111,9 +125,7 @@ class OptionsScene extends Phaser.Scene {
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(1);
     		btnIdioma.setFrame(0);
-    		txtCuenta.setVisible(false);
-    		txtSonido.setVisible(true);
-    		txtIdioma.setVisible(false);
+    		detectarIdioma(1,game.global.idioma);
     		generalContainer.visible = false;
     		soundContainer.visible = true;
     		languageContainer.visible = false;
@@ -128,9 +140,7 @@ class OptionsScene extends Phaser.Scene {
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(0);
     		btnIdioma.setFrame(1);
-    		txtCuenta.setVisible(false);
-    		txtSonido.setVisible(false);
-    		txtIdioma.setVisible(true);
+    		detectarIdioma(2,game.global.idioma);
     		generalContainer.visible = false;
     		soundContainer.visible = false;
     		languageContainer.visible = true;
@@ -327,6 +337,64 @@ class OptionsScene extends Phaser.Scene {
 			var vol = game.global.myPlayer.config.volEffects;
 			return vol;
 		}
+		
+		function detectarIdioma(type,lang){
+			switch (type){
+				case 0: 
+					if(lang=="esp"){
+						txtSound.setVisible(false);
+						txtSonido.setVisible(false);
+						txtCuenta.setVisible(true);
+			    		txtIdioma.setVisible(false);
+			    		txtCount.setVisible(false);
+			    		txtLang.setVisible(false);
+					}else{
+						txtSound.setVisible(false);
+						txtSonido.setVisible(false);
+						txtCuenta.setVisible(false);
+			    		txtIdioma.setVisible(false);
+			    		txtCount.setVisible(true);
+			    		txtLang.setVisible(false);
+					}
+					break;
+				case 1:
+					if(lang=="esp"){
+						txtCuenta.setVisible(false);
+			    		txtSonido.setVisible(true);
+			    		txtIdioma.setVisible(false);
+			    		txtCount.setVisible(false);
+			    		txtSound.setVisible(false);
+			    		txtLang.setVisible(false);
+					}else{
+						txtCuenta.setVisible(false);
+			    		txtSonido.setVisible(false);
+			    		txtIdioma.setVisible(false);
+			    		txtCount.setVisible(false);
+			    		txtSound.setVisible(true);
+			    		txtLang.setVisible(false);
+					}
+					break;
+				case 2:
+					if(lang=="esp"){
+						txtCuenta.setVisible(false);
+			    		txtSonido.setVisible(false);
+			    		txtIdioma.setVisible(true);
+			    		txtCount.setVisible(false);
+			    		txtSound.setVisible(false);
+			    		txtLang.setVisible(false);
+					}else{
+						txtCuenta.setVisible(false);
+			    		txtSonido.setVisible(false);
+			    		txtIdioma.setVisible(false);
+			    		txtCount.setVisible(false);
+			    		txtSound.setVisible(false);
+			    		txtLang.setVisible(true);
+					}
+					break;
+				default:
+					break;
+			}
+		}
         
         soundContainer.visible = false;
         languageContainer.visible = false;
@@ -367,6 +435,18 @@ class OptionsScene extends Phaser.Scene {
         };
         
         languageContainer.add(this.elementL);
+        
+        if(game.global.idioma == 'eng'){
+        	document.getElementById('ingles').style.backgroundColor = "#5050af";
+        }else{
+        	document.getElementById('espanyol').style.backgroundColor = "#5050af";
+        }
+        
+        if(game.global.idioma == 'eng'){
+        	document.getElementById('ingles').style.backgroundColor = "#5050af";
+        }else{
+        	document.getElementById('espanyol').style.backgroundColor = "#5050af";
+        }
 		
     	
     }
