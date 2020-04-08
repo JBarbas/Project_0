@@ -90,6 +90,7 @@ public class CentroOperaciones extends Edificio {
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
 		task = new Task(this.player, CentroOperaciones.COSTS[this.getLevel() - 1][4], msg, callback);
+		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
 		this.setBuildingBeginTime(task.getBeginDate());

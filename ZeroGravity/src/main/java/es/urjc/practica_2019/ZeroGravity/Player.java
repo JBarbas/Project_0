@@ -460,6 +460,7 @@ public class Player {
 			edificio.setLevel(e.getInteger("level", 1));
 			edificio.setEnConstruccion(e.getBoolean("enConstruccion", false));
 			edificio.setBuildingBeginTime((Document) e.get("buildingBeginTime")); 
+			edificio.logInUpdate();
 			this.edificios.put(edificio.getId(), edificio);
 		}
 		saveEdificios();
