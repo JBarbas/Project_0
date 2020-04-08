@@ -141,15 +141,14 @@ window.onload = function() {
 		idioma : navigator.language
 	}
 	
-	console.log(navigator.language);
-	
+
+	//Previamente se ha detectado el lenguaje del navegador, si es español se cambia a esp el idioma. Si no es español se pone en ingles
 	if(navigator.language == "es-ES" || navigator.language == "es-AR"|| navigator.language == "es-CL"|| navigator.language == "es-BO"|| navigator.language == "es-CO"|| navigator.language == "es-CR"|| navigator.language == "es-DO" || navigator.language == "es-EC"|| navigator.language == "es-SV"|| navigator.language == "es-GT" || navigator.language == "es-HN"|| navigator.language == "es-MX"|| navigator.language == "es-NI"|| navigator.language == "es-PA"|| navigator.language == "es-PY"|| navigator.language == "es-PR"|| navigator.language == "es-UY"|| navigator.language == "es-VE"){
 		game.global.idioma = "esp";
 	}else{
 		game.global.idioma = "eng";
 	}
-	
-	console.log(game.global.idioma);
+
 	//WEBSOCKET CONFIGURATOR
 	game.global.socket = new WebSocket("ws://" + location.href.substring(7).split("/")[0] + "/polaris")
 	
