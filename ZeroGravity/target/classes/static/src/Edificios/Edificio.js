@@ -56,6 +56,7 @@ class Edificio {
 			    });
 				let e = this
 				this.recolectIcon.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+					game.global.recolecting = true;
 					game.global.sound = game.sound.play('recogerRecursos');
 		    		this.destroy();
 		    		e.lleno = false;
@@ -63,6 +64,10 @@ class Edificio {
 		    		msg.event = 'RECOLECT';
 		    		msg.id = e.id;
 		    		game.global.socket.send(JSON.stringify(msg));
+		    		if (game.global.menu !== null) {
+						game.scene.stop(game.global.menu);
+					}
+		    		setTimeout(function(){ game.global.recolecting = false; }, 500);
 		    	});
 			}
 		}

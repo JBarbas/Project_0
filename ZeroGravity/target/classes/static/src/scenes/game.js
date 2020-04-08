@@ -82,7 +82,10 @@ class GameScene extends Phaser.Scene {
 		    			}
 		        		else if (game.global.grid[i][j].type > 0) {
 		        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
-	        				if (!game.scene.isActive(edificio.menuScene)) {
+		        			if (game.global.menu !== null) {
+    							game.scene.stop(game.global.menu);
+    						}
+	        				if (!game.scene.isActive(edificio.menuScene) && !game.global.recolecting) {
 	        					game.global.sound = game.sound.play('menuEdificios');
 	    						game.global.inMenu = true;
 	    						if (game.global.menu !== null) {

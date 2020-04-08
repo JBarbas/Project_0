@@ -85,6 +85,7 @@ window.onload = function() {
 		comercioMenuLast: 'edificio',
 		inZoom : false,
 		menu : null,
+		recolecting : false,
 		offers: [],
 		buildingMenu: {
 			x: 1280,
