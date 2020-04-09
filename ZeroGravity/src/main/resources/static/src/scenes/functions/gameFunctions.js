@@ -97,6 +97,15 @@ function construir(i, j, scene, edificio) {
 	}
 }
 
+function cancelConstruir (scene, edificio) {
+	game.global.construyendo = false;
+	scene.gridContainer.setAlpha(0);
+	
+	// Borramos la previsualización del edificio
+	edificio.alpha = 1;
+	edificio.gameObject.destroy();
+}
+
 // Mueve el edificio con el raton cambiando su sprite a rojo cuando este en una posicion invalida
 function previsualizarEdificio(edificio, scene) {
 	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).y);

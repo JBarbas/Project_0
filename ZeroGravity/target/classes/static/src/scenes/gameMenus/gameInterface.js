@@ -124,6 +124,26 @@ class GameInterface extends Phaser.Scene {
     	});
     	
     	//particulasRecurso();
+    	
+    	// Cuando construyes y/o mueves edificios:
+    	this.btnCancel = this.add.image(960, 900, 'cancelBtn').setOrigin(0.5, 0.5); 
+    	this.btnCancel.setInteractive();
+    	this.btnCancel.setVisible(false);
+    	
+    	this.btnCancel.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    		game.global.canBuild = false;
+    	})
+
+    	this.btnCancel.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    		game.global.canBuild = true;
+    	})
+    	
+    	this.btnCancel.on('pointerdown', function(pointer){
+    		game.global.sound = game.sound.play('pulsarBoton');
+    		cancelConstruir(game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    	});
     }
     update(time, delta) {
     	if(game.global.inMenu){
@@ -199,5 +219,13 @@ class GameInterface extends Phaser.Scene {
     	if(this.puntuacion >= 200){
     		this.e1.setFrame(2);
     	}
+    	
+    	if (game.global.construyendo) {
+    		this.btnCancel.setVisible(true);
+    	}
+    	else {
+    		this.btnCancel.setVisible(false);
+    	}
+    	
     }
 }
