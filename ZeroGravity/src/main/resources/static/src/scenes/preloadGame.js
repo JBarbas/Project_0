@@ -69,6 +69,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('xSusto', 'assets/interface/Gameplay/xSusto.png', {frameWidth:38,frameHeight:40});
 		this.load.spritesheet('xAnuncio', 'assets/interface/Gameplay/x.png', {frameWidth:49,frameHeight:40});
 		
+		this.load.spritesheet('cancelBtn', 'assets/interface/cancel.png',{frameWidth:165,frameHeight:63});
+		
 		
 		//Interfaz
 		

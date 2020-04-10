@@ -78,6 +78,7 @@ window.onload = function() {
 		mejoresPuntuaciones:[],
 		ofertasListas : false,
 		construyendo : false,
+		canBuild : true,
 		expandiendo : false,
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,

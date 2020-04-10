@@ -345,10 +345,7 @@ class TallerMenu extends Phaser.Scene {
 					detallesContainer.visible= false;
 					mejorasContainer.visible= false;
 			
-					let msg = new Object();
-					msg.event = 'GET TALLER MENU';
-					msg.id = data.miEdificio.id;
-					game.global.socket.send(JSON.stringify(msg));
+					
 					mejorasContainer.add(this.subirNivel);
 				}
 				else{
@@ -380,6 +377,11 @@ class TallerMenu extends Phaser.Scene {
 			game.scene.stop(data.miEdificio.menuScene);
 			game.global.inMenu = false;
     	});
+    	
+    	let msg = new Object();
+		msg.event = 'GET TALLER MENU';
+		msg.id = data.miEdificio.id;
+		game.global.socket.send(JSON.stringify(msg));
 		
     }
     update(time, delta) {
