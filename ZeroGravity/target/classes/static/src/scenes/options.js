@@ -41,9 +41,7 @@ class OptionsScene extends Phaser.Scene {
     	var txtIdioma = this.add.image(650, 650, 'txtIdioma');
     	var txtCount = this.add.image(950, 650, 'txtCount');
     	var txtSound = this.add.image(650, 650, 'txtSound');
-    	var txtLang = this.add.image(650, 650, 'txtLang');
-    	
-    	
+    	var txtLang = this.add.image(650, 650, 'txtLang');   	
 		
 		//Dependiendo del idioma del usuario se cambia a un boton de back o a otro
 		
@@ -207,6 +205,28 @@ class OptionsScene extends Phaser.Scene {
     		btnModify.setFrame(0);
     	})
     	
+    	
+    	
+    	//Si esta en pantalla completa se checkea Si y sino pues NO
+    	if (!window.screenTop && !window.screenY) {
+    		document.getElementById('yes').style.backgroundColor = "#5050af";
+    	}else{
+    		document.getElementById('no').style.backgroundColor = "#5050af";
+    	}
+		
+		document.getElementById('yes').addEventListener("click", function(){
+			document.getElementById('yes').style.backgroundColor = "#5050af";
+			document.getElementById('no').style.backgroundColor = "#8989EE";
+			openFullscreen();
+		});
+		
+		document.getElementById('no').addEventListener("click", function(){
+			console.log("hola!");
+			document.getElementById('no').style.backgroundColor = "#5050af";
+			document.getElementById('yes').style.backgroundColor = "#8989EE";
+			exitFullscreen();
+		});
+    	
     	var textUsuario = this.element.getChildByName("username");
     	
     	btnModificar.on('pointerdown',function(pointer){
@@ -272,7 +292,8 @@ class OptionsScene extends Phaser.Scene {
 		
 		this.elementS = this.add.dom(0, 200).createFromCache('optionsformS');
         this.elementS.setPerspective(800);
-        
+       
+        //Effects
         $("#volume").slider({
 		  	min: 0,
 		  	max: 100,
@@ -283,6 +304,7 @@ class OptionsScene extends Phaser.Scene {
 		  	}
 		});
         
+        //Music
         $("#volume2").slider({
 		  	min: 0,
 		  	max: 100,
@@ -334,6 +356,7 @@ class OptionsScene extends Phaser.Scene {
 		}
 		
 		function getVolumeEffects(){
+			console.log(game.global.myPlayer.config.volEffects);
 			var vol = game.global.myPlayer.config.volEffects;
 			return vol;
 		}

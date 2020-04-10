@@ -26,7 +26,11 @@ class CentroComercioMenu extends Phaser.Scene {
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
 
-    	game.scene.getScene('GameInterface').panel.setTexture('panelCComercio');
+    	if(game.global.idioma == 'eng'){
+    		game.scene.getScene('GameInterface').panel.setTexture('tradeCenter');
+    	}else{
+    		game.scene.getScene('GameInterface').panel.setTexture('panelCComercio');
+    	}
     	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
@@ -40,6 +44,18 @@ class CentroComercioMenu extends Phaser.Scene {
     	var comprarContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	this.comprarContainer = comprarContainer;
     	
+    	// Contenedor del panel de mejoras EN INGLES
+    	var updatesContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de detalles
+    	var detailsContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de ofertas
+    	var offersContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de vender
+    	var sellContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	// Contenedor del panel de comprar
+    	var buyContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	this.buyContainer = buyContainer;
+    	
     	//Se añade a cada contenedor su imagen de fondo
     	this.intMejoras = this.add.image(0, 0, 'intCMejoras').setOrigin(0, 0); 
     	mejorasContainer.add(this.intMejoras);
@@ -52,55 +68,46 @@ class CentroComercioMenu extends Phaser.Scene {
     	this.intOfertas = this.add.image(0, 0, 'intCOfertas').setOrigin(0, 0);
     	ofertasContainer.add(this.intOfertas);
     	
+    	this.intCUpdates = this.add.image(0, 0, 'intCUpdates').setOrigin(0, 0); 
+    	updatesContainer.add(this.intCUpdates);
+    	this.intCDetails = this.add.image(0, 0, 'intCDetails').setOrigin(0, 0); 
+    	detailsContainer.add(this.intCDetails);
+    	this.intCBuy = this.add.image(0, 0, 'intCBuy').setOrigin(0, 0);
+    	buyContainer.add(this.intCBuy);
+    	this.intCSell = this.add.image(0, 0, 'intCSell').setOrigin(0, 0);
+    	sellContainer.add(this.intCSell);
+    	this.intCMyOffers = this.add.image(0, 0, 'intCMyOffers').setOrigin(0, 0);
+    	offersContainer.add(this.intCMyOffers);
+    	
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 300, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
     	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		game.global.sound = game.sound.play('pulsarBoton');
-    		detallesContainer.visible= true;
-    		mejorasContainer.visible= false;
-    		comprarContainer.visible= false;
-    		venderContainer.visible= false;
-    		ofertasContainer.visible= false;
+    		mostrarInfo(5);
     		game.global.comercioMenuLast = 'detalles';
     	});
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		game.global.sound = game.sound.play('pulsarBoton');
-    		detallesContainer.visible= false;
-    		mejorasContainer.visible= true;
-    		comprarContainer.visible= false;
-    		venderContainer.visible= false;
-    		ofertasContainer.visible= false;
+    		mostrarInfo(4);
     		game.global.comercioMenuLast = 'mejoras';
     	});
     	this.iconoOfertas = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoOfertas').setOrigin(0, 0);
     	this.iconoOfertas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		game.global.sound = game.sound.play('pulsarBoton');
-    		detallesContainer.visible= false;
-    		mejorasContainer.visible= false;
-    		comprarContainer.visible= false;
-    		venderContainer.visible= false;
-    		ofertasContainer.visible= true;
+    		mostrarInfo(3);
     		game.global.comercioMenuLast = 'ofertas';
     	});
     	this.iconoVender = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoVender').setOrigin(0, 0);
     	this.iconoVender.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		game.global.sound = game.sound.play('pulsarBoton');
-    		detallesContainer.visible= false;
-    		mejorasContainer.visible= false;
-    		comprarContainer.visible= false;
-    		venderContainer.visible= true;
-    		ofertasContainer.visible= false;
+    		mostrarInfo(2);
     		game.global.comercioMenuLast = 'vender';
     	});
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoComprar').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
     		game.global.sound = game.sound.play('pulsarBoton');
-    		detallesContainer.visible= false;
-    		mejorasContainer.visible= false;
-    		comprarContainer.visible= true;
-    		venderContainer.visible= false;
-    		ofertasContainer.visible= false;
+    		mostrarInfo(1);
     		game.global.comercioMenuLast = 'edificio';
     	});
     	
@@ -999,6 +1006,139 @@ class CentroComercioMenu extends Phaser.Scene {
     	// Desactivamos al inicio los otros dos contenedores
 		detallesContainer.visible= false;
 		mejorasContainer.visible= false;
+		
+		function mostrarInfo(value){
+			switch (value){
+				case 1: 
+					if(game.global.idioma== "eng"){
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=true;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}else{
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= true;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}
+					break;
+				case 2: 
+					if(game.global.idioma== "eng"){
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=true;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}else{
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= true;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}
+					break;
+					
+				case 3: 
+					if(game.global.idioma== "eng"){
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=true;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}else{
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= true;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}
+					break;
+					
+				case 4: 
+					if(game.global.idioma== "eng"){
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=true;
+			    		detailsContainer.visible=false;
+					}else{
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= true;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}
+					break;
+					
+				case 5: 
+					if(game.global.idioma== "eng"){
+						detallesContainer.visible= false;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=true;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=true;
+					}else{
+						detallesContainer.visible= true;
+			    		mejorasContainer.visible= false;
+			    		comprarContainer.visible= false;
+			    		venderContainer.visible= false;
+			    		ofertasContainer.visible= false;
+			    		buyContainer.visible=false;
+			    		sellContainer.visible=false;
+			    		offersContainer.visible=false;
+			    		updatesContainer.visible=false;
+			    		detailsContainer.visible=false;
+					}
+					break;
+			}
+		}
 
     }
     update(time, delta) {

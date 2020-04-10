@@ -58,6 +58,8 @@ class MenuScene extends Phaser.Scene {
     	jugar.addEventListener("click", function(){
     		game.global.sound = game.sound.play('pulsarBoton');
     		
+    		
+    		
     		anim.style.visibility = "hidden";
     		jugar.style.visibility = "hidden";
         	opciones.style.visibility = "hidden";

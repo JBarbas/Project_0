@@ -33,6 +33,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('backgroundDifficulty', 'assets/background/ElegirDificultad.png');
 		this.load.image('backgroundDifficultyEng', 'assets/background/ElegirDificultadEng.png');
 		this.load.image('bckCargando', 'assets/background/backload.png');
+		this.load.image('bckCargandoEng', 'assets/background/backloadEng.png');
 		
 		//Elements
 		this.load.image('team', 'assets/interface/team.png');

@@ -26,7 +26,13 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
 
-    	game.scene.getScene('GameInterface').panel.setTexture('panelBViviendas');
+
+    	if(game.global.idioma == 'eng'){
+    		game.scene.getScene('GameInterface').panel.setTexture('households');
+    	}else{
+    		game.scene.getScene('GameInterface').panel.setTexture('panelBViviendas');
+    	}
+    	
     	
     if (!this.miEdificio.enConstruccion) {
     	// Contenedor del panel de mejoras
@@ -37,12 +43,23 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
     	//Se añade a cada contenedor su imagen de fondo
-    	this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
-    	mejorasContainer.add(this.intMejoras);
-    	this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
-    	detallesContainer.add(this.intDetalles);
-    	this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
-    	edificiosContainer.add(this.intEdificios);
+		this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
+		this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
+		this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
+		
+		this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
+		this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
+		this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
+		
+		if(game.global.idioma == "eng"){
+			mejorasContainer.add(this.intUpdates);
+			detallesContainer.add(this.intDetails);
+			edificiosContainer.add(this.intBuildings);
+		}else{
+			mejorasContainer.add(this.intMejoras);
+			detallesContainer.add(this.intDetalles);
+			edificiosContainer.add(this.intEdificios);
+		}
     	
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
@@ -291,7 +308,11 @@ class BloqueViviendasMenu extends Phaser.Scene {
 		}
 		}
     	else {
-	    	this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0); 
+    		if(game.global.idioma == "eng"){
+    			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccionEng').setOrigin(0, 0);
+    		}else{
+    			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0);
+    		}
 	    }
 		
 		// El botón cerrar será el mismo, por lo que no se incluirá en ningún contenerdor

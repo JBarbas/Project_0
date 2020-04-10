@@ -49,6 +49,7 @@ class PreloadGameScene extends Phaser.Scene {
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
 		this.load.image('menuEnConstruccion', 'assets/interface/enConstruccion.png');
+		this.load.image('menuEnConstruccionEng', 'assets/interface/inConstruction.png');
 		
 		//Botones
 		this.load.spritesheet('btnMover', 'assets/sprites/Edificios/btnMover.png', {frameWidth:200,frameHeight:50});
@@ -61,10 +62,12 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnOpciones', 'assets/interface/Gameplay/btnOpcionesSprite.png', {frameWidth:78,frameHeight:78});
 		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
 		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
+		this.load.spritesheet('btnSee', 'assets/interface/Gameplay/buttonSee.png', {frameWidth:300,frameHeight:54});
 		this.load.spritesheet('btnSusto', 'assets/interface/Gameplay/btnProximoSprite.png', {frameWidth:300,frameHeight:54});
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
 		this.load.spritesheet('xSusto', 'assets/interface/Gameplay/xSusto.png', {frameWidth:38,frameHeight:40});
+		this.load.spritesheet('xAnuncio', 'assets/interface/Gameplay/x.png', {frameWidth:49,frameHeight:40});
 		
 		
 		//Interfaz
@@ -73,15 +76,21 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intEdificioRec', 'assets/interface/interfazEdificioRecuadro.png');
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
+		
+		this.load.image('intBuildings', 'assets/interface/interfazBuildings.png');
+		this.load.image('intUpdates', 'assets/interface/interfazUpdates.png');
+		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
+		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/Principal.png');
 		this.load.image('intMision', 'assets/interface/Gameplay/btnMision.png');
 		this.load.image('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png');
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
+		this.load.image('panelAnuncioEng', 'assets/interface/Gameplay/panelAds.png');
 		this.load.image('panelSusto', 'assets/interface/Gameplay/halloween.png');
 		this.load.image('panelRanking', 'assets/interface/Gameplay/Ranking.png');
-		this.load.image('xAnuncio', 'assets/interface/Gameplay/x.png');
+		
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');
 		this.load.image('iconoEdificio', 'assets/interface/iconoEdificio.png');
 		this.load.image('iconoMejoras', 'assets/interface/iconoMejoras.png');
@@ -99,12 +108,28 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('panelCAdministrativo', 'assets/interface/Secciones/panelCAdministrativo.png');
 		this.load.image('panelCComercio', 'assets/interface/Secciones/panelCComercio.png');
 		
+		this.load.image('households', 'assets/interface/Secciones/households.png');
+		this.load.image('administrationCenter', 'assets/interface/Secciones/administrationCenter.png');
+		this.load.image('tradeCenter', 'assets/interface/Secciones/tradeCenter.png');
+		this.load.image('extractionPlatform', 'assets/interface/Secciones/extractionPlatform.png');
+		this.load.image('commandCenter', 'assets/interface/Secciones/commandCenter.png');
+		this.load.image('operationsCenter', 'assets/interface/Secciones/operationsCenter.png');
+		this.load.image('generator', 'assets/interface/Secciones/generator.png');
+		this.load.image('laboratory', 'assets/interface/Secciones/laboratory.png');
+		this.load.image('workshop', 'assets/interface/Secciones/workshop.png');
 		
+		//Comercio
 		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
 		this.load.image('intCDetalles', 'assets/interface/Comercio/DetallesComercio.png');
 		this.load.image('intCComprar', 'assets/interface/Comercio/ComprarComercio.png');
 		this.load.image('intCVender', 'assets/interface/Comercio/VenderComercio.png');
 		this.load.image('intCOfertas', 'assets/interface/Comercio/misOfertasComercio.png');
+		//Comercio en Ingles
+		this.load.image('intCUpdates', 'assets/interface/Comercio/updates.png');
+		this.load.image('intCDetails', 'assets/interface/Comercio/details.png');
+		this.load.image('intCBuy', 'assets/interface/Comercio/buy.png');
+		this.load.image('intCSell', 'assets/interface/Comercio/sell.png');
+		this.load.image('intCMyOffers', 'assets/interface/Comercio/myoffers.png');
 		
 		//Efectos
 		this.load.image('orangeSpark', 'assets/sprites/Particulas/orangeSpark.png');

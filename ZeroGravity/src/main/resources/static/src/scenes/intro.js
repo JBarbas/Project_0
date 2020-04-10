@@ -16,6 +16,8 @@ class IntroScene extends Phaser.Scene {
 		
     }
     create (data)  {
+    	
+    	
     	game.global.musicMenu = game.sound.add('intro');
     	var intro = game.global.musicMenu;    	
     	intro.pause();
@@ -23,6 +25,9 @@ class IntroScene extends Phaser.Scene {
     	var background = this.add.image(960, 540, 'backgroundLoadGame');
     	background.alpha = 0;
     	
+    	game.global.musicMenu = game.sound.add('pulsarBoton');
+    	
+    	console.log(game.global.effects);
     	
     	var tween = this.tweens.add({
     	    targets: background,

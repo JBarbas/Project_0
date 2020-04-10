@@ -27,7 +27,12 @@ class TallerMenu extends Phaser.Scene {
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
 
-    	game.scene.getScene('GameInterface').panel.setTexture('panelTaller');
+    	
+    	if(game.global.idioma == 'eng'){
+    		game.scene.getScene('GameInterface').panel.setTexture('workshop');
+    	}else{
+    		game.scene.getScene('GameInterface').panel.setTexture('panelTaller');
+    	}
 		
 		if (!this.miEdificio.enConstruccion) {
 			// Contenedor del panel de mejoras
@@ -38,15 +43,28 @@ class TallerMenu extends Phaser.Scene {
 			var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			
 			//
-			this.edificiosContainer = edificiosContainer;
+			//this.edificiosContainer = edificiosContainer;
 			
 			//Se añade a cada contenedor su imagen de fondo
 			this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
-			mejorasContainer.add(this.intMejoras);
 			this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
-			detallesContainer.add(this.intDetalles);
 			this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
-			edificiosContainer.add(this.intEdificios);
+			
+			this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
+			this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
+			this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
+			
+			if(game.global.idioma == "eng"){
+				mejorasContainer.add(this.intUpdates);
+				detallesContainer.add(this.intDetails);
+				edificiosContainer.add(this.intBuildings);
+			}else{
+				mejorasContainer.add(this.intMejoras);
+				detallesContainer.add(this.intDetalles);
+				edificiosContainer.add(this.intEdificios);
+			}
+			
+			
 			
 			//Se alterna entre contenedores según el icono seleccionado
 			this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
@@ -68,7 +86,7 @@ class TallerMenu extends Phaser.Scene {
 				game.global.sound = game.sound.play('pulsarBoton');
 				detallesContainer.visible= false;
 				mejorasContainer.visible= false;
-				edificiosContainer.visible= true;
+				edificiosContainer.visible= false;
 			});
 			
 			//  CONTENEDOR EDIFICIO
@@ -125,16 +143,22 @@ class TallerMenu extends Phaser.Scene {
 				
 				
 				//
-				this.edificiosContainer = edificiosContainer;
+				//this.edificiosContainer = edificiosContainer;
 				
 						
-				//Se añade a cada contenedor su imagen de fondo
-				this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
-				mejorasContainer.add(this.intMejoras);
-				this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
-				detallesContainer.add(this.intDetalles);
-				this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
-				edificiosContainer.add(this.intEdificios);
+				this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
+				this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
+				this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
+				
+				if(game.global.idioma == "eng"){
+					mejorasContainer.add(this.intUpdates);
+					detallesContainer.add(this.intDetails);
+					edificiosContainer.add(this.intBuildings);
+				}else{
+					mejorasContainer.add(this.intMejoras);
+					detallesContainer.add(this.intDetalles);
+					edificiosContainer.add(this.intEdificios);
+				}
 				
 				//Se alterna entre contenedores según el icono seleccionado
 				this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
@@ -153,7 +177,7 @@ class TallerMenu extends Phaser.Scene {
 				this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
 					detallesContainer.visible= false;
 					mejorasContainer.visible= false;
-					edificiosContainer.visible= true;
+					edificiosContainer.visible= false;
 				});
 				
 				//  CONTENEDOR EDIFICIO
@@ -210,13 +234,19 @@ class TallerMenu extends Phaser.Scene {
 					//
 					this.edificiosContainer = edificiosContainer;
 					
-					//Se añade a cada contenedor su imagen de fondo
-					this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
-					mejorasContainer.add(this.intMejoras);
-					this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
-					detallesContainer.add(this.intDetalles);
-					this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
-					edificiosContainer.add(this.intEdificios);
+					this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
+					this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
+					this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
+					
+					if(game.global.idioma == "eng"){
+						mejorasContainer.add(this.intUpdates);
+						detallesContainer.add(this.intDetails);
+						edificiosContainer.add(this.intBuildings);
+					}else{
+						mejorasContainer.add(this.intMejoras);
+						detallesContainer.add(this.intDetalles);
+						edificiosContainer.add(this.intEdificios);
+					}
 					
 					//Se alterna entre contenedores según el icono seleccionado
 					this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
@@ -235,7 +265,7 @@ class TallerMenu extends Phaser.Scene {
 					this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
 						detallesContainer.visible= false;
 						mejorasContainer.visible= false;
-						edificiosContainer.visible= true;
+						edificiosContainer.visible= false;
 					});
 					
 					//  CONTENEDOR EDIFICIO
@@ -329,7 +359,11 @@ class TallerMenu extends Phaser.Scene {
 			}
 		}
     	else {
-	    	this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0); 
+    		if(game.global.idioma == "eng"){
+    			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccionEng').setOrigin(0, 0);
+    		}else{
+    			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0);
+    		}
 	    }
 		
 		// El botón cerrar será el mismo, por lo que no se incluirá en ningún contenerdor

@@ -19,6 +19,15 @@ class LoadGameplayScene extends Phaser.Scene {
     	
     	
     	var bckCargando = this.add.image(960, 540, 'bckCargando');
+    	var bckCargandoEng = this.add.image(960, 540, 'bckCargandoEng');
+    	
+    	if(game.global.idioma === "eng"){
+    		bckCargando.setVisible(false);
+    		bckCargandoEng.setVisible(true);
+    	}else{
+    		bckCargando.setVisible(true);
+    		bckCargandoEng.setVisible(false);
+    	}
     	
     	
     	game.global.cargando = this.add.image(game.config.width/2+20, game.config.height/2, 'load');
