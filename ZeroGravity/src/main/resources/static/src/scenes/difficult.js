@@ -52,7 +52,8 @@ class DifficultScene extends Phaser.Scene {
     	document.getElementById("dificultad").style.visibility = 'visible';
     	
     	$( "#selectNivel" ).click(function() {
-    		game.global.sound = game.sound.play('dificultadMenu');
+    		game.global.effects.dificultadMenu.play();
+    		game.global.effects.dificultadMenu.setVolume(game.global.myPlayer.config.volEffects/100);
     		game.scene.run('PreloadGameScene');
     		game.scene.stop('DifficultScene');
     	});
@@ -75,14 +76,16 @@ class DifficultScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		document.getElementById("dificultad").style.visibility = 'hidden';
     		game.scene.run('MenuScene');
     		game.scene.stop('DifficultScene');
     	});
     	
     	buttonEng.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		document.getElementById("dificultad").style.visibility = 'hidden';
     		game.scene.run('MenuScene');
     		game.scene.stop('DifficultScene');

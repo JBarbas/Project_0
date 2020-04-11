@@ -101,7 +101,8 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnCuenta.on('pointerdown',function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		btnCuenta.setFrame(1);
     		btnSonido.setFrame(0);
     		btnIdioma.setFrame(0);
@@ -119,7 +120,8 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
-    		game.global.sound = game.global.effects.manager.sounds[13].play;
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(1);
     		btnIdioma.setFrame(0);
@@ -134,7 +136,8 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnIdioma.on('pointerdown',function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(0);
     		btnIdioma.setFrame(1);
@@ -149,7 +152,8 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		if(game.global.inGame){
     			game.scene.run('GameInterface');
     			game.scene.run('GameScene');
@@ -162,7 +166,8 @@ class OptionsScene extends Phaser.Scene {
     	});
     	
     	buttonEng.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		if(game.global.inGame){
     			game.scene.run('GameInterface');
     			game.scene.run('GameScene');
@@ -252,8 +257,8 @@ class OptionsScene extends Phaser.Scene {
     	var textUsuario = this.element.getChildByName("username");
     	
     	btnModificar.on('pointerdown',function(pointer){
-    		openFullscreen();
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		if (textUsuario.value !== '') {
 	    		let msg = new Object();
 	    		msg.event = 'UPDATE USERNAME';
@@ -263,8 +268,8 @@ class OptionsScene extends Phaser.Scene {
     	});
     	
     	btnModify.on('pointerdown',function(pointer){
-    		openFullscreen();
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		if (textUsuario.value !== '') {
 	    		let msg = new Object();
 	    		msg.event = 'UPDATE USERNAME';
@@ -293,7 +298,8 @@ class OptionsScene extends Phaser.Scene {
     	var textNewPassword = this.element.getChildByName("password1");
     	
     	btnModificar2.on('pointerdown',function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		if (textPassword.value !== '' && textNewPassword.value !== '') {
 	    		let msg = new Object();
 	    		msg.event = 'UPDATE PASSWORD';
@@ -304,7 +310,7 @@ class OptionsScene extends Phaser.Scene {
     	});
 
     	btnModify2.on('pointerdown',function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
     		if (textPassword.value !== '' && textNewPassword.value !== '') {
 	    		let msg = new Object();
 	    		msg.event = 'UPDATE PASSWORD';

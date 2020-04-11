@@ -46,11 +46,13 @@ class HalloweenMenu extends Phaser.Scene {
     	})
     	
     	btnHalloween.on('pointerdown',function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     	})
     	
     	btnX.on('pointerdown', function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;

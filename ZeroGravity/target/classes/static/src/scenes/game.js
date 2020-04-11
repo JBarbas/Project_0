@@ -74,7 +74,8 @@ class GameScene extends Phaser.Scene {
     			if (typeof game.global.grid[i] !== 'undefined') {
         			if (typeof game.global.grid[i][j] !== 'undefined') {
 		    			if (game.global.construyendo && !game.global.inMenu) {
-		    				game.sound.play('construyendo');
+		    				game.global.effects.construyendo.play();
+		    	    		game.global.effects.construyendo.setVolume(game.global.myPlayer.config.volEffects/100);
 		        			construir(i, j, scene, game.global.edificioEnConstruccion);
 		        		}
 		    			else if (game.global.expandiendo && !game.global.inMenu) {
@@ -86,7 +87,8 @@ class GameScene extends Phaser.Scene {
     							game.scene.stop(game.global.menu);
     						}
 	        				if (!game.scene.isActive(edificio.menuScene) && !game.global.recolecting) {
-	        					game.global.sound = game.sound.play('menuEdificios');
+	        					game.global.effects.menuEdificios.play();
+			    	    		game.global.effects.menuEdificios.setVolume(game.global.myPlayer.config.volEffects/100);
 	    						game.global.inMenu = true;
 	    						if (game.global.menu !== null) {
 	    							game.scene.stop(game.global.menu);

@@ -138,7 +138,7 @@ window.onload = function() {
 		resources: {},
 		music: null,
 		sound: null,
-		effects: null,
+		effects: {},
 		musicMenu: null,
 		idioma : navigator.language
 	}
@@ -366,33 +366,39 @@ window.onload = function() {
 			if(game.global.resources.energia != msg.energia){
 				game.global.resources.energia = msg.energia;
 				particulasRecurso("energia");
-				game.global.effects = game.sound.play('cambianRecursos');
+				game.global.effects.cambianRecursos.play();
+	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.metal != msg.metal){
 				game.global.resources.metal = msg.metal;
 				particulasRecurso("metal");
-				game.global.effects = game.sound.play('cambianRecursos');
+				game.global.effects.cambianRecursos.play();
+	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.ceramica != msg.ceramica){
 				game.global.resources.ceramica = msg.ceramica;
 				particulasRecurso("ceramica");
-				game.global.effects = game.sound.play('cambianRecursos');
+				game.global.effects.cambianRecursos.play();
+	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.creditos != msg.creditos){
 				game.global.resources.creditos = msg.creditos;
 				particulasRecurso("creditos");
-				game.global.effects = game.sound.play('cambianRecursos');
+				game.global.effects.cambianRecursos.play();
+	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 
 			}
 			if(game.global.resources.unionCoins != msg.unionCoins){
 				game.global.resources.unionCoins = msg.unionCoins;
 				particulasRecurso("unionCoins");
-				game.global.effects = game.sound.play('cambianRecursos');
+				game.global.effects.cambianRecursos.play();
+	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.colonos != msg.colonos){
 				game.global.resources.colonos = msg.colonos;
 				particulasRecurso("colonos");
-				game.global.effects = game.sound.play('cambianRecursos');
+				game.global.effects.cambianRecursos.play();
+	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			game.global.puntuacion = msg.punctuacion;
 			break;			
@@ -416,7 +422,8 @@ window.onload = function() {
 			
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
-					game.global.effects = game.sound.play('construido');
+					game.global.effects.construido.play();
+		    		game.global.effects.construido.setVolume(game.global.myPlayer.config.volEffects/100);
 					game.global.edificios.get(msg.id).enConstruccion = false;
 					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
 					clearInterval(game.global.edificios.get(msg.id).interval);
@@ -469,7 +476,8 @@ window.onload = function() {
 				console.log('[DEBUG] EDIFICIO LLENO message recieved');
 				console.dir(msg);
 			}
-			game.global.effects = game.sound.play('recursosMaximos');
+			game.global.effects.recursosMaximos.play();
+    		game.global.effects.recursosMaximos.setVolume(game.global.myPlayer.config.volEffects/100);
 			let edificioLleno = game.global.edificios.get(msg.id);
 			edificioLleno.lleno = true;
 			game.global.edificios.get(msg.id).produciendo = false;
@@ -497,7 +505,8 @@ window.onload = function() {
 				console.log('[DEBUG] CERAMICA RECOLECTADA message recieved');
 				console.dir(msg);
 			}
-			game.global.effects = game.sound.play('cambianRecursos');
+			game.global.effects.cambianRecursos.play();
+    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			game.global.resources.ceramica = msg.ceramica;
 			particulasRecurso("ceramica");
 			pedirPuntuaciones()
@@ -507,7 +516,8 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS RECOLECTADOS message recieved');
 				console.dir(msg);
 			}
-			game.global.effects = game.sound.play('cambianRecursos');
+			game.global.effects.cambianRecursos.play();
+    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			game.global.resources.creditos = msg.creditos;
 			particulasRecurso("creditos");
 			pedirPuntuaciones()
@@ -517,7 +527,8 @@ window.onload = function() {
 				console.log('[DEBUG] METAL RECOLECTADO message recieved');
 				console.dir(msg);
 			}
-			game.global.effects = game.sound.play('cambianRecursos');
+			game.global.effects.cambianRecursos.play();
+    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			game.global.resources.metal = msg.metal;
 			particulasRecurso("metal");
 			if (game.scene.isActive('TallerMenu')) {
@@ -718,7 +729,8 @@ window.onload = function() {
 				console.log('[DEBUG] ENVIO DE COLONOS message recieved');
 				console.dir(msg);
 			}
-			game.global.effects = game.sound.play('cambianRecursos');
+			game.global.effects.cambianRecursos.play();
+    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			game.global.resources.colonos = msg.colonos;
 			particulasRecurso("colonos");
 

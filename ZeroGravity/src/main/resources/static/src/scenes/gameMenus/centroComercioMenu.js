@@ -19,7 +19,8 @@ class CentroComercioMenu extends Phaser.Scene {
     }
     
     create (data)  {
-    	game.global.sound = game.sound.play('seleccionarEdificio');
+    	game.global.effects.seleccionarEdificio.play();
+		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	
     	this.miEdificio = data.miEdificio;
     	
@@ -82,31 +83,36 @@ class CentroComercioMenu extends Phaser.Scene {
     	//Se alterna entre contenedores según el icono seleccionado
     	this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 300, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
     	this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		mostrarInfo(5);
     		game.global.comercioMenuLast = 'detalles';
     	});
     	this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
     	this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		mostrarInfo(4);
     		game.global.comercioMenuLast = 'mejoras';
     	});
     	this.iconoOfertas = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoOfertas').setOrigin(0, 0);
     	this.iconoOfertas.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		mostrarInfo(3);
     		game.global.comercioMenuLast = 'ofertas';
     	});
     	this.iconoVender = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoVender').setOrigin(0, 0);
     	this.iconoVender.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		mostrarInfo(2);
     		game.global.comercioMenuLast = 'vender';
     	});
     	this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoComprar').setOrigin(0, 0);
     	this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		mostrarInfo(1);
     		game.global.comercioMenuLast = 'edificio';
     	});
@@ -145,7 +151,8 @@ class CentroComercioMenu extends Phaser.Scene {
           	    	  if (willDelete) {         
           	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
     	        		box.parentElement.style.visibility = "hidden";
-    	        		game.global.sound = game.sound.play('comprar');
+    	        		game.global.effects.comprar.play();
+    	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
           	    	    swal("Compra realizada", {
           	    	      icon: "success",
           	    	      dangerMode: false,         	    	   
@@ -183,7 +190,8 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	    	.then((willDelete) => {
 	            	    	  if (willDelete) {         
 	            	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	            	    		game.global.sound = game.sound.play('comprar');
+	            	    		game.global.effects.comprar.play();
+	        	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
 	            	    		box.parentElement.style.visibility = "hidden";
 	            	    	    swal("Compra realizada", {
 	            	    	      icon: "success",
@@ -208,7 +216,8 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	    	.then((willDelete) => {
 	            	    	  if (willDelete) {         
 	            	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
-	            	    		game.global.sound = game.sound.play('comprar');	
+	            	    		game.global.effects.comprar.play();
+	        	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
 	            	    		box.parentElement.style.visibility = "hidden";
 	            	    	    swal("Compra realizada", {
 	            	    	      icon: "success",
@@ -235,7 +244,8 @@ class CentroComercioMenu extends Phaser.Scene {
 	          	    	  if (willDelete) {         
 	          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	    	        		box.parentElement.style.visibility = "hidden";
-	    	        		game.global.sound = game.sound.play('comprar');	
+	    	        		game.global.effects.comprar.play();
+	    	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
 	          	    	    swal("Compra realizada", {
 	          	    	      icon: "success",
 	          	    	      dangerMode: false,         	    	   
@@ -300,7 +310,8 @@ class CentroComercioMenu extends Phaser.Scene {
 	          	    	  if (willDelete) {         
 	          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	    	        		box.parentElement.style.visibility = "hidden";
-	    	        		game.global.sound = game.sound.play('comprar');
+	    	        		game.global.effects.comprar.play();
+	    	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
 	          	    	    swal("Compra realizada", {
 	          	    	      icon: "success",
 	          	    	      dangerMode: false,         	    	   
@@ -327,7 +338,8 @@ class CentroComercioMenu extends Phaser.Scene {
 	          	    	  if (willDelete) {         
 	          	    		comprarOferta(oferta.idOferta, data.miEdificio.id);
 	    	        		box.parentElement.style.visibility = "hidden";
-	    	        		game.global.sound = game.sound.play('comprar');
+	    	        		game.global.effects.comprar.play();
+	    	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
 	          	    	    swal("Compra realizada", {
 	          	    	      icon: "success",
 	          	    	      dangerMode: false,         	    	   
@@ -387,7 +399,8 @@ class CentroComercioMenu extends Phaser.Scene {
         	    	.then((willDelete) => {
         	    	  if (willDelete) {         
         	    		  pasarAcrearOferta(boxV.indice);
-        	    		  game.global.sound = game.sound.play('comprar');
+        	    		  game.global.effects.comprar.play();
+      	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
         	    	    swal("Tu oferta está en el mercado", {
         	    	      icon: "success",
         	    	      dangerMode: false,         	    	   
@@ -423,7 +436,8 @@ class CentroComercioMenu extends Phaser.Scene {
           	    	.then((willDelete) => {
           	    	  if (willDelete) {         
           	    		  pasarAcrearOferta(boxV.indice);
-          	    		game.global.sound = game.sound.play('comprar');
+          	    		game.global.effects.comprar.play();
+    	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
           	    	    swal("Tu oferta está en el mercado", {
           	    	      icon: "success",
           	    	      dangerMode: false,         	    	   
@@ -447,7 +461,8 @@ class CentroComercioMenu extends Phaser.Scene {
           	    	.then((willDelete) => {
           	    	  if (willDelete) {         
           	    		  pasarAcrearOferta(boxV.indice);  
-          	    		  game.global.sound = game.sound.play('comprar');  
+          	    		game.global.effects.comprar.play();
+    	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);  
           	    	    swal("Tu oferta está en el mercado", {
           	    	      icon: "success",
           	    	      dangerMode: false,         	    	   
@@ -472,7 +487,8 @@ class CentroComercioMenu extends Phaser.Scene {
       	    	.then((willDelete) => {
       	    	  if (willDelete) {         
       	    		  pasarAcrearOferta(boxV.indice);
-      	    		  game.global.sound = game.sound.play('comprar');
+      	    		game.global.effects.comprar.play();
+	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
       	    	    swal("Tu oferta está en el mercado", {
       	    	      icon: "success",
       	    	      dangerMode: false,         	    	   
@@ -537,7 +553,8 @@ class CentroComercioMenu extends Phaser.Scene {
       	    	.then((willDelete) => {
       	    	  if (willDelete) {         
       	    		pasarAcrearOferta(boxV.indice);	
-      	    		game.global.sound = game.sound.play('comprar');
+      	    		game.global.effects.comprar.play();
+	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
       	    	    swal("Tu oferta está en el mercado", {
       	    	      icon: "success",
       	    	      dangerMode: false,         	    	   
@@ -564,7 +581,8 @@ class CentroComercioMenu extends Phaser.Scene {
       	    	.then((willDelete) => {
       	    	  if (willDelete) {         
       	    		pasarAcrearOferta(boxV.indice);
-      	    		game.global.sound = game.sound.play('comprar');
+      	    		game.global.effects.comprar.play();
+	        		game.global.effects.comprar.setVolume(game.global.myPlayer.config.volEffects/100);
       	    	    swal("Tu oferta está en el mercado", {
       	    	      icon: "success",
       	    	      dangerMode: false,         	    	   
@@ -684,7 +702,8 @@ class CentroComercioMenu extends Phaser.Scene {
       	    	  if (willDelete) {         
       	    		boxO.parentElement.style.visibility = "hidden";
             		borrarOferta(oferta.idOferta, data.miEdificio.id);
-            		game.global.sound = game.sound.play('denegar');
+            		game.global.effects.denegar.play();
+	        		game.global.effects.denegar.setVolume(game.global.myPlayer.config.volEffects/100);
       	    	    swal("Tu oferta ha sido retirada de el mercado", {
       	    	      icon: "success",
       	    	      dangerMode: false,         	    	   
@@ -742,7 +761,8 @@ class CentroComercioMenu extends Phaser.Scene {
             	    	  if (willDelete) {         
             	    		boxO.parentElement.style.visibility = "hidden";
             	    		borrarOferta(oferta.idOferta, data.miEdificio.id); 
-            	    		game.global.sound = game.sound.play('denegar');
+            	    		game.global.effects.denegar.play();
+        	        		game.global.effects.denegar.setVolume(game.global.myPlayer.config.volEffects/100);
             	    	    swal("Tu oferta ha sido retirada de el mercado", {
             	    	      icon: "success",
             	    	      dangerMode: false,         	    	   
@@ -770,7 +790,8 @@ class CentroComercioMenu extends Phaser.Scene {
             	    	  if (willDelete) {         
             	    		boxO.parentElement.style.visibility = "hidden";
             	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
-            	    		game.global.sound = game.sound.play('denegar');  
+            	    		game.global.effects.denegar.play();
+        	        		game.global.effects.denegar.setVolume(game.global.myPlayer.config.volEffects/100); 
             	    	    swal("Tu oferta ha sido retirada de el mercado", {
             	    	      icon: "success",
             	    	      dangerMode: false,         	    	   
@@ -798,7 +819,8 @@ class CentroComercioMenu extends Phaser.Scene {
         	    	  if (willDelete) {         
         	    		boxO.parentElement.style.visibility = "hidden";
         	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
-        	    		game.global.sound = game.sound.play('denegar');
+        	    		game.global.effects.denegar.play();
+    	        		game.global.effects.denegar.setVolume(game.global.myPlayer.config.volEffects/100); 
         	    	    swal("Tu oferta ha sido retirada de el mercado", {
         	    	      icon: "success",
         	    	      dangerMode: false,         	    	   
@@ -866,7 +888,8 @@ class CentroComercioMenu extends Phaser.Scene {
         	    	  if (willDelete) {         
         	    		boxO.parentElement.style.visibility = "hidden";
         	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
-        	    		game.global.sound = game.sound.play('denegar');
+        	    		game.global.effects.denegar.play();
+    	        		game.global.effects.denegar.setVolume(game.global.myPlayer.config.volEffects/100); 
         	    	    swal("Tu oferta ha sido retirada de el mercado", {
         	    	      icon: "success",
         	    	      dangerMode: false,         	    	   
@@ -895,7 +918,8 @@ class CentroComercioMenu extends Phaser.Scene {
         	    	  if (willDelete) {         
         	    		boxO.parentElement.style.visibility = "hidden";
         	    		borrarOferta(oferta.idOferta, data.miEdificio.id);
-        	    		game.global.sound = game.sound.play('denegar');
+        	    		game.global.effects.denegar.play();
+    	        		game.global.effects.denegar.setVolume(game.global.myPlayer.config.volEffects/100); 
         	    	    swal("Tu oferta ha sido retirada de el mercado", {
         	    	      icon: "success",
         	    	      dangerMode: false,         	    	   
@@ -944,7 +968,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	    mover.setFrame(0);
     	})
     	mover.on('pointerdown', function(pointer, localX, localY, event){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
     		if(!game.global.construyendo){
 				game.scene.pause();
 				data.miEdificio.move();
@@ -998,7 +1023,8 @@ class CentroComercioMenu extends Phaser.Scene {
     	    this.setFrame(0);
     	});
     	cerrar.on('pointerdown', function(pointer, localX, localY, event){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
 			game.scene.stop(data.miEdificio.menuScene);
 			game.global.inMenu = false;
     	});
