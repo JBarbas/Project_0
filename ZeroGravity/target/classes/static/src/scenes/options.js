@@ -119,7 +119,7 @@ class OptionsScene extends Phaser.Scene {
     	})
     	
     	btnSonido.on('pointerdown',function(pointer){
-    		game.global.sound = game.sound.play('pulsarBoton');
+    		game.global.sound = game.global.effects.manager.sounds[13].play;
     		btnCuenta.setFrame(0);
     		btnSonido.setFrame(1);
     		btnIdioma.setFrame(0);
@@ -209,27 +209,50 @@ class OptionsScene extends Phaser.Scene {
     	
     	//Si esta en pantalla completa se checkea Si y sino pues NO
     	if (!window.screenTop && !window.screenY) {
-    		document.getElementById('yes').style.backgroundColor = "#5050af";
-    	}else{
     		document.getElementById('no').style.backgroundColor = "#5050af";
+    	}else{
+    		document.getElementById('yes').style.backgroundColor = "#5050af";
+    		
     	}
 		
+		function getFullScreen(){
+			if (!window.screenTop && !window.screenY) {
+				return false;
+			}else{
+				return true;
+			}
+		}
+		
+		var docElm = document.documentElement;
+		
 		document.getElementById('yes').addEventListener("click", function(){
-			document.getElementById('yes').style.backgroundColor = "#5050af";
-			document.getElementById('no').style.backgroundColor = "#8989EE";
-			openFullscreen();
+			if(!getFullScreen()){
+				
+				/*if (docElm.webkitRequestFullscreen) {
+					console.log("hola");
+		            //docElm.webkitRequestFullscreen();
+					
+				}*/
+				openFullscreen();
+				document.getElementById('yes').style.backgroundColor = "#5050af";
+				document.getElementById('no').style.backgroundColor = "#8989EE";
+			}
 		});
 		
-		document.getElementById('no').addEventListener("click", function(){
-			console.log("hola!");
-			document.getElementById('no').style.backgroundColor = "#5050af";
-			document.getElementById('yes').style.backgroundColor = "#8989EE";
-			exitFullscreen();
+		document.getElementById('no').addEventListener("click", function(){			
+			if(getFullScreen()){
+				//closeFullscreen();
+				
+				document.getElementById('no').style.backgroundColor = "#5050af";
+				document.getElementById('yes').style.backgroundColor = "#8989EE";
+			}
+			
 		});
     	
     	var textUsuario = this.element.getChildByName("username");
     	
     	btnModificar.on('pointerdown',function(pointer){
+    		openFullscreen();
     		game.global.sound = game.sound.play('pulsarBoton');
     		if (textUsuario.value !== '') {
 	    		let msg = new Object();
@@ -240,6 +263,7 @@ class OptionsScene extends Phaser.Scene {
     	});
     	
     	btnModify.on('pointerdown',function(pointer){
+    		openFullscreen();
     		game.global.sound = game.sound.play('pulsarBoton');
     		if (textUsuario.value !== '') {
 	    		let msg = new Object();
@@ -356,7 +380,6 @@ class OptionsScene extends Phaser.Scene {
 		}
 		
 		function getVolumeEffects(){
-			console.log(game.global.myPlayer.config.volEffects);
 			var vol = game.global.myPlayer.config.volEffects;
 			return vol;
 		}

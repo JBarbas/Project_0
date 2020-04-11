@@ -184,6 +184,7 @@ window.onload = function() {
 	    	game.global.musicMenu.play();	    	
 	    	game.global.musicMenu.setLoop(true);
 	    	
+	    	
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;			
@@ -206,7 +207,7 @@ window.onload = function() {
 			}
 			/*y yo aprovecho para precargar las puntuaciones y las ofertas disponibles*/
 			pedirPuntuaciones();
-			pedirOfertas();			
+			pedirOfertas();
 			break;
 		case 'LOGIN FAILED':
 			if (game.global.DEBUG_MODE) {

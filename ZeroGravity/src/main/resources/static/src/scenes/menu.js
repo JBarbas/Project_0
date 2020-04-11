@@ -19,9 +19,11 @@ class MenuScene extends Phaser.Scene {
     	var music = game.global.music;
     	game.global.music.setVolume(0);
     	
+    	console.log(game.global.myPlayer.config.volEffects);
+    	console.log(game.global.myPlayer.config.volMusic);
     	var backgroundM = this.add.image(960, 540, 'backgroundMenu');
     	
-    	
+    	anyadirEfectos();
     	//var textT = this.add.bitmapText(200, 50, 'myfont', 'Holaaaaaaaaaa', 128); 
     	
     	var element = this.add.dom(0, 0).createFromCache('menuform');
@@ -93,6 +95,34 @@ class MenuScene extends Phaser.Scene {
     		game.scene.run('CreditsScene');
     		game.scene.stop('MenuScene');
     	});
+    	
+    	function anyadirEfectos(){
+    		
+    		if(game.global.effects==null){
+	    		game.global.effects = null;
+	    		game.global.effects = game.sound.add('cambianRecursos'); // indice 4 de game.global.effects.manager.sounds
+	    		game.global.effects = game.sound.add('comprar');   //5
+	    		game.global.effects = game.sound.add('confirmar');   //6
+	    		game.global.effects = game.sound.add('construido');  //....
+	    		game.global.effects = game.sound.add('construyendo');
+	    		game.global.effects = game.sound.add('denegar');
+	    		game.global.effects = game.sound.add('dificultadMenu');
+	    		game.global.effects = game.sound.add('mensaje');
+	    		game.global.effects = game.sound.add('menuEdificios');
+	    		game.global.effects = game.sound.add('pulsarBoton');
+	    		game.global.effects = game.sound.add('puntuacion');
+	    		game.global.effects = game.sound.add('recogerRecursos');
+	    		game.global.effects = game.sound.add('recursosMaximos');
+	    		game.global.effects = game.sound.add('seleccionarEdificio'); //18
+	    			    		
+	    		for(var i=4;i<game.global.effects.manager.sounds.length; i++){
+	    			game.global.effects.manager.sounds[i].volume = game.global.myPlayer.config.volEffects/100;
+	    		}
+	    		game.global.sound = game.sound.play(game.global.effects.manager.sounds[17].key);
+	    		console.log(game.global.effects.manager.sounds[17].config.volume);
+    		}
+	    		
+    	}
 
     }
     

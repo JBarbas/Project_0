@@ -12,3 +12,15 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { // Firefox /
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { /// Chrome, Safari and Opera /
+    document.webkitCancelFullScreen();
+  } else if (document.msExitFullscreen) { // Edge
+    document.msExitFullscreen();
+  }
+}
