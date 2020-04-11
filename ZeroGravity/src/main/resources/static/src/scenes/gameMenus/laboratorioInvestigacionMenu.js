@@ -45,20 +45,18 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 			// Contenedor del panel de gestion
 			var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			
-			//Se añade a cada contenedor su imagen de fondo
-			this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
-			this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
-			this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
-			
-			this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
-			this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
-			this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
-			
+			//Se añade a cada contenedor su imagen de fondo			
 			if(game.global.idioma == "eng"){
+				this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
+				this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
+				this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
 				mejorasContainer.add(this.intUpdates);
 				detallesContainer.add(this.intDetails);
 				edificiosContainer.add(this.intBuildings);
 			}else{
+				this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
+				this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
+				this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
 				mejorasContainer.add(this.intMejoras);
 				detallesContainer.add(this.intDetalles);
 				edificiosContainer.add(this.intEdificios);
