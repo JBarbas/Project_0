@@ -64,7 +64,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 		    "mongodb+srv://ZeroGravity:webyrrss@polaris-u3pvb.mongodb.net/POLARIS?retryWrites=true&w=majority");
 
 	private static MongoClient mongoClient = new MongoClient(uri);
-	private static MongoDatabase database = mongoClient.getDatabase("POLARIS");
+	private static MongoDatabase database = mongoClient.getDatabase("POLARIS-PRUEBAS");
 
 	private static MongoCollection<Document> coll = database.getCollection("Users", Document.class);
 	private static MongoCollection<Document> collOfertas = database.getCollection("Ofertas", Document.class);
