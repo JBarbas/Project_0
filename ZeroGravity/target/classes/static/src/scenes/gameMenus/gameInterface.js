@@ -130,9 +130,17 @@ class GameInterface extends Phaser.Scene {
     	//particulasRecurso();
     	
     	// Cuando construyes y/o mueves edificios:
-    	this.btnCancel = this.add.image(960, 900, 'cancelBtn').setOrigin(0.5, 0.5); 
+    	this.btnCancel = this.add.image(1150, 900, 'cancelBtn').setOrigin(0.5, 0.5); 
     	this.btnCancel.setInteractive();
     	this.btnCancel.setVisible(false);
+    	
+    	this.btnAcept = this.add.image(900, 900, 'btnAcept').setOrigin(0.5, 0.5); 
+    	this.btnAcept.setInteractive();
+    	this.btnAcept.setVisible(false);
+    	
+    	this.btnAceptar = this.add.image(900, 900, 'btnAceptar').setOrigin(0.5, 0.5); 
+    	this.btnAceptar.setInteractive();
+    	this.btnAceptar.setVisible(false);
     	
     	this.btnCancel.on('pointerover',function(pointer){
     		this.setFrame(1);
@@ -144,10 +152,40 @@ class GameInterface extends Phaser.Scene {
     		game.global.canBuild = true;
     	})
     	
+    	this.btnAceptar.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	})
+
+    	this.btnAceptar.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    		
+    	})
+    	
+    	this.btnAcept.on('pointerover',function(pointer){
+    		this.setFrame(1);
+    	})
+
+    	this.btnAcept.on('pointerout',function(pointer){
+    		this.setFrame(0);
+    		
+    	})
+    	
     	this.btnCancel.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		cancelConstruir(game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    	});
+    	
+    	this.btnAcept.on('pointerdown', function(pointer){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    		
+    	});
+    	
+    	this.btnAceptar.on('pointerdown', function(pointer){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    		
     	});
     }
     update(time, delta) {
@@ -227,9 +265,11 @@ class GameInterface extends Phaser.Scene {
     	
     	if (game.global.construyendo) {
     		this.btnCancel.setVisible(true);
+    		this.btnAcept.setVisible(true);
     	}
     	else {
     		this.btnCancel.setVisible(false);
+    		this.btnAcept.setVisible(false);
     	}
     	
     }
