@@ -63,13 +63,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
 		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
 		this.load.spritesheet('btnSee', 'assets/interface/Gameplay/buttonSee.png', {frameWidth:300,frameHeight:54});
-		this.load.spritesheet('btnClose', 'assets/interface/Gameplay/btnProximoSprite.png', {frameWidth:300,frameHeight:54});
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
 		this.load.spritesheet('xSusto', 'assets/interface/Gameplay/xSusto.png', {frameWidth:38,frameHeight:40});
 		this.load.spritesheet('xAnuncio', 'assets/interface/Gameplay/x.png', {frameWidth:49,frameHeight:40});
 		
 		this.load.spritesheet('cancelBtn', 'assets/interface/cancel.png',{frameWidth:165,frameHeight:63});
+		
+		this.load.spritesheet('boxConstr', 'assets/interface/Gameplay/Construccion/BoxConstruccion.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnBuild', 'assets/interface/Gameplay/Construccion/btnBuild.png',{frameWidth:594,frameHeight:142});
+		this.load.spritesheet('btnConstruir', 'assets/interface/Gameplay/Construccion/btnConstruir.png',{frameWidth:594,frameHeight:142});
 		
 		
 		//Interfaz
@@ -90,7 +93,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
 		this.load.image('panelAnuncioEng', 'assets/interface/Gameplay/panelAds.png');
-		this.load.image('panelSusto', 'assets/interface/Gameplay/halloween.png');
+		this.load.image('panelConstruccion', 'assets/interface/Gameplay/Construccion/BckConstruccion.png');
 		this.load.image('panelRanking', 'assets/interface/Gameplay/Ranking.png');
 		
 		this.load.image('iconoDetalles', 'assets/interface/iconoDetalles.png');

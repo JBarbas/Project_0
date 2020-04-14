@@ -17,17 +17,31 @@ class ConstruccionMenu extends Phaser.Scene {
     }
     create (data)  {
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
-    	this.panelConstruccion = this.add.image(560, 300, 'panelSusto').setOrigin(0, 0);
+    	this.panelConstruccion = this.add.image(430, 300, 'panelConstruccion').setOrigin(0, 0);
     	
-    	var btnX = this.add.image(1570, 340, 'xSusto').setInteractive();
-    	var btnConstruccion = this.add.image(game.global.btnAnuncio.x-250, game.global.btnAnuncio.y, 'btnClose').setInteractive();
+    	var btnX = this.add.image(1580, 340, 'xBuilding').setInteractive();
+    	var btnConstruir = this.add.image(game.global.btnAnuncio.x, game.global.btnAnuncio.y+60, 'btnConstruir').setInteractive();
+    	var btnBuild = this.add.image(game.global.btnAnuncio.x, game.global.btnAnuncio.y+60, 'btnBuild').setInteractive();
+    	
+    	var boxConstr = this.add.image(540, 420, 'boxConstr').setInteractive();
     	var cort = this.cortina;
     	var panelA = this.panelConstruccion;
     	
     	
     	cort.alpha = 0.4;
-    	panelA.scale = 0.7;
     	btnX.scale = 0.7;
+    	
+    	panelA.scale = 1;
+    	btnConstruir.scale = 0.5;
+    	btnBuild.scale = 0.5;
+    	
+    	if(game.global.idioma == "eng"){
+    		btnConstruir.setVisible(false);
+    		btnBuild.setVisible(true);
+    	}else{
+    		btnConstruir.setVisible(true);
+    		btnBuild.setVisible(false);
+    	}
     	
     	btnX.on('pointerover',function(pointer){
     		btnX.setFrame(1);
@@ -37,18 +51,30 @@ class ConstruccionMenu extends Phaser.Scene {
     		btnX.setFrame(0);
     	})
     	
-    	btnConstruccion.on('pointerover',function(pointer){
-    		btnConstruccion.setFrame(1);
+    	boxConstr.on('pointerover',function(pointer){
+    		boxConstr.setFrame(1);
     	})
     	
-    	btnConstruccion.on('pointerout',function(pointer){
-    		btnConstruccion.setFrame(0);
+    	boxConstr.on('pointerout',function(pointer){
+    		boxConstr.setFrame(0);
     	})
     	
-    	btnConstruccion.on('pointerdown',function(pointer){
-    		game.global.effects.pulsarBoton.play();
-    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    	btnBuild.on('pointerover',function(pointer){
+    		btnBuild.setFrame(1);
     	})
+    	
+    	btnBuild.on('pointerout',function(pointer){
+    		btnBuild.setFrame(0);
+    	})
+    	
+    	btnConstruir.on('pointerover',function(pointer){
+    		btnConstruir.setFrame(1);
+    	})
+    	
+    	btnConstruir.on('pointerout',function(pointer){
+    		btnConstruir.setFrame(0);
+    	})
+    	
     	
     	btnX.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
