@@ -63,7 +63,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnCerrar', 'assets/sprites/cerrar.png', {frameWidth:64,frameHeight:64});
 		this.load.spritesheet('btnAnuncio', 'assets/interface/Gameplay/btnAnuncio.png', {frameWidth:300,frameHeight:54});
 		this.load.spritesheet('btnSee', 'assets/interface/Gameplay/buttonSee.png', {frameWidth:300,frameHeight:54});
-		this.load.spritesheet('btnSusto', 'assets/interface/Gameplay/btnProximoSprite.png', {frameWidth:300,frameHeight:54});
+		this.load.spritesheet('btnClose', 'assets/interface/Gameplay/btnProximoSprite.png', {frameWidth:300,frameHeight:54});
 
 		this.load.spritesheet('xBuilding', 'assets/interface/Gameplay/x2.png', {frameWidth:38,frameHeight:40});
 		this.load.spritesheet('xSusto', 'assets/interface/Gameplay/xSusto.png', {frameWidth:38,frameHeight:40});
@@ -84,7 +84,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
 		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/Principal.png');
-		this.load.image('intMision', 'assets/interface/Gameplay/btnMision.png');
+		this.load.image('intMision', 'assets/interface/Gameplay/btnConstruccion.png');
 		this.load.image('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png');
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
 		this.load.image('cortina', 'assets/interface/Cortina.png');

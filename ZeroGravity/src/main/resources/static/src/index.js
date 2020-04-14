@@ -52,7 +52,7 @@ window.onload = function() {
 				  		TallerMenu,
 				  		AnuncioMenu,
 				  		RankingMenu,
-				  		HalloweenMenu]
+				  		ConstruccionMenu]
 			};
 			
 	

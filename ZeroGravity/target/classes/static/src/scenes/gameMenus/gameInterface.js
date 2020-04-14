@@ -99,8 +99,8 @@ class GameInterface extends Phaser.Scene {
 			if (game.global.menu !== null) {
 				game.scene.stop(game.global.menu);
 			}
-			game.global.menu = 'HalloweenMenu';
-			game.scene.run('HalloweenMenu');
+			game.global.menu = 'ConstruccionMenu';
+			game.scene.run('ConstruccionMenu');
 			
 			
     	});

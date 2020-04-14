@@ -1,14 +1,14 @@
-class HalloweenMenu extends Phaser.Scene {
+class ConstruccionMenu extends Phaser.Scene {
 
 	constructor() {
         super({
-            key: "HalloweenMenu",
+            key: "ConstruccionMenu",
         });
     }
 
     init(data) {
     	if (game.global.DEBUG_MODE) {
-			console.log("[DEBUG] Entering **HALLOWEEN** menu");
+			console.log("[DEBUG] Entering **CONSTRUCCION** menu");
 		}
     }
     
@@ -17,12 +17,12 @@ class HalloweenMenu extends Phaser.Scene {
     }
     create (data)  {
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
-    	this.panelHalloween = this.add.image(560, 300, 'panelSusto').setOrigin(0, 0);
+    	this.panelConstruccion = this.add.image(560, 300, 'panelSusto').setOrigin(0, 0);
     	
     	var btnX = this.add.image(1570, 340, 'xSusto').setInteractive();
-    	var btnHalloween = this.add.image(game.global.btnAnuncio.x-250, game.global.btnAnuncio.y, 'btnSusto').setInteractive();
+    	var btnConstruccion = this.add.image(game.global.btnAnuncio.x-250, game.global.btnAnuncio.y, 'btnClose').setInteractive();
     	var cort = this.cortina;
-    	var panelA = this.panelHalloween;
+    	var panelA = this.panelConstruccion;
     	
     	
     	cort.alpha = 0.4;
@@ -37,15 +37,15 @@ class HalloweenMenu extends Phaser.Scene {
     		btnX.setFrame(0);
     	})
     	
-    	btnHalloween.on('pointerover',function(pointer){
-    		btnHalloween.setFrame(1);
+    	btnConstruccion.on('pointerover',function(pointer){
+    		btnConstruccion.setFrame(1);
     	})
     	
-    	btnHalloween.on('pointerout',function(pointer){
-    		btnHalloween.setFrame(0);
+    	btnConstruccion.on('pointerout',function(pointer){
+    		btnConstruccion.setFrame(0);
     	})
     	
-    	btnHalloween.on('pointerdown',function(pointer){
+    	btnConstruccion.on('pointerdown',function(pointer){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     	})
@@ -56,7 +56,7 @@ class HalloweenMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
-    		game.scene.stop('HalloweenMenu');
+    		game.scene.stop('ConstruccionMenu');
     	});
     	
     }
