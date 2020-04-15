@@ -720,6 +720,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "GIVE ME PUNCTUATIONS":
 				sendPunctuations(player);
 				break;
+			case "DEBUG":
+				System.out.println("The Debug message was received");
+				break;
 			case "REFRESH MY MENU":
 				msg.put("event", "REFRESH MENU");
 				msg.put("id", node.get("edificioId").asInt());

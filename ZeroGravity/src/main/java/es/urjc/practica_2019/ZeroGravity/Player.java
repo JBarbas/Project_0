@@ -540,6 +540,7 @@ public class Player {
 		saveRecursos();
 		saveOfertas();
 		savePuntuacion();
+		saveConfig();
 	}
 	
 	public void saveGrid() {
