@@ -72,6 +72,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnAcept', 'assets/interface/Gameplay/Construccion/btnAcept.png',{frameWidth:165,frameHeight:63});
 		this.load.spritesheet('btnAceptar', 'assets/interface/Gameplay/Construccion/btnAceptar.png',{frameWidth:165,frameHeight:63});
 		
+		this.load.spritesheet('btnEdit', 'assets/interface/Gameplay/Construccion/btnEdit.png',{frameWidth:68,frameHeight:68});
+		
 		this.load.spritesheet('boxConstr', 'assets/interface/Gameplay/Construccion/BoxConstruccion.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnBuild', 'assets/interface/Gameplay/Construccion/btnBuild.png',{frameWidth:594,frameHeight:142});
 		this.load.spritesheet('btnConstruir', 'assets/interface/Gameplay/Construccion/btnConstruir.png',{frameWidth:594,frameHeight:142});

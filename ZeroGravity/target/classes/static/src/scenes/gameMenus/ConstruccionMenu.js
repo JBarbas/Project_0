@@ -31,6 +31,8 @@ class ConstruccionMenu extends Phaser.Scene {
     	var boxConstr4 = this.add.image(720, 600, 'boxConstr').setInteractive();
     	var boxConstr5 = this.add.image(900, 600, 'boxConstr').setInteractive();
     	
+    	var btnEdit = this.add.image(500, 275, 'btnEdit').setInteractive(); //1650, 870 Lateral inferior derecho      // 1500, 275   Superior derecho
+    	
     	var cort = this.cortina;
     	var panelA = this.panelConstruccion;    	
     	
@@ -80,6 +82,25 @@ class ConstruccionMenu extends Phaser.Scene {
     	btnX.on('pointerout',function(pointer){
     		btnX.setFrame(0);
     	})
+    	
+    	btnEdit.on('pointerover',function(pointer){
+    		btnEdit.setFrame(1);
+    	})
+    	
+    	btnEdit.on('pointerout',function(pointer){
+    		btnEdit.setFrame(0);
+    	})
+    	
+    	btnEdit.on('pointerdown', function(pointer){
+    		//Aqui falta poner el menu de edicion para mover edificios
+    		
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    		game.scene.getScene('GameInterface').panel.alpha = 1.0;
+    		//stop scene
+    		game.global.inMenu = false;
+    		game.scene.stop('ConstruccionMenu');
+    	});
     	
     	btnConstruir.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
