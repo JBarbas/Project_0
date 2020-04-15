@@ -76,7 +76,8 @@ class GameScene extends Phaser.Scene {
 		    			if (game.global.construyendo && !game.global.inMenu) {
 		    				game.global.effects.construyendo.play();
 		    	    		game.global.effects.construyendo.setVolume(game.global.myPlayer.config.volEffects/100);
-		        			construir(i, j, scene, game.global.edificioEnConstruccion);
+		        			//construir(i, j, scene, game.global.edificioEnConstruccion);
+		    	    		situarEdificio(scene, game.global.edificioEnConstruccion);
 		        		}
 		    			else if (game.global.expandiendo && !game.global.inMenu) {
 		    				buyCell(i, j);

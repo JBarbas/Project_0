@@ -177,15 +177,19 @@ class GameInterface extends Phaser.Scene {
     	});
     	
     	this.btnAcept.on('pointerdown', function(pointer){
-    		game.global.effects.pulsarBoton.play();
-    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
-    		
+    		if (game.global.edificioEnConstruccion.bienSituado) {    		
+	    		game.global.effects.pulsarBoton.play();
+	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+	    		construir(game.global.edificioEnConstruccion.i, game.global.edificioEnConstruccion.j, game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    		}    		
     	});
     	
     	this.btnAceptar.on('pointerdown', function(pointer){
-    		game.global.effects.pulsarBoton.play();
-    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
-    		
+    		if (game.global.edificioEnConstruccion.bienSituado) {    		
+	    		game.global.effects.pulsarBoton.play();
+	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+	    		construir(game.global.edificioEnConstruccion.i, game.global.edificioEnConstruccion.j, game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    		}
     	});
     }
     update(time, delta) {
@@ -265,7 +269,12 @@ class GameInterface extends Phaser.Scene {
     	
     	if (game.global.construyendo) {
     		this.btnCancel.setVisible(true);
-    		this.btnAcept.setVisible(true);
+    		if (game.global.edificioEnConstruccion.bienSituado){
+    			this.btnAcept.setVisible(true);
+    		}
+    		else {
+    			this.btnAcept.setVisible(false);
+    		}
     	}
     	else {
     		this.btnCancel.setVisible(false);

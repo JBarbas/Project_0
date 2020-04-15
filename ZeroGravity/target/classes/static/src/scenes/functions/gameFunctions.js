@@ -85,6 +85,9 @@ function construir(i, j, scene, edificio) {
     	// Borramos la previsualización del edificio
     	edificio.alpha = 1;
     	edificio.gameObject.destroy();
+    	if (edificio.clone !== null) {
+    		edificio.clone.destroy();
+    	}
     	
     	// Informamos al servidor de la construccion, para que este la valide o la descarte
     	let msg = new Object();
@@ -104,6 +107,41 @@ function cancelConstruir (scene, edificio) {
 	// Borramos la previsualización del edificio
 	edificio.alpha = 1;
 	edificio.gameObject.destroy();
+	if (edificio.clone !== null) {
+		edificio.clone.destroy();
+	}
+}
+
+function situarEdificio(scene, edificio) {
+	edificio.situado = true;
+	if (edificio.clone === null) {
+		edificio.clone = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(edificio.originX, 1);
+	}
+	else {
+		edificio.clone.destroy();
+		edificio.clone = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(edificio.originX, 1);
+	}
+	edificio.clone.depth = edificio.gameObject.depth;
+	edificio.clone.alpha = 0.6;
+	if (game.global.canBuild) {
+		edificio.bienSituado = true;
+	}
+	else {
+		edificio.bienSituado = false;
+		edificio.clone.setFrame(edificio.level -1 + 3);
+	}
+	
+	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).y);
+	
+	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+	position = isometricToCartesian(position);
+	
+	// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+	let i = Math.trunc(position.y/tile_height + 1);
+	let j = Math.trunc(position.x/(tile_width/2) + 1);
+	
+	edificio.i = i;
+	edificio.j = j;
 }
 
 // Mueve el edificio con el raton cambiando su sprite a rojo cuando este en una posicion invalida
@@ -117,6 +155,8 @@ function previsualizarEdificio(edificio, scene) {
 	let i = Math.trunc(position.y/tile_height + 1);
 	let j = Math.trunc(position.x/(tile_width/2) + 1);
 	
+	game.global.canBuild = true;
+	
 	if (typeof game.global.grid[i] !== 'undefined') {
 		if (typeof game.global.grid[i][j] !== 'undefined') {
 			edificio.gameObject.setFrame(edificio.level-1);
@@ -126,6 +166,7 @@ function previsualizarEdificio(edificio, scene) {
 						if (typeof game.global.grid[a][b] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
 								edificio.gameObject.setFrame(edificio.level -1 + 3);
+								game.global.canBuild = false;
 								break;
 							}
 						}
