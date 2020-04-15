@@ -638,3 +638,9 @@ li {
     background-color: rgba(4, 72, 99, 0.0);
 }
  
+ 
+ .vertical-center {
+   display: flex;
+   align-items: center;
+   min-height: 100vh;
+}

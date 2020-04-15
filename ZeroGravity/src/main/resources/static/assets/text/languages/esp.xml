@@ -25,6 +25,7 @@
 		<reg>REGÍSTRATE</reg>
 		<user>Nombre de Usuario</user>
 		<pass>Contraseña</pass>
+		<forgetPass>¿Olvidaste tu contraseña?</forgetPass>
 	</login>
 	<edificios>
 		<taller>Taller</taller>

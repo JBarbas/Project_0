@@ -88,48 +88,13 @@ window.onload = function() {
 		menu : null,
 		recolecting : false,
 		offers: [],
-		buildingMenu: {
-			x: 1280,
-			y: 120,
-			width: 584,
-			height: 908
-		},
-		intPrincipal:{
-			x: 0,
-			y: 0,
-			width: 1920,
-			height: 1080
-		},
-		btnMision:{
-			x: 0,
-			y: 310,
-			width: 110,
-			height: 117
-		},
-		btnAnuncios:{
-			x: 0,
-			y: 427,
-			width: 110,
-			height: 117
-		},
-		btnRanking:{
-			x: 0,
-			y: 544,
-			width: 110,
-			height: 117
-		},
-		btnOpciones:{
-			x: 1870,
-			y: 50,
-			width: 78,
-			height: 78
-		},
-		btnAnuncio:{
-			x: 1350,
-			y: 800,
-			width: 300,
-			height: 54
-		},
+		buildingMenu: new Btn(1280,120,584,908),
+		intPrincipal: new Btn(0,0,1920,1080),
+		btnMision: new Btn(0,310,110,117),
+		btnAnuncios: new Btn(0,427,110,117),
+		btnRanking: new Btn(0,544,110,117),
+		btnOpciones: new Btn(1870,50,78,78),
+		btnAnuncio: new Btn(1350,800,300,54),
 		cargando:null,
 		timedEvent:null,
 		timer:null,
