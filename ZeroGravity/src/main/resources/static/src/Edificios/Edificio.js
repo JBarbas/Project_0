@@ -5,15 +5,20 @@ class Edificio {
 		this.id = 0;
 		this.x = x;
 		this.y = y;
+		this.i = 0;
+		this.j = 0;
 		this.height = 1;
 		this.width = 1;
 		this.level = 1;
 		this.sprite = 'edificio';
 		this.buildingSprite = 'enConstruccion1';
 		this.enConstruccion = false;
+		this.situado = false;
+		this.bienSituado = false;
 		this.inicioConstruccion = Date.now();
 		this.timeText = null;
 		this.gameObject = null;
+		this.clone = null;
 		this.originX = 0.5; // Porcentaje a lo ancho de la imagen desde donde se comenzara a pintar
 		this.menuScene = ''; // La key de la escena del menu de este edificio
 		this.costes =  [[5, 0],
@@ -87,7 +92,7 @@ class Edificio {
 	}
 	
 	move () {
-		this.gameObject.alpha = 0.5;
+		this.gameObject.alpha = 0.25;
 		this.gameObject.setTexture(this.sprite);
 		for (var i = this.y-this.height+1; i <= this.y; i++) {
 			for (var j = this.x-this.width+1; j <= this.x; j++) {
@@ -111,7 +116,7 @@ class Edificio {
 	
 	previsualizar(scene) {
 		this.gameObject = scene.add.image(this.x, this.y, this.sprite).setOrigin(this.originX, 1);
-		this.gameObject.alpha = 0.5;
+		this.gameObject.alpha = 0.25;
 	}
 	
 	destroy() {
