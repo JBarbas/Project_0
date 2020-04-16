@@ -80,6 +80,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private static HashMap<ObjectId, Player> players = new HashMap<>();
 	private static HashMap<ObjectId, Oferta> ofertas = new HashMap<>();
 	
+	@Autowired
+    private EmailService emailService;
+	
 	public static MongoCollection<Document> getColl() {
 		return coll;
 	}
@@ -730,7 +733,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				break;
 			case "RECOVER PASSWORD":
 				System.out.println(node.get("email").asText());
-				SendMailBySite.SendRecoverMailWrap(node.get("email").asText(),"zerogravity.contacto@gmail.com","A", "a");
+				emailService.sendMail("kate@example.com", "Test Subject", "Test mail");
 				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
