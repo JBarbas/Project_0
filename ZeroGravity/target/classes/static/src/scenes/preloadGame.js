@@ -53,6 +53,7 @@ class PreloadGameScene extends Phaser.Scene {
 		
 		//Botones
 		this.load.spritesheet('btnMover', 'assets/sprites/Edificios/btnMover.png', {frameWidth:200,frameHeight:50});
+		this.load.spritesheet('btnDestruir', 'assets/sprites/Edificios/btnDestruir.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnExpandir', 'assets/sprites/Edificios/btnExpandir.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnSubirNivel', 'assets/sprites/Edificios/btnNivel.png', {frameWidth:200,frameHeight:50});
 		this.load.spritesheet('btnSubirNivelRobot', 'assets/sprites/Edificios/btnNivelRobot.png', {frameWidth:50,frameHeight:50});
