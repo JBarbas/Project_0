@@ -91,7 +91,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intUpdates', 'assets/interface/interfazUpdates.png');
 		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
 		
-		this.load.image('intPrincipal', 'assets/interface/Gameplay/Principal.png');
+		this.load.image('intPrincipal', 'assets/interface/Gameplay/UiGamePlayMenu.png');
 		this.load.image('intMision', 'assets/interface/Gameplay/btnConstruccion.png');
 		this.load.image('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png');
 		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
