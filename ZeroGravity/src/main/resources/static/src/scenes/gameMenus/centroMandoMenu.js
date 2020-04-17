@@ -95,7 +95,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	arrayAuxiliar2.push(10);
     	arrayAuxiliar2.push(10);
     	arrayAuxiliar2.push(10);
-    	for(let i = 0; i < arrayAuxiliar.length; i++){
+    	/*for(let i = 0; i < arrayAuxiliar.length; i++){
     		//Se añade el recuadro como botón
     		this.borde = this.add.image(80, 160 + 196 * 0.65 * i, 'intEdificioRec').setOrigin(0, 0).setScale(0.65, 0.65);
     		this.borde.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux(arrayAuxiliar[i]); });
@@ -124,7 +124,7 @@ class CentroMandoMenu extends Phaser.Scene {
         	edificiosContainer.add(this.recurso);
         	this.coste = this.add.text(440, 240 + 196 * 0.65 * i, arrayAuxiliar2[i], { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
         	edificiosContainer.add(this.coste);
-    	}
+    	}*/
     	
     	
     	
