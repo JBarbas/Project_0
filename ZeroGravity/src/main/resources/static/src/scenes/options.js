@@ -36,10 +36,10 @@ class OptionsScene extends Phaser.Scene {
     	
     	
     	
-    	var txtCuenta = this.add.image(950, 650, 'txtCuenta');
+    	var txtCuenta = this.add.image(950, 520, 'txtCuenta');
     	var txtSonido = this.add.image(650, 650, 'txtSonido');
     	var txtIdioma = this.add.image(650, 650, 'txtIdioma');
-    	var txtCount = this.add.image(950, 650, 'txtCount');
+    	var txtCount = this.add.image(950, 520, 'txtCount');
     	var txtSound = this.add.image(650, 650, 'txtSound');
     	var txtLang = this.add.image(650, 650, 'txtLang');   	
 		
@@ -67,16 +67,16 @@ class OptionsScene extends Phaser.Scene {
 			backgroundEng.setVisible(false);
 		}
 		
-		var btnModificar = this.add.image(1650, 550, 'btnModificar').setInteractive();
+		var btnModificar = this.add.image(1650, 430, 'btnModificar').setInteractive();
     	btnModificar.setScale(.4);
     	
-    	var btnModificar2 = this.add.image(1650, 800, 'btnModificar').setInteractive();
+    	var btnModificar2 = this.add.image(1650, 680, 'btnModificar').setInteractive();
     	btnModificar2.setScale(.4);
     	
-    	var btnModify = this.add.image(1650, 550, 'btnModify').setInteractive();
+    	var btnModify = this.add.image(1650, 430, 'btnModify').setInteractive();
     	btnModify.setScale(.4);
     	
-    	var btnModify2 = this.add.image(1650, 800, 'btnModify').setInteractive();
+    	var btnModify2 = this.add.image(1650, 680, 'btnModify').setInteractive();
     	btnModify2.setScale(.4);
     	
 		
@@ -184,13 +184,13 @@ class OptionsScene extends Phaser.Scene {
         this.element.setPerspective(800);
         
         var boxe = this.element.node.children[1];
-        boxe.children[0].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('si')[0].childNodes[0].nodeValue;
-        boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('no')[0].childNodes[0].nodeValue;
+        //boxe.children[0].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('si')[0].childNodes[0].nodeValue;
+        //boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('no')[0].childNodes[0].nodeValue;
 
-        boxe.children[0].children[1].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('user')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('user')[0].childNodes[0].nodeValue;
         
-        boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('conact')[0].childNodes[0].nodeValue;
-        boxe.children[0].children[3].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('connueva')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[1].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('conact')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('connueva')[0].childNodes[0].nodeValue;
         
 		generalContainer.add(this.element);
 		
@@ -213,12 +213,12 @@ class OptionsScene extends Phaser.Scene {
     	
     	
     	//Si esta en pantalla completa se checkea Si y sino pues NO
-    	if (!window.screenTop && !window.screenY) {
+    	/*if (!window.screenTop && !window.screenY) {
     		document.getElementById('no').style.backgroundColor = "#5050af";
     	}else{
     		document.getElementById('yes').style.backgroundColor = "#5050af";
     		
-    	}
+    	}*/
 		
 		function getFullScreen(){
 			if (!window.screenTop && !window.screenY) {
@@ -230,14 +230,9 @@ class OptionsScene extends Phaser.Scene {
 		
 		var docElm = document.documentElement;
 		
-		document.getElementById('yes').addEventListener("click", function(){
+		/*document.getElementById('yes').addEventListener("click", function(){
 			if(!getFullScreen()){
 				
-				/*if (docElm.webkitRequestFullscreen) {
-					console.log("hola");
-		            //docElm.webkitRequestFullscreen();
-					
-				}*/
 				openFullscreen();
 				document.getElementById('yes').style.backgroundColor = "#5050af";
 				document.getElementById('no').style.backgroundColor = "#8989EE";
@@ -252,7 +247,7 @@ class OptionsScene extends Phaser.Scene {
 				document.getElementById('yes').style.backgroundColor = "#8989EE";
 			}
 			
-		});
+		});*/
     	
     	var textUsuario = this.element.getChildByName("username");
     	
@@ -490,15 +485,18 @@ class OptionsScene extends Phaser.Scene {
         
         if(game.global.idioma == 'eng'){
         	document.getElementById('ingles').style.backgroundColor = "#5050af";
+        	btnModify2.setVisible(true);
+        	btnModify.setVisible(true);
+        	btnModificar2.setVisible(false);
+        	btnModificar.setVisible(false);
         }else{
         	document.getElementById('espanyol').style.backgroundColor = "#5050af";
+        	btnModify2.setVisible(false);
+        	btnModify.setVisible(false);
+        	btnModificar2.setVisible(true);
+        	btnModificar.setVisible(true);
         }
-        
-        if(game.global.idioma == 'eng'){
-        	document.getElementById('ingles').style.backgroundColor = "#5050af";
-        }else{
-        	document.getElementById('espanyol').style.backgroundColor = "#5050af";
-        }
+
 		
     	
     }

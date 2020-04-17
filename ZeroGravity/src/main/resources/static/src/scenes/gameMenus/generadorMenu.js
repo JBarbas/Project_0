@@ -98,7 +98,43 @@ class GeneradorMenu extends Phaser.Scene {
 			detallesContainer.add(this.descEdificio);
 			
 	    	// Se añade el botón mover al contenedor de detalles
-	    	var mover = this.add.image(300, 800, 'btnMover').setOrigin(0.5,0.5).setInteractive();
+			var mover = this.add.image(400, 800, 'btnMover').setOrigin(0.5,0.5).setInteractive();
+	    	var destruir = this.add.image(180, 800, 'btnDestruir').setOrigin(0.5,0.5).setInteractive();
+	    	
+	    	destruir.on('pointerover',function(pointer){
+	    		destruir.setFrame(1);
+	    	})
+	    	destruir.on('pointerout',function(pointer){
+	    		destruir.setFrame(0);
+	    	})
+	    	
+	    	destruir.on('pointerdown', function(pointer, localX, localY, event){
+	    		game.global.effects.pulsarBoton.play();
+	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+	    		if(!game.global.construyendo){
+					/*game.scene.pause();
+					data.miEdificio.move();
+					game.scene.stop('CentroMandoMenu');
+					setTimeout(function(){ game.global.inMenu = false; }, 500);*/
+	    			Swal.fire({
+	    				  title: 'Are you sure?',
+	    				  text: "You won't be able to revert this! It will be returned to you:", //Aqui hay que añadir los recursos que se le devolveran
+	    				  icon: 'warning',
+	    				  showCancelButton: true,
+	    				  confirmButtonColor: '#3085d6',
+	    				  cancelButtonColor: '#d33',
+	    				  confirmButtonText: 'Yes, delete it!'
+	    				}).then((result) => {
+	    				  if (result.value) {
+	    				    Swal.fire(
+	    				      'Deleted!',
+	    				      'Your building has been deleted.',
+	    				      'success'
+	    				    )
+	    				  }
+					});
+	    		}
+	    	});
 	    	mover.on('pointerover',function(pointer){
 	    	    mover.setFrame(1);
 	    	})
@@ -116,6 +152,7 @@ class GeneradorMenu extends Phaser.Scene {
 	    		}
 	    	});
 	    	detallesContainer.add(mover);
+	    	detallesContainer.add(destruir);
 	    	
 	    	//  CONTENEDOR MEJORAS
 	    	// Se añade el titulo de siguiente mejora

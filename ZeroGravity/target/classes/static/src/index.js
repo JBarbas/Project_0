@@ -179,14 +179,22 @@ window.onload = function() {
 				console.log('[DEBUG] LOGIN FAILED message recieved')
 				console.dir(msg);
 			}
-			swal(msg.data);
+				Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: msg.data
+				});
 			break;
 		case 'UPDATE USERNAME RESPONSE':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
 				console.dir(msg);
 			}
-			swal(msg.resultado);
+			Swal.fire({
+				  icon: 'success',
+				  title: 'Nice!',
+				  text: msg.resultado
+				});
 			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {
@@ -432,7 +440,16 @@ window.onload = function() {
 				levelUp(game.global.edificios.get(msg.id));
 				pedirPuntuaciones()
 			}else{
-				swal("No dispones de los recursos para aumentar de nivel a este edificio");
+				Swal.fire({
+					  icon: 'warning',
+					  text: "No dispones de los recursos para aumentar de nivel a este edificio",
+					  showClass: {
+					    popup: 'animated fadeInDown faster'
+					  },
+					  hideClass: {
+					    popup: 'animated fadeOutUp faster'
+					  }
+					});
 			}	
 			break;		
 		
@@ -712,7 +729,17 @@ window.onload = function() {
 				console.log('[DEBUG] CREDITOS INSUFICIENTES message recieved');
 				console.dir(msg);
 			}
-			swal("Necesitas " + msg.cantidad + " créditos más para poder expandir la base");
+			
+			Swal.fire({
+				  icon: 'warning',
+				  text: "Necesitas " + msg.cantidad + " créditos más para poder expandir la base",
+				  showClass: {
+				    popup: 'animated fadeInDown faster'
+				  },
+				  hideClass: {
+				    popup: 'animated fadeOutUp faster'
+				  }
+				})
 			
 			break;
 		case 'RESPUESTA CREAR OFERTA':
@@ -721,7 +748,16 @@ window.onload = function() {
 				console.log(msg.respuesta);
 			}
 			if(!msg.respuesta){
-				swal("Necesitas más recursos para enviar esta oferta al mercado");
+				Swal.fire({
+					  icon: 'warning',
+					  text: "Necesitas más recursos para enviar esta oferta al mercado",
+					  showClass: {
+					    popup: 'animated fadeInDown faster'
+					  },
+					  hideClass: {
+					    popup: 'animated fadeOutUp faster'
+					  }
+					})
 			}else{
 				let message = {		
 						event: 'ASK_PLAYER_RESOURCES',
@@ -762,7 +798,17 @@ window.onload = function() {
 				console.log(msg.respuesta);
 			}
 			if(!msg.respuesta){
-				swal("Lo sentimos, esta oferta ya no está disponible");
+				
+				Swal.fire({
+					  icon: 'error',
+					  text: "Lo sentimos, esta oferta ya no está disponible",
+					  showClass: {
+					    popup: 'animated fadeInDown faster'
+					  },
+					  hideClass: {
+					    popup: 'animated fadeOutUp faster'
+					  }
+					})
 			}
 			let messag = {		
 				event: 'ASK_PLAYER_RESOURCES'

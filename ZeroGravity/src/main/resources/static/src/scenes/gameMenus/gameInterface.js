@@ -34,14 +34,17 @@ class GameInterface extends Phaser.Scene {
     	this.metal = this.add.text(588, 22, game.global.resources.metal, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	this.ceramica = this.add.text(755, 22, game.global.resources.ceramica, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	this.creditos = this.add.text(248, 22, game.global.resources.creditos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
-    	this.unionCoins = this.add.text(80, 22, game.global.resources.unionCoins, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
-    	this.colonos = this.add.text(1298, 22, game.global.resources.colonos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
+    	this.unionCoins = this.add.text(100, 22, game.global.resources.unionCoins, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
+    	this.colonos = this.add.text(1500, 22, game.global.resources.colonos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	
-    	this.e1 = this.add.image(920, 15, 'starIcon').setOrigin(0, 0);
-    	this.e2 = this.add.image(970, 15, 'starIcon').setOrigin(0, 0);
-    	this.e3 = this.add.image(1020, 15, 'starIcon').setOrigin(0, 0);
-    	this.e4 = this.add.image(1070, 15, 'starIcon').setOrigin(0, 0);
-    	this.e5 = this.add.image(1120, 15, 'starIcon').setOrigin(0, 0);
+    	this.e1 = this.add.image(1150, 15, 'starIcon').setOrigin(0, 0);
+    	this.e2 = this.add.image(1200, 15, 'starIcon').setOrigin(0, 0);
+    	this.e3 = this.add.image(1250, 15, 'starIcon').setOrigin(0, 0);
+    	this.e4 = this.add.image(1300, 15, 'starIcon').setOrigin(0, 0);
+    	this.e5 = this.add.image(1350, 15, 'starIcon').setOrigin(0, 0);
+    	
+    	
+    	this.nombre = this.add.text(865, 18, "AGATUPITI STATION", { fontFamily: '"Roboto"', color: 'white', fontSize: '26px' });
     	
 
     	this.e1.setFrame(1);

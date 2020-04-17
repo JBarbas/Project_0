@@ -9,11 +9,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 
 import org.bson.BsonDocument;
 import org.bson.Document;
@@ -46,7 +50,12 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
+import java.util.Properties;  
+import javax.mail.*;  
+import javax.mail.internet.*;
+
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
+import es.urjc.practica_2019.ZeroGravity.Mailing.RecoverPasswordHandler;
 import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
@@ -87,6 +96,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	public static HashMap<ObjectId, Oferta> getOfertas() {
 		return ofertas;
 	}
+	
+	@Autowired
+	private RecoverPasswordHandler recoverPasswordHandler;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -719,6 +731,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			
 			case "GIVE ME PUNCTUATIONS":
 				sendPunctuations(player);
+				break;
+			case "RECOVER PASSWORD":
+				//emailService.prepareAndSend(node.get("email").asText());
+				recoverPasswordHandler.execute(node.get("email").asText());
 				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
