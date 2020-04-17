@@ -55,6 +55,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
+import es.urjc.practica_2019.ZeroGravity.Mailing.RecoverPasswordHandler;
 import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
@@ -80,9 +81,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private static HashMap<ObjectId, Player> players = new HashMap<>();
 	private static HashMap<ObjectId, Oferta> ofertas = new HashMap<>();
 	
-	@Autowired
-    private EmailService emailService;
-	
 	public static MongoCollection<Document> getColl() {
 		return coll;
 	}
@@ -98,6 +96,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	public static HashMap<ObjectId, Oferta> getOfertas() {
 		return ofertas;
 	}
+	
+	@Autowired
+	private RecoverPasswordHandler recoverPasswordHandler;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -732,8 +733,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				sendPunctuations(player);
 				break;
 			case "RECOVER PASSWORD":
-				System.out.println(node.get("email").asText());
-				emailService.sendMail("kate@example.com", "Test Subject", "Test mail");
+				//emailService.prepareAndSend(node.get("email").asText());
+				recoverPasswordHandler.execute(node.get("email").asText());
 				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
