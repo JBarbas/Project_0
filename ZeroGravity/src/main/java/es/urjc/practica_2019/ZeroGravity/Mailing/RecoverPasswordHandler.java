@@ -1,10 +1,13 @@
 package es.urjc.practica_2019.ZeroGravity.Mailing;
 
 import java.io.File;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -74,7 +77,29 @@ public class RecoverPasswordHandler {
 	
 	private void RecoverPassword(String to) {
 		HashMap<String,String> auxHashmap =  new HashMap<String, String>(fixedContentAtributes);
+		auxHashmap.put("pass", GeneratePassword());
 		String content = MailContentBuilder.build(auxHashmap,layout);
 		emailService.prepareAndSend(to,from, subject,content,fixedResourcesEmbebed);
+	}
+	
+	private String GeneratePassword() {
+		String password = null;
+		try {
+		String[] symbols = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+		int length = 10;
+		Random random;
+		
+		random = SecureRandom.getInstanceStrong();
+		StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+		    int indexRandom = random.nextInt( symbols.length );
+		    sb.append( symbols[indexRandom] );
+		}
+		password = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // as of JDK 8, this should return the strongest algorithm available to the JVM
+		return password;
 	}
 }
