@@ -46,6 +46,29 @@ class ConstruccionMenu extends Phaser.Scene {
     	var selCDComercio = this.add.image(1205, 474, 'selCDComercio').setVisible(false);
     	var selCDOperaciones = this.add.image(1205, 474, 'selCDOperaciones').setVisible(false);
     	var selCAdministrativo = this.add.image(1205, 474, 'selCAdministrativo').setVisible(false);
+    	
+    	this.nombreEdificio = this.add.text(1335, 360, '', {
+    	    fontFamily: 'pantonBlack',
+    	    fontSize: '30px'
+    	});
+    	
+    	this.costeEdificio = this.add.text(1350, 440, '', {
+    	    fontFamily: 'pantonBlack',
+    	    fontSize: '20px'
+    	});
+    	
+    	this.creditIcon = this.add.image(1375, 490, 'creditIcon').setScale(0.7, 0.7);
+    	this.metalIcon = this.add.image(1375, 530, 'metalIcon').setScale(0.7, 0.7);
+    	this.clayIcon = this.add.image(1375, 570, 'clayIcon').setScale(0.7, 0.7);
+    	this.creditIcon.setVisible(false);
+    	this.metalIcon.setVisible(false);
+    	this.clayIcon.setVisible(false);
+    	this.costeNums = this.add.text(1405, 478, '', {
+    	    fontFamily: 'pantonBlack',
+    	    fontSize: '18px',
+    	    lineSpacing: 20
+    	});
+    	
     	/*var boxConstr1 = this.add.image(720, 420, 'boxConstr').setInteractive();
     	var boxConstr2 = this.add.image(900, 420, 'boxConstr').setInteractive();
     	
@@ -109,6 +132,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Plataforma\nde extracción";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnBDViviendas.on('pointerover',function(pointer){
@@ -140,6 +169,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Bloque de\nviviendas";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnGenerador.on('pointerover',function(pointer){
@@ -171,6 +206,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Generador";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnTaller.on('pointerover',function(pointer){
@@ -202,6 +243,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Taller";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnLaboratorio.on('pointerover',function(pointer){
@@ -233,6 +280,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Laboratorio de\ninvestigación";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnCDComercio.on('pointerover',function(pointer){
@@ -264,6 +317,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Centro de\ncomercio";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnCDOperaciones.on('pointerover',function(pointer){
@@ -295,6 +354,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Centro de\noperaciones";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	btnCAdministrativo.on('pointerover',function(pointer){
@@ -326,6 +391,12 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCDOperaciones.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
+    		scene.nombreEdificio.text = "Centro\nadministrativo";
+    		scene.costeEdificio.text = "Coste:";
+    		scene.creditIcon.setVisible(true);
+    		scene.metalIcon.setVisible(true);
+    		scene.clayIcon.setVisible(true);
+    		scene.costeNums.text = '1000\n1000\n1000';
     	})
     	
     	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////

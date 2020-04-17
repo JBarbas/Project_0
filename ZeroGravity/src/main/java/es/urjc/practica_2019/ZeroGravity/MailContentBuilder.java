@@ -20,7 +20,6 @@ public class MailContentBuilder {
     public static String build(HashMap<String,String> contentAtributes,String layout) {
         Context context = new Context();
         for(String i:contentAtributes.keySet()) {
-        	System.out.println(i+" "+contentAtributes.get(i));
         	context.setVariable(i,contentAtributes.get(i));
         }
         return templateEngine.process(layout, context);

@@ -180,7 +180,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						dbPlayer.append("_id", player.getId());
 						dbPlayer.append("name", player.getUsername());			
 						dbPlayer.append("email", player.getEmail());		
-						dbPlayer.append("password", player.getPassword());		
+						dbPlayer.append("password", player.getPassword());
+						dbPlayer.append("validatedAccount", false);
 						coll.insertOne(dbPlayer);				
 						msg.put("event", "LOGGED");
 						msg.put("playerId", player.getId().toString());
@@ -734,7 +735,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				break;
 			case "RECOVER PASSWORD":
 				//emailService.prepareAndSend(node.get("email").asText());
-				recoverPasswordHandler.execute(node.get("email").asText());
+				Bson filterEmail = new Document("email", node.get("email").asText());
+				Document myPlayerEmail = coll.find(filterEmail).first();
+				if(myPlayerEmail!=null) {
+					recoverPasswordHandler.execute(node.get("email").asText());
+				}
 				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
