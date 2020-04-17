@@ -89,6 +89,7 @@ Accede al panel Comercio para ver una lista de ofertas, aceptar algún intercamb
 Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro de Comercio.
 Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón mover.
 			</ccdetalles>
+			<ccdesc>El Centro de Comercio es el edificio en el que gestionas el comercio de tu base. Desde aquí puedes intercambiar Créditos a cambio de recursos de otros jugadores u ofrecer los tuyos a cambio de los Créditos que creas justos.</ccdesc>
 			<ccmejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Laboratorio de Investigación y Planta de Extracción.
 Coste:
     900 unidades de Metal.
@@ -115,6 +116,8 @@ Accede al panel Solicitar para ver cuantos puestos de trabajo hay disponibles y 
 Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro Administrativo.
 Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón Mover.
 			</cadetalles>
+			<cadesc>El Centro Administrativo es el edificio desde el que administras a tus Colonos.
+			</cadesc>
 			<camejoraNivel2>Permite adquirir las mejoras de Nivel 2 al Bloque de Viviendas.
 Coste:
     1000 unidades de Metal.
@@ -139,6 +142,8 @@ Accede al panel Robots para ver tus robots.
 Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y mejorar el Centro de Operaciones.
 Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón Mover.
 			</codetalles>
+			<codesc>El Centro de Operaciones es el edificio desde el que gestionas la Energía y tus Robots.
+			</codesc>
 			<comejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Generador y a Taller.
 Coste:
     1500 unidades de Metal.
@@ -166,6 +171,7 @@ Número de viviendas a Nivel 1: 5.
 Número de viviendas a Nivel 2: 10.
 Número de viviendas a Nivel 3: 15.
 			</bvdetalles>
+			<bvdesc>El Bloque de Viviendas es el edificio en el que residen tus Colonos.</bvdesc>
 			<bvmejoraNivel2>Permite ampliar a 10 el límite de Colonos.
 Coste:
     1050 unidades de Metal.
@@ -193,6 +199,8 @@ Suministro a Nivel 1: 5 unidades de Energía.
 Suministro a Nivel 2: 12 unidades de Energía.
 Suministro a Nivel 3: 16 unidades de Energía.
 			</gendetalles>
+			<gendesc>El Generador suministra Energía a los edificios que producen recursos. Sin el suministro eléctrico tus edificios no pueden producir.
+			</gendesc>
 			<genmejoraNivel2>Requiere 2 Colonos. 
 Suministra 12 unidades de Energía.
 Coste:
@@ -222,6 +230,8 @@ Producción a Nivel 1: 60 Créditos por hora.
 Producción a Nivel 2: 180 Créditos por hora.
 Producción a Nivel 3: 360 Créditos por hora. 
 			</labdetalles>
+			<labdesc>El Laboratorio de Investigación es dónde se desarrollan múltiples investigaciones sobre la terraformación del planeta.
+			</labdesc>
 			<labmejoraNivel2>Requiere 2 Colonos. 
 Requiere 2 unidades de Energía.
 Genera 180 Créditos por hora. 
@@ -253,6 +263,8 @@ Producción a Nivel 1: 12 unidades de Cerámica por hora.
 Producción a Nivel 2: 18 unidades de Cerámica por hora.
 Producción a Nivel 3: 22 unidades de Cerámica por hora.
 			</pedetalles>
+			<pedesc>La Plataforma de Extracción extrae Cerámica desde el subsuelo para usar como aislante térmico en tus edificios.
+			</pedesc>
 			<pemejoraNivel2>Requiere 2 Colonos. 
 Requiere 4 unidades de Energía.
 Genera 18 unidades de Cerámica por hora. 
@@ -284,6 +296,8 @@ Producción a Nivel 1: 5 unidades de Metal por hora y por Robot de nivel 1.
 Producción a Nivel 2: 8 unidades de Metal por hora y por Robot de nivel 2.
 Producción a Nivel 3: 12 unidades de Metal por hora y por Robot de nivel 3.
 			</tdetalles>
+			<tdesc>El Taller alberga a tus Robots. Puedes mandarlos a recolectar Metal y regresarán cuando llenen su depósito, aunque en el futuro te servirán para más cosas.
+			</tdesc>
 			<tmejoraNivel2>Requiere 2 Colonos. 
 Requiere 3 unidades de Energía.
 Puede almacenar hasta 2 Robots
