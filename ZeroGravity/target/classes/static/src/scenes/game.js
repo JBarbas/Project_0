@@ -37,7 +37,29 @@ class GameScene extends Phaser.Scene {
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg0').setOrigin(1, 1).setScale(2, 2);
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg1').setOrigin(0, 1).setScale(2, 2);
     	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg2').setOrigin(1, 0).setScale(2, 2);
-    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg3').setOrigin(0, 0).setScale(2, 2);    	
+    	this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'bg3').setOrigin(0, 0).setScale(2, 2);    
+    	
+    	Swal.fire({
+  		  title: '¡Añade el nombre de tu colonia!',
+  		  imageUrl: 'assets/interface/colonyicon.png',
+  		  imageWidth: 200,
+  		  imageHeight: 200,
+  		  imageAlt: 'Colony',
+  		  input: 'text',
+  		  inputAttributes: {
+  		    autocapitalize: 'off'
+  		  },
+  		  showCancelButton: false,
+  		  confirmButtonText: 'Aceptar',
+  		  showLoaderOnConfirm: true,
+  		}).then((result) => {
+  		  if (result.value) {
+  		    Swal.fire({
+  		      title: `${result.value.login}'s avatar`,
+  		      imageUrl: result.value.avatar_url
+  		    })
+  		  }
+  		})
 
 		var mediaQuery = window.matchMedia("(max-width: 700px)")
 		if (!mediaQuery.matches) { 
