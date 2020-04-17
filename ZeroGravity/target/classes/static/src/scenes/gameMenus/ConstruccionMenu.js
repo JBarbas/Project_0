@@ -69,6 +69,11 @@ class ConstruccionMenu extends Phaser.Scene {
     	    lineSpacing: 20
     	});
     	
+    	this.descEdificio = this.add.text(1080, 625, '', {
+    	    fontFamily: 'Roboto Condensed',
+    	    fontSize: '24px'
+    	});
+    	
     	/*var boxConstr1 = this.add.image(720, 420, 'boxConstr').setInteractive();
     	var boxConstr2 = this.add.image(900, 420, 'boxConstr').setInteractive();
     	
@@ -138,6 +143,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('pedesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnBDViviendas.on('pointerover',function(pointer){
@@ -175,6 +181,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('bvdesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnGenerador.on('pointerover',function(pointer){
@@ -212,6 +219,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('gendesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnTaller.on('pointerover',function(pointer){
@@ -249,6 +257,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('tdesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnLaboratorio.on('pointerover',function(pointer){
@@ -286,6 +295,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('labdesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnCDComercio.on('pointerover',function(pointer){
@@ -323,6 +333,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('ccdesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnCDOperaciones.on('pointerover',function(pointer){
@@ -360,6 +371,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('codesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	btnCAdministrativo.on('pointerover',function(pointer){
@@ -397,6 +409,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
     		scene.costeNums.text = '1000\n1000\n1000';
+    		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('cadesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
     	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -89,6 +89,7 @@ Access the Trading panel to see a list of offers, accept some trade, post your o
 Access the Upgrades panel to visualize the next level, advantages, cost and upgrade the Trading Center.
 There can only be one building of this kind, but you can position it where you wish with the Move button.
 			</ccdetalles>
+			<ccdesc>The Trade Center is the building in which you manage your base trade. From here you can trade Credits in exchange for other players' resources or offer yours in exchange of the Credits you consider fair.</ccdesc>
 			<ccmejoraNivel2>Allows you to acquire the level 2 upgrades to Research Laboratory and Extraction Platform.
 Cost:
     900 Metal units.
@@ -115,6 +116,7 @@ Access the Request panel to see how may job openings and vacant apartments are t
 Access the Upgrades panel to visualize the next level, advantages, cost and to upgrade the Administrative Center.
 There can only be one building of this kind, but you can position it where you wish with the Move button.
 			</cadetalles>
+			<cadesc>The Administrative Center is the building from which you manage your Colonists.</cadesc>
 			<camejoraNivel2>Allows you to acquire the Level 2 upgrades to the Block of Apartments.
 Cost:
     1000 Metal units.
@@ -139,6 +141,7 @@ Access the Robots panel to see your robots.
 Access the Upgrades panel to visualize the next level, advantages, cost and upgrade the Operations Center.
 There can only be one building of this kind, but you can position it where you wish with the Move button.
 			</codetalles>
+			<codesc>The Operatons Center is the building from which you manage the Energy and your Robots.</codesc>
 			<comejoraNivel2>Allows you to acquire the Level 2 upgrades to Generator and Workshop.
 Cost:
     1500 Metal units.
@@ -166,6 +169,7 @@ Number of Apartments at Level 1: 5.
 Number of Apartments at Level 2: 10.
 Number of Apartments at Level 3: 15.
 			</bvdetalles>
+			<bvdesc>The Block of Apartments is the building in which your Colonists reside.</bvdesc>
 			<bvmejoraNivel2>Allows you to increase the Colonists limit to 10.
 Cost:
     1050 Metal units.
@@ -193,6 +197,7 @@ Supply at Level 1: 5 Energy units.
 Supply at Level 2: 12 Energy units.
 Supply at Level 3: 16 Energy units.
 			</gendetalles>
+			<gendesc>The Generator supplies Energy to the buildings that produce resources. Without the electric supply your buildings cannot produce.</gendesc>
 			<genmejoraNivel2>Requires 2 Colonists. 
 Supplies 12 Energy units.
 Cost:
@@ -222,6 +227,7 @@ Production at Level 1: 60 Credits per hour.
 Production at Level 2: 180 Credits per hour.
 Production at Level 3: 360 Credits per hour.
 			</labdetalles>
+			<labdesc>The Research Laboratory is where multiple investigations about the terraformation of the planet are carried out.</labdesc>
 			<labmejoraNivel2>Requires 2 Colonists. 
 Requires 2 Energy units.
 Generates 180 Credits per hour. 
@@ -253,6 +259,7 @@ Production at Level 1: 12 Ceramic per hour.
 Production at Level 2: 18 Ceramic per hour.
 Production at Level 3: 22 Ceramic per hour.
 			</pedetalles>
+			<pedesc>The Extraction Platform extracts Ceramic from the underground to use it as thermal insulator for your buildings.</pedesc>
 			<pemejoraNivel2>Requires 2 Colonists. 
 Requires 4 Energy units.
 Generates 18 Ceramic units per hour. 
@@ -284,6 +291,8 @@ Production at Level 1: 5 Metal units per hour and per Robot of Level 1.
 Production at Level 2: 8 Metal units per hour and per Robot of Level 2.
 Production at Level 3: 12 Metal units per hour and per Robot of Level 3.
 			</tdetalles>
+			<tdesc>The Workshop houses your Robots. You can send them to gather Metal and they will return when they fill their deposit, though in the future they will be useful for more things.
+			</tdesc>
 			<tmejoraNivel2>Requires 2 Colonists. 
 Requires 3 Energy units.
 Can house up to 2 Robots

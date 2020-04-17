@@ -65,3 +65,37 @@ function justifica(textoEntrante){
 	}
 	return textoSalida;
 }
+function justificaHasta(textoEntrante, width){
+	let textoSalida = "";
+	let i = 0;
+	let j = 0;
+	let inicio = 0;
+	while(i < textoEntrante.length){
+		if(textoEntrante[i] === '\n'){
+			if(j == 0){
+				inicio = i + 1;
+				j = -1;
+			}
+			else{
+				textoSalida += textoEntrante.slice(inicio, i + 1);
+				inicio = i + 1;
+				j = -1;
+			}
+		}
+		else if(j > width){
+			while(textoEntrante[i] !== ' ' &&  textoEntrante[i] !== '.' && textoEntrante[i] !== ',' && textoEntrante[i] !== '\n'){
+				i--;
+			}
+			if(textoEntrante[i] === '\n')
+				textoSalida += textoEntrante.slice(inicio, i + 1);
+			else
+				textoSalida += textoEntrante.slice(inicio, i + 1) + '\n';
+			inicio = i + 1;
+			j = -1;
+		}
+		j++;
+		i++;
+		
+	}
+	return textoSalida;
+}
