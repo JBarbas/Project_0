@@ -29,25 +29,34 @@ class GameInterface extends Phaser.Scene {
     	var btnRanking = this.add.image(game.global.btnRanking.x, game.global.btnRanking.y, 'intRanking').setOrigin(0, 0); 
     	
     	var btnOpciones = this.add.image(game.global.btnOpciones.x, game.global.btnOpciones.y, 'btnOpciones').setInteractive();
+    	
+    	
+    	//NOMBRE CIUDAD
+    	/*if(game.global.idioma == 'eng'){
+    		game.scene.getScene('GameInterface').panel.setTexture('operationsCenter');
+    	}else{
+    		game.scene.getScene('GameInterface').panel.setTexture('panelCOperaciones');
+    	}*/
 
-    	this.energia = this.add.text(420, 22, game.global.resources.energia, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '18px'});
-    	this.metal = this.add.text(588, 22, game.global.resources.metal, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
-    	this.ceramica = this.add.text(755, 22, game.global.resources.ceramica, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
-    	this.creditos = this.add.text(248, 22, game.global.resources.creditos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
-    	this.unionCoins = this.add.text(100, 22, game.global.resources.unionCoins, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
+
+    	this.unionCoins = this.add.text(480, 22, game.global.resources.unionCoins, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
+    	this.creditos = this.add.text(700, 22, game.global.resources.creditos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
+    	this.energia = this.add.text(900, 22, game.global.resources.energia, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '18px'});
+    	this.metal = this.add.text(1100, 22, game.global.resources.metal, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
+    	this.ceramica = this.add.text(1320, 22, game.global.resources.ceramica, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	this.colonos = this.add.text(1500, 22, game.global.resources.colonos, { fontFamily: '"Roboto Condensed"', color: 'white', fontSize: '18px' });
     	
-    	this.e1 = this.add.image(1150, 15, 'starIcon').setOrigin(0, 0);
+    	/*this.e1 = this.add.image(1150, 15, 'starIcon').setOrigin(0, 0);
     	this.e2 = this.add.image(1200, 15, 'starIcon').setOrigin(0, 0);
     	this.e3 = this.add.image(1250, 15, 'starIcon').setOrigin(0, 0);
     	this.e4 = this.add.image(1300, 15, 'starIcon').setOrigin(0, 0);
-    	this.e5 = this.add.image(1350, 15, 'starIcon').setOrigin(0, 0);
+    	this.e5 = this.add.image(1350, 15, 'starIcon').setOrigin(0, 0);*/
     	
     	
-    	this.nombre = this.add.text(865, 18, "AGATUPITI STATION", { fontFamily: '"Roboto"', color: 'white', fontSize: '26px' });
+    	//this.nombre = this.add.text(865, 18, "AGATUPITI STATION", { fontFamily: '"Roboto"', color: 'white', fontSize: '26px' });
     	
 
-    	this.e1.setFrame(1);
+    	//this.e1.setFrame(1);
 
     	var btnAnuncios = this.add.image(game.global.btnAnuncios.x, game.global.btnAnuncios.y, 'intAnuncios').setOrigin(0, 0); 
     	btnAnuncios.setInteractive();
@@ -210,7 +219,7 @@ class GameInterface extends Phaser.Scene {
     	this.unionCoins.text = game.global.resources.unionCoins;
     	this.colonos.text = game.global.resources.colonos;
     	
-    	this.puntuacion = game.global.puntuacion;
+    	/*this.puntuacion = game.global.puntuacion;
     	if(this.puntuacion >= 5000){
     		this.e5.setFrame(2);
     		this.e4.setFrame(2);
@@ -268,7 +277,7 @@ class GameInterface extends Phaser.Scene {
     	}
     	if(this.puntuacion >= 200){
     		this.e1.setFrame(2);
-    	}
+    	}*/
     	
     	if (game.global.construyendo) {
     		this.btnCancel.setVisible(true);
