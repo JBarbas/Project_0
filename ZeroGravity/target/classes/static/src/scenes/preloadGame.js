@@ -78,7 +78,15 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('boxConstr', 'assets/interface/Gameplay/Construccion/BoxConstruccion.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnBuild', 'assets/interface/Gameplay/Construccion/btnBuild.png',{frameWidth:594,frameHeight:142});
 		this.load.spritesheet('btnConstruir', 'assets/interface/Gameplay/Construccion/btnConstruir.png',{frameWidth:594,frameHeight:142});
-		
+		this.load.spritesheet('btnPDExtraccion', 'assets/interface/Gameplay/Construccion/btnPDExtraccion.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnPDExtraccion', 'assets/interface/Gameplay/Construccion/btnPDExtraccion.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnBDViviendas', 'assets/interface/Gameplay/Construccion/btnBDViviendas.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnGenerador', 'assets/interface/Gameplay/Construccion/btnGenerador.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnTaller', 'assets/interface/Gameplay/Construccion/btnTaller.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnLaboratorio', 'assets/interface/Gameplay/Construccion/btnLaboratorio.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnCDComercio', 'assets/interface/Gameplay/Construccion/btnCDComercio.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnCDOperaciones', 'assets/interface/Gameplay/Construccion/btnCDOperaciones.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnCAdministrativo', 'assets/interface/Gameplay/Construccion/btnCAdministrativo.png',{frameWidth:162,frameHeight:165});		
 		
 		//Interfaz
 		
@@ -126,7 +134,17 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('operationsCenter', 'assets/interface/Secciones/operationsCenter.png');
 		this.load.image('generator', 'assets/interface/Secciones/generator.png');
 		this.load.image('laboratory', 'assets/interface/Secciones/laboratory.png');
-		this.load.image('workshop', 'assets/interface/Secciones/workshop.png');
+		this.load.image('workshop', 'assets/interface/Secciones/workshop.png');		
+
+		this.load.image('selPDExtraccion', 'assets/interface/Gameplay/Construccion/selPDExtraccion.png');
+		this.load.image('selPDExtraccion', 'assets/interface/Gameplay/Construccion/selPDExtraccion.png');
+		this.load.image('selBDViviendas', 'assets/interface/Gameplay/Construccion/selBDViviendas.png');
+		this.load.image('selGenerador', 'assets/interface/Gameplay/Construccion/selGenerador.png');
+		this.load.image('selTaller', 'assets/interface/Gameplay/Construccion/selTaller.png');
+		this.load.image('selLaboratorio', 'assets/interface/Gameplay/Construccion/selLaboratorio.png');
+		this.load.image('selCDComercio', 'assets/interface/Gameplay/Construccion/selCDComercio.png');
+		this.load.image('selCDOperaciones', 'assets/interface/Gameplay/Construccion/selCDOperaciones.png');
+		this.load.image('selCAdministrativo', 'assets/interface/Gameplay/Construccion/selCAdministrativo.png');
 		
 		//Comercio
 		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
