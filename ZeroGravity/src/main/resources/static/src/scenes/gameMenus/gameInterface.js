@@ -136,6 +136,9 @@ class GameInterface extends Phaser.Scene {
     		game.scene.stop('RankingMenu');
     		game.scene.stop('AnuncioMenu');
     		game.scene.stop('TallerMenu');
+    		if (game.global.menu !== null) {
+				game.scene.stop(game.global.menu);
+			}
     		
     	});
     	
