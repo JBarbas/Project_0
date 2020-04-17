@@ -85,7 +85,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnPDExtraccion.on('pointerout',function(pointer){
-    		btnPDExtraccion.setFrame(0);
+    		if (scene.edificioSeleccionado !== "plataformaExtraccion") {
+    			btnPDExtraccion.setFrame(0);
+    		}
     	})
     	
     	btnPDExtraccion.on('pointerdown',function(pointer){
@@ -98,6 +100,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(false);
+        	btnBDViviendas.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -107,7 +116,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnBDViviendas.on('pointerout',function(pointer){
-    		btnBDViviendas.setFrame(0);
+    		if (scene.edificioSeleccionado !== "bloqueViviendas") {
+    			btnBDViviendas.setFrame(0);
+    		}
     	})
     	
     	btnBDViviendas.on('pointerdown',function(pointer){
@@ -120,6 +131,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(false);
+        	btnPDExtraccion.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -129,7 +147,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnGenerador.on('pointerout',function(pointer){
-    		btnGenerador.setFrame(0);
+    		if (scene.edificioSeleccionado !== "generador") {
+    			btnGenerador.setFrame(0);
+    		}
     	})
     	
     	btnGenerador.on('pointerdown',function(pointer){
@@ -142,6 +162,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(false);
+        	btnPDExtraccion.setFrame(0);
+        	btnBDViviendas.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -151,7 +178,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnTaller.on('pointerout',function(pointer){
-    		btnTaller.setFrame(0);
+    		if (scene.edificioSeleccionado !== "taller") {
+    			btnTaller.setFrame(0);
+    		}
     	})
     	
     	btnTaller.on('pointerdown',function(pointer){
@@ -164,6 +193,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(false);
+        	btnPDExtraccion.setFrame(0);
+        	btnBDViviendas.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -173,7 +209,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnLaboratorio.on('pointerout',function(pointer){
-    		btnLaboratorio.setFrame(0);
+    		if (scene.edificioSeleccionado !== "laboratorioInvestigacion") {
+    			btnLaboratorio.setFrame(0);
+    		}
     	})
     	
     	btnLaboratorio.on('pointerdown',function(pointer){
@@ -186,6 +224,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(false);
+        	btnPDExtraccion.setFrame(0);
+        	btnBDViviendas.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -195,7 +240,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCDComercio.on('pointerout',function(pointer){
-    		btnCDComercio.setFrame(0);
+    		if (scene.edificioSeleccionado !== "centroComercio") {
+    			btnCDComercio.setFrame(0);
+    		}
     	})
     	
     	btnCDComercio.on('pointerdown',function(pointer){
@@ -208,6 +255,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(true);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(false);
+        	btnPDExtraccion.setFrame(0);
+        	btnBDViviendas.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -217,7 +271,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCDOperaciones.on('pointerout',function(pointer){
-    		btnCDOperaciones.setFrame(0);
+    		if (scene.edificioSeleccionado !== "centroOperaciones") {
+    			btnCDOperaciones.setFrame(0);
+    		}
     	})
     	
     	btnCDOperaciones.on('pointerdown',function(pointer){
@@ -230,6 +286,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(true);
         	selCAdministrativo.setVisible(false);
+        	btnPDExtraccion.setFrame(0);
+        	btnBDViviendas.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
@@ -239,7 +302,9 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCAdministrativo.on('pointerout',function(pointer){
-    		btnCAdministrativo.setFrame(0);
+    		if (scene.edificioSeleccionado !== "centroAdministrativo") {
+    			btnCAdministrativo.setFrame(0);
+    		}
     	})
     	
     	btnCAdministrativo.on('pointerdown',function(pointer){
@@ -252,6 +317,13 @@ class ConstruccionMenu extends Phaser.Scene {
         	selCDComercio.setVisible(false);
         	selCDOperaciones.setVisible(false);
         	selCAdministrativo.setVisible(true);
+        	btnPDExtraccion.setFrame(0);
+        	btnBDViviendas.setFrame(0);
+        	btnGenerador.setFrame(0);
+        	btnTaller.setFrame(0);
+        	btnLaboratorio.setFrame(0);
+        	btnCDComercio.setFrame(0);
+        	btnCDOperaciones.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
     	})
