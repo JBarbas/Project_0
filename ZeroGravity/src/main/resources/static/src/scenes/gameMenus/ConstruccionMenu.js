@@ -564,6 +564,9 @@ class ConstruccionMenu extends Phaser.Scene {
     		//stop scene
     		game.global.inMenu = false;
     		game.scene.stop('ConstruccionMenu');
+    		game.global.editMode = true;
+    		game.scene.getScene('GameScene').gridContainer.setAlpha(0.5);
+    		game.global.buildingsEdited = [];
     	});
     	
     	btnConstruir.on('pointerdown', function(pointer){

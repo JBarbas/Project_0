@@ -86,6 +86,7 @@ window.onload = function() {
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
+		editMode : false,
 		comercioMenuLast: 'edificio',
 		inZoom : false,
 		menu : null,

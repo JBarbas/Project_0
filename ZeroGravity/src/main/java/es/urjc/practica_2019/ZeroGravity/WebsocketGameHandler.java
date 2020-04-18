@@ -548,6 +548,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("punctuacion", player.getPuntuacion());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "REFRESH GRID":
+				updateInfo(player, "REFRESH GRID");
+				break;
 			case "PEDIR COLONOS":
 				player.requestColonos();
 				msg.put("event", "ENVIO DE COLONOS");
