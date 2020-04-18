@@ -155,8 +155,14 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Plataforma\nde extracción";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Extraction\nplatform";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Plataforma\nde extracción";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -193,8 +199,14 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Bloque de\nviviendas";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Block of\napartments";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Bloque de\nviviendas";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -231,8 +243,14 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Generador";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Generator";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Generador";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -269,8 +287,14 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Taller";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Workshop";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Taller";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -318,8 +342,14 @@ class ConstruccionMenu extends Phaser.Scene {
         		btnBuild.setFrame(2);
         		btnConstruir.setFrame(2);
         	}
-    		scene.nombreEdificio.text = "Laboratorio de\ninvestigación";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Research\nlaboratory";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Laboratorio de\ninvestigación";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -367,8 +397,14 @@ class ConstruccionMenu extends Phaser.Scene {
         		btnBuild.setFrame(2);
         		btnConstruir.setFrame(2);
         	}
-    		scene.nombreEdificio.text = "Centro de\ncomercio";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Trade\ncenter";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Centro de\ncomercio";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -416,8 +452,14 @@ class ConstruccionMenu extends Phaser.Scene {
         		btnBuild.setFrame(2);
         		btnConstruir.setFrame(2);
         	}
-    		scene.nombreEdificio.text = "Centro de\noperaciones";
-    		scene.costeEdificio.text = "Coste:";
+        	if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Operations\ncenter";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Centro de\noperaciones";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -454,8 +496,14 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCDOperaciones.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Centro\nadministrativo";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Administrative\ncenter";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Centro\nadministrativo";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
