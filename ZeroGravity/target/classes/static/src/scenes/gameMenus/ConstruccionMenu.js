@@ -16,6 +16,10 @@ class ConstruccionMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	let msg = new Object();
+		msg.event = 'GET CONSTRUCCION MENU';
+		game.global.socket.send(JSON.stringify(msg));
+    	
     	game.global.inMenu = true;
     	
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
@@ -92,6 +96,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	    fontSize: '24px'
     	});
     	
+    	this.blockMessage = this.add.text(1080, 790, '', {
+    	    fontFamily: 'Roboto Condensed',
+    	    fontSize: '20px',
+    	    color: '#4A4A4A'
+    	});
+    	
     	/*var boxConstr1 = this.add.image(720, 420, 'boxConstr').setInteractive();
     	var boxConstr2 = this.add.image(900, 420, 'boxConstr').setInteractive();
     	
@@ -163,6 +173,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Plataforma\nde extracción";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -207,6 +218,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Bloque de\nviviendas";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -251,6 +263,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Generador";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -295,6 +308,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Taller";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -350,6 +364,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Laboratorio de\ninvestigación";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -405,6 +420,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Centro de\ncomercio";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -460,6 +476,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		scene.nombreEdificio.text = "Centro de\noperaciones";
         		scene.costeEdificio.text = "Coste:";        		
         	}
+        	scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -478,7 +495,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCAdministrativo.on('pointerdown',function(pointer){
-    		scene.edificioSeleccionado = "centroAdministrativo";
+    		if (!game.global.myPlayer.caBlocked) {
+    			scene.edificioSeleccionado = "centroAdministrativo";
+    		}
+    		else {
+    			scene.edificioSeleccionado = "";
+    		}
     		selPDExtraccion.setVisible(false);
     		selBDViviendas.setVisible(false);
         	selGenerador.setVisible(false);
@@ -494,8 +516,15 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnLaboratorio.setFrame(0);
         	btnCDComercio.setFrame(0);
         	btnCDOperaciones.setFrame(0);
-    		btnBuild.setFrame(0);
-    		btnConstruir.setFrame(0);
+        	if (!game.global.myPlayer.caBlocked) {
+        		btnBuild.setFrame(0);
+        		btnConstruir.setFrame(0);
+        	}
+        	else {
+        		btnBuild.setFrame(2);
+        		btnConstruir.setFrame(2);
+        		scene.blockMessage.text = "Ya tienes un edificio de este tipo";
+        	}
     		if(game.global.idioma == "eng"){
         		scene.nombreEdificio.text = "Administrative\ncenter";
         		scene.costeEdificio.text = "Cost:";        		

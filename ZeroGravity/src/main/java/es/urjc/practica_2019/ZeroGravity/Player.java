@@ -45,9 +45,6 @@ public class Player {
 	private LinkedList<BloqueViviendas> viviendas = new LinkedList<>();
 	private LinkedList<Generador> generadores = new LinkedList<>();
 	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
-	private CentroAdministrativo centroAdministrativo = new CentroAdministrativo(this, 8, 8, centroMando, edificioId.incrementAndGet());
-	private CentroComercio centroComercio = new CentroComercio(this, 8, 12, centroMando, edificioId.incrementAndGet());
-	private CentroOperaciones centroOperaciones = new CentroOperaciones(this, 10, 7, centroMando, edificioId.incrementAndGet());
 	
 	private int energia = 0;
 	private int metal = 100;
@@ -62,6 +59,10 @@ public class Player {
 	private int celdasCompradas = 0;
 	
 	private boolean gameStarted = false;
+	private boolean caBlocked = false;
+	private boolean cdcBlocked = true;
+	private boolean cdoBlocked = true;
+	private boolean labBlocked = true;	
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
@@ -282,6 +283,38 @@ public class Player {
 	public void setGameStarted(boolean gameStarted) {
 		this.gameStarted = gameStarted;
 	}
+	
+	public boolean isCaBlocked() {
+		return caBlocked;
+	}
+
+	public void setCaBlocked(boolean caBlocked) {
+		this.caBlocked = caBlocked;
+	}
+
+	public boolean isCdcBlocked() {
+		return cdcBlocked;
+	}
+
+	public void setCdcBlocked(boolean cdcBlocked) {
+		this.cdcBlocked = cdcBlocked;
+	}
+
+	public boolean isCdoBlocked() {
+		return cdoBlocked;
+	}
+
+	public void setCdoBlocked(boolean cdoBlocked) {
+		this.cdoBlocked = cdoBlocked;
+	}
+
+	public boolean isLabBlocked() {
+		return labBlocked;
+	}
+
+	public void setLabBlocked(boolean labBlocked) {
+		this.labBlocked = labBlocked;
+	}
 
 	public int[][] createGrid(int[][] grid) {
 		//Primera generacion, con celdas bloqueadas, desbloqueadas y bordes
@@ -303,15 +336,6 @@ public class Player {
 		//Introducimos el Centro de Mando
 		edificios.put(this.centroMando.getId(), this.centroMando);
 		grid = this.centroMando.build(grid, this.centroMando.getX(), this.centroMando.getY());	
-		
-		edificios.put(this.centroAdministrativo.getId(), this.centroAdministrativo);
-		grid = this.centroAdministrativo.build(grid, this.centroAdministrativo.getX(), this.centroAdministrativo.getY());	
-
-		edificios.put(this.centroComercio.getId(), this.centroComercio);
-		grid = this.centroComercio.build(grid, this.centroComercio.getX(), this.centroComercio.getY());	
-		
-		edificios.put(this.centroOperaciones.getId(), this.centroOperaciones);
-		grid = this.centroOperaciones.build(grid, this.centroOperaciones.getX(), this.centroOperaciones.getY());	
 		return grid;
 	}
 	
@@ -478,7 +502,10 @@ public class Player {
 				edificio = new CentroOperaciones(this, x, y, this.centroMando, edificioId.incrementAndGet());
 				break;
 			case "centroAdministrativo":
-				edificio = new CentroAdministrativo(this, x, y, this.centroMando, edificioId.incrementAndGet());
+				if (!caBlocked) {
+					edificio = new CentroAdministrativo(this, x, y, this.centroMando, edificioId.incrementAndGet());
+					caBlocked = true;
+				}
 				break;
 			case "bloqueViviendas":
 				edificio = new BloqueViviendas(this, x, y, this.centroMando, edificioId.incrementAndGet());
@@ -616,7 +643,7 @@ public class Player {
 		// Actualizamos la info en la BDD
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), new Document("$set", 
 				new Document("edificios", dbEdificios)
-				.append("edificioId", getEdificioId())));
+				.append("edificioId", getEdificioId()).append("caBlocked", caBlocked)));
 	}
 	
 	public void saveRecursos() {

@@ -137,6 +137,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					player.setCeldasCompradas(myPlayer.getInteger("celdasCompradas", 0));
 					player.setColonos(myPlayer.getInteger("colonos", 0));
 					player.setGameStarted(myPlayer.getBoolean("gameStarted", false));
+					player.setCaBlocked(myPlayer.getBoolean("caBlocked", true));
 					
 					Config config = new Config();
 					config.setVolMusic(((Document)myPlayer.get("config")).getInteger("volMusic", 100));
@@ -539,6 +540,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}
 				msg.putPOJO("robots", arrayNodeRobots2);
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET CONSTRUCCION MENU":
+				msg.put("event", "CONSTRUCCION MENU");
+				msg.put("caBlocked", player.isCaBlocked());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "GET JOBS":
