@@ -71,7 +71,10 @@ window.onload = function() {
 			config : {
 				volMusic : 100,
 				volEffects : 100
-			}
+			},
+			cdcBlocked : true,
+			cdoBlocked : true,
+			labBlocked : true
 		},
 		myPlayerId: "",
 		puntuacion: 0,
