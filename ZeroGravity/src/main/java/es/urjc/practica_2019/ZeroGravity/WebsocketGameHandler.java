@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -265,7 +266,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("punctuacion", player.getPuntuacion());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;	
-				
+			case "EDIT":
+				Iterator<JsonNode> edificios = node.get("edificios").iterator();
+				while (edificios.hasNext()) {
+					JsonNode e = edificios.next();
+					player.build(e.get("x").asInt(), e.get("y").asInt(), e.get("edificio").asText(), e.get("id").asInt());	
+				}
+				updateInfo(player, "REFRESH GRID");
+				break;
 			case "ASK_PLAYER_RESOURCES":
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("metal", player.getMetal());

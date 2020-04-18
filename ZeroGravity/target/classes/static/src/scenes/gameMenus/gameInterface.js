@@ -202,11 +202,7 @@ class GameInterface extends Phaser.Scene {
     	
     	this.btnAcept.on('pointerdown', function(pointer){
     		if (game.global.editMode) {
-    			for (var i in game.global.buildingsEdited) {
-					if (game.global.buildingsEdited[i].bienSituado) {
-						construir(game.global.buildingsEdited[i].i, game.global.buildingsEdited[i].j, game.scene.getScene('GameScene'), game.global.buildingsEdited[i]);
-					}
-				}
+    			editarCiudad();
     			game.global.editMode = false;
     		}
     		else if (game.global.edificioEnConstruccion.bienSituado) {    		

@@ -100,6 +100,48 @@ function construir(i, j, scene, edificio) {
 	}
 }
 
+function editarCiudad() {
+	game.global.construyendo = false;
+	game.scene.getScene('GameScene').gridContainer.setAlpha(0);
+	let msg = new Object();
+	msg.event = 'EDIT';
+	msg.edificios = [];
+	for (var index in game.global.buildingsEdited) {
+		if (game.global.buildingsEdited[index].bienSituado) {
+			var puedoConstruir = true;
+			for (var a = game.global.buildingsEdited[index].i-game.global.buildingsEdited[index].height+1; a <= game.global.buildingsEdited[index].i; a++) {
+				for (var b = game.global.buildingsEdited[index].j-game.global.buildingsEdited[index].width+1; b <= game.global.buildingsEdited[index].j; b++) {
+					if (typeof game.global.grid[a] !== 'undefined') {
+						if (typeof game.global.grid[a][b] !== 'undefined') {
+							if (game.global.grid[a][b].type !== 0 && game.global.grid[a][b].type !== game.global.buildingsEdited[index].id) {
+								puedoConstruir = false
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (puedoConstruir) {
+		    	// Borramos la previsualización del edificio
+				game.global.buildingsEdited[index].alpha = 1;
+				game.global.buildingsEdited[index].gameObject.destroy();
+		    	if (game.global.buildingsEdited[index].clone !== null) {
+		    		game.global.buildingsEdited[index].clone.destroy();
+		    	}
+		    	
+		    	// Informamos al servidor de la construccion, para que este la valide o la descarte
+		    	let msgEdificio = new Object();
+				msgEdificio.x = game.global.buildingsEdited[index].j;
+				msgEdificio.y = game.global.buildingsEdited[index].i;
+				msgEdificio.edificio = game.global.buildingsEdited[index].sprite;
+				msgEdificio.id = game.global.buildingsEdited[index].id;
+				msg.edificios.push(msgEdificio);
+			}
+		}
+	}
+	game.global.socket.send(JSON.stringify(msg));
+}
+
 function cancelConstruir (scene, edificio) {
 	game.global.construyendo = false;
 	scene.gridContainer.setAlpha(0);
