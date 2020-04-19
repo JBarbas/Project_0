@@ -16,6 +16,11 @@ class CentroMandoMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	
+    	/*let msg = new Object();
+		msg.event = 'GET CENTRO DE MANDO MENU';
+		game.global.socket.send(JSON.stringify(msg));*/
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	//
@@ -84,27 +89,39 @@ class CentroMandoMenu extends Phaser.Scene {
     	//  CONTENEDOR EDIFICIOS
     	//Debería recibir por petición las listas
     	let arrayAuxiliar = [];
-    	arrayAuxiliar.push('assets/sprites/Edificios/Operaciones.png');
+    	/*arrayAuxiliar.push('assets/sprites/Edificios/Operaciones.png');
     	arrayAuxiliar.push('assets/sprites/Edificios/Plataforma_2.png');
     	arrayAuxiliar.push('assets/sprites/Edificios/Laboratorio1.png');
     	arrayAuxiliar.push('assets/sprites/Edificios/Edificio_Viviendas.png');
     	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');
-    	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');
+    	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');*/
     	let arrayAuxiliarName = [];
-    	arrayAuxiliarName.push('Centro Operaciones');
+    	/*arrayAuxiliarName.push('Centro Operaciones');
     	arrayAuxiliarName.push('Plataforma Extracción');
     	arrayAuxiliarName.push('Laboratorio');
     	arrayAuxiliarName.push('Bloque Viviendas');
     	arrayAuxiliarName.push('Generador');
-    	arrayAuxiliarName.push('Generador');
+    	arrayAuxiliarName.push('Generador');*/
     	
-    	let arrayAuxiliar2 = [];
+    	for (let edificio of game.global.edificios.values()) {
+    		if (edificio.sprite !== 'centroDeMando') {
+	    		arrayAuxiliar.push(edificio.listImage);
+	    		if(game.global.idioma == "eng"){
+	    			arrayAuxiliarName.push(edificio.nameEng);
+	    		}
+	    		else {
+	    			arrayAuxiliarName.push(edificio.nameEsp);
+	    		}
+    		}
+    	}
+    	
+    	/*let arrayAuxiliar2 = [];
     	arrayAuxiliar2.push(10);
     	arrayAuxiliar2.push(10);
     	arrayAuxiliar2.push(10);
     	arrayAuxiliar2.push(10);
     	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
+    	arrayAuxiliar2.push(10);*/
     	
     	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
         elementV.setPerspective(800);

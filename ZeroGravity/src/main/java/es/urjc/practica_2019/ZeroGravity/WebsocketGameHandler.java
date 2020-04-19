@@ -497,6 +497,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				player.saveEdificios();
 				break;
+			case "GET CENTRO DE MANDO MENU":
+				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
 				msg.put("event", "PLATAFORMA EXTRACCION MENU");
 				msg.put("id", node.get("id").asInt());

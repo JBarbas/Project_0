@@ -12,6 +12,9 @@ class Edificio {
 		this.level = 1;
 		this.sprite = 'edificio';
 		this.buildingSprite = 'enConstruccion1';
+		this.listImage = 'assets/sprites/Edificios/Operaciones.png';
+		this.nameEsp = 'Edificio';
+		this.nameEng = 'Building';
 		this.enConstruccion = false;
 		this.situado = false;
 		this.bienSituado = false;
