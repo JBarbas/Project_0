@@ -69,7 +69,7 @@ function construir(i, j, scene, edificio) {
 		for (var b = j-edificio.width+1; b <= j; b++) {
 			if (typeof game.global.grid[a] !== 'undefined') {
 				if (typeof game.global.grid[a][b] !== 'undefined') {
-					if (game.global.grid[a][b].type !== 0) {
+					if (game.global.grid[a][b].type !== 0 && game.global.grid[a][b].type !== edificio.id) {
 						puedoConstruir = false
 						break;
 					}
@@ -100,6 +100,48 @@ function construir(i, j, scene, edificio) {
 	}
 }
 
+function editarCiudad() {
+	game.global.construyendo = false;
+	game.scene.getScene('GameScene').gridContainer.setAlpha(0);
+	let msg = new Object();
+	msg.event = 'EDIT';
+	msg.edificios = [];
+	for (var index in game.global.buildingsEdited) {
+		if (game.global.buildingsEdited[index].bienSituado) {
+			var puedoConstruir = true;
+			for (var a = game.global.buildingsEdited[index].i-game.global.buildingsEdited[index].height+1; a <= game.global.buildingsEdited[index].i; a++) {
+				for (var b = game.global.buildingsEdited[index].j-game.global.buildingsEdited[index].width+1; b <= game.global.buildingsEdited[index].j; b++) {
+					if (typeof game.global.grid[a] !== 'undefined') {
+						if (typeof game.global.grid[a][b] !== 'undefined') {
+							if (game.global.grid[a][b].type !== 0 && game.global.grid[a][b].type !== game.global.buildingsEdited[index].id) {
+								puedoConstruir = false
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (puedoConstruir) {
+		    	// Borramos la previsualización del edificio
+				game.global.buildingsEdited[index].alpha = 1;
+				game.global.buildingsEdited[index].gameObject.destroy();
+		    	if (game.global.buildingsEdited[index].clone !== null) {
+		    		game.global.buildingsEdited[index].clone.destroy();
+		    	}
+		    	
+		    	// Informamos al servidor de la construccion, para que este la valide o la descarte
+		    	let msgEdificio = new Object();
+				msgEdificio.x = game.global.buildingsEdited[index].j;
+				msgEdificio.y = game.global.buildingsEdited[index].i;
+				msgEdificio.edificio = game.global.buildingsEdited[index].sprite;
+				msgEdificio.id = game.global.buildingsEdited[index].id;
+				msg.edificios.push(msgEdificio);
+			}
+		}
+	}
+	game.global.socket.send(JSON.stringify(msg));
+}
+
 function cancelConstruir (scene, edificio) {
 	game.global.construyendo = false;
 	scene.gridContainer.setAlpha(0);
@@ -110,16 +152,20 @@ function cancelConstruir (scene, edificio) {
 	if (edificio.clone !== null) {
 		edificio.clone.destroy();
 	}
+	
+	let msg = new Object();
+	msg.event = 'REFRESH GRID';
+	game.global.socket.send(JSON.stringify(msg));
 }
 
 function situarEdificio(scene, edificio) {
 	edificio.situado = true;
 	if (edificio.clone === null) {
-		edificio.clone = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(edificio.originX, 1);
+		edificio.clone = scene.add.image(edificio.gameObject.x, edificio.gameObject.y, edificio.sprite).setOrigin(edificio.originX, 1);
 	}
 	else {
 		edificio.clone.destroy();
-		edificio.clone = scene.add.image(edificio.x, edificio.y, edificio.sprite).setOrigin(edificio.originX, 1);
+		edificio.clone = scene.add.image(edificio.gameObject.x, edificio.gameObject.y, edificio.sprite).setOrigin(edificio.originX, 1);
 	}
 	edificio.clone.depth = edificio.gameObject.depth;
 	edificio.clone.alpha = 0.6;
@@ -142,6 +188,54 @@ function situarEdificio(scene, edificio) {
 	
 	edificio.i = i;
 	edificio.j = j;
+}
+
+function situarEdificioEdit(scene, edificio) {
+	
+	var situado = false;
+	
+	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).y);
+	
+	// Convertimos las coordenadas de isometricas a cartesianas para poder utilizar los ejes cartesianos "x" e "y"
+	position = isometricToCartesian(position);
+	
+	// Una vez en coordenadas cartesianas comprobamos a que celda de la malla corresponde el click (Utilizamos su indice en el mapGrid, que está en coordenadas cartesianas)
+	let i = Math.trunc(position.y/tile_height + 1);
+	let j = Math.trunc(position.x/(tile_width/2) + 1);
+	
+	if (typeof game.global.grid[i] !== 'undefined') {
+		if (typeof game.global.grid[i][j] !== 'undefined') {
+			
+			for (var a = i-edificio.height+1; a <= i; a++) {
+				for (var b = j-edificio.width+1; b <= j; b++) {
+					if (typeof game.global.grid[a] !== 'undefined') {
+						if (typeof game.global.grid[a][b] !== 'undefined') {
+							if (game.global.grid[a][b].type <= 0) {
+								game.global.grid[a][b].type = edificio.id;
+								situado = true;
+							}
+						}
+					}
+				}
+			}
+			if (situado) {
+				edificio.situado = true;
+				edificio.gameObject.alpha = 0.6;
+				if (game.global.canBuild) {
+					edificio.bienSituado = true;
+				}
+				else {
+					edificio.bienSituado = false;
+				}
+				
+				edificio.i = i;
+				edificio.j = j;
+				game.global.buildingsEdited.push(edificio);
+			}
+		}
+	}
+	return situado;
+	
 }
 
 // Mueve el edificio con el raton cambiando su sprite a rojo cuando este en una posicion invalida
@@ -178,8 +272,11 @@ function previsualizarEdificio(edificio, scene) {
 			edificio.gameObject.x = game.global.grid[i][j].image.x;
 			edificio.gameObject.y = game.global.grid[i][j].image.y;
     		
-			edificio.x = game.global.grid[i][j].image.x;
-			edificio.y = game.global.grid[i][j].image.y;
+			//edificio.x = game.global.grid[i][j].image.x;
+			//edificio.y = game.global.grid[i][j].image.y;
+			
+			edificio.x = j;
+			edificio.y = i;
 			
 			if (game.global.grid[i][j].type > 0) {
 				edificio.gameObject.depth = 1000;

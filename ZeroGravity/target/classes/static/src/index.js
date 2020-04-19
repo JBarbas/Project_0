@@ -71,7 +71,11 @@ window.onload = function() {
 			config : {
 				volMusic : 100,
 				volEffects : 100
-			}
+			},
+			cdcBlocked : true,
+			cdoBlocked : true,
+			labBlocked : true,
+			caBlocked : false
 		},
 		myPlayerId: "",
 		puntuacion: 0,
@@ -83,6 +87,7 @@ window.onload = function() {
 		edificioEnConstruccion : null,
 		edificioSubiendoNivel: null,
 		inMenu : false,
+		editMode : false,
 		comercioMenuLast: 'edificio',
 		inZoom : false,
 		menu : null,
@@ -649,6 +654,13 @@ window.onload = function() {
 					console.log(game.scene.getScene("TallerMenu").times[i].robot);
 				}				
 			}
+			break;
+		case 'CONSTRUCCION MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CONSTRUCCION MENU message recieved');
+				console.dir(msg);
+			}
+			game.global.myPlayer.caBlocked = msg.caBlocked;
 			break;
 		case 'GENERADOR MENU':
 			if (game.global.DEBUG_MODE) {

@@ -16,6 +16,10 @@ class ConstruccionMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	let msg = new Object();
+		msg.event = 'GET CONSTRUCCION MENU';
+		game.global.socket.send(JSON.stringify(msg));
+    	
     	game.global.inMenu = true;
     	
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
@@ -33,10 +37,28 @@ class ConstruccionMenu extends Phaser.Scene {
     	var btnBDViviendas = this.add.image(720, 420, 'btnBDViviendas').setInteractive();
     	var btnGenerador = this.add.image(900, 420, 'btnGenerador').setInteractive();
     	var btnTaller = this.add.image(540, 600, 'btnTaller').setInteractive();
-    	var btnLaboratorio = this.add.image(720, 600, 'btnLaboratorio').setInteractive();
-    	var btnCDComercio = this.add.image(900, 600, 'btnCDComercio').setInteractive();
-    	var btnCDOperaciones = this.add.image(540, 780, 'btnCDOperaciones').setInteractive();
-    	var btnCAdministrativo = this.add.image(720, 780, 'btnCAdministrativo').setInteractive();
+    	var btnCAdministrativo = this.add.image(720, 600, 'btnCAdministrativo').setInteractive();
+    	var btnLaboratorio;
+    	if (game.global.myPlayer.labBlocked) {
+    		btnLaboratorio = this.add.image(900, 600, 'btnLabBlocked').setInteractive();
+    	}
+    	else {
+    		btnLaboratorio = this.add.image(900, 600, 'btnLaboratorio').setInteractive();
+    	}
+    	var btnCDComercio;
+    	if (game.global.myPlayer.cdcBlocked) {
+    		btnCDComercio = this.add.image(540, 780, 'btnCdcBlocked').setInteractive();
+    	}
+    	else {
+    		btnCDComercio = this.add.image(540, 780, 'btnCDComercio').setInteractive();
+    	}
+    	var btnCDOperaciones;
+    	if (game.global.myPlayer.cdoBlocked) {
+    		btnCDOperaciones = this.add.image(720, 780, 'btnCdoBlocked').setInteractive();
+    	}
+    	else {
+    		btnCDOperaciones = this.add.image(720, 780, 'btnCDOperaciones').setInteractive();
+    	}
     	
     	var selPDExtraccion = this.add.image(1205, 474, 'selPDExtraccion').setVisible(false);
     	var selBDViviendas = this.add.image(1205, 474, 'selBDViviendas').setVisible(false);
@@ -72,6 +94,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	this.descEdificio = this.add.text(1080, 625, '', {
     	    fontFamily: 'Roboto Condensed',
     	    fontSize: '24px'
+    	});
+    	
+    	this.blockMessage = this.add.text(1080, 790, '', {
+    	    fontFamily: 'Roboto Condensed',
+    	    fontSize: '20px',
+    	    color: '#4A4A4A'
     	});
     	
     	/*var boxConstr1 = this.add.image(720, 420, 'boxConstr').setInteractive();
@@ -137,8 +165,15 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Plataforma\nde extracción";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Extraction\nplatform";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Plataforma\nde extracción";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -175,8 +210,15 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Bloque de\nviviendas";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Block of\napartments";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Bloque de\nviviendas";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -213,8 +255,15 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Generador";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Generator";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Generador";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -251,8 +300,15 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Taller";
-    		scene.costeEdificio.text = "Coste:";
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Workshop";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Taller";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -271,7 +327,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnLaboratorio.on('pointerdown',function(pointer){
-    		scene.edificioSeleccionado = "laboratorioInvestigacion";
+    		if (!game.global.myPlayer.labBlocked) {
+    			scene.edificioSeleccionado = "laboratorioInvestigacion";
+    		}
+    		else {
+    			scene.edificioSeleccionado = "";
+    		}
     		selPDExtraccion.setVisible(false);
     		selBDViviendas.setVisible(false);
         	selGenerador.setVisible(false);
@@ -287,10 +348,23 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnCDComercio.setFrame(0);
         	btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
-    		btnBuild.setFrame(0);
-    		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Laboratorio de\ninvestigación";
-    		scene.costeEdificio.text = "Coste:";
+        	if (!game.global.myPlayer.labBlocked) {
+        		btnBuild.setFrame(0);
+        		btnConstruir.setFrame(0);
+        	}
+        	else {
+        		btnBuild.setFrame(2);
+        		btnConstruir.setFrame(2);
+        	}
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Research\nlaboratory";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Laboratorio de\ninvestigación";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -309,7 +383,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCDComercio.on('pointerdown',function(pointer){
-    		scene.edificioSeleccionado = "centroComercio";
+    		if (!game.global.myPlayer.cdcBlocked) {
+    			scene.edificioSeleccionado = "centroComercio";
+    		}
+    		else {
+    			scene.edificioSeleccionado = "";
+    		}
     		selPDExtraccion.setVisible(false);
     		selBDViviendas.setVisible(false);
         	selGenerador.setVisible(false);
@@ -325,10 +404,23 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnLaboratorio.setFrame(0);
         	btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
-    		btnBuild.setFrame(0);
-    		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Centro de\ncomercio";
-    		scene.costeEdificio.text = "Coste:";
+        	if (!game.global.myPlayer.cdcBlocked) {
+        		btnBuild.setFrame(0);
+        		btnConstruir.setFrame(0);
+        	}
+        	else {
+        		btnBuild.setFrame(2);
+        		btnConstruir.setFrame(2);
+        	}
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Trade\ncenter";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Centro de\ncomercio";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+    		scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -347,7 +439,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCDOperaciones.on('pointerdown',function(pointer){
-    		scene.edificioSeleccionado = "centroOperaciones";
+    		if (!game.global.myPlayer.cdoBlocked) {
+    			scene.edificioSeleccionado = "centroOperaciones";
+    		}
+    		else {
+    			scene.edificioSeleccionado = "";
+    		}
     		selPDExtraccion.setVisible(false);
     		selBDViviendas.setVisible(false);
         	selGenerador.setVisible(false);
@@ -363,10 +460,23 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnLaboratorio.setFrame(0);
         	btnCDComercio.setFrame(0);
         	btnCAdministrativo.setFrame(0);
-    		btnBuild.setFrame(0);
-    		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Centro de\noperaciones";
-    		scene.costeEdificio.text = "Coste:";
+        	if (!game.global.myPlayer.cdoBlocked) {
+        		btnBuild.setFrame(0);
+        		btnConstruir.setFrame(0);
+        	}
+        	else {
+        		btnBuild.setFrame(2);
+        		btnConstruir.setFrame(2);
+        	}
+        	if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Operations\ncenter";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Centro de\noperaciones";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
+        	scene.blockMessage.text = "";
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -385,7 +495,12 @@ class ConstruccionMenu extends Phaser.Scene {
     	})
     	
     	btnCAdministrativo.on('pointerdown',function(pointer){
-    		scene.edificioSeleccionado = "centroAdministrativo";
+    		if (!game.global.myPlayer.caBlocked) {
+    			scene.edificioSeleccionado = "centroAdministrativo";
+    		}
+    		else {
+    			scene.edificioSeleccionado = "";
+    		}
     		selPDExtraccion.setVisible(false);
     		selBDViviendas.setVisible(false);
         	selGenerador.setVisible(false);
@@ -401,10 +516,23 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnLaboratorio.setFrame(0);
         	btnCDComercio.setFrame(0);
         	btnCDOperaciones.setFrame(0);
-    		btnBuild.setFrame(0);
-    		btnConstruir.setFrame(0);
-    		scene.nombreEdificio.text = "Centro\nadministrativo";
-    		scene.costeEdificio.text = "Coste:";
+        	if (!game.global.myPlayer.caBlocked) {
+        		btnBuild.setFrame(0);
+        		btnConstruir.setFrame(0);
+        	}
+        	else {
+        		btnBuild.setFrame(2);
+        		btnConstruir.setFrame(2);
+        		scene.blockMessage.text = "Ya tienes un edificio de este tipo";
+        	}
+    		if(game.global.idioma == "eng"){
+        		scene.nombreEdificio.text = "Administrative\ncenter";
+        		scene.costeEdificio.text = "Cost:";        		
+        	}
+        	else {
+        		scene.nombreEdificio.text = "Centro\nadministrativo";
+        		scene.costeEdificio.text = "Coste:";        		
+        	}
     		scene.creditIcon.setVisible(true);
     		scene.metalIcon.setVisible(true);
     		scene.clayIcon.setVisible(true);
@@ -465,6 +593,9 @@ class ConstruccionMenu extends Phaser.Scene {
     		//stop scene
     		game.global.inMenu = false;
     		game.scene.stop('ConstruccionMenu');
+    		game.global.editMode = true;
+    		game.scene.getScene('GameScene').gridContainer.setAlpha(0.5);
+    		game.global.buildingsEdited = [];
     	});
     	
     	btnConstruir.on('pointerdown', function(pointer){

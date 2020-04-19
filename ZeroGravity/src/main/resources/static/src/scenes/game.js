@@ -59,7 +59,7 @@ class GameScene extends Phaser.Scene {
 	  		      title: `${result.value.login}'s avatar`,
 	  		      imageUrl: result.value.avatar_url
 	  		    })
-	  		  game.global.myPlayer.gameStarted = true;
+	  		  game.global.myPlayer.gameStarted = true;	  		   
 	  		  }
 	  		})
     	}
@@ -102,26 +102,37 @@ class GameScene extends Phaser.Scene {
 		    				game.global.effects.construyendo.play();
 		    	    		game.global.effects.construyendo.setVolume(game.global.myPlayer.config.volEffects/100);
 		        			//construir(i, j, scene, game.global.edificioEnConstruccion);
-		    	    		situarEdificio(scene, game.global.edificioEnConstruccion);
+		    	    		if (game.global.editMode) {
+		    	    			//situarEdificioEdit(scene, game.global.edificioEnConstruccion);
+		    	    			game.global.construyendo = !situarEdificioEdit(scene, game.global.edificioEnConstruccion);
+		    	    		}
+		    	    		else {
+		    	    			situarEdificio(scene, game.global.edificioEnConstruccion);
+		    	    		}
 		        		}
 		    			else if (game.global.expandiendo && !game.global.inMenu) {
 		    				buyCell(i, j);
 		    			}
 		        		else if (game.global.grid[i][j].type > 0) {
 		        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
-		        			if (game.global.menu !== null) {
-    							game.scene.stop(game.global.menu);
-    						}
-	        				if (!game.scene.isActive(edificio.menuScene) && !game.global.recolecting) {
-	        					game.global.effects.menuEdificios.play();
-			    	    		game.global.effects.menuEdificios.setVolume(game.global.myPlayer.config.volEffects/100);
-	    						game.global.inMenu = true;
-	    						if (game.global.menu !== null) {
+		        			if (game.global.editMode) {
+		        				edificio.move();
+		        			}
+		        			else {
+			        			if (game.global.menu !== null) {
 	    							game.scene.stop(game.global.menu);
 	    						}
-	    						game.global.menu = edificio.menuScene;
-	    						game.scene.run(edificio.menuScene, {miEdificio: edificio});
-	    					}
+		        				if (!game.scene.isActive(edificio.menuScene) && !game.global.recolecting) {
+		        					game.global.effects.menuEdificios.play();
+				    	    		game.global.effects.menuEdificios.setVolume(game.global.myPlayer.config.volEffects/100);
+		    						game.global.inMenu = true;
+		    						if (game.global.menu !== null) {
+		    							game.scene.stop(game.global.menu);
+		    						}
+		    						game.global.menu = edificio.menuScene;
+		    						game.scene.run(edificio.menuScene, {miEdificio: edificio});
+		    					}
+		        			}
 		        		}
         			}
     			}

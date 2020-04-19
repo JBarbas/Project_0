@@ -84,8 +84,11 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnGenerador', 'assets/interface/Gameplay/Construccion/btnGenerador.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnTaller', 'assets/interface/Gameplay/Construccion/btnTaller.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnLaboratorio', 'assets/interface/Gameplay/Construccion/btnLaboratorio.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnLabBlocked', 'assets/interface/Gameplay/Construccion/btnLaboratorioLocked.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnCDComercio', 'assets/interface/Gameplay/Construccion/btnCDComercio.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnCdcBlocked', 'assets/interface/Gameplay/Construccion/btnCDComercioLocked.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnCDOperaciones', 'assets/interface/Gameplay/Construccion/btnCDOperaciones.png',{frameWidth:162,frameHeight:165});
+		this.load.spritesheet('btnCdoBlocked', 'assets/interface/Gameplay/Construccion/btnCDOperacionesLocked.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnCAdministrativo', 'assets/interface/Gameplay/Construccion/btnCAdministrativo.png',{frameWidth:162,frameHeight:165});		
 		
 		//Interfaz
