@@ -177,13 +177,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('clayIcon', 'assets/interface/Gameplay/arcillaFloat.png');
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/interface/Gameplay/creditosFloat.png');
-		this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
+		this.load.image('colonIcon', 'assets/interface/Gameplay/newColon.png');
+		
+		//this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
 		
 		//Texts
 		this.load.html('rankingmenu', 'assets/text/rankingmenu.html');
 		this.load.html('centroComercioMenu', 'assets/text/centroComercioMenu.html');
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
+		this.load.html('centroMandoMenu', 'assets/text/centroMandoMenu.html');
 		
 
 		var url;		  
