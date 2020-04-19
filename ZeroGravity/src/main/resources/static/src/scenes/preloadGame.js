@@ -182,6 +182,12 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('creditIcon', 'assets/interface/Gameplay/creditosFloat.png');
 		this.load.image('colonIcon', 'assets/interface/Gameplay/newColon.png');
 		
+		this.load.image('n1Icon', 'assets/interface/Gameplay/n1.png');
+		this.load.image('n2Icon', 'assets/interface/Gameplay/n2.png');
+		this.load.image('n3Icon', 'assets/interface/Gameplay/n3.png');
+		
+		this.load.image('boxRank', 'assets/interface/Gameplay/boxRanking.png');
+		
 		//this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
 		
 		//Texts
