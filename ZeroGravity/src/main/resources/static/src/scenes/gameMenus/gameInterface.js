@@ -188,11 +188,24 @@ class GameInterface extends Phaser.Scene {
     	this.btnCancel.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
-    		cancelConstruir(game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    		if (game.global.editMode) {
+    			game.global.editMode = false;
+    			game.scene.getScene('GameScene').gridContainer.setAlpha(0);
+    			if (game.global.edificioEnConstruccion !== null) {
+    				cancelConstruir(game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    			}
+    		}
+    		else {
+    			cancelConstruir(game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
+    		}
     	});
     	
     	this.btnAcept.on('pointerdown', function(pointer){
-    		if (game.global.edificioEnConstruccion.bienSituado) {    		
+    		if (game.global.editMode) {
+    			editarCiudad();
+    			game.global.editMode = false;
+    		}
+    		else if (game.global.edificioEnConstruccion.bienSituado) {    		
 	    		game.global.effects.pulsarBoton.play();
 	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 	    		construir(game.global.edificioEnConstruccion.i, game.global.edificioEnConstruccion.j, game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
@@ -282,13 +295,23 @@ class GameInterface extends Phaser.Scene {
     		this.e1.setFrame(2);
     	}*/
     	
-    	if (game.global.construyendo) {
+    	if (game.global.construyendo || game.global.editMode) {
     		this.btnCancel.setVisible(true);
-    		if (game.global.edificioEnConstruccion.bienSituado){
-    			this.btnAcept.setVisible(true);
-    		}
-    		else {
-    			this.btnAcept.setVisible(false);
+    		if (game.global.edificioEnConstruccion !== null) {
+    			if (game.global.editMode) {
+    				this.btnAcept.setVisible(true);
+    				for (var i in game.global.buildingsEdited) {
+    					if (!game.global.buildingsEdited[i].bienSituado) {
+    						this.btnAcept.setVisible(false);
+    					}
+    				}
+    			}
+    			else if (game.global.edificioEnConstruccion.bienSituado){
+	    			this.btnAcept.setVisible(true);
+	    		}
+	    		else {
+	    			this.btnAcept.setVisible(false);
+	    		}
     		}
     	}
     	else {

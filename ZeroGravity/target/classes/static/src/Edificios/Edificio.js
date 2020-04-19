@@ -98,7 +98,9 @@ class Edificio {
 			for (var j = this.x-this.width+1; j <= this.x; j++) {
 				if (typeof game.global.grid[i] !== 'undefined') {
 					if (typeof game.global.grid[i][j] !== 'undefined') {
-						game.global.grid[i][j].type = 0
+						if (game.global.grid[i][j].type === this.id) {
+							game.global.grid[i][j].type = 0;
+						}
 					}
 				}
 			}
