@@ -71,6 +71,30 @@ class GameInterface extends Phaser.Scene {
     		btnOpciones.setFrame(0);
     	})
     	
+    	btnMision.on('pointerover',function(pointer){
+    		btnMision.setFrame(1);
+    	})
+
+    	btnMision.on('pointerout',function(pointer){
+    		btnMision.setFrame(0);
+    	})
+    	
+    	btnAnuncios.on('pointerover',function(pointer){
+    		btnAnuncios.setFrame(1);
+    	})
+
+    	btnAnuncios.on('pointerout',function(pointer){
+    		btnAnuncios.setFrame(0);
+    	})
+    	
+    	btnRanking.on('pointerover',function(pointer){
+    		btnRanking.setFrame(1);
+    	})
+
+    	btnRanking.on('pointerout',function(pointer){
+    		btnRanking.setFrame(0);
+    	})
+    	
     	btnRanking.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);

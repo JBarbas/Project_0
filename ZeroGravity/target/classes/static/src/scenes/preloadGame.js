@@ -90,7 +90,9 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnCDOperaciones', 'assets/interface/Gameplay/Construccion/btnCDOperaciones.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnCdoBlocked', 'assets/interface/Gameplay/Construccion/btnCDOperacionesLocked.png',{frameWidth:162,frameHeight:165});
 		this.load.spritesheet('btnCAdministrativo', 'assets/interface/Gameplay/Construccion/btnCAdministrativo.png',{frameWidth:162,frameHeight:165});		
-		
+		this.load.spritesheet('intMision', 'assets/interface/Gameplay/btnConstruccion.png',{frameWidth:110,frameHeight:116});
+		this.load.spritesheet('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png',{frameWidth:110,frameHeight:116});
+		this.load.spritesheet('intRanking', 'assets/interface/Gameplay/btnRanking.png',{frameWidth:110,frameHeight:116});
 		//Interfaz
 		
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
@@ -103,9 +105,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
 		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/UiGamePlayMenu.png');
-		this.load.image('intMision', 'assets/interface/Gameplay/btnConstruccion.png');
-		this.load.image('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png');
-		this.load.image('intRanking', 'assets/interface/Gameplay/btnRanking.png');
+		
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
 		this.load.image('panelAnuncioEng', 'assets/interface/Gameplay/panelAds.png');
@@ -181,6 +181,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/interface/Gameplay/creditosFloat.png');
 		this.load.image('colonIcon', 'assets/interface/Gameplay/newColon.png');
+	
 		
 		//this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
 		
