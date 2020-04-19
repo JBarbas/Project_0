@@ -36,6 +36,8 @@ class LogInScene extends Phaser.Scene {
     	
     	var forgetPass = this.add.text(840, 630, game.cache.xml.get(game.global.idioma).getElementsByTagName('forgetPass')[0].childNodes[0].nodeValue, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' }).setInteractive();
 
+        var forgetUserName = this.add.text(810, 680, game.cache.xml.get(game.global.idioma).getElementsByTagName('forgetUserName')[0].childNodes[0].nodeValue, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' }).setInteractive();
+
     	button.on('pointerover',function(pointer){
     		
     	    button.setFrame(1);
@@ -64,6 +66,7 @@ class LogInScene extends Phaser.Scene {
 
     	registro.setFontSize(size);
     	forgetPass.setFontSize(size);
+        forgetUserName.setFontSize(size)
     	
     	registro.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
     		game.global.sound = game.sound.play('pulsarBoton');
@@ -91,6 +94,18 @@ class LogInScene extends Phaser.Scene {
     		game.global.sound = game.sound.play('pulsarBoton');
     		window.open("assets/text/forgetPasswordMenu.html", "_blank"); 
     	});
+
+        forgetUserName.on('pointerover', function(pointer, localX, localY, event){
+            forgetUserName.setFill(colorYellow);
+        });
+        forgetUserName.on('pointerout', function(pointer, localX, localY, event){
+            forgetUserName.setFill(colorWhite);
+        });
+        
+        forgetUserName.on('pointerdown', function(pointer, localX, localY, event){
+            game.global.sound = game.sound.play('pulsarBoton');
+            window.open("assets/text/forgetPasswordMenu.html", "_blank"); 
+        });
         
     	var element = this.add.dom(420, 600).createFromCache('loginform');
 
