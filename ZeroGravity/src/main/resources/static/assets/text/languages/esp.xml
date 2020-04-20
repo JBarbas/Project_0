@@ -136,6 +136,9 @@ Tiempo requerido:
     6 días y 10 horas.
 			</camejoraNivel3>
 			<camejoraNivel4>N/D</camejoraNivel4>
+			<caveramigos>Ver Amigos</caveramigos>
+			<caaddamigos>Añadir Amigos</caaddamigos>
+			<carankamigos>Ranking Amigos</carankamigos>
 		</centroAdministrativo>
 		<centroOperaciones>
 			<codetalles>El Centro de Operaciones es el edificio desde el que gestionas la Energía y tus Robots. Mejorarlo permite desbloquear las mejoras del Generador y el Taller.

@@ -135,6 +135,9 @@ Required time:
     6 days and 10 hours.
 			</camejoraNivel3>
 			<camejoraNivel4>N/A</camejoraNivel4>
+			<caveramigos>Show Friends</caveramigos>
+			<caaddamigos>Add Friends</caaddamigos>
+			<carankamigos>Ranking Friends</carankamigos>
 		</centroAdministrativo>
 		<centroOperaciones>
 			<codetalles>The Operatons Center is the building from which you manage the Energy and your Robots. Upgrading it allows you to unlock the upgrades of the Generator and the Workshop. 

@@ -93,7 +93,14 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('intMision', 'assets/interface/Gameplay/btnConstruccion.png',{frameWidth:110,frameHeight:116});
 		this.load.spritesheet('intAnuncios', 'assets/interface/Gameplay/btnAnuncios.png',{frameWidth:110,frameHeight:116});
 		this.load.spritesheet('intRanking', 'assets/interface/Gameplay/btnRanking.png',{frameWidth:110,frameHeight:116});
+		this.load.spritesheet('btnAdministracion', 'assets/interface/Gameplay/Administracion/btnAdministracion.png',{frameWidth:400,frameHeight:86});
 		//Interfaz
+		
+
+		this.load.image('contAdmin', 'assets/interface/Gameplay/Administracion/contAdministracion.png');
+		this.load.image('addFIcon', 'assets/interface/Gameplay/Administracion/addFriendsIcon.png');
+		this.load.image('fIcon', 'assets/interface/Gameplay/Administracion/friendsIcon.png');
+		this.load.image('rankFIcon', 'assets/interface/Gameplay/Administracion/rankFriendsIcon.png');
 		
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
 		this.load.image('intEdificioRec', 'assets/interface/interfazEdificioRecuadro.png');

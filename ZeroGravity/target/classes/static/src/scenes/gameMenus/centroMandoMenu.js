@@ -251,8 +251,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	}
         
     	edificiosContainer.add(elementV);
-    	/*edificiosContainer.visible = false;*/
-    	
+    	/*edificiosContainer.visible = false;*/  	
     	
     	/*
     	 *    EDIFICIOS QUE NO SE PUEDEN CONSTRUIR FUERA DEL TUTORIAL PARA PODER TRASTEAR
