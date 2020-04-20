@@ -27,19 +27,19 @@ public class RecoverPasswordHandler extends MailingHandler{
 	private RecoverPasswordHandler(){
 		super();
 		this.subject = "Password Recovery";//Aqui lo mismmo que arriba pero con el asunto.	
-		this.layout = "EmailRecover";//Nombre del archivo que sirve de plantilla en la carpeta resources/templates	
+		this.layout = "PasswordRecover";//Nombre del archivo que sirve de plantilla en la carpeta resources/templates	
 	}
 		 
 	public void execute(String to) {
-		executor.execute(()->RecoverPassword(to));
+		executor.execute(()->recoverPassword(to));
 	}
 	
-	private void RecoverPassword(String to) {
+	private void recoverPassword(String to) {
 		//Generamos una contraseña
-		String newPassword = GeneratePassword();
+		String newPassword = generatePassword();
 		
 		//Ciframos la contraseña
-		byte [] passwordBytes = CifratePassword(newPassword);
+		byte [] passwordBytes = cifratePassword(newPassword);
 		
 		//Cambiamos el valor en base de datos
 		MongoCollection<Document> mongoCollection = WebsocketGameHandler.getColl();
@@ -56,7 +56,7 @@ public class RecoverPasswordHandler extends MailingHandler{
 		emailService.prepareAndSend(to,from, subject,content,fixedResourcesEmbebed);
 	}
 	
-	private String GeneratePassword() {
+	private String generatePassword() {
 		String password = null;
 		try {
 		String[] symbols = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
@@ -76,7 +76,7 @@ public class RecoverPasswordHandler extends MailingHandler{
 		return password;
 	}
 	
-	private byte [] CifratePassword(String password) {
+	private byte [] cifratePassword(String password) {
 		byte [] passwordBytes = password.getBytes();
 		try {
 			passwordBytes = MessageDigest.getInstance("MD5").digest(passwordBytes);

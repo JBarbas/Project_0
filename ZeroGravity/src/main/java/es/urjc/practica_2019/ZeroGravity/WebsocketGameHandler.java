@@ -58,6 +58,7 @@ import javax.mail.internet.*;
 import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 import es.urjc.practica_2019.ZeroGravity.Mailing.ConfirmEmailHandler;
 import es.urjc.practica_2019.ZeroGravity.Mailing.RecoverPasswordHandler;
+import es.urjc.practica_2019.ZeroGravity.Mailing.RecoverUserNameHandler;
 import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
@@ -103,7 +104,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	private RecoverPasswordHandler recoverPasswordHandler;
 	
 	@Autowired
+	private RecoverUserNameHandler recoverUserNameHandler;
+	
+	@Autowired
 	private ConfirmEmailHandler confirmEmailHandler;
+	
+	
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -760,6 +766,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				Document myPlayerEmail = coll.find(filterEmail).first();
 				if(myPlayerEmail!=null) {
 					recoverPasswordHandler.execute(node.get("email").asText());
+				}
+				break;
+			case "RECOVER USERNAME":
+				//Solo se manda el correo si se cumple que el email esta registrado
+				Bson filterEmail2 = new Document("email", node.get("email").asText());
+				Document myPlayerEmail2 = coll.find(filterEmail2).first();
+				if(myPlayerEmail2!=null) {
+					recoverUserNameHandler.execute(node.get("email").asText());
 				}
 				break;
 			case "DEBUG":
