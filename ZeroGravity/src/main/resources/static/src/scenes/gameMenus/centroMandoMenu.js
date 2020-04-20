@@ -16,6 +16,11 @@ class CentroMandoMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	
+    	/*let msg = new Object();
+		msg.event = 'GET CENTRO DE MANDO MENU';
+		game.global.socket.send(JSON.stringify(msg));*/
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	//
@@ -84,48 +89,169 @@ class CentroMandoMenu extends Phaser.Scene {
     	//  CONTENEDOR EDIFICIOS
     	//Debería recibir por petición las listas
     	let arrayAuxiliar = [];
-    	arrayAuxiliar.push('taller');
-    	arrayAuxiliar.push('plataformaExtraccion');
-    	arrayAuxiliar.push('laboratorioInvestigacion');
-    	arrayAuxiliar.push('bloqueViviendas');
-    	arrayAuxiliar.push('generador');
-    	let arrayAuxiliar2 = [];
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	/*for(let i = 0; i < arrayAuxiliar.length; i++){
-    		//Se añade el recuadro como botón
-    		this.borde = this.add.image(80, 160 + 196 * 0.65 * i, 'intEdificioRec').setOrigin(0, 0).setScale(0.65, 0.65);
-    		this.borde.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { aux(arrayAuxiliar[i]); });
-    		edificiosContainer.add(this.borde);
-        	
-    		//Se añade la imagen, con colocación en el centro para que los diferentes tamaños no sean problemáticos
-    		this.edificio = this.add.image(150, 220 + 196 * 0.65 * i, arrayAuxiliar[i]).setOrigin(0.5, 0.5).setScale(0.65, 0.65);
-        	edificiosContainer.add(this.edificio);
-        	
-        	//Se añade el nombre del edificio
-        	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName(arrayAuxiliar[i])[0].childNodes[0].nodeValue;
-    		
-        	this.nombreEdificio = this.add.text(240, 180 + 196 * 0.65 * i, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px'});
-        	edificiosContainer.add(this.nombreEdificio);
-        	
-        	//Se añaden los recursos, con sus costes
-    		this.recurso = this.add.image(260, 240 + 196 * 0.65 * i, 'clayIcon').setOrigin(0.5, 0.5).setScale(0.15, 0.15);
-        	edificiosContainer.add(this.recurso);
-        	this.coste = this.add.text(290, 240 + 196 * 0.65 * i, arrayAuxiliar2[i], { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
-        	edificiosContainer.add(this.coste);
-    		this.recurso = this.add.image(335, 240 + 196 * 0.65 * i, 'clayIcon').setOrigin(0.5, 0.5).setScale(0.15, 0.15);
-        	edificiosContainer.add(this.recurso);
-        	this.coste = this.add.text(365, 240 + 196 * 0.65 * i, arrayAuxiliar2[i], { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
-        	edificiosContainer.add(this.coste);
-    		this.recurso = this.add.image(410, 240 + 196 * 0.65 * i, 'clayIcon').setOrigin(0.5, 0.5).setScale(0.15, 0.15);
-        	edificiosContainer.add(this.recurso);
-        	this.coste = this.add.text(440, 240 + 196 * 0.65 * i, arrayAuxiliar2[i], { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
-        	edificiosContainer.add(this.coste);
-    	}*/
+    	/*arrayAuxiliar.push('assets/sprites/Edificios/Operaciones.png');
+    	arrayAuxiliar.push('assets/sprites/Edificios/Plataforma_2.png');
+    	arrayAuxiliar.push('assets/sprites/Edificios/Laboratorio1.png');
+    	arrayAuxiliar.push('assets/sprites/Edificios/Edificio_Viviendas.png');
+    	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');
+    	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');*/
+    	let arrayAuxiliarName = [];
+    	/*arrayAuxiliarName.push('Centro Operaciones');
+    	arrayAuxiliarName.push('Plataforma Extracción');
+    	arrayAuxiliarName.push('Laboratorio');
+    	arrayAuxiliarName.push('Bloque Viviendas');
+    	arrayAuxiliarName.push('Generador');
+    	arrayAuxiliarName.push('Generador');*/
     	
+    	for (let edificio of game.global.edificios.values()) {
+    		if (edificio.sprite !== 'centroDeMando') {
+	    		arrayAuxiliar.push(edificio.listImage);
+	    		if(game.global.idioma == "eng"){
+	    			arrayAuxiliarName.push(edificio.nameEng);
+	    		}
+	    		else {
+	    			arrayAuxiliarName.push(edificio.nameEsp);
+	    		}
+    		}
+    	}
+    	
+    	/*let arrayAuxiliar2 = [];
+    	arrayAuxiliar2.push(10);
+    	arrayAuxiliar2.push(10);
+    	arrayAuxiliar2.push(10);
+    	arrayAuxiliar2.push(10);
+    	arrayAuxiliar2.push(10);
+    	arrayAuxiliar2.push(10);*/
+    	
+    	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
+        elementV.setPerspective(800);
+        
+        var divMando = document.getElementById("divMando");
+      	        
+    	for(var i = 0; i < arrayAuxiliar.length; i++){   		
+    			    		
+    		let divPuestoV = document.createElement("div");
+    		divPuestoV.style.marginTop = "40px";
+    		
+    		/*la imagen*/
+    		let boxV = document.createElement("img");
+        	boxV.src = "assets/interface/interfazEdificioRecuadro.png";
+        	boxV.style.marginLeft ="0px";
+        	boxV.style.marginTop = "0px";
+        	boxV.style.width = '98%';
+        	boxV.style.height = 'auto';
+        	boxV.indice = i;
+        	
+        	
+    		var imagen = document.createElement("img");
+    		imagen.src = arrayAuxiliar[i];
+    		imagen.style.position = "absolute";
+    		imagen.style.left = "10px";
+    		if(i != 0){
+    			imagen.style.marginTop = "10px";
+    		}
+    		imagen.style.width = '50px';
+    		imagen.style.heigth = 'auto';
+    		
+    		var colono = document.createElement("img");
+    		colono.src = 'assets/interface/Gameplay/newColon.png';
+    		colono.style.position = "absolute";
+    		colono.style.left = "85px";
+    		colono.style.marginTop = "27px";
+    		colono.style.width = '17px';
+    		colono.style.heigth = 'auto';
+    		
+    		var menos = document.createElement("img");
+    		menos.src = 'assets/interface/Gameplay/Colonos/botonMenos.png';
+    		menos.style.position = "absolute";
+    		menos.style.left = "120px";
+    		menos.style.marginTop = "28px";
+    		menos.style.width = '17px';
+    		menos.style.heigth = 'auto';
+    		menos.style.cursor = "pointer";
+    		menos.indice = i;
+    		
+    		var interior = document.createElement("img");
+    		interior.src = 'assets/interface/Gameplay/Colonos/Interior.png';
+    		interior.style.position = "absolute";
+    		interior.style.left = "137px";
+    		interior.style.marginTop = "28px";
+    		interior.style.width = '34px';
+    		interior.style.heigth = 'auto';
+    		
+    		var mas = document.createElement("img");
+    		mas.src = 'assets/interface/Gameplay/Colonos/botonMas.png';
+    		mas.style.position = "absolute";
+    		mas.style.left = "171px";
+    		mas.style.marginTop = "28px";
+    		mas.style.width = '17px';
+    		mas.style.heigth = 'auto';
+    		mas.style.cursor = "pointer";
+    		mas.indice = i;
+    		
+    		var number = document.createElement("span");
+    		number.style.position = "absolute";
+    		number.style.left = "150px";
+    		number.style.marginTop = "30px";
+    		number.style.width = '200px';
+    		number.style.color = '#fff';
+    		number.indice = i;
+ 
+    		var name = document.createElement("span");
+    		name.style.position = "absolute";
+    		name.style.left = "80px";
+    		name.style.marginTop = "5px";
+    		name.style.width = '300px';
+    		name.style.color = '#fff';
+    		name.indice = i;
+        	
+    		var num = document.createTextNode('1');
+    		number.appendChild(num);
+    		
+        	var n = document.createTextNode(arrayAuxiliarName[i]);
+        	name.appendChild(n);
+        	
+        	/*boxV.onmouseover = function(){
+        		boxV.src = "assets/interface/interfazEdificioRecuadroHover.png";
+        	}
+        	boxV.onmouseout = function(){
+        		boxV.src = "assets/interface/interfazEdificioRecuadro.png";
+        	}*/
+        	
+        	menos.onmouseover = function(){
+        		menos.src = "assets/interface/Gameplay/Colonos/botonMenosHover.png";
+        	}
+        	menos.onmouseout = function(){
+        		menos.src = "assets/interface/Gameplay/Colonos/botonMenos.png";
+        	}
+        	
+        	mas.onmouseover = function(){
+        		mas.src = "assets/interface/Gameplay/Colonos/botonMasHover.png";
+        	}
+        	mas.onmouseout = function(){
+        		mas.src = "assets/interface/Gameplay/Colonos/botonMas.png";
+        	}
+        	
+        	/*el div de los span*/
+        	var contenidoV = document.createElement("div");
+        	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+        	
+        	divPuestoV.appendChild(name);
+        	divPuestoV.appendChild(colono);
+        	divPuestoV.appendChild(imagen);
+        	divPuestoV.appendChild(mas);
+        	divPuestoV.appendChild(menos);
+        	divPuestoV.appendChild(interior);
+        	divPuestoV.appendChild(number);
+        	divPuestoV.appendChild(boxV);
+        	divPuestoV.appendChild(contenidoV);
+        	
+        	
+        	divMando.appendChild(divPuestoV);
+    	}
+        
+    	edificiosContainer.add(elementV);
+    	/*edificiosContainer.visible = false;*/
     	
     	
     	/*

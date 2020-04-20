@@ -26,6 +26,7 @@
 		<user>Username</user>
 		<pass>Password</pass>
 		<forgetPass>Forgot your password?</forgetPass>
+		<forgetUserName>Forgot your userName?</forgetUserName>
 	</login>
 	<edificios>
 		<taller>Workshop</taller>

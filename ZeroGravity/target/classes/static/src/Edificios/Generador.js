@@ -9,6 +9,9 @@ class Generador extends GeneradorRecursos {
 		super.sprite = 'generador';
 		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'GeneradorMenu';
+		super.listImage = 'assets/sprites/Edificios/Generador1.png';
+		super.nameEsp = 'Generador';
+		super.nameEng = 'Generator';
 		super.resourceSprite = '';
 		this.recursos = [[0, 0],
 						[0, 0],
