@@ -96,7 +96,11 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnAdministracion', 'assets/interface/Gameplay/Administracion/btnAdministracion.png',{frameWidth:400,frameHeight:86});
 		//Interfaz
 		
-
+		//Friends
+		//this.load.image('bckAmigos', 'assets/interface/Gameplay/Friends/AmigosBck.png');
+		this.load.image('bloqueAmigosBck', 'assets/interface/Gameplay/Friends/BloqueAmigosBck.png');
+		this.load.image('conected', 'assets/interface/Gameplay/Friends/conected.png');
+		
 		this.load.image('contAdmin', 'assets/interface/Gameplay/Administracion/contAdministracion.png');
 		this.load.image('addFIcon', 'assets/interface/Gameplay/Administracion/addFriendsIcon.png');
 		this.load.image('fIcon', 'assets/interface/Gameplay/Administracion/friendsIcon.png');
@@ -198,6 +202,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
 		this.load.html('centroMandoMenu', 'assets/text/centroMandoMenu.html');
+		this.load.html('centroMandoMenu', 'assets/text/amigosMenu.html');
 		
 
 		var url;		  

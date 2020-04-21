@@ -28,6 +28,9 @@
 		<forgetPass>Forgot your password?</forgetPass>
 		<forgetUserName>Forgot your userName?</forgetUserName>
 	</login>
+	<amigos>
+		<txtamigos>Friends</txtamigos>
+	</amigos>
 	<edificios>
 		<taller>Workshop</taller>
 		<plataformaExtraccion>Extraction Platform</plataformaExtraccion>
@@ -321,6 +324,7 @@ Required time:
     5 days and 20 hours.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
+		
 		
 	</menusEdificios>
 </patata>

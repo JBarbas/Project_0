@@ -52,7 +52,8 @@ window.onload = function() {
 				  		TallerMenu,
 				  		AnuncioMenu,
 				  		RankingMenu,
-				  		ConstruccionMenu]
+				  		ConstruccionMenu,
+				  		FriendsScene]
 			};
 			
 	
