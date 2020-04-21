@@ -161,7 +161,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    		number.style.position = "absolute";
 	    		number.style.left = "150px";
 	    		number.style.marginTop = "30px";
-	    		number.style.width = '200px';
+	    		number.style.width = '20px';
 	    		number.style.color = '#fff';
 	    		number.indice = i;
 	    		number.setAttribute("id", "numColonos" + edificio.id);
@@ -209,6 +209,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	}
 	        	
 	        	mas.onmouseover = function(){
+	        		
 	        		this.src = "assets/interface/Gameplay/Colonos/botonMasHover.png";
 	        	}
 	        	mas.onmouseout = function(){

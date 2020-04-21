@@ -97,9 +97,13 @@ class PreloadGameScene extends Phaser.Scene {
 		//Interfaz
 		
 		//Friends
-		//this.load.image('bckAmigos', 'assets/interface/Gameplay/Friends/AmigosBck.png');
-		this.load.image('bloqueAmigosBck', 'assets/interface/Gameplay/Friends/BloqueAmigosBck.png');
-		this.load.image('conected', 'assets/interface/Gameplay/Friends/conected.png');
+		this.load.image('bckAmigos', 'assets/interface/Gameplay/Friends/AmigosBck.png');
+		//this.load.image('bloqueAmigosBck', 'assets/interface/Gameplay/Friends/BloqueAmigosBck.png');
+		//this.load.image('conected', 'assets/interface/Gameplay/Friends/conected.png');
+		this.load.spritesheet('btnAddFriends', 'assets/interface/Gameplay/Friends/btnAddFriends.png',{frameWidth:80,frameHeight:80});
+		this.load.spritesheet('btnSearchFriends', 'assets/interface/Gameplay/Friends/btnCompartirFriends.png',{frameWidth:80,frameHeight:80});
+		this.load.spritesheet('btnSolicitudFriends', 'assets/interface/Gameplay/Friends/btnSolicitudFriends.png',{frameWidth:80,frameHeight:80});
+		
 		
 		this.load.image('contAdmin', 'assets/interface/Gameplay/Administracion/contAdministracion.png');
 		this.load.image('addFIcon', 'assets/interface/Gameplay/Administracion/addFriendsIcon.png');
