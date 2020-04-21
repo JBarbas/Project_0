@@ -6,6 +6,7 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.height = 1;
 		super.width = 2;
 		super.level = 1;
+		super.numColonos = 0;
 		super.sprite = 'laboratorioInvestigacion';
 		super.buildingSprite = 'enConstruccion2';
 		super.menuScene = 'LaboratorioInvestigacionMenu';

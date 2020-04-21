@@ -588,7 +588,34 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
-				
+			case "ADD COLONO":
+				((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).addColono();
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
+				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				player.saveEdificios();
+				player.saveRecursos();
+				break;
+			case "QUITAR COLONO":
+				((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).quitarColono();
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
+				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				player.saveEdificios();
+				player.saveRecursos();
+				break;
 			case "CREATE AN OFFER":
 				msg.put("event", "RESPUESTA CREAR OFERTA");
 				boolean ofertaAceptada = false;
@@ -907,6 +934,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
 					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
 					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+					jsonEdificio.put("jobs", ((GeneradorRecursos) e).getJobs());
 					if (e instanceof Taller) {
 						ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
 						for (Robot r :  ((Taller) e).getRobots()) {

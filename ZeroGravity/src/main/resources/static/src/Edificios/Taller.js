@@ -6,6 +6,7 @@ class Taller extends GeneradorRecursos {
 		super.height = 2;
 		super.width = 1;
 		super.level = 1;
+		super.numColonos = 0;
 		super.sprite = 'taller';
 		super.buildingSprite = 'enConstruccion3';
 		super.menuScene = 'TallerMenu';

@@ -79,11 +79,15 @@ public class GeneradorRecursos extends Edificio {
 	}
 	
 	public void addColono() {
-		colonos++;
+		if (this.getJobs() > 0) {
+			colonos++;
+		}
 	}
 	
 	public void quitarColono() {
-		colonos--;
+		if (this.getColonos() > 0) {
+			colonos--;
+		}
 	}
 
 	public int getJobs() {
