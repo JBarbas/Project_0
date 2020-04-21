@@ -87,9 +87,20 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 	
 	@Override
 	public void addColono() {
-		this.setColonos(this.getColonos() + 1);
-		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2]) {
-			producir();
+		if (this.getJobs() > 0 && this.player.getColonosMax() - this.player.getColonos() > 0) {
+			this.setColonos(this.getColonos() + 1);
+			this.player.addColono();
+			if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2]) {
+				producir();
+			}
+		}
+	}
+	
+	@Override
+	public void quitarColono() {
+		if (this.getColonos() > 0) {
+			this.setColonos(this.getColonos() - 1);
+			this.player.quitarColono();
 		}
 	}
 	

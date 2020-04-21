@@ -10,6 +10,8 @@ class Edificio {
 		this.height = 1;
 		this.width = 1;
 		this.level = 1;
+		this.numColonos = 0;
+		this.jobs = 0;
 		this.sprite = 'edificio';
 		this.buildingSprite = 'enConstruccion1';
 		this.listImage = 'assets/sprites/Edificios/Operaciones.png';
