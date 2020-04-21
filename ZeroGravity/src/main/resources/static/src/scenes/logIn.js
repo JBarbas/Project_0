@@ -104,7 +104,7 @@ class LogInScene extends Phaser.Scene {
         
         forgetUserName.on('pointerdown', function(pointer, localX, localY, event){
             game.global.sound = game.sound.play('pulsarBoton');
-            window.open("assets/text/forgetPasswordMenu.html", "_blank"); 
+            window.open("assets/text/forgetUserNameMenu.html", "_blank"); 
         });
         
     	var element = this.add.dom(420, 600).createFromCache('loginform');

@@ -85,7 +85,93 @@ class CentroAdministrativoMenu extends Phaser.Scene {
 
     	//	CONTENEDOR EDIFICIO
     	// Añadimos los puestos de trabajo disponibles
-    	this.puestosTrabajo = this.add.text(100, 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+    	
+    	
+    	//IMAGENES
+    	var contAdmin1 = this.add.image(44, 180, 'contAdmin').setOrigin(0, 0);
+    	var contAdmin2 = this.add.image(44, 300, 'contAdmin').setOrigin(0, 0);
+    	var contAdmin3 = this.add.image(44, 420, 'contAdmin').setOrigin(0, 0);
+    	var ficon = this.add.image(42, 180, 'fIcon').setOrigin(0, 0);
+    	var addicon = this.add.image(44, 300, 'addFIcon').setOrigin(0, 0);
+    	var rankicon = this.add.image(44, 415, 'rankFIcon').setOrigin(0, 0);
+    	ficon.scale = 0.3;
+    	addicon.scale = 0.3;
+    	rankicon.scale = 0.3;
+    	var btnVerAmigos = this.add.image(130, 180, 'btnAdministracion').setOrigin(0, 0).setInteractive();
+    	btnVerAmigos.on('pointerover',function(pointer){
+    		btnVerAmigos.setFrame(1);
+    	});
+    	btnVerAmigos.on('pointerout',function(pointer){
+    		btnVerAmigos.setFrame(0);
+    	});
+    	
+    	var btnAddAmigos = this.add.image(130, 300, 'btnAdministracion').setOrigin(0, 0).setInteractive();
+    	btnAddAmigos.on('pointerover',function(pointer){
+    		btnAddAmigos.setFrame(1);
+    	});
+    	btnAddAmigos.on('pointerout',function(pointer){
+    		btnAddAmigos.setFrame(0);
+    	});
+    	
+    	var btnRankingAmigos = this.add.image(130, 420, 'btnAdministracion').setOrigin(0, 0).setInteractive();
+    	btnRankingAmigos.on('pointerover',function(pointer){
+    		btnRankingAmigos.setFrame(1);
+    	});
+    	
+    	btnRankingAmigos.on('pointerout',function(pointer){
+    		btnRankingAmigos.setFrame(0);
+    	});
+    	
+    	btnRankingAmigos.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+    		game.scene.stop('CentroAdministrativoMenu');
+			game.global.inMenu = false;
+    	});
+    	
+    	btnAddAmigos.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+    		
+			game.scene.stop('CentroAdministrativoMenu');
+			game.global.inMenu = false;
+    	});
+    	
+    	btnVerAmigos.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+    		game.scene.stop('CentroAdministrativoMenu');
+    		game.global.inMenu = false;
+    	});
+    	
+    	
+    	
+    	
+    	edificiosContainer.add(contAdmin1);
+    	edificiosContainer.add(contAdmin2);
+    	edificiosContainer.add(contAdmin3);
+    	edificiosContainer.add(addicon);
+    	edificiosContainer.add(ficon);
+    	edificiosContainer.add(rankicon);
+    	edificiosContainer.add(btnVerAmigos);
+    	edificiosContainer.add(btnAddAmigos);
+    	edificiosContainer.add(btnRankingAmigos);
+    	
+    	
+    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('caveramigos')[0].childNodes[0].nodeValue;
+		this.veramigostxt = this.add.text(150, 200, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		edificiosContainer.add(this.veramigostxt);
+		
+		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('caaddamigos')[0].childNodes[0].nodeValue;
+		this.addamigostxt = this.add.text(150, 320, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		edificiosContainer.add(this.addamigostxt);
+		
+		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('carankamigos')[0].childNodes[0].nodeValue;
+		this.rankamigostxt = this.add.text(150, 440, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		edificiosContainer.add(this.rankamigostxt);
+    	
+    	
+    	/*this.puestosTrabajo = this.add.text(100, 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
     	this.viviendas = this.add.text(100, 230, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
     	edificiosContainer.add(this.puestosTrabajo);
     	edificiosContainer.add(this.viviendas);
@@ -128,7 +214,9 @@ class CentroAdministrativoMenu extends Phaser.Scene {
 	    		game.global.socket.send(JSON.stringify(msg));
     		}
     	});
-    	edificiosContainer.add(this.colonos);
+    	edificiosContainer.add(this.colonos);*/
+    	
+    	
 
     	//	CONTENEDOR DETALLES
     	// Se añade la descripción del edificio
