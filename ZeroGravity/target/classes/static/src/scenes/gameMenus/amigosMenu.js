@@ -25,12 +25,19 @@ class FriendsScene extends Phaser.Scene {
     	var btnX = this.add.image(1500, 300, 'xBuilding').setInteractive();
     	var btnAdd = this.add.image(1030, 420, 'btnAddFriends').setInteractive();
     	var btnSolicitud = this.add.image(1030, 575, 'btnSolicitudFriends').setInteractive();
+    	var btnVolver = this.add.image(1030, 420, 'btnBackFriends').setInteractive();
     	var btnSearch = this.add.image(1030, 730, 'btnSearchFriends').setInteractive();
     	var cort = this.cortina;
     	
     	var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtamigos')[0].childNodes[0].nodeValue;
-		this.amigostxt = this.add.text(550, 295, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
-		this.amigostxt.scale = 0.8;
+		var amigostxt = this.add.text(550, 295, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		amigostxt.scale = 0.8;
+		
+		var textoDesdeXml1 = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtadd')[0].childNodes[0].nodeValue;
+		var addamigostxt = this.add.text(550, 300, textoDesdeXml1, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		addamigostxt.scale = 0.6;
+		addamigostxt.setVisible(false);
+		
     	cort.alpha = 0.4;
     	btnX.scale = 0.7;
     	panelFriends.scale = 0.8;
@@ -38,7 +45,8 @@ class FriendsScene extends Phaser.Scene {
     	btnAdd.scale = 0.7;
     	btnSearch.scale = 0.7;
     	btnSolicitud.scale = 0.7;
-    	//bloqueAmigo.scale = 0.8;
+    	btnVolver.scale = 0.7;
+    	btnVolver.setVisible(false);
     	
     	
     	var amigosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
@@ -142,6 +150,14 @@ class FriendsScene extends Phaser.Scene {
 	 	btnSolicitud.on('pointerout',function(pointer){
 	 	    this.setFrame(0);
 	 	})
+	 	
+	 	btnVolver.on('pointerover',function(pointer){
+	 	    this.setFrame(1);
+	 	})
+	
+	 	btnVolver.on('pointerout',function(pointer){
+	 	    this.setFrame(0);
+	 	})
     	
     	btnX.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
@@ -150,6 +166,20 @@ class FriendsScene extends Phaser.Scene {
     		//stop scene
     		game.global.inMenu = false;
     		game.scene.stop('FriendsScene');
+    	});
+    	
+    	btnVolver.on('pointerdown', function(pointer){
+    		btnAdd.setVisible(true);
+    		btnVolver.setVisible(false);
+    		addamigostxt.setVisible(false);
+    		amigostxt.setVisible(true);
+    	});
+    	
+    	btnAdd.on('pointerdown', function(pointer){
+    		btnAdd.setVisible(false);
+    		btnVolver.setVisible(true);
+    		addamigostxt.setVisible(true);
+    		amigostxt.setVisible(false);
     	});
     	
     }

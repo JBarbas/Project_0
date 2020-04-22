@@ -30,6 +30,7 @@
 	</login>
 	<amigos>
 		<txtamigos>Friends</txtamigos>
+		<txtadd>Add Friends</txtadd>
 	</amigos>
 	<edificios>
 		<taller>Workshop</taller>
