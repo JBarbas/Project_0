@@ -412,6 +412,9 @@ window.onload = function() {
 					game.global.edificios.get(msg.id).enConstruccion = false;
 					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
 					clearInterval(game.global.edificios.get(msg.id).interval);
+					if (typeof msg.jobs !== 'undefined') {
+						game.global.edificios.get(msg.id).jobs = msg.jobs;
+					}
 				}
 			}
 			break;

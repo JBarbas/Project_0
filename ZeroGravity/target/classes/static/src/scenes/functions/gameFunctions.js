@@ -319,11 +319,11 @@ function previsualizarExpansion(scene) {
 
 // Control del zoom
 window.addEventListener("wheel", event => {
-	if (!game.global.inMenu || !(game.scene.getScene('GameScene').game.input.activePointer.position.x > game.global.buildingMenu.x && 
+	if (!game.global.inMenu/* || !(game.scene.getScene('GameScene').game.input.activePointer.position.x > game.global.buildingMenu.x && 
 			game.scene.getScene('GameScene').game.input.activePointer.position.x < game.global.buildingMenu.x + game.global.buildingMenu.width && 
 			game.scene.getScene('GameScene').game.input.activePointer.position.y > game.global.buildingMenu.y && 
 			game.scene.getScene('GameScene').game.input.activePointer.position.y < game.global.buildingMenu.y + game.global.buildingMenu.height &&
-            !game.global.inZoom)) {
+            !game.global.inZoom)*/) {
 				const delta = zoomSpeed*(-Math.sign(event.deltaY));
 			    zoom += delta;
 			    if (zoom < minZoom) {

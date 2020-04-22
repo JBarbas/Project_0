@@ -238,6 +238,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("jobs", this.getJobs());
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
@@ -253,7 +254,6 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
-			System.out.println("Generador " + id + " construido");
 			if (this.player.getSession().isOpen()) {
 				this.setEnConstruccion(false);
 				this.player.saveEdificios();
