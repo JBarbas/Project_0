@@ -96,7 +96,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet('btnAdministracion', 'assets/interface/Gameplay/Administracion/btnAdministracion.png',{frameWidth:400,frameHeight:86});
 		//Interfaz
 		
-
+		//Friends
+		this.load.image('bckAmigos', 'assets/interface/Gameplay/Friends/AmigosBck.png');
+		//this.load.image('bloqueAmigosBck', 'assets/interface/Gameplay/Friends/BloqueAmigosBck.png');
+		//this.load.image('conected', 'assets/interface/Gameplay/Friends/conected.png');
+		this.load.spritesheet('btnAddFriends', 'assets/interface/Gameplay/Friends/btnAddFriends.png',{frameWidth:80,frameHeight:80});
+		this.load.spritesheet('btnSearchFriends', 'assets/interface/Gameplay/Friends/btnCompartirFriends.png',{frameWidth:80,frameHeight:80});
+		this.load.spritesheet('btnSolicitudFriends', 'assets/interface/Gameplay/Friends/btnSolicitudFriends.png',{frameWidth:80,frameHeight:80});
+		this.load.spritesheet('btnBackFriends', 'assets/interface/Gameplay/Friends/btnBackFriends.png',{frameWidth:80,frameHeight:80});
+		
+		
 		this.load.image('contAdmin', 'assets/interface/Gameplay/Administracion/contAdministracion.png');
 		this.load.image('addFIcon', 'assets/interface/Gameplay/Administracion/addFriendsIcon.png');
 		this.load.image('fIcon', 'assets/interface/Gameplay/Administracion/friendsIcon.png');
@@ -198,10 +207,12 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
 		this.load.html('centroMandoMenu', 'assets/text/centroMandoMenu.html');
+		this.load.html('centroMandoMenu', 'assets/text/amigosMenu.html');
 		
 
 		var url;		  
-        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpinchplugin.min.js';
+        //url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpinchplugin.min.js';
+		url = 'scripts/VM214.js';
         this.load.plugin('rexpinchplugin', url, true);
     }
     create (data)  {

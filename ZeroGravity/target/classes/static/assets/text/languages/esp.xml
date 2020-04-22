@@ -28,6 +28,10 @@
 		<forgetPass>¿Olvidaste tu contraseña?</forgetPass>
 		<forgetUserName>¿Olvidaste tu nombre de usuario?</forgetUserName>
 	</login>
+	<amigos>
+		<txtamigos>Amigos</txtamigos>
+		<txtadd>Añadir Amigos</txtadd>
+	</amigos>
 	<edificios>
 		<taller>Taller</taller>
 		<plataformaExtraccion>Plataforma de Extracción</plataformaExtraccion>
@@ -326,6 +330,7 @@ Tiempo requerido:
     5 días y 20 horas.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
+		
 		
 	</menusEdificios>
 </patata>

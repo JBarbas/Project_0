@@ -59,6 +59,22 @@ public class Generador extends GeneradorRecursos {
 	}
 
 	@Override
+	public void addColono() {
+		if (this.getJobs() > 0 && this.player.getColonosMax() - this.player.getColonos() > 0) {
+			this.setColonos(this.getColonos() + 1);
+			this.player.addColono();
+		}
+	}
+	
+	@Override
+	public void quitarColono() {
+		if (this.getColonos() > 0) {
+			this.setColonos(this.getColonos() - 1);
+			this.player.quitarColono();
+		}
+	}
+	
+	@Override
 	public String getColonosString() {
 		return this.getColonos() + "/" + this.RECURSOS_GENERADOS[this.level - 1][2];
 	}

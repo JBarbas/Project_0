@@ -238,6 +238,30 @@ public class Player {
 		this.colonos = colonos;
 	}
 
+	public void addColono() {
+		if (colonosMax - colonos > 0) {
+			colonos++;
+			for (BloqueViviendas v : viviendas) {
+				if (v.getColonos() < v.getCapacidad()) {
+					v.setColonos(v.getColonos() + 1);
+					break;
+				}
+			}
+		}
+	}
+	
+	public void quitarColono() {
+		if (colonos > 0) {
+			colonos--;
+			for (BloqueViviendas v : viviendas) {
+				if (v.getColonos() > 0) {
+					v.setColonos(v.getColonos() - 1);
+					break;
+				}
+			}
+		}
+	}
+	
 	public int getPuntuacion() {
 		return this.puntuacion;
 	}

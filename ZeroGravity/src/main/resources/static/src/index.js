@@ -52,7 +52,8 @@ window.onload = function() {
 				  		TallerMenu,
 				  		AnuncioMenu,
 				  		RankingMenu,
-				  		ConstruccionMenu]
+				  		ConstruccionMenu,
+				  		FriendsScene]
 			};
 			
 	
@@ -232,6 +233,7 @@ window.onload = function() {
 					break;
 				case 'taller':
 					edificio = new Taller(e.x, e.y);
+					edificio.jobs = e.jobs;
 					for (var j = 0; j < e.robots.length; j++) {
 						var r = new Robot(e.robots[j].id, Date.UTC(e.robots[j].dateYear, e.robots[j].dateMonth-1, e.robots[j].dateDay, e.robots[j].dateHour, e.robots[j].dateMinute+1, 0));
 						r.ausente = e.robots[j].ausente;
@@ -242,6 +244,7 @@ window.onload = function() {
 					break;
 				case 'plataformaExtraccion':
 					edificio = new PlataformaExtraccion(e.x, e.y);
+					edificio.jobs = e.jobs;
 					edificio.lleno = e.lleno;
 					edificio.levelProduciendo = e.levelProduciendo;
 					// Las sumas y restas a los parametros estan hechas a mano para que cuadren (No se por que va mal)
@@ -252,6 +255,7 @@ window.onload = function() {
 					break;
 				case 'generador':
 					edificio = new Generador(e.x, e.y);
+					edificio.jobs = e.jobs;
 					break;
 				case 'laboratorioInvestigacion':
 					edificio = new LaboratorioInvestigacion(e.x, e.y);

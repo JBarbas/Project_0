@@ -87,167 +87,164 @@ class CentroMandoMenu extends Phaser.Scene {
     	});
     	
     	//  CONTENEDOR EDIFICIOS
-    	//Debería recibir por petición las listas
-    	let arrayAuxiliar = [];
-    	/*arrayAuxiliar.push('assets/sprites/Edificios/Operaciones.png');
-    	arrayAuxiliar.push('assets/sprites/Edificios/Plataforma_2.png');
-    	arrayAuxiliar.push('assets/sprites/Edificios/Laboratorio1.png');
-    	arrayAuxiliar.push('assets/sprites/Edificios/Edificio_Viviendas.png');
-    	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');
-    	arrayAuxiliar.push('assets/sprites/Edificios/Generador1.png');*/
-    	let arrayAuxiliarName = [];
-    	/*arrayAuxiliarName.push('Centro Operaciones');
-    	arrayAuxiliarName.push('Plataforma Extracción');
-    	arrayAuxiliarName.push('Laboratorio');
-    	arrayAuxiliarName.push('Bloque Viviendas');
-    	arrayAuxiliarName.push('Generador');
-    	arrayAuxiliarName.push('Generador');*/
-    	
-    	for (let edificio of game.global.edificios.values()) {
-    		if (edificio.sprite !== 'centroDeMando') {
-	    		arrayAuxiliar.push(edificio.listImage);
-	    		if(game.global.idioma == "eng"){
-	    			arrayAuxiliarName.push(edificio.nameEng);
-	    		}
-	    		else {
-	    			arrayAuxiliarName.push(edificio.nameEsp);
-	    		}
-    		}
-    	}
-    	
-    	/*let arrayAuxiliar2 = [];
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);
-    	arrayAuxiliar2.push(10);*/
     	
     	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
         elementV.setPerspective(800);
         
         var divMando = document.getElementById("divMando");
-      	        
-    	for(var i = 0; i < arrayAuxiliar.length; i++){   		
-    			    		
-    		let divPuestoV = document.createElement("div");
-    		divPuestoV.style.marginTop = "40px";
-    		
-    		/*la imagen*/
-    		let boxV = document.createElement("img");
-        	boxV.src = "assets/interface/interfazEdificioRecuadro.png";
-        	boxV.style.marginLeft ="0px";
-        	boxV.style.marginTop = "0px";
-        	boxV.style.width = '98%';
-        	boxV.style.height = 'auto';
-        	boxV.indice = i;
-        	
-        	
-    		var imagen = document.createElement("img");
-    		imagen.src = arrayAuxiliar[i];
-    		imagen.style.position = "absolute";
-    		imagen.style.left = "10px";
-    		if(i != 0){
-    			imagen.style.marginTop = "10px";
+      	
+        var i = 0;
+    	for(let edificio of game.global.edificios.values()){   		
+    		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
+	    		let divPuestoV = document.createElement("div");
+	    		divPuestoV.style.marginTop = "40px";
+	    		
+	    		/*la imagen*/
+	    		let boxV = document.createElement("img");
+	        	boxV.src = "assets/interface/interfazEdificioRecuadro.png";
+	        	boxV.style.marginLeft ="0px";
+	        	boxV.style.marginTop = "0px";
+	        	boxV.style.width = '98%';
+	        	boxV.style.height = 'auto';
+	        	boxV.indice = i;
+	        	
+	        	
+	    		var imagen = document.createElement("img");
+	    		imagen.src = edificio.listImage;
+	    		imagen.style.position = "absolute";
+	    		imagen.style.left = "10px";
+	    		if(i != 0){
+	    			imagen.style.marginTop = "10px";
+	    		}
+	    		imagen.style.width = '50px';
+	    		imagen.style.heigth = 'auto';
+	    		
+	    		var colono = document.createElement("img");
+	    		colono.src = 'assets/interface/Gameplay/newColon.png';
+	    		colono.style.position = "absolute";
+	    		colono.style.left = "85px";
+	    		colono.style.marginTop = "27px";
+	    		colono.style.width = '17px';
+	    		colono.style.heigth = 'auto';
+	    		
+	    		let menos = document.createElement("img");
+	    		menos.src = 'assets/interface/Gameplay/Colonos/botonMenos.png';
+	    		menos.style.position = "absolute";
+	    		menos.style.left = "120px";
+	    		menos.style.marginTop = "28px";
+	    		menos.style.width = '17px';
+	    		menos.style.heigth = 'auto';
+	    		menos.style.cursor = "pointer";
+	    		menos.indice = i;
+	    		menos.edificio = edificio;
+	    		
+	    		var interior = document.createElement("img");
+	    		interior.src = 'assets/interface/Gameplay/Colonos/Interior.png';
+	    		interior.style.position = "absolute";
+	    		interior.style.left = "137px";
+	    		interior.style.marginTop = "28px";
+	    		interior.style.width = '34px';
+	    		interior.style.heigth = 'auto';
+	    		
+	    		let mas = document.createElement("img");
+	    		mas.src = 'assets/interface/Gameplay/Colonos/botonMas.png';
+	    		mas.style.position = "absolute";
+	    		mas.style.left = "171px";
+	    		mas.style.marginTop = "28px";
+	    		mas.style.width = '17px';
+	    		mas.style.heigth = 'auto';
+	    		mas.style.cursor = "pointer";
+	    		mas.indice = i;
+	    		mas.edificio = edificio;
+	    		
+	    		var number = document.createElement("span");
+	    		number.style.position = "absolute";
+	    		number.style.left = "150px";
+	    		number.style.marginTop = "30px";
+	    		number.style.width = '20px';
+	    		number.style.color = '#fff';
+	    		number.indice = i;
+	    		number.setAttribute("id", "numColonos" + edificio.id);
+	 
+	    		var name = document.createElement("span");
+	    		name.style.position = "absolute";
+	    		name.style.left = "80px";
+	    		name.style.marginTop = "5px";
+	    		name.style.width = '300px';
+	    		name.style.color = '#fff';
+	    		name.indice = i;
+	        	
+	    		var num = document.createTextNode(edificio.numColonos);
+	    		number.appendChild(num);
+	    		var n;
+	        	if(game.global.idioma == 'eng'){
+	        		n = document.createTextNode(edificio.nameEng);
+	        	}else{
+	        		n = document.createTextNode(edificio.nameEsp);
+	        	}
+	        	name.appendChild(n);
+	        	
+	        	/*boxV.onmouseover = function(){
+	        		boxV.src = "assets/interface/interfazEdificioRecuadroHover.png";
+	        	}
+	        	boxV.onmouseout = function(){
+	        		boxV.src = "assets/interface/interfazEdificioRecuadro.png";
+	        	}*/
+	        	
+	        	menos.onmouseover = function(){
+	        		this.src = "assets/interface/Gameplay/Colonos/botonMenosHover.png";
+	        	}
+	        	menos.onmouseout = function(){
+	        		this.src = "assets/interface/Gameplay/Colonos/botonMenos.png";
+	        	}
+	        	menos.onmousedown = function(){
+	        		if (this.edificio.numColonos > 0) {
+	        			this.edificio.numColonos--;
+		        		document.getElementById("numColonos" + this.edificio.id).innerHTML = this.edificio.numColonos;
+		        		let msg = new Object();
+		        		msg.event = 'QUITAR COLONO';
+		        		msg.id = edificio.id;
+		        		game.global.socket.send(JSON.stringify(msg));
+	        		}
+	        	}
+	        	
+	        	mas.onmouseover = function(){
+	        		
+	        		this.src = "assets/interface/Gameplay/Colonos/botonMasHover.png";
+	        	}
+	        	mas.onmouseout = function(){
+	        		this.src = "assets/interface/Gameplay/Colonos/botonMas.png";
+	        	}
+	        	mas.onmousedown = function(){
+	        		if (this.edificio.jobs > this.edificio.numColonos) {
+		        		this.edificio.numColonos++;
+		        		document.getElementById("numColonos" + this.edificio.id).innerHTML = this.edificio.numColonos;
+		        		let msg = new Object();
+		        		msg.event = 'ADD COLONO';
+		        		msg.id = edificio.id;
+		        		game.global.socket.send(JSON.stringify(msg));
+	        		}
+	        	}
+	        	
+	        	/*el div de los span*/
+	        	var contenidoV = document.createElement("div");
+	        	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+	        	
+	        	divPuestoV.appendChild(name);
+	        	divPuestoV.appendChild(colono);
+	        	divPuestoV.appendChild(imagen);
+	        	divPuestoV.appendChild(mas);
+	        	divPuestoV.appendChild(menos);
+	        	divPuestoV.appendChild(interior);
+	        	divPuestoV.appendChild(number);
+	        	divPuestoV.appendChild(boxV);
+	        	divPuestoV.appendChild(contenidoV);
+	        	
+	        	
+	        	divMando.appendChild(divPuestoV);
+	        	
+	        	i++;
     		}
-    		imagen.style.width = '50px';
-    		imagen.style.heigth = 'auto';
-    		
-    		var colono = document.createElement("img");
-    		colono.src = 'assets/interface/Gameplay/newColon.png';
-    		colono.style.position = "absolute";
-    		colono.style.left = "85px";
-    		colono.style.marginTop = "27px";
-    		colono.style.width = '17px';
-    		colono.style.heigth = 'auto';
-    		
-    		var menos = document.createElement("img");
-    		menos.src = 'assets/interface/Gameplay/Colonos/botonMenos.png';
-    		menos.style.position = "absolute";
-    		menos.style.left = "120px";
-    		menos.style.marginTop = "28px";
-    		menos.style.width = '17px';
-    		menos.style.heigth = 'auto';
-    		menos.style.cursor = "pointer";
-    		menos.indice = i;
-    		
-    		var interior = document.createElement("img");
-    		interior.src = 'assets/interface/Gameplay/Colonos/Interior.png';
-    		interior.style.position = "absolute";
-    		interior.style.left = "137px";
-    		interior.style.marginTop = "28px";
-    		interior.style.width = '34px';
-    		interior.style.heigth = 'auto';
-    		
-    		var mas = document.createElement("img");
-    		mas.src = 'assets/interface/Gameplay/Colonos/botonMas.png';
-    		mas.style.position = "absolute";
-    		mas.style.left = "171px";
-    		mas.style.marginTop = "28px";
-    		mas.style.width = '17px';
-    		mas.style.heigth = 'auto';
-    		mas.style.cursor = "pointer";
-    		mas.indice = i;
-    		
-    		var number = document.createElement("span");
-    		number.style.position = "absolute";
-    		number.style.left = "150px";
-    		number.style.marginTop = "30px";
-    		number.style.width = '200px';
-    		number.style.color = '#fff';
-    		number.indice = i;
- 
-    		var name = document.createElement("span");
-    		name.style.position = "absolute";
-    		name.style.left = "80px";
-    		name.style.marginTop = "5px";
-    		name.style.width = '300px';
-    		name.style.color = '#fff';
-    		name.indice = i;
-        	
-    		var num = document.createTextNode('1');
-    		number.appendChild(num);
-    		
-        	var n = document.createTextNode(arrayAuxiliarName[i]);
-        	name.appendChild(n);
-        	
-        	/*boxV.onmouseover = function(){
-        		boxV.src = "assets/interface/interfazEdificioRecuadroHover.png";
-        	}
-        	boxV.onmouseout = function(){
-        		boxV.src = "assets/interface/interfazEdificioRecuadro.png";
-        	}*/
-        	
-        	menos.onmouseover = function(){
-        		menos.src = "assets/interface/Gameplay/Colonos/botonMenosHover.png";
-        	}
-        	menos.onmouseout = function(){
-        		menos.src = "assets/interface/Gameplay/Colonos/botonMenos.png";
-        	}
-        	
-        	mas.onmouseover = function(){
-        		mas.src = "assets/interface/Gameplay/Colonos/botonMasHover.png";
-        	}
-        	mas.onmouseout = function(){
-        		mas.src = "assets/interface/Gameplay/Colonos/botonMas.png";
-        	}
-        	
-        	/*el div de los span*/
-        	var contenidoV = document.createElement("div");
-        	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
-        	
-        	divPuestoV.appendChild(name);
-        	divPuestoV.appendChild(colono);
-        	divPuestoV.appendChild(imagen);
-        	divPuestoV.appendChild(mas);
-        	divPuestoV.appendChild(menos);
-        	divPuestoV.appendChild(interior);
-        	divPuestoV.appendChild(number);
-        	divPuestoV.appendChild(boxV);
-        	divPuestoV.appendChild(contenidoV);
-        	
-        	
-        	divMando.appendChild(divPuestoV);
     	}
         
     	edificiosContainer.add(elementV);
