@@ -94,7 +94,7 @@ class CentroMandoMenu extends Phaser.Scene {
         var divMando = document.getElementById("divMando");
       	
         var i = 0;
-    	for(let edificio of game.global.edificios.values()){   		
+    	for(let edificio of game.global.edificios.values()){
     		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
 	    		let divPuestoV = document.createElement("div");
 	    		divPuestoV.style.marginTop = "40px";

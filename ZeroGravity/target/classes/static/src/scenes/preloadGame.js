@@ -31,6 +31,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('tile_0', 'assets/sprites/Tiles_prototipo/tile_0.png');
 		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		
+		this.load.atlas('global', 'assets/atlas/global.png', 'assets/atlas/global.json');
+		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
 		this.load.spritesheet('centroDeMando', 'assets/sprites/Edificios/CentroDeMando.png', {frameWidth:247,frameHeight:189});
