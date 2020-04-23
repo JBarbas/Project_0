@@ -36,10 +36,10 @@ class OptionsScene extends Phaser.Scene {
     	
     	
     	
-    	var txtCuenta = this.add.image(950, 520, 'txtCuenta');
+    	var txtCuenta = this.add.image(950, 650, 'txtCuenta');
     	var txtSonido = this.add.image(650, 650, 'txtSonido');
     	var txtIdioma = this.add.image(650, 650, 'txtIdioma');
-    	var txtCount = this.add.image(950, 520, 'txtCount');
+    	var txtCount = this.add.image(950, 650, 'txtCount');
     	var txtSound = this.add.image(650, 650, 'txtSound');
     	var txtLang = this.add.image(650, 650, 'txtLang');   	
 		
@@ -67,16 +67,16 @@ class OptionsScene extends Phaser.Scene {
 			backgroundEng.setVisible(false);
 		}
 		
-		var btnModificar = this.add.image(1650, 430, 'btnModificar').setInteractive();
+		var btnModificar = this.add.image(1650, 520, 'btnModificar').setInteractive();
     	btnModificar.setScale(.4);
     	
-    	var btnModificar2 = this.add.image(1650, 680, 'btnModificar').setInteractive();
+    	var btnModificar2 = this.add.image(1650, 820, 'btnModificar').setInteractive();
     	btnModificar2.setScale(.4);
     	
-    	var btnModify = this.add.image(1650, 430, 'btnModify').setInteractive();
+    	var btnModify = this.add.image(1650, 520, 'btnModify').setInteractive();
     	btnModify.setScale(.4);
     	
-    	var btnModify2 = this.add.image(1650, 680, 'btnModify').setInteractive();
+    	var btnModify2 = this.add.image(1650, 820, 'btnModify').setInteractive();
     	btnModify2.setScale(.4);
     	
 		
@@ -179,7 +179,7 @@ class OptionsScene extends Phaser.Scene {
     		}
     	});
     	
-    	this.element = this.add.dom(100, 300).createFromCache('optionsform');
+    	this.element = this.add.dom(100, 410).createFromCache('optionsform');
 
         this.element.setPerspective(800);
         
@@ -187,12 +187,12 @@ class OptionsScene extends Phaser.Scene {
         //boxe.children[0].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('si')[0].childNodes[0].nodeValue;
         //boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('no')[0].childNodes[0].nodeValue;
 
-        boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('user')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('email')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[1].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('user')[0].childNodes[0].nodeValue;
         
-        boxe.children[0].children[1].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('conact')[0].childNodes[0].nodeValue;
-        boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('connueva')[0].childNodes[0].nodeValue;
-        
-		generalContainer.add(this.element);
+        boxe.children[0].children[2].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('conact')[0].childNodes[0].nodeValue;
+        boxe.children[0].children[3].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('connueva')[0].childNodes[0].nodeValue;
+        generalContainer.add(this.element);
 		
 		btnModificar.on('pointerover',function(pointer){
     		btnModificar.setFrame(1);
@@ -248,7 +248,8 @@ class OptionsScene extends Phaser.Scene {
 			}
 			
 		});*/
-    	
+		var textCorreo = this.element.getChildByName("email");
+		
     	var textUsuario = this.element.getChildByName("username");
     	
     	btnModificar.on('pointerdown',function(pointer){

@@ -20,6 +20,7 @@
 		<no>No</no>
 		<conact>Contraseña actual</conact>
 		<connueva>Contraseña nueva</connueva>
+		<email>Correo</email>
 	</opciones>
 	<login>
 		<reg>REGÍSTRATE</reg>
