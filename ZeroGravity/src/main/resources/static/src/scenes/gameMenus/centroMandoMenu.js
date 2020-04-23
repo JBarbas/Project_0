@@ -216,7 +216,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        		this.src = "assets/interface/Gameplay/Colonos/botonMas.png";
 	        	}
 	        	mas.onmousedown = function(){
-	        		if (this.edificio.jobs > this.edificio.numColonos) {
+	        		if (this.edificio.jobs > this.edificio.numColonos && parseInt(game.global.resources.colonos.split("/")[0]) < parseInt(game.global.resources.colonos.split("/")[1])) {
 		        		this.edificio.numColonos++;
 		        		document.getElementById("numColonos" + this.edificio.id).innerHTML = this.edificio.numColonos;
 		        		let msg = new Object();

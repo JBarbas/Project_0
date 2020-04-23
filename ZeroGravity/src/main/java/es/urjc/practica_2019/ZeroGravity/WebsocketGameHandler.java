@@ -949,6 +949,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
 					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
 					jsonEdificio.put("jobs", ((GeneradorRecursos) e).getJobs());
+					jsonEdificio.put("numColonos", ((GeneradorRecursos) e).getColonos());
 					if (e instanceof Taller) {
 						ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
 						for (Robot r :  ((Taller) e).getRobots()) {

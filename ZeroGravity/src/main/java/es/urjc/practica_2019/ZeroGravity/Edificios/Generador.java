@@ -125,6 +125,7 @@ public class Generador extends GeneradorRecursos {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("jobs", this.getJobs());
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
