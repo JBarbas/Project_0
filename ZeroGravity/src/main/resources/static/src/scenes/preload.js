@@ -38,10 +38,10 @@ class PreloadScene extends Phaser.Scene {
 		//Elements
 		this.load.image('team', 'assets/interface/team.png');
 		this.load.image('teamEng', 'assets/interface/teamEng.png');
-		this.load.image('txtCuenta', 'assets/interface/Opciones/cuentaTextosnoFS.png');
+		this.load.image('txtCuenta', 'assets/interface/Opciones/cuentaTextos.png');
 		this.load.image('txtSonido', 'assets/interface/Opciones/sonidoTextos.png');
 		this.load.image('txtIdioma', 'assets/interface/Opciones/idiomaTextos.png');
-		this.load.image('txtCount', 'assets/interface/Opciones/countTextsnoFS.png');
+		this.load.image('txtCount', 'assets/interface/Opciones/countTexts.png');
 		this.load.image('txtSound', 'assets/interface/Opciones/soundTexts.png');
 		this.load.image('txtLang', 'assets/interface/Opciones/langTexts.png');
 		

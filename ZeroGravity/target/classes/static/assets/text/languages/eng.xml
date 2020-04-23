@@ -14,12 +14,14 @@
 		<creditos>CREDITS</creditos>
 	</menu>
 	<opciones>
+		
 		<esp>Spanish</esp>
 		<eng>English</eng>
 		<si>Yes</si>
 		<no>No</no>
 		<conact>Current password</conact>
 		<connueva>New password</connueva>
+		<email>E-mail</email>
 	</opciones>
 	<login>
 		<reg>SIGN UP</reg>
