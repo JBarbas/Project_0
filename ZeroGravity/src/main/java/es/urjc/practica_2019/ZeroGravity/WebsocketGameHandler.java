@@ -249,6 +249,28 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.setConfig(config);
 				player.saveConfig();
 				break;
+			case "UPDATE EMAIL":
+				//Comprobamos que esta el email Actual
+				Bson filterEmail3 = new Document("email", node.get("email").asText());
+				Document myPlayerEmail3 = coll.find(filterEmail3).first();
+				
+				//Comprobamos que el nuevo email no esta en uso
+				Bson filterEmail4 = new Document("email", node.get("newEmail").asText());
+				Document myPlayerEmail4 = coll.find(filterEmail4).first();
+				
+				//Si el email no esta en uso y el propio existe se cambia
+				if(myPlayerEmail3!=null && myPlayerEmail4==null) {
+					player.setEmail(node.get("newEmail").asText());//Se cambia en el server
+					player.saveEmail();//Se guarda en base de datos
+					msg.put("resultado", true);
+				}
+				else {
+					msg.put("resultado", false);
+				}
+				
+				msg.put("event", "UPDATE EMAIL RESPONSE");
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "ASK PLAYER INFO":
 				if (!player.isGameStarted()) {
 					player.setGameStarted(true);
@@ -804,29 +826,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				if(myPlayerEmail2!=null) {
 					recoverUserNameHandler.execute(node.get("email").asText());
 				}
-				break;
-			case "CHANGE EMAIL":
-				//Comprobamos que esta el email Actual
-				Bson filterEmail3 = new Document("email", node.get("email").asText());
-				Document myPlayerEmail3 = coll.find(filterEmail3).first();
-				
-				//Comprobamos que el nuevo email no esta en uso
-				Bson filterEmail4 = new Document("email", node.get("newEmail").asText());
-				Document myPlayerEmail4 = coll.find(filterEmail4).first();
-				
-				if(myPlayerEmail3!=null && myPlayerEmail4==null) {
-					ObjectId objectId = myPlayerEmail3.getObjectId("_id");
-					coll.updateOne(new Document("_id", objectId), 
-			                new Document("$set", new Document("email", node.get("newEmail").asText())));
-					
-					msg.put("event", "CHANGED EMAIL");
-					
-				}
-				else {
-					msg.put("event", "CHANGED EMAIL FAILED");
-				}
-				
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
