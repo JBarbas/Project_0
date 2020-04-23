@@ -29,6 +29,11 @@ class FriendsScene extends Phaser.Scene {
     	var btnSearch = this.add.image(1030, 730, 'btnSearchFriends').setInteractive();
     	var cort = this.cortina;
     	
+    	//GIF
+    	this.anims.create({ key: 'everything1', frames: this.anims.generateFrameNames('global'), repeat: -1 });
+    	this.add.sprite((game.config.width/2)+352, 430, 'global').play('everything1').setOrigin(0.5,0.5).setScale(0.57);
+    	
+    	
     	var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtamigos')[0].childNodes[0].nodeValue;
 		var amigostxt = this.add.text(550, 295, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
 		amigostxt.scale = 0.8;
@@ -49,7 +54,7 @@ class FriendsScene extends Phaser.Scene {
     	btnVolver.setVisible(false);
     	
     	
-    	var amigosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+    	/*var amigosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
     	var elementV = this.add.dom(-1170, 350).createFromCache('centroMandoMenu');
         elementV.setPerspective(800);
@@ -60,7 +65,7 @@ class FriendsScene extends Phaser.Scene {
 		let divPuestoV = document.createElement("div");
 		divPuestoV.style.marginTop = "40px";
 		
-		/*la imagen*/
+		
 		let boxV = document.createElement("img");
     	boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
     	boxV.style.marginLeft ="0px";
@@ -106,7 +111,7 @@ class FriendsScene extends Phaser.Scene {
     	}
 		con.appendChild(c);
     	
-    	/*el div de los span*/
+    	
     	var contenidoV = document.createElement("div");
     	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
     	
@@ -117,7 +122,7 @@ class FriendsScene extends Phaser.Scene {
     	divPuestoV.appendChild(contenidoV);
     	divMando.appendChild(divPuestoV);
     	
-    	amigosContainer.add(elementV);
+    	amigosContainer.add(elementV);*/
     	
     	btnX.on('pointerover',function(pointer){
 	 	    this.setFrame(1);
