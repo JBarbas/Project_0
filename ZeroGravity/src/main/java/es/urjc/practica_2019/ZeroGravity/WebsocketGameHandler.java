@@ -805,6 +805,29 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					recoverUserNameHandler.execute(node.get("email").asText());
 				}
 				break;
+			case "CHANGE EMAIL":
+				//Comprobamos que esta el email Actual
+				Bson filterEmail3 = new Document("email", node.get("email").asText());
+				Document myPlayerEmail3 = coll.find(filterEmail3).first();
+				
+				//Comprobamos que el nuevo email no esta en uso
+				Bson filterEmail4 = new Document("email", node.get("newEmail").asText());
+				Document myPlayerEmail4 = coll.find(filterEmail4).first();
+				
+				if(myPlayerEmail3!=null && myPlayerEmail4==null) {
+					ObjectId objectId = myPlayerEmail3.getObjectId("_id");
+					coll.updateOne(new Document("_id", objectId), 
+			                new Document("$set", new Document("email", node.get("newEmail").asText())));
+					
+					msg.put("event", "CHANGED EMAIL");
+					
+				}
+				else {
+					msg.put("event", "CHANGED EMAIL FAILED");
+				}
+				
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
 				break;
