@@ -110,7 +110,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	
 	        	
 	    		var imagen = document.createElement("img");
-	    		imagen.src = edificio.listImage;
+	    		imagen.src = edificio.listImage + edificio.level + '.png';
 	    		imagen.style.position = "absolute";
 	    		imagen.style.left = "10px";
 	    		if(i != 0){
@@ -200,6 +200,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	menos.onmousedown = function(){
 	        		if (this.edificio.numColonos > 0) {
 	        			this.edificio.numColonos--;
+	        			this.edificio.jobs++;
 		        		document.getElementById("numColonos" + this.edificio.id).innerHTML = this.edificio.numColonos;
 		        		let msg = new Object();
 		        		msg.event = 'QUITAR COLONO';
@@ -216,8 +217,9 @@ class CentroMandoMenu extends Phaser.Scene {
 	        		this.src = "assets/interface/Gameplay/Colonos/botonMas.png";
 	        	}
 	        	mas.onmousedown = function(){
-	        		if (this.edificio.jobs > this.edificio.numColonos && parseInt(game.global.resources.colonos.split("/")[0]) < parseInt(game.global.resources.colonos.split("/")[1])) {
+	        		if (this.edificio.jobs > 0 && parseInt(game.global.resources.colonos.split("/")[0]) < parseInt(game.global.resources.colonos.split("/")[1])) {
 		        		this.edificio.numColonos++;
+		        		this.edificio.jobs--;
 		        		document.getElementById("numColonos" + this.edificio.id).innerHTML = this.edificio.numColonos;
 		        		let msg = new Object();
 		        		msg.event = 'ADD COLONO';

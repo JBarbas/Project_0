@@ -10,7 +10,7 @@ class PlataformaExtraccion extends GeneradorRecursos{
 		super.sprite = 'plataformaExtraccion';
 		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'PlataformaExtraccionMenu';
-		super.listImage = 'assets/sprites/Edificios/Plataforma_2.png';
+		super.listImage = 'assets/sprites/Edificios/Plataforma_';
 		super.nameEsp = 'Plataforma de extracción';
 		super.nameEng = 'Extraction platform';
 		super.resourceSprite = 'clayIcon';
