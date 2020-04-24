@@ -183,6 +183,8 @@ class OptionsScene extends Phaser.Scene {
 
         this.element.setPerspective(800);
         
+       
+        
         var boxe = this.element.node.children[1];
         //boxe.children[0].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('si')[0].childNodes[0].nodeValue;
         //boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('no')[0].childNodes[0].nodeValue;

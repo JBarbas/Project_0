@@ -32,6 +32,7 @@
 	<amigos>
 		<txtamigos>Amigos</txtamigos>
 		<txtadd>Añadir Amigos</txtadd>
+		<txtsol>Solicitudes</txtsol>
 	</amigos>
 	<edificios>
 		<taller>Taller</taller>

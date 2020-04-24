@@ -26,6 +26,7 @@ class FriendsScene extends Phaser.Scene {
     	var btnAdd = this.add.image(1030, 420, 'btnAddFriends').setInteractive();
     	var btnSolicitud = this.add.image(1030, 575, 'btnSolicitudFriends').setInteractive();
     	var btnVolver = this.add.image(1030, 420, 'btnBackFriends').setInteractive();
+    	var btnVolver1 = this.add.image(1030, 575, 'btnBackFriends').setInteractive();
     	var btnSearch = this.add.image(1030, 730, 'btnSearchFriends').setInteractive();
     	var cort = this.cortina;
     	
@@ -35,13 +36,18 @@ class FriendsScene extends Phaser.Scene {
     	
     	
     	var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtamigos')[0].childNodes[0].nodeValue;
-		var amigostxt = this.add.text(550, 295, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
-		amigostxt.scale = 0.8;
+		var amigostxt = this.add.text(550, 300, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		amigostxt.scale = 0.6;
 		
 		var textoDesdeXml1 = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtadd')[0].childNodes[0].nodeValue;
 		var addamigostxt = this.add.text(550, 300, textoDesdeXml1, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
 		addamigostxt.scale = 0.6;
 		addamigostxt.setVisible(false);
+		
+		var textoDesdeXml2 = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtsol')[0].childNodes[0].nodeValue;
+		var solicitudamigostxt = this.add.text(550, 300, textoDesdeXml2, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		solicitudamigostxt.scale = 0.6;
+		solicitudamigostxt.setVisible(false);
 		
     	cort.alpha = 0.4;
     	btnX.scale = 0.7;
@@ -52,11 +58,17 @@ class FriendsScene extends Phaser.Scene {
     	btnSolicitud.scale = 0.7;
     	btnVolver.scale = 0.7;
     	btnVolver.setVisible(false);
+    	btnVolver1.scale = 0.7;
+    	btnVolver1.setVisible(false);
     	
+    	this.element = this.add.dom(0, 545).createFromCache('buscarAmigosMenu');
+
+        this.element.setPerspective(800);
     	
+    	var textBuscar = this.element.getChildByName("friend");
     	/*var amigosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
-    	var elementV = this.add.dom(-1170, 350).createFromCache('centroMandoMenu');
+    	var elementV = this.add.dom(-1170, 350).createFromCache('amigosMenu');
         elementV.setPerspective(800);
         
         var divMando = document.getElementById("divMando");
@@ -175,15 +187,45 @@ class FriendsScene extends Phaser.Scene {
     	
     	btnVolver.on('pointerdown', function(pointer){
     		btnAdd.setVisible(true);
+    		btnSolicitud.setVisible(true);
     		btnVolver.setVisible(false);
+    		btnVolver1.setVisible(false);
+    		
     		addamigostxt.setVisible(false);
+    		solicitudamigostxt.setVisible(false);
+    		amigostxt.setVisible(true);
+    	});
+    	
+    	btnVolver1.on('pointerdown', function(pointer){
+    		btnAdd.setVisible(true);
+    		btnSolicitud.setVisible(true);
+    		btnVolver.setVisible(false);
+    		btnVolver1.setVisible(false);
+    		
+    		addamigostxt.setVisible(false);
+    		solicitudamigostxt.setVisible(false);
     		amigostxt.setVisible(true);
     	});
     	
     	btnAdd.on('pointerdown', function(pointer){
     		btnAdd.setVisible(false);
     		btnVolver.setVisible(true);
+    		btnVolver1.setVisible(false);
+    		btnSolicitud.setVisible(true);
+    		
     		addamigostxt.setVisible(true);
+    		solicitudamigostxt.setVisible(false);
+    		amigostxt.setVisible(false);
+    	});
+    	
+    	btnSolicitud.on('pointerdown', function(pointer){
+    		btnAdd.setVisible(true);
+    		btnVolver.setVisible(false);
+    		btnVolver1.setVisible(true);
+    		btnSolicitud.setVisible(false);
+    		
+    		addamigostxt.setVisible(false);
+    		solicitudamigostxt.setVisible(true);
     		amigostxt.setVisible(false);
     	});
     	
