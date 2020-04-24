@@ -88,7 +88,7 @@ class GeneradorMenu extends Phaser.Scene {
 	    	});
 	    	
 	    	//  CONTENEDOR EDIFICIO
-	    	this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+	    	this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
 	    	edificiosContainer.add(this.colonos);
 	    	
 	    	//  CONTENEDOR DETALLES
