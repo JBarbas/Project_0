@@ -251,6 +251,9 @@ class FriendsScene extends Phaser.Scene {
 			msg.search = $("#friend").val();
 			game.global.socket.send(JSON.stringify(msg));
     	}
+    	else if ($("#friend").val().length === 0) {
+    		this.usersList.text = '';
+    	}
     	
     	this.searchName = $("#friend").val();
     	

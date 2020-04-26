@@ -842,10 +842,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				ArrayNode arrayNodeUsers = mapper.createArrayNode(); // JSON para el cliente
 				while (itUsers.hasNext()) {
 					Document user = (Document) itUsers.next();
-					ObjectNode jsonUser = mapper.createObjectNode();
-					jsonUser.put("id", user.getObjectId("_id").toString());
-					jsonUser.put("name", user.getString("name"));		
-					arrayNodeUsers.addPOJO(jsonUser);
+					if (!user.getString("name").equals(player.getUsername())) {
+						ObjectNode jsonUser = mapper.createObjectNode();
+						jsonUser.put("id", user.getObjectId("_id").toString());
+						jsonUser.put("name", user.getString("name"));		
+						arrayNodeUsers.addPOJO(jsonUser);
+					}
 				}
 				/*for (Document user : users) {
 					ObjectNode jsonUser = mapper.createObjectNode();
