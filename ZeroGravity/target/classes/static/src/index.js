@@ -862,8 +862,67 @@ window.onload = function() {
 				console.log(msg);
 			}
 			game.scene.getScene('FriendsScene').usersList.text = '';
+			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '';
 			for (let i = 0; i < msg.users.length; i++) {
-				game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
+				//game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
+				let divPuestoV = document.createElement("div");
+				
+				
+				let boxV = document.createElement("img");
+		    	boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
+		    	boxV.style.marginLeft ="0px";
+		    	boxV.style.marginTop = "0px";
+		    	boxV.style.width = '80%';
+		    	boxV.style.height = 'auto';
+		    	
+		    	let connect = document.createElement("img");
+		    	connect.src = 'assets/interface/Gameplay/Friends/conected.png';
+		    	connect.style.position = "absolute";
+		    	connect.style.marginLeft ="8px";
+		    	connect.style.marginTop = "8px";
+		    	connect.style.width = '2%';
+		    	connect.style.height = 'auto';
+		    	
+		    	var name = document.createElement("span");
+				name.style.position = "absolute";
+				name.style.left = "20px";
+				name.style.marginTop = "1px";
+				name.style.width = '200px';
+				name.style.color = '#fff';
+				name.style.fontFamily = 'pantonBlack';
+				name.style.fontSize = '11px';
+				
+				var n = document.createTextNode(msg.users[i].name);
+				name.appendChild(n);
+				
+				var con = document.createElement("span");
+				con.style.position = "absolute";
+				con.style.left = "20px";
+				con.style.marginTop = "12px";
+				con.style.width = '200px';
+				con.style.color = '#fff';
+				con.style.fontFamily = 'pantonLight';
+				con.style.fontSize = '6px';
+				
+				var c;
+				
+				if(game.global.idioma == 'eng'){
+		    		c = document.createTextNode("connected");
+		    	}else{
+		    		c = document.createTextNode("conectado");
+		    	}
+				con.appendChild(c);
+		    	
+		    	
+		    	var contenidoV = document.createElement("div");
+		    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px";
+		    	
+		    	divPuestoV.appendChild(name);
+		    	divPuestoV.appendChild(connect);
+		    	divPuestoV.appendChild(con);
+		    	divPuestoV.appendChild(boxV);
+		    	divPuestoV.appendChild(contenidoV);
+		    	game.scene.getScene('FriendsScene').divAmigos.appendChild(divPuestoV);
 			}
 			break;			
 		default:
