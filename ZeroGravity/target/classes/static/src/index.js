@@ -892,6 +892,24 @@ window.onload = function() {
 				name.style.fontFamily = 'pantonBlack';
 				name.style.fontSize = '11px';
 				
+				let city = document.createElement("img");
+				city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
+				city.style.position = "absolute";
+				city.style.marginLeft ="160px";
+				city.style.marginTop = "2px";
+				city.style.width = '6%';
+				city.style.height = 'auto';
+				city.style.cursor = 'pointer';
+				
+				let borrar = document.createElement("img");
+				borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
+				borrar.style.position = "absolute";
+				borrar.style.marginLeft ="175px";
+				borrar.style.marginTop = "3px";
+				borrar.style.width = '6%';
+				borrar.style.height = 'auto';
+				borrar.style.cursor = 'pointer';
+				
 				var n = document.createTextNode(msg.users[i].name);
 				name.appendChild(n);
 				
@@ -915,10 +933,12 @@ window.onload = function() {
 		    	
 		    	
 		    	var contenidoV = document.createElement("div");
-		    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px";
+		    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px;margin-bottom:5px";
 		    	
 		    	divPuestoV.appendChild(name);
 		    	divPuestoV.appendChild(connect);
+		    	divPuestoV.appendChild(city);
+		    	divPuestoV.appendChild(borrar);
 		    	divPuestoV.appendChild(con);
 		    	divPuestoV.appendChild(boxV);
 		    	divPuestoV.appendChild(contenidoV);

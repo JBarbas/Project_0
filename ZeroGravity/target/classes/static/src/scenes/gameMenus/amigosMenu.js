@@ -40,7 +40,7 @@ class FriendsScene extends Phaser.Scene {
 		amigostxt.scale = 0.6;
 		
 		var textoDesdeXml1 = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtadd')[0].childNodes[0].nodeValue;
-		var addamigostxt = this.add.text(550, 300, textoDesdeXml1, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
+		var addamigostxt = this.add.text(525, 300, textoDesdeXml1, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '40px', fontWeight: 'bold'});
 		addamigostxt.scale = 0.6;
 		addamigostxt.setVisible(false);
 		
