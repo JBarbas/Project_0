@@ -70,18 +70,18 @@ class FriendsScene extends Phaser.Scene {
     	this.element = this.add.dom(0, 545).createFromCache('buscarAmigosMenu');
 
         this.element.setPerspective(800);
+        this.element.alpha = 50;
     	
     	var textBuscar = this.element.getChildByName("friend");
     	var amigosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
-    	var elementV = this.add.dom(-1170, 350).createFromCache('amigosMenu');
+    	var elementV = this.add.dom(-1125, 610).createFromCache('amigosMenu');
         elementV.setPerspective(800);
         
         var divAmigos = document.getElementById("divAmigos");
       	
            		
 		let divPuestoV = document.createElement("div");
-		divPuestoV.style.marginTop = "40px";
 		
 		
 		let boxV = document.createElement("img");
@@ -131,7 +131,7 @@ class FriendsScene extends Phaser.Scene {
     	
     	
     	var contenidoV = document.createElement("div");
-    	contenidoV.style.cssText = "position:relative;color:white;margin-top:-40px;margin-left:15px";
+    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px";
     	
     	divPuestoV.appendChild(name);
     	divPuestoV.appendChild(connect);
