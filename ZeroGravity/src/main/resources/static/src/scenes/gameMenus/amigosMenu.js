@@ -61,6 +61,12 @@ class FriendsScene extends Phaser.Scene {
     	btnVolver1.scale = 0.7;
     	btnVolver1.setVisible(false);
     	
+    	this.usersList = this.add.text(550, 420, '', {
+    	    fontFamily: 'pantonBlack',
+    	    fontSize: '18px',
+    	    lineSpacing: 20
+    	});
+    	
     	this.element = this.add.dom(0, 545).createFromCache('buscarAmigosMenu');
 
         this.element.setPerspective(800);
@@ -229,8 +235,25 @@ class FriendsScene extends Phaser.Scene {
     		amigostxt.setVisible(false);
     	});
     	
+    	
+		  /*$("#search-box").change(function(){
+		    let msg = new Object();
+			msg.event = 'SEARCH USERS';
+			msg.search = $("#friend").val();
+			game.global.socket.send(JSON.stringify(msg));
+		  });*/
+    	
     }
     update(time, delta) {
+    	if ($("#friend").val() !== this.searchName && $("#friend").val().length > 0) {
+    		let msg = new Object();
+			msg.event = 'SEARCH USERS';
+			msg.search = $("#friend").val();
+			game.global.socket.send(JSON.stringify(msg));
+    	}
+    	
+    	this.searchName = $("#friend").val();
+    	
     	
     }
 

@@ -856,7 +856,16 @@ window.onload = function() {
 			arrayAux.pop(); //por alguna razón mete un undefined al final
 			game.global.mejoresPuntuaciones = arrayAux;
 			break;
-			
+		case 'USERS FOUND':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] USERS FOUND message recieved');
+				console.log(msg);
+			}
+			game.scene.getScene('FriendsScene').usersList.text = '';
+			for (let i = 0; i < msg.users.length; i++) {
+				game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
+			}
+			break;			
 		default:
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UNKNOWN message recieved')

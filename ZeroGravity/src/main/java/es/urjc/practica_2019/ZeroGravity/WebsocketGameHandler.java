@@ -40,6 +40,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
@@ -50,6 +52,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Indexes;
+import java.util.regex.*;
 
 import java.util.Properties;  
 import javax.mail.*;  
@@ -827,6 +831,32 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					recoverUserNameHandler.execute(node.get("email").asText());
 				}
 				break;
+			case "SEARCH USERS":
+				coll.createIndex(Indexes.text("name"));
+				Bson filterUsers = new Document("name", node.get("search").asText());
+				//FindIterable<Document> users = coll.find(Filters.text(node.get("search").asText()));
+				BasicDBObject q = new BasicDBObject();
+				q.put("name",  java.util.regex.Pattern.compile(node.get("search").asText(), Pattern.CASE_INSENSITIVE));
+				FindIterable<Document> users = coll.find(q);
+				Iterator itUsers = users.iterator();
+				ArrayNode arrayNodeUsers = mapper.createArrayNode(); // JSON para el cliente
+				while (itUsers.hasNext()) {
+					Document user = (Document) itUsers.next();
+					ObjectNode jsonUser = mapper.createObjectNode();
+					jsonUser.put("id", user.getObjectId("_id").toString());
+					jsonUser.put("name", user.getString("name"));		
+					arrayNodeUsers.addPOJO(jsonUser);
+				}
+				/*for (Document user : users) {
+					ObjectNode jsonUser = mapper.createObjectNode();
+					jsonUser.put("id", user.getObjectId("_id").toString());
+					jsonUser.put("ausente", user.getString("name"));		
+					arrayNodeUsers.addPOJO(jsonUser);
+				}*/
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeUsers);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
 				break;
@@ -1017,4 +1047,5 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 		}
 		player.saveAll();
 	}
+	
 }

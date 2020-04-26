@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,6 +36,7 @@ public class Player {
 	private String email;
 	private byte[] password;
 	private Config config;
+	private Collection<ObjectId> friends = new HashSet<ObjectId>();
 	private static final int GRID_WIDTH = 20;
 	private static final int GRID_HEIGHT = 20;
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
@@ -141,6 +143,15 @@ public class Player {
 
 	public void setConfig(Config config) {
 		this.config = config;
+	}
+	
+	public Collection<ObjectId> getFriends() {
+		return friends;
+	}
+	
+	public void addFriend(ObjectId friend) {
+		friends.add(friend);
+		saveFriends();
 	}
 
 	public int getEdificioId() {
@@ -719,5 +730,16 @@ public class Player {
 		dbEmail.append("email", email);
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
 				new Document("$set", new Document("email", dbEmail)));
+	}
+	
+	public void saveFriends() {
+		LinkedList<Document> dbFriends = new LinkedList<>(); //Bson para mongo
+		for(ObjectId friend : this.getFriends()) {
+			Document dbFriend = new Document();
+			dbFriend.append("id", friend);
+			dbFriends.add(dbFriend);
+		}	
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
+				new Document("$set", new Document("friends", dbFriends)));
 	}
 }
