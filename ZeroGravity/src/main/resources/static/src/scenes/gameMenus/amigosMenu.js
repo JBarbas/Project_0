@@ -17,6 +17,10 @@ class FriendsScene extends Phaser.Scene {
     }
     create (data)  {
     	
+    	var scene = this;
+    	
+    	this.mode = "amigos";
+    	
     	var textoDesdeXml;
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	var panelFriends = this.add.image(460, 260, 'bckAmigos').setOrigin(0, 0);
@@ -143,6 +147,8 @@ class FriendsScene extends Phaser.Scene {
     		addamigostxt.setVisible(false);
     		solicitudamigostxt.setVisible(false);
     		amigostxt.setVisible(true);
+    		
+    		scene.mode = "amigos";
     	});
     	
     	btnVolver1.on('pointerdown', function(pointer){
@@ -154,6 +160,8 @@ class FriendsScene extends Phaser.Scene {
     		addamigostxt.setVisible(false);
     		solicitudamigostxt.setVisible(false);
     		amigostxt.setVisible(true);
+    		
+    		scene.mode = "amigos";
     	});
     	
     	btnAdd.on('pointerdown', function(pointer){
@@ -165,6 +173,8 @@ class FriendsScene extends Phaser.Scene {
     		addamigostxt.setVisible(true);
     		solicitudamigostxt.setVisible(false);
     		amigostxt.setVisible(false);
+    		
+    		scene.mode = "addAmigos";
     	});
     	
     	btnSolicitud.on('pointerdown', function(pointer){
@@ -176,6 +186,8 @@ class FriendsScene extends Phaser.Scene {
     		addamigostxt.setVisible(false);
     		solicitudamigostxt.setVisible(true);
     		amigostxt.setVisible(false);
+    		
+    		scene.mode = "solicitudes";
     	});
     	
     	
