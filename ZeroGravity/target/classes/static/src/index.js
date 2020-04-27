@@ -892,23 +892,59 @@ window.onload = function() {
 				name.style.fontFamily = 'pantonBlack';
 				name.style.fontSize = '11px';
 				
-				let city = document.createElement("img");
-				city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
-				city.style.position = "absolute";
-				city.style.marginLeft ="160px";
-				city.style.marginTop = "2px";
-				city.style.width = '6%';
-				city.style.height = 'auto';
-				city.style.cursor = 'pointer';
-				
-				let borrar = document.createElement("img");
-				borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
-				borrar.style.position = "absolute";
-				borrar.style.marginLeft ="175px";
-				borrar.style.marginTop = "3px";
-				borrar.style.width = '6%';
-				borrar.style.height = 'auto';
-				borrar.style.cursor = 'pointer';
+				switch(game.scene.getScene('FriendsScene').mode){
+					case 'amigos':
+						var city = document.createElement("img");
+						city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
+						city.style.position = "absolute";
+						city.style.marginLeft ="160px";
+						city.style.marginTop = "2px";
+						city.style.width = '6%';
+						city.style.height = 'auto';
+						city.style.cursor = 'pointer';
+						
+						var borrar = document.createElement("img");
+						borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
+						borrar.style.position = "absolute";
+						borrar.style.marginLeft ="175px";
+						borrar.style.marginTop = "3px";
+						borrar.style.width = '6%';
+						borrar.style.height = 'auto';
+						borrar.style.cursor = 'pointer';
+					break;
+					case 'addAmigos':
+						var add = document.createElement("img");
+						add.src = 'assets/interface/Gameplay/Friends/btncrearamigo.png';
+						add.style.position = "absolute";
+						add.style.marginLeft ="175px";
+						add.style.marginTop = "3px";
+						add.style.width = '6%';
+						add.style.height = 'auto';
+						add.style.cursor = 'pointer';
+					break;
+					case 'solicitudes':
+						var accept = document.createElement("img");
+						accept.src = 'assets/interface/Gameplay/Friends/btnaceptaramigos.png';
+						accept.style.position = "absolute";
+						accept.style.marginLeft ="160px";
+						accept.style.marginTop = "3px";
+						accept.style.width = '6%';
+						accept.style.height = 'auto';
+						accept.style.cursor = 'pointer';
+						
+						var destroyFriend = document.createElement("img");
+						destroyFriend.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
+						destroyFriend.style.position = "absolute";
+						destroyFriend.style.marginLeft ="175px";
+						destroyFriend.style.marginTop = "3px";
+						destroyFriend.style.width = '6%';
+						destroyFriend.style.height = 'auto';
+						destroyFriend.style.cursor = 'pointer';
+					break;
+					default:
+					break;
+					
+				}
 				
 				var n = document.createTextNode(msg.users[i].name);
 				name.appendChild(n);
@@ -937,8 +973,23 @@ window.onload = function() {
 		    	
 		    	divPuestoV.appendChild(name);
 		    	divPuestoV.appendChild(connect);
-		    	divPuestoV.appendChild(city);
-		    	divPuestoV.appendChild(borrar);
+		    	
+		    	switch(game.scene.getScene('FriendsScene').mode){
+					case 'amigos':
+						divPuestoV.appendChild(city);
+				    	divPuestoV.appendChild(borrar);
+					break;
+					case 'addAmigos':
+						divPuestoV.appendChild(add);
+					break;
+					case 'solicitudes':
+						divPuestoV.appendChild(accept);
+				    	divPuestoV.appendChild(destroyFriend);
+					break;
+		    	}
+				
+			
+		    	
 		    	divPuestoV.appendChild(con);
 		    	divPuestoV.appendChild(boxV);
 		    	divPuestoV.appendChild(contenidoV);
