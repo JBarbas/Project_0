@@ -898,8 +898,8 @@ window.onload = function() {
 						city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
 						city.style.position = "absolute";
 						city.style.marginLeft ="160px";
-						city.style.marginTop = "2px";
-						city.style.width = '6%';
+						city.style.marginTop = "3px";
+						city.style.width = '7%';
 						city.style.height = 'auto';
 						city.style.cursor = 'pointer';
 						
@@ -908,7 +908,7 @@ window.onload = function() {
 						borrar.style.position = "absolute";
 						borrar.style.marginLeft ="175px";
 						borrar.style.marginTop = "3px";
-						borrar.style.width = '6%';
+						borrar.style.width = '7%';
 						borrar.style.height = 'auto';
 						borrar.style.cursor = 'pointer';
 					break;
@@ -918,7 +918,7 @@ window.onload = function() {
 						add.style.position = "absolute";
 						add.style.marginLeft ="175px";
 						add.style.marginTop = "3px";
-						add.style.width = '6%';
+						add.style.width = '7%';
 						add.style.height = 'auto';
 						add.style.cursor = 'pointer';
 					break;
@@ -928,7 +928,7 @@ window.onload = function() {
 						accept.style.position = "absolute";
 						accept.style.marginLeft ="160px";
 						accept.style.marginTop = "3px";
-						accept.style.width = '6%';
+						accept.style.width = '7%';
 						accept.style.height = 'auto';
 						accept.style.cursor = 'pointer';
 						
@@ -937,7 +937,7 @@ window.onload = function() {
 						destroyFriend.style.position = "absolute";
 						destroyFriend.style.marginLeft ="175px";
 						destroyFriend.style.marginTop = "3px";
-						destroyFriend.style.width = '6%';
+						destroyFriend.style.width = '7%';
 						destroyFriend.style.height = 'auto';
 						destroyFriend.style.cursor = 'pointer';
 					break;
