@@ -147,12 +147,20 @@ public class Player {
 	}
 	
 	public Collection<ObjectId> getFriends() {
+		friends.clear();
+		Bson filter = new Document("_id", getId());
+		Document myPlayer = WebsocketGameHandler.getColl().find(filter).first();
+		if (myPlayer.get("friends") != null) {
+			for (ObjectId friend : (Collection<ObjectId>) myPlayer.get("friends")) {
+				friends.add(friend);
+			}
+		}
 		return friends;
 	}
 	
 	public void addFriend(ObjectId friend) {
 		friends.add(friend);
-		saveFriends();
+		//saveFriends();
 	}
 	
 	public Collection<ObjectId> getFriendRequests() {

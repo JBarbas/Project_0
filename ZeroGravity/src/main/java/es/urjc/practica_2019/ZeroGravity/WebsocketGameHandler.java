@@ -836,7 +836,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "SEARCH USERS":
 				coll.createIndex(Indexes.text("name"));
 				Bson filterUsers = new Document("name", node.get("search").asText());
-				//FindIterable<Document> users = coll.find(Filters.text(node.get("search").asText()));
 				BasicDBObject q = new BasicDBObject();
 				q.put("name",  java.util.regex.Pattern.compile(node.get("search").asText(), Pattern.CASE_INSENSITIVE));
 				FindIterable<Document> users = coll.find(q);
@@ -851,12 +850,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						arrayNodeUsers.addPOJO(jsonUser);
 					}
 				}
-				/*for (Document user : users) {
-					ObjectNode jsonUser = mapper.createObjectNode();
-					jsonUser.put("id", user.getObjectId("_id").toString());
-					jsonUser.put("ausente", user.getString("name"));		
-					arrayNodeUsers.addPOJO(jsonUser);
-				}*/
 				msg.put("event", "USERS FOUND");
 				msg.putPOJO("users", arrayNodeUsers);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -879,7 +872,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "ACCEPT FRIEND":
-				player.addFriend(new ObjectId(node.get("idTransmitter").asText()));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())), 
+						Updates.addToSet("friends", new ObjectId(node.get("idReceiver").asText())));
 				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())), 
 						Updates.addToSet("friends", new ObjectId(node.get("idTransmitter").asText())));
 				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())),
@@ -888,6 +882,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						Updates.pull("friendRequests", new ObjectId(node.get("idReceiver").asText())));
 				arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
 				for (ObjectId id : player.getFriendRequests()) {					
+					ObjectNode jsonRequest = mapper.createObjectNode();
+					jsonRequest.put("id", id.toString());
+					Bson filterRequest = new Document("_id", id);
+					jsonRequest.put("name", coll.find(filterRequest).first().getString("name"));		
+					arrayNodeRequests.addPOJO(jsonRequest);
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeRequests);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "SHOW FRIENDS":
+				arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
+				for (ObjectId id : player.getFriends()) {					
 					ObjectNode jsonRequest = mapper.createObjectNode();
 					jsonRequest.put("id", id.toString());
 					Bson filterRequest = new Document("_id", id);
