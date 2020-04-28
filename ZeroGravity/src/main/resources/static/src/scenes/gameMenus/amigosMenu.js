@@ -149,6 +149,7 @@ class FriendsScene extends Phaser.Scene {
     		amigostxt.setVisible(true);
     		
     		scene.mode = "amigos";
+    		document.getElementById("friend").value = "";
     	});
     	
     	btnVolver1.on('pointerdown', function(pointer){
@@ -162,6 +163,7 @@ class FriendsScene extends Phaser.Scene {
     		amigostxt.setVisible(true);
     		
     		scene.mode = "amigos";
+    		document.getElementById("friend").value = "";
     	});
     	
     	btnAdd.on('pointerdown', function(pointer){
@@ -175,9 +177,16 @@ class FriendsScene extends Phaser.Scene {
     		amigostxt.setVisible(false);
     		
     		scene.mode = "addAmigos";
+    		document.getElementById("friend").value = "";
     	});
     	
     	btnSolicitud.on('pointerdown', function(pointer){
+    		document.getElementById("friend").value = "";
+    		
+    		let msg = new Object();
+			msg.event = 'SHOW FRIEND REQUESTS';
+			game.global.socket.send(JSON.stringify(msg));
+			
     		btnAdd.setVisible(true);
     		btnVolver.setVisible(false);
     		btnVolver1.setVisible(true);
@@ -187,7 +196,7 @@ class FriendsScene extends Phaser.Scene {
     		solicitudamigostxt.setVisible(true);
     		amigostxt.setVisible(false);
     		
-    		scene.mode = "solicitudes";
+    		scene.mode = "solicitudes";		
     	});
     	
     	
@@ -206,7 +215,7 @@ class FriendsScene extends Phaser.Scene {
 			msg.search = $("#friend").val();
 			game.global.socket.send(JSON.stringify(msg));
     	}
-    	else if ($("#friend").val().length === 0) {
+    	else if ($("#friend").val().length === 0 && this.mode !== 'solicitudes') {
     		this.divAmigos.innerHTML = '';
     	}
     	

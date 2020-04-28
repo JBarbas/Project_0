@@ -53,6 +53,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.Updates;
+
 import java.util.regex.*;
 
 import java.util.Properties;  
@@ -857,6 +859,43 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				}*/
 				msg.put("event", "USERS FOUND");
 				msg.putPOJO("users", arrayNodeUsers);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "REQUEST FRIENDSHIP":
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())), 
+						Updates.addToSet("friendRequests", new ObjectId(node.get("idTransmitter").asText())));
+				break;
+			case "SHOW FRIEND REQUESTS":
+				ArrayNode arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
+				for (ObjectId id : player.getFriendRequests()) {					
+					ObjectNode jsonRequest = mapper.createObjectNode();
+					jsonRequest.put("id", id.toString());
+					Bson filterRequest = new Document("_id", id);
+					jsonRequest.put("name", coll.find(filterRequest).first().getString("name"));		
+					arrayNodeRequests.addPOJO(jsonRequest);
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeRequests);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "ACCEPT FRIEND":
+				player.addFriend(new ObjectId(node.get("idTransmitter").asText()));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())), 
+						Updates.addToSet("friends", new ObjectId(node.get("idTransmitter").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())),
+						Updates.pull("friendRequests", new ObjectId(node.get("idTransmitter").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())),
+						Updates.pull("friendRequests", new ObjectId(node.get("idReceiver").asText())));
+				arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
+				for (ObjectId id : player.getFriendRequests()) {					
+					ObjectNode jsonRequest = mapper.createObjectNode();
+					jsonRequest.put("id", id.toString());
+					Bson filterRequest = new Document("_id", id);
+					jsonRequest.put("name", coll.find(filterRequest).first().getString("name"));		
+					arrayNodeRequests.addPOJO(jsonRequest);
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeRequests);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "DEBUG":

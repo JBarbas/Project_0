@@ -921,6 +921,14 @@ window.onload = function() {
 						add.style.width = '7%';
 						add.style.height = 'auto';
 						add.style.cursor = 'pointer';
+						
+						add.onmousedown = function(){
+							let msgAux = new Object();
+							msgAux.event = 'REQUEST FRIENDSHIP';
+							msgAux.idReceiver = msg.users[i].id;
+							msgAux.idTransmitter = game.global.myPlayerId;
+							game.global.socket.send(JSON.stringify(msgAux));
+						}
 					break;
 					case 'solicitudes':
 						var accept = document.createElement("img");
@@ -931,6 +939,13 @@ window.onload = function() {
 						accept.style.width = '7%';
 						accept.style.height = 'auto';
 						accept.style.cursor = 'pointer';
+						accept.onmousedown = function(){
+							let msgAux = new Object();
+							msgAux.event = 'ACCEPT FRIEND';
+							msgAux.idReceiver = msg.users[i].id;
+							msgAux.idTransmitter = game.global.myPlayerId;
+							game.global.socket.send(JSON.stringify(msgAux));
+						}
 						
 						var destroyFriend = document.createElement("img");
 						destroyFriend.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
