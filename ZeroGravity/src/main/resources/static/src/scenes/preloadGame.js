@@ -118,11 +118,13 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
 		
+		
 		this.load.image('intBuildings', 'assets/interface/interfazBuildings.png');
 		this.load.image('intUpdates', 'assets/interface/interfazUpdates.png');
 		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
 		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/UiGamePlayMenu.png');
+		this.load.image('hoverMats', 'assets/interface/Gameplay/hovermats.png');
 		
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
@@ -137,6 +139,13 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoComprar', 'assets/interface/iconoComprar.png');
 		this.load.image('iconoVender', 'assets/interface/iconoVender.png');
 		this.load.image('iconoOfertas', 'assets/interface/iconoOfertas.png');
+		
+		this.load.image('iconoUC', 'assets/interface/Gameplay/unioncoins.png');
+		this.load.image('iconoMoney', 'assets/interface/Gameplay/creditosFloat.png');
+		this.load.image('iconoEnergy', 'assets/interface/Gameplay/newEnergy.png');
+		this.load.image('iconoMetal', 'assets/interface/Gameplay/metalFloat.png');
+		this.load.image('iconoArcilla', 'assets/interface/Gameplay/arcillaFloat.png');
+		this.load.image('iconoColonos', 'assets/interface/Gameplay/newColon.png');
 		
 		this.load.image('panelCExtraccion', 'assets/interface/Secciones/panelCExtraccion.png');
 		this.load.image('panelCMando', 'assets/interface/Secciones/panelCMando.png');

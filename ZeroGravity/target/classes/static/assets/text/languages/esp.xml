@@ -332,6 +332,22 @@ Tiempo requerido:
     5 días y 20 horas.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
+		<hovericonos>
+			<unioncoin>Consigue más en nuestra tienda </unioncoin>
+			<unioncoin2>o en misiones</unioncoin2>
+			<dinero>Dinero</dinero>
+			<dinero1>Consigue más en las viviendas</dinero1>
+			<energiaT>Energía</energiaT>
+			<energia1>Se usa para dar energía a las</energia1>
+			<energia2>instalaciones </energia2>
+			<metal>Consigue más en el Taller </metal>
+			<ceramica>Cerámica</ceramica>
+			<ceramica1>Consigue más en la Plataforma de </ceramica1>
+			<ceramica2>Extracción</ceramica2>
+			<colono>Colonos</colono>
+			<colono1>Construye viviendas para  </colono1>
+			<colono2>aumentar la población </colono2>
+		</hovericonos>
 		
 		
 	</menusEdificios>
