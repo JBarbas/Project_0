@@ -128,6 +128,14 @@ class FriendsScene extends Phaser.Scene {
 	 	btnVolver.on('pointerout',function(pointer){
 	 	    this.setFrame(0);
 	 	})
+	 	
+	 	btnVolver1.on('pointerover',function(pointer){
+	 	    this.setFrame(1);
+	 	})
+	
+	 	btnVolver1.on('pointerout',function(pointer){
+	 	    this.setFrame(0);
+	 	})
     	
     	btnX.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
