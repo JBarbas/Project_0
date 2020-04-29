@@ -898,7 +898,7 @@ window.onload = function() {
 						var city = document.createElement("img");
 						city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
 						city.style.position = "absolute";
-						city.style.marginLeft ="160px";
+						city.style.marginLeft ="140px";
 						city.style.marginTop = "3px";
 						city.style.width = '7%';
 						city.style.height = 'auto';
@@ -907,30 +907,53 @@ window.onload = function() {
 						var borrar = document.createElement("img");
 						borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
 						borrar.style.position = "absolute";
-						borrar.style.marginLeft ="175px";
+						borrar.style.marginLeft ="155px";
 						borrar.style.marginTop = "3px";
 						borrar.style.width = '7%';
 						borrar.style.height = 'auto';
 						borrar.style.cursor = 'pointer';
 						borrar.onmousedown = function(){
-							let msgAux = new Object();
-							msgAux.event = 'DELETE FRIEND';
-							msgAux.idReceiver = msg.users[i].id;
-							msgAux.idTransmitter = game.global.myPlayerId;
-							game.global.socket.send(JSON.stringify(msgAux));
+							Swal.fire({
+							  title: 'Are you sure?',
+							  text: "You won't be able to revert this!",
+							  icon: 'warning',
+							  showCancelButton: true,
+							  confirmButtonColor: '#3085d6',
+							  cancelButtonColor: '#d33',
+							  confirmButtonText: 'Yes, delete it!'
+							}).then((result) => {
+							  if (result.value) {
+							    Swal.fire(
+							      'Deleted!',
+							      'Your friend has been deleted.',
+							      'success'
+							    )
+							    let msgAux = new Object();
+								msgAux.event = 'DELETE FRIEND';
+								msgAux.idReceiver = msg.users[i].id;
+								msgAux.idTransmitter = game.global.myPlayerId;
+								game.global.socket.send(JSON.stringify(msgAux));
+							  }
+							})
+							
 						}
 					break;
 					case 'addAmigos':
 						var add = document.createElement("img");
 						add.src = 'assets/interface/Gameplay/Friends/btncrearamigo.png';
 						add.style.position = "absolute";
-						add.style.marginLeft ="175px";
+						add.style.marginLeft ="155px";
 						add.style.marginTop = "3px";
 						add.style.width = '7%';
 						add.style.height = 'auto';
 						add.style.cursor = 'pointer';
 						
 						add.onmousedown = function(){
+							Swal.fire({
+								  icon: 'success',
+								  title: 'Nice!',
+								  text: "Your request has been sent."
+								});
 							let msgAux = new Object();
 							msgAux.event = 'REQUEST FRIENDSHIP';
 							msgAux.idReceiver = msg.users[i].id;
@@ -942,7 +965,7 @@ window.onload = function() {
 						var accept = document.createElement("img");
 						accept.src = 'assets/interface/Gameplay/Friends/btnaceptaramigos.png';
 						accept.style.position = "absolute";
-						accept.style.marginLeft ="160px";
+						accept.style.marginLeft ="140px";
 						accept.style.marginTop = "3px";
 						accept.style.width = '7%';
 						accept.style.height = 'auto';
@@ -958,7 +981,7 @@ window.onload = function() {
 						var destroyFriend = document.createElement("img");
 						destroyFriend.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
 						destroyFriend.style.position = "absolute";
-						destroyFriend.style.marginLeft ="175px";
+						destroyFriend.style.marginLeft ="155px";
 						destroyFriend.style.marginTop = "3px";
 						destroyFriend.style.width = '7%';
 						destroyFriend.style.height = 'auto';

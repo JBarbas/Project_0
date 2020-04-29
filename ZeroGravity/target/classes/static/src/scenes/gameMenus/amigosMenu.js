@@ -24,6 +24,7 @@ class FriendsScene extends Phaser.Scene {
     	var textoDesdeXml;
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	var panelFriends = this.add.image(460, 260, 'bckAmigos').setOrigin(0, 0);
+    	var panelFriends2 = this.add.image(460, 260, 'bckAmigosSinBuscar').setOrigin(0, 0);
     	//var bloqueAmigo = this.add.image(540, 420, 'bloqueAmigosBck').setOrigin(0, 0);
     	
     	var btnX = this.add.image(1500, 300, 'xBuilding').setInteractive();
@@ -56,6 +57,8 @@ class FriendsScene extends Phaser.Scene {
     	cort.alpha = 0.4;
     	btnX.scale = 0.7;
     	panelFriends.scale = 0.8;
+    	panelFriends2.scale = 0.8;
+    	panelFriends.visible = false;
     	
     	btnAdd.scale = 0.7;
     	btnSearch.scale = 0.7;
@@ -71,12 +74,12 @@ class FriendsScene extends Phaser.Scene {
     	    lineSpacing: 20
     	});
     	
-    	this.element = this.add.dom(0, 545).createFromCache('buscarAmigosMenu');
+    	var element = this.add.dom(0, 545).createFromCache('buscarAmigosMenu');
 
-        this.element.setPerspective(800);
-        this.element.alpha = 50;
-    	
-    	var textBuscar = this.element.getChildByName("friend");
+        element.setPerspective(800);
+        element.alpha = 50;
+        element.setVisible(false);
+    	var textBuscar = element.getChildByName("friend");
     	var amigosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
     	var elementV = this.add.dom(-1125, 610).createFromCache('amigosMenu');
@@ -157,6 +160,9 @@ class FriendsScene extends Phaser.Scene {
     		btnSolicitud.setVisible(true);
     		btnVolver.setVisible(false);
     		btnVolver1.setVisible(false);
+    		panelFriends2.visible = false;
+    		panelFriends.visible = true;
+    		element.setVisible(false);
     		
     		addamigostxt.setVisible(false);
     		solicitudamigostxt.setVisible(false);
@@ -177,6 +183,9 @@ class FriendsScene extends Phaser.Scene {
     		btnSolicitud.setVisible(true);
     		btnVolver.setVisible(false);
     		btnVolver1.setVisible(false);
+    		panelFriends2.visible = false;
+    		panelFriends.visible = true;
+    		element.setVisible(false);
     		
     		addamigostxt.setVisible(false);
     		solicitudamigostxt.setVisible(false);
@@ -190,10 +199,14 @@ class FriendsScene extends Phaser.Scene {
     		btnVolver.setVisible(true);
     		btnVolver1.setVisible(false);
     		btnSolicitud.setVisible(true);
+    		element.setVisible(true);
     		
     		addamigostxt.setVisible(true);
     		solicitudamigostxt.setVisible(false);
     		amigostxt.setVisible(false);
+    		panelFriends.visible = true;
+    		panelFriends2.visible = false;
+
     		
     		scene.mode = "addAmigos";
     		document.getElementById("friend").value = "";
@@ -210,6 +223,9 @@ class FriendsScene extends Phaser.Scene {
     		btnVolver.setVisible(false);
     		btnVolver1.setVisible(true);
     		btnSolicitud.setVisible(false);
+    		panelFriends2.visible = true;
+    		panelFriends.visible = false;
+    		element.setVisible(false);
     		
     		addamigostxt.setVisible(false);
     		solicitudamigostxt.setVisible(true);
