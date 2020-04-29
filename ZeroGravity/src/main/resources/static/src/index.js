@@ -40,6 +40,7 @@ window.onload = function() {
 				  		PreloadGameScene,
 				  		LoadGameplayScene,
 				  		GameScene,
+				  		GameVisitorScene,
 				  		GameInterface,
 				  		CentroMandoMenu,
 				  		CentroOperacionesMenu,
