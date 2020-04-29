@@ -233,10 +233,18 @@ class FriendsScene extends Phaser.Scene {
     }
     update(time, delta) {
     	if ($("#friend").val() !== this.searchName && $("#friend").val().length > 0) {
-    		let msg = new Object();
-			msg.event = 'SEARCH USERS';
-			msg.search = $("#friend").val();
-			game.global.socket.send(JSON.stringify(msg));
+    		if (this.mode === 'amigos') {
+    			
+    		}
+    		else if(this.mode === 'addAmigos') {
+        		let msg = new Object();
+    			msg.event = 'SEARCH USERS';
+    			msg.search = $("#friend").val();
+    			game.global.socket.send(JSON.stringify(msg));    			
+    		}
+    		else if (this.mode === 'solicitudes') {
+    			
+    		}
     	}
     	else if ($("#friend").val().length === 0 && this.mode === 'addAmigos') {
     		this.divAmigos.innerHTML = '';

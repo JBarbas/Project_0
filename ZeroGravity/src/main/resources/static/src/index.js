@@ -911,6 +911,13 @@ window.onload = function() {
 						borrar.style.width = '7%';
 						borrar.style.height = 'auto';
 						borrar.style.cursor = 'pointer';
+						borrar.onmousedown = function(){
+							let msgAux = new Object();
+							msgAux.event = 'DELETE FRIEND';
+							msgAux.idReceiver = msg.users[i].id;
+							msgAux.idTransmitter = game.global.myPlayerId;
+							game.global.socket.send(JSON.stringify(msgAux));
+						}
 					break;
 					case 'addAmigos':
 						var add = document.createElement("img");

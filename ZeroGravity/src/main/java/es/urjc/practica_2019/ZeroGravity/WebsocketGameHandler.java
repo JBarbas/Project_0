@@ -840,10 +840,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				q.put("name",  java.util.regex.Pattern.compile(node.get("search").asText(), Pattern.CASE_INSENSITIVE));
 				FindIterable<Document> users = coll.find(q);
 				Iterator itUsers = users.iterator();
+				Collection<ObjectId> friends = player.getFriends();
 				ArrayNode arrayNodeUsers = mapper.createArrayNode(); // JSON para el cliente
 				while (itUsers.hasNext()) {
 					Document user = (Document) itUsers.next();
-					if (!user.getString("name").equals(player.getUsername())) {
+					if (!user.getString("name").equals(player.getUsername()) && !friends.contains(user.getObjectId("_id"))) {
 						ObjectNode jsonUser = mapper.createObjectNode();
 						jsonUser.put("id", user.getObjectId("_id").toString());
 						jsonUser.put("name", user.getString("name"));		
@@ -892,6 +893,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.putPOJO("users", arrayNodeRequests);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "DELETE FRIEND":
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())),
+						Updates.pull("friends", new ObjectId(node.get("idTransmitter").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())),
+						Updates.pull("friends", new ObjectId(node.get("idReceiver").asText())));
 			case "SHOW FRIENDS":
 				arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
 				for (ObjectId id : player.getFriends()) {					
