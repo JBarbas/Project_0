@@ -29,6 +29,9 @@ class GameInterface extends Phaser.Scene {
     	
     	var btnOpciones = this.add.image(game.global.btnOpciones.x, game.global.btnOpciones.y, 'btnOpciones').setInteractive();
     	
+    	var cityBox = this.add.image(game.global.btnOpciones.x-150, game.global.btnOpciones.y+970, 'boxCityName').setInteractive();
+    	var cityEdit = this.add.image(game.global.btnOpciones.x+20, game.global.btnOpciones.y+965, 'boxCityEdit').setInteractive();
+    	cityEdit.visible = false;
     	
     	//NOMBRE CIUDAD
     	/*if(game.global.idioma == 'eng'){
@@ -168,6 +171,63 @@ class GameInterface extends Phaser.Scene {
     	colonosContainer.add(this.unionCoinstxtColonos);
     	colonosContainer.add(this.unionCoinstxtdesc1Colonos);
     	colonosContainer.add(this.unionCoinstxtdesc2Colonos);
+    	
+    	var cityname = this.add.text(1550,1000, "Murcia Downtown", { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
+    	
+    	//NOMBRE CIUDAD
+    	cityBox.on('pointerover',function(pointer){
+    		cityEdit.visible = true;
+    	})
+
+    	cityBox.on('pointerout',function(pointer){
+    		cityEdit.visible = false;
+    	})
+    	
+    	cityEdit.on('pointerover',function(pointer){
+    		cityEdit.visible = true;
+    	})
+
+    	cityEdit.on('pointerout',function(pointer){
+    		cityEdit.visible = false;
+    	})
+    	
+    	cityEdit.on('pointerdown', function(pointer){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    		//Sweet Alert para editar nombre Ciudad  --------------------- HAY QUE CONFIGURARLO BIEN ------------------------------------------
+			Swal.fire({
+				  title: 'Change your city name',
+				  input: 'text',
+				  inputAttributes: {
+				    autocapitalize: 'off'
+				  },
+				  showCancelButton: true,
+				  confirmButtonText: 'Confirm',
+				  showLoaderOnConfirm: true,
+				  preConfirm: (login) => {
+				    return fetch(`//api.github.com/users/${login}`)
+				      .then(response => {
+				        if (!response.ok) {
+				          throw new Error(response.statusText)
+				        }
+				        return response.json()
+				      })
+				      .catch(error => {
+				        Swal.showValidationMessage(
+				          `Request failed: ${error}`
+				        )
+				      })
+				  },
+				  allowOutsideClick: () => !Swal.isLoading()
+				}).then((result) => {
+				  if (result.value) {
+				    Swal.fire({
+				      title: `${result.value.login}'s avatar`,
+				      imageUrl: result.value.avatar_url
+				    })
+				  }
+				})
+    	});
     	
     	
     	//Caja UnionCoin
