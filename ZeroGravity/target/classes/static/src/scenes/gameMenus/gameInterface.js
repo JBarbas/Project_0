@@ -482,6 +482,40 @@ class GameInterface extends Phaser.Scene {
 	    		construir(game.global.edificioEnConstruccion.i, game.global.edificioEnConstruccion.j, game.scene.getScene('GameScene'), game.global.edificioEnConstruccion);
     		}
     	});
+    	
+    	if (game.global.myPlayer.isVisitor) {
+    		var button = this.add.image(950, 900, 'back').setInteractive();
+            button.setOrigin(0.5, 0.5);
+            
+            button.on('pointerover',function(pointer){
+        	    button.setFrame(1);
+        	})
+
+        	button.on('pointerout',function(pointer){
+        	    button.setFrame(0);
+        	})
+        	
+        	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
+        		Swal.fire({
+    				  title: 'Do you want to go back to your colony?',
+    				  icon: 'warning',
+    				  showCancelButton: true,
+    				  confirmButtonColor: '#3085d6',
+    				  cancelButtonColor: '#d33',
+    				  confirmButtonText: 'Yes!'
+    				}).then((result) => {
+    				  if (result.value) {
+    			    		let msg = new Object();
+    			    		msg.event = 'ASK PLAYER INFO';
+    			    		game.global.socket.send(JSON.stringify(msg));
+    			    		game.global.myPlayer.isVisitor = false;
+    			    		game.scene.stop('GameVisitorScene');
+    			    		game.scene.stop('GameInterface');
+    						game.scene.run('LoadGameplayScene');
+    				  }
+    				})
+        	});
+    	}
     }
     update(time, delta) {
     	if(game.global.inMenu){

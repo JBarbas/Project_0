@@ -281,7 +281,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				if (!player.isGameStarted()) {
 					player.setGameStarted(true);
 				}
-				updateInfo(player, "PLAYER INFO");
+				updateInfo(player, "PLAYER INFO", player.getSession());
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("metal", player.getMetal());
 				msg.put("energia", player.getEnergia());
@@ -297,7 +297,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				// Construimos el edificio, si se puede
 				player.build(node.get("x").asInt(), node.get("y").asInt(), node.get("edificio").asText(), node.get("id").asInt());	
 				// Pedimos al cliente que refresque el grid con la nueva info
-				updateInfo(player, "REFRESH GRID");
+				updateInfo(player, "REFRESH GRID", player.getSession());
 				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[0]);
 				player.savePuntuacion();
@@ -311,7 +311,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					JsonNode e = edificios.next();
 					player.build(e.get("x").asInt(), e.get("y").asInt(), e.get("edificio").asText(), e.get("id").asInt());	
 				}
-				updateInfo(player, "REFRESH GRID");
+				updateInfo(player, "REFRESH GRID", player.getSession());
 				break;
 			case "ASK_PLAYER_RESOURCES":
 				msg.put("event", "GET_PLAYER_RESOURCES");
@@ -594,7 +594,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				break;
 			case "BUY CELL":
 				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
-				updateInfo(player, "REFRESH GRID");
+				updateInfo(player, "REFRESH GRID", player.getSession());
 				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[3]);
 				player.savePuntuacion();
@@ -603,7 +603,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "REFRESH GRID":
-				updateInfo(player, "REFRESH GRID");
+				updateInfo(player, "REFRESH GRID", player.getSession());
 				break;
 			case "PEDIR COLONOS":
 				player.requestColonos();
@@ -911,6 +911,35 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				msg.putPOJO("users", arrayNodeRequests);
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "SHOW CITY":
+				ObjectId idHost = new ObjectId(node.get("id").asText());
+				Player host = players.get(idHost);
+				if (host == null) {
+					filter = new Document("_id", idHost);
+					Document dbHost = coll.find(filter).first();
+					if (dbHost != null) {
+						host = new Player(null, idHost);
+						host.updateGrid((Collection<Document>) dbHost.get("grid"));
+						host.setEdificioId(dbHost.getInteger("edificioId", 0));
+						host.updateEdificios((Collection<Document>) dbHost.get("edificios"));
+						host.updateOfertas((Collection<Document>) dbHost.get("ofertas"));
+						host.setPuntuacion(dbHost.get("puntuacion", 0));
+						host.setEnergia(dbHost.getInteger("energia", 0));
+						host.setMetal(dbHost.getInteger("metal", 100));
+						host.setCeramica(dbHost.getInteger("ceramica", 100));
+						host.setCreditos(dbHost.getInteger("creditos", 1000));
+						host.setUnionCoins(dbHost.getInteger("unionCoins", 0));
+						host.setCosteCelda(dbHost.getInteger("costeCelda", 0));
+						host.setCeldasCompradas(dbHost.getInteger("celdasCompradas", 0));
+						host.setColonos(dbHost.getInteger("colonos", 0));
+						host.setGameStarted(dbHost.getBoolean("gameStarted", false));
+						host.setCaBlocked(dbHost.getBoolean("caBlocked", true));
+					}
+				}
+				if (host != null) {
+					updateInfo(host, "PLAYER INFO", player.getSession());
+				}
+				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
 				break;
@@ -1025,7 +1054,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 	}
 	
 	// Informa al cliente y a la BDD de una actualizacion en la informacion del jugador (Grid y edificios)
-	private void updateInfo(Player player, String event) {
+	private void updateInfo(Player player, String event, WebSocketSession session) {
 		ObjectNode msg = mapper.createObjectNode();
 		try {
 			msg.put("event", event);
@@ -1094,7 +1123,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			msg.put("puntuacion", player.getPuntuacion());
 			msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 			// Enviamos el mensaje al cliente
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			session.sendMessage(new TextMessage(msg.toString()));
 		} catch (Exception e) {
 			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);
