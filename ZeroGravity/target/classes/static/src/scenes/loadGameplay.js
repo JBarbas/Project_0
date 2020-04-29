@@ -44,7 +44,12 @@ class LoadGameplayScene extends Phaser.Scene {
         }
     	
     	function cargado(){
-    		game.scene.run('GameScene');
+    		if (game.global.myPlayer.isVisitor) {
+    			game.scene.run('GameVisitorScene');
+    		}
+    		else {
+    			game.scene.run('GameScene');
+    		}
         	game.scene.stop('LoadGameplayScene');
     	}
     	

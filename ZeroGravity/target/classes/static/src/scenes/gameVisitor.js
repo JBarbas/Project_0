@@ -10,7 +10,7 @@ var minZoom = 0.5; // zoom minimo permitido
 var zoomSpeed = 0.1 // velocidad del zoom
 var construible = false; //controlador de si es posible contruir en ese momento
 
-class GameScene extends Phaser.Scene {
+class GameVisitorScene extends Phaser.Scene {
 	
 	constructor() {
 		super({
@@ -74,6 +74,8 @@ class GameScene extends Phaser.Scene {
                 	zoom = maxZoom;
                 }
             }, this);
+        
+        
     }
     update(time, delta) {
     	////////////////////////////////////////////////////////////////////////////////////

@@ -70,6 +70,7 @@ window.onload = function() {
 		loaded : false,
 		myPlayer : {
 			gameStarted : false,
+			isVisitor : false,
 			config : {
 				volMusic : 100,
 				volEffects : 100
@@ -903,6 +904,29 @@ window.onload = function() {
 						city.style.width = '7%';
 						city.style.height = 'auto';
 						city.style.cursor = 'pointer';
+						city.onmousedown = function(){
+							Swal.fire({
+							  title: 'Do you want to see the colony of ' + msg.users[i].name + '?',
+							  icon: 'warning',
+							  showCancelButton: true,
+							  confirmButtonColor: '#3085d6',
+							  cancelButtonColor: '#d33',
+							  confirmButtonText: 'Yes, show me!'
+							}).then((result) => {
+							  if (result.value) {
+							    let msgAux = new Object();
+								msgAux.event = 'SHOW CITY';
+								msgAux.id = msg.users[i].id;
+								game.global.socket.send(JSON.stringify(msgAux));
+								game.global.myPlayer.isVisitor = true;
+								game.scene.stop('GameScene');
+								game.scene.stop('GameInterface');
+								game.scene.stop('FriendsScene');
+								game.scene.run('LoadGameplayScene');
+							  }
+							})
+							
+						}
 						
 						var borrar = document.createElement("img");
 						borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
