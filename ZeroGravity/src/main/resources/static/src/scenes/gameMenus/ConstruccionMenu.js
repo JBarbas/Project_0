@@ -26,7 +26,7 @@ class ConstruccionMenu extends Phaser.Scene {
     	this.panelConstruccion = this.add.image(430, 300, 'panelConstruccion').setOrigin(0, 0);
     	this.panelConstruccion.setInteractive();
     	
-    	var btnX = this.add.image(1580, 340, 'xBuilding').setInteractive();
+    	var btnX = this.add.image(1580, 335, 'xBuilding').setInteractive();
     	var btnConstruir = this.add.image(game.global.btnAnuncio.x, game.global.btnAnuncio.y+60, 'btnConstruir').setInteractive();
     	var btnBuild = this.add.image(game.global.btnAnuncio.x, game.global.btnAnuncio.y+60, 'btnBuild').setInteractive();
     	

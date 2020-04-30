@@ -12,22 +12,22 @@ function particulasRecurso(caso){
 	switch(caso){
 	
 	case 'unionCoins':
-		emitter.setPosition(60, 40);
+		emitter.setPosition(375, 40);
 		break;
 	case 'creditos':
-		emitter.setPosition(240, 40);
+		emitter.setPosition(615, 40);
 		break;
 	case 'energia':
-		emitter.setPosition(385, 40);
+		emitter.setPosition(830, 40);
 		break;
 	case 'metal':
-		emitter.setPosition(560, 40);
+		emitter.setPosition(1055, 40);
 		break;
 	case 'ceramica':
-		emitter.setPosition(728, 40);
+		emitter.setPosition(1265, 40);
 		break;
 	case 'colonos':
-		emitter.setPosition(1275, 40);
+		emitter.setPosition(1480, 40);
 		break;
 	default:
 		break;
