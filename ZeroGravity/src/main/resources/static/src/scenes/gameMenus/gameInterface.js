@@ -176,7 +176,11 @@ class GameInterface extends Phaser.Scene {
     	
     	//NOMBRE CIUDAD
     	cityBox.on('pointerover',function(pointer){
-    		cityEdit.visible = true;
+    		if(game.global.myPlayer.isVisitor){
+        		cityEdit.visible = false;
+        	}else{
+        		cityEdit.visible = true;
+        	}
     	})
 
     	cityBox.on('pointerout',function(pointer){
@@ -184,7 +188,11 @@ class GameInterface extends Phaser.Scene {
     	})
     	
     	cityEdit.on('pointerover',function(pointer){
-    		cityEdit.visible = true;
+    		if(game.global.myPlayer.isVisitor){
+        		cityEdit.visible = false;
+        	}else{
+        		cityEdit.visible = true;
+        	}
     	})
 
     	cityEdit.on('pointerout',function(pointer){

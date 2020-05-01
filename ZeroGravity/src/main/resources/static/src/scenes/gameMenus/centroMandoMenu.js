@@ -94,6 +94,8 @@ class CentroMandoMenu extends Phaser.Scene {
         var divMando = document.getElementById("divMando");
       	
         var i = 0;
+        
+        
     	for(let edificio of game.global.edificios.values()){
     		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
 	    		let divPuestoV = document.createElement("div");
@@ -247,6 +249,34 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	
 	        	i++;
     		}
+    	}
+    	
+    	if(i==0){
+    		let divPuestoV = document.createElement("div");
+    		divPuestoV.style.marginTop = "40px";
+    		
+    		var noInfo = document.createElement("span");
+    		noInfo.style.position = "absolute";
+    		noInfo.style.left = "0px";
+    		noInfo.style.marginTop = "5px";
+    		noInfo.style.fontFamily = "pantonLight";
+    		noInfo.style.fontSize = '10px';
+    		noInfo.style.textAlign = "center";
+    		noInfo.style.color = '#fff';
+    		noInfo.indice = i;
+    		
+    		var n;
+        	if(game.global.idioma == 'eng'){
+        		n = document.createTextNode("To manage settlers you must build houses and other buildings. The workshop, the generators or the extraction platform are some of the buildings that need settlers. Go to the Construction section on the left side of the screen.");
+        	}else{
+        		n = document.createTextNode("Para administrar colonos debe construir viviendas y otros EDIFICIOS. El taller, los generadores o la plataforma de extracción son algunos de los EDIFICIOS que necesitan colonos. Ve a la sección de Construcción que se encuentra en la parte izquierda de la pantalla.");
+        	}
+        	noInfo.appendChild(n);
+        	
+        	divPuestoV.appendChild(noInfo);
+        	
+        	
+        	divMando.appendChild(divPuestoV);
     	}
         
     	edificiosContainer.add(elementV);

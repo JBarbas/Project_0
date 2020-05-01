@@ -352,38 +352,33 @@ window.onload = function() {
 			//game.global.effects.setVolume(game.global.myPlayer.config.volEffects);
 			if(game.global.resources.energia != msg.energia){
 				game.global.resources.energia = msg.energia;
-				particulasRecurso("energia");
 				game.global.effects.cambianRecursos.play();
 	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.metal != msg.metal){
 				game.global.resources.metal = msg.metal;
-				particulasRecurso("metal");
 				game.global.effects.cambianRecursos.play();
 	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.ceramica != msg.ceramica){
 				game.global.resources.ceramica = msg.ceramica;
-				particulasRecurso("ceramica");
 				game.global.effects.cambianRecursos.play();
 	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.creditos != msg.creditos){
 				game.global.resources.creditos = msg.creditos;
-				particulasRecurso("creditos");
 				game.global.effects.cambianRecursos.play();
 	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 
 			}
 			if(game.global.resources.unionCoins != msg.unionCoins){
 				game.global.resources.unionCoins = msg.unionCoins;
-				particulasRecurso("unionCoins");
 				game.global.effects.cambianRecursos.play();
 	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
 			if(game.global.resources.colonos != msg.colonos){
 				game.global.resources.colonos = msg.colonos;
-				particulasRecurso("colonos");
+				//particulasRecurso("colonos");
 				game.global.effects.cambianRecursos.play();
 	    		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			}
@@ -868,7 +863,7 @@ window.onload = function() {
 			for (let i = 0; i < msg.users.length; i++) {
 				//game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
 				let divPuestoV = document.createElement("div");
-				
+				divPuestoV.style.width = "220px";
 				
 				let boxV = document.createElement("img");
 		    	boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
@@ -889,7 +884,7 @@ window.onload = function() {
 				name.style.position = "absolute";
 				name.style.left = "20px";
 				name.style.marginTop = "1px";
-				name.style.width = '200px';
+				name.style.width = 'auto';
 				name.style.color = '#fff';
 				name.style.fontFamily = 'pantonBlack';
 				name.style.fontSize = '11px';
@@ -907,7 +902,7 @@ window.onload = function() {
 						city.onmousedown = function(){
 							Swal.fire({
 							  title: 'Do you want to see the colony of ' + msg.users[i].name + '?',
-							  icon: 'warning',
+							  icon: 'question',
 							  showCancelButton: true,
 							  confirmButtonColor: '#3085d6',
 							  cancelButtonColor: '#d33',
@@ -1023,7 +1018,7 @@ window.onload = function() {
 				con.style.position = "absolute";
 				con.style.left = "20px";
 				con.style.marginTop = "12px";
-				con.style.width = '200px';
+				con.style.width = 'auto';
 				con.style.color = '#fff';
 				con.style.fontFamily = 'pantonLight';
 				con.style.fontSize = '6px';
@@ -1039,7 +1034,7 @@ window.onload = function() {
 		    	
 		    	
 		    	var contenidoV = document.createElement("div");
-		    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px;margin-bottom:5px";
+		    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px;margin-bottom:5px;";
 		    	
 		    	divPuestoV.appendChild(name);
 		    	divPuestoV.appendChild(connect);
