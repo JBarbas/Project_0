@@ -181,6 +181,10 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('selCDOperaciones', 'assets/interface/Gameplay/Construccion/selCDOperaciones.png');
 		this.load.image('selCAdministrativo', 'assets/interface/Gameplay/Construccion/selCAdministrativo.png');
 		
+		this.load.image('selLaboratorioBlack', 'assets/interface/Gameplay/Construccion/selLaboratorioBlack.png');
+		this.load.image('selCDComercioBlack', 'assets/interface/Gameplay/Construccion/selCDComercioBlack.png');
+		this.load.image('selCDOperacionesBlack', 'assets/interface/Gameplay/Construccion/selCDOperacionesBlack.png');
+		
 		//Comercio
 		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
 		this.load.image('intCDetalles', 'assets/interface/Comercio/DetallesComercio.png');
