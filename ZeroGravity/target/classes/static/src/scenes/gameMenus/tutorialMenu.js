@@ -19,9 +19,11 @@ class TutorialScene extends Phaser.Scene {
     	
     	var scene = this;
     	
+    	var cont = 0;
     	this.mode = "tutorial";
+    	game.global.inMenu = true;
     	
-    	var textoDesdeXml,textoDesdeXmlTut;
+    	var textoDesdeXml,textoDesdeXmlTut, textoTut;
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	
     	var container = this.add.image(560, 840, 'contTextTut').setOrigin(0, 0);
@@ -36,8 +38,9 @@ class TutorialScene extends Phaser.Scene {
     	
     	var cort = this.cortina;
     
-		textoDesdeXmlTut = this.cache.xml.get(game.global.idioma).getElementsByTagName('tut')[0].childNodes[0].nodeValue;
-		var textoTut = this.add.text(600, 905, textoDesdeXmlTut, { fontFamily: '"pantonLight"', color: 'white' , fontSize: '20px', fontWeight: 'bold'});
+
+		textoDesdeXmlTut = this.cache.xml.get(game.global.idioma + "Tut").getElementsByTagName('tut')[0].childNodes[0].nodeValue;
+		textoTut = this.add.text(600, 905, textoDesdeXmlTut, { fontFamily: '"pantonLight"', color: 'white' , fontSize: '20px', fontWeight: 'bold'});
 		
 		
 		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('omitir')[0].childNodes[0].nodeValue;
@@ -86,6 +89,16 @@ class TutorialScene extends Phaser.Scene {
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
+
+    		cont--;
+    		if(cont == 0){
+    			textoDesdeXmlTut = scene.cache.xml.get(game.global.idioma + "Tut").getElementsByTagName('tut')[0].childNodes[0].nodeValue;
+    			textoTut.text = textoDesdeXmlTut;
+    			
+    		}else{
+    			textoDesdeXmlTut = scene.cache.xml.get(game.global.idioma + "Tut").getElementsByTagName('tut' + cont)[0].childNodes[0].nodeValue;
+    			textoTut.text = textoDesdeXmlTut;
+    		}
     	})
     	
     	//Siguiente
@@ -100,14 +113,18 @@ class TutorialScene extends Phaser.Scene {
     	sigTut.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
-    		game.scene.getScene('GameInterface').panel.alpha = 1.0;
+    		game.scene.getScene('GameInterface').panel.alpha = 1.0;  
+    		
+    		cont++;
+    		textoDesdeXmlTut = scene.cache.xml.get(game.global.idioma + "Tut").getElementsByTagName('tut' + cont)[0].childNodes[0].nodeValue;
+    		textoTut.text = textoDesdeXmlTut;
+    		
+    		
     	})
     	
     }
     update(time, delta) {
-    	
-    	
-    	
+    		
     }
 
 }
