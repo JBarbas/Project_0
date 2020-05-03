@@ -55,15 +55,17 @@ class GameScene extends Phaser.Scene {
 	  		  showLoaderOnConfirm: true,
 	  		}).then((result) => {
 	  		  if (result.value) {
-	  		    Swal.fire({
+	  		    /*Swal.fire({
 	  		      title: `${result.value.login}'s avatar`,
 	  		      imageUrl: result.value.avatar_url
-	  		    })
-	  		  game.global.myPlayer.gameStarted = true;	  		   
+	  		    })*/
+	  		  game.global.myPlayer.gameStarted = true;
+	  		    
 	  		  }
 	  		})
     	}
-
+    	///Esta aqui para poder hacer pruebas/// Habra que meterlo despues en el .then((result))
+    	game.scene.run('TutorialScene');
 		var mediaQuery = window.matchMedia("(max-width: 700px)")
 		if (!mediaQuery.matches) { 
 			this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);

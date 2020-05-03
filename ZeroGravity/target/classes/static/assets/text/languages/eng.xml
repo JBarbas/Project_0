@@ -347,6 +347,14 @@ Required time:
 			<colono1>Build houses to</colono1>
 			<colono2>increase population</colono2>
 		</hovericonos>
+		<tutorial>
+			<omitir>Skip</omitir>
+			<anterior>Previous</anterior>
+			<siguiente>Next</siguiente>
+			<tut>Welcome to Murcia Downtown. Your colony at Polaris. 
+			I'm Celso, general commander of the Russian bacon, 
+			I have been commissioned to show you how things are going around here</tut>
+		</tutorial>
 		
 		
 	</menusEdificios>

@@ -54,7 +54,8 @@ window.onload = function() {
 				  		AnuncioMenu,
 				  		RankingMenu,
 				  		ConstruccionMenu,
-				  		FriendsScene]
+				  		FriendsScene,
+				  		TutorialScene]
 			};
 			
 	

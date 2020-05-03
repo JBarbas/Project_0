@@ -14,6 +14,7 @@ class PreloadGameScene extends Phaser.Scene {
 	}
 	
 	preload () {
+		
 		var musicMenu = game.global.musicMenu;
 		//musicMenu.stop();
 		game.scene.run('LoadGameplayScene');
@@ -22,6 +23,8 @@ class PreloadGameScene extends Phaser.Scene {
 		let msg = new Object();
 		msg.event = 'ASK PLAYER INFO';
 		game.global.socket.send(JSON.stringify(msg));
+		
+		
 		
 		this.load.image('fondo', 'assets/sprites/Fondo/fondo2.jpg');
 		this.load.image('bg0', 'assets/sprites/0.jpg');
@@ -216,6 +219,14 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/interface/Gameplay/creditosFloat.png');
 		this.load.image('colonIcon', 'assets/interface/Gameplay/newColon.png');
+		
+		//Tutorial
+
+		this.load.image('contTextTut', 'assets/interface/Tutorial/cuadro de dialogo.png');
+		this.load.image('priya', 'assets/interface/Tutorial/priya.png');
+		this.load.image('jakob', 'assets/interface/Tutorial/jakob.png');
+		this.load.image('celso', 'assets/interface/Tutorial/celso.png');
+		this.load.image('binette', 'assets/interface/Tutorial/binette.png');
 	
 		
 		//this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
