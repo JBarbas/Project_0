@@ -510,35 +510,43 @@ public class Player {
 				break;
 			case "taller":
 				edificio = new Taller(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
-				for (Document r : (Collection<Document>) e.get("robots")) {
-					Robot robot = new RobotEstandar(r.getInteger("id"), (Taller) edificio);
-					robot.setAusente(r.getBoolean("ausente"));
-					robot.setNivel(r.getInteger("nivel"));
-					robot.setCarga(r.getInteger("carga"));
-					robot.setProductionBeginTime((Document) e.get("productionBeginTime"));
-					((Taller) edificio).addRobot(robot);
+				if (session != null) { 
+					for (Document r : (Collection<Document>) e.get("robots")) {
+						Robot robot = new RobotEstandar(r.getInteger("id"), (Taller) edificio);
+						robot.setAusente(r.getBoolean("ausente"));
+						robot.setNivel(r.getInteger("nivel"));
+						robot.setCarga(r.getInteger("carga"));
+						robot.setProductionBeginTime((Document) e.get("productionBeginTime"));
+						((Taller) edificio).addRobot(robot);
+					}
+					((Taller) edificio).setRobotId(e.getInteger("robotId", 0));
+					((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+					generadoresRecursos.add((GeneradorRecursos) edificio);
 				}
-				((Taller) edificio).setRobotId(e.getInteger("robotId", 0));
-				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
-				generadoresRecursos.add((GeneradorRecursos) edificio);
 				break;
 			case "plataformaExtraccion":
 				edificio = new PlataformaExtraccion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
-				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
-				((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
-				generadoresRecursos.add((GeneradorRecursos) edificio);
+				if (session != null) {
+					((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+					((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
+					generadoresRecursos.add((GeneradorRecursos) edificio);
+				}				
 				break;
 			case "generador":
 				edificio = new Generador(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
-				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
-				generadoresRecursos.add((GeneradorRecursos) edificio);
-				generadores.add((Generador) edificio);
+				if (session != null) {
+					((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+					generadoresRecursos.add((GeneradorRecursos) edificio);
+					generadores.add((Generador) edificio);
+				}
 				break;
 			case "laboratorioInvestigacion":
 				edificio = new LaboratorioInvestigacion(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"), e.getBoolean("lleno"), e.getBoolean("produciendo"), (Document) e.get("productionBeginTime"));
-				((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
-				((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
-				generadoresRecursos.add((GeneradorRecursos) edificio);
+				if (session != null) { 
+					((GeneradorRecursos) edificio).setColonos(e.getInteger("colonos", 0));
+					((GeneradorRecursos) edificio).setLevelProduciendo(e.getInteger("levelProduciendo", 1));
+					generadoresRecursos.add((GeneradorRecursos) edificio);
+				}
 				break;
 			case "centroComercio":
 				edificio = new CentroComercio(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
@@ -552,7 +560,7 @@ public class Player {
 			edificio.logInUpdate();
 			this.edificios.put(edificio.getId(), edificio);
 		}
-		saveEdificios();
+		if (session != null) saveEdificios();
 	}
 	
 	public void build(int x, int y, String sprite, int id) {
