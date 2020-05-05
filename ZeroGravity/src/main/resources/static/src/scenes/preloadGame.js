@@ -36,6 +36,7 @@ class PreloadGameScene extends Phaser.Scene {
 		
 		this.load.atlas('global', 'assets/atlas/global.png', 'assets/atlas/global.json');
 		this.load.atlas('nextlvl1x1', 'assets/atlas/nextlvl1x1.png', 'assets/atlas/nextlvl1x1.json');
+		this.load.atlas('nextlvl1x2', 'assets/atlas/nextlvl1x2.png', 'assets/atlas/nextlvl1x2.json');
 		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');

@@ -453,6 +453,7 @@ window.onload = function() {
 				levelUp(game.global.edificios.get(msg.id));
 				var edif = game.global.edificios.get(msg.id);
 				var effect = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevel', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x1')});
+				var effect2 = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevelLarge', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x2')});
 				
 				//Sacamos coordenadas cartesianas
 				var position = new Phaser.Geom.Point(edif.x*tile_width/2 , edif.y*tile_height);
@@ -461,12 +462,24 @@ window.onload = function() {
 	            //Ejecutamos sonido de subir nivel
 	            game.global.effects.subirNivel.play();
 	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
-	            
-				var effectPlay = game.scene.getScene('GameScene').add.sprite(position.x+tileMap_width*tile_width/2, position.y +85, 'nextlvl1x1').play('animNextLevel').setScale(0.63);
+	    		
+	    		//Se crean las animaciones segun el tamaño del edificio
+	    		if(edif.width === 2 && edif.height === 2){
+	    			//Guay
+	    			var effectPlay = game.scene.getScene('GameScene').add.sprite(position.x+tileMap_width*tile_width/2-10, position.y +200, 'nextlvl1x1').play('animNextLevel').setScale(1.4);
+	    		}else if(edif.width === 1 && edif.height === 2){
+	    			//
+	    			var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)-25, position.y +85, 'nextlvl1x2').play('animNextLevelLarge').setScale(0.65);
+	    		}else if(edif.width === 2 && edif.height === 1){
+	    			var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)+25, position.y +85, 'nextlvl1x2').play('animNextLevelLarge').setScale(0.65).setFlip(true,false);
+	    		}else{
+	    			//Guay
+		    		var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)-5, position.y +90, 'nextlvl1x1').play('animNextLevel').setScale(0.65);
+	    		}
 				effectPlay.setOrigin(edif.originX,1);
-				console.log(position.x+tileMap_width*tile_width/2, position.y);
 				effectPlay.depth = game.global.edificios.get(msg.id).gameObject.depth;
 				pedirPuntuaciones()
+				
 			}else{
 				Swal.fire({
 					  icon: 'warning',
