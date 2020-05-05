@@ -451,6 +451,21 @@ window.onload = function() {
 			}	
 			if(msg.resultado){
 				levelUp(game.global.edificios.get(msg.id));
+				var edif = game.global.edificios.get(msg.id);
+				var effect = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevel', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x1')});
+				
+				//Sacamos coordenadas cartesianas
+				var position = new Phaser.Geom.Point(edif.x*tile_width/2 , edif.y*tile_height);
+	            position = cartesianToIsometric(position);
+	            
+	            //Ejecutamos sonido de subir nivel
+	            game.global.effects.subirNivel.play();
+	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+	            
+				var effectPlay = game.scene.getScene('GameScene').add.sprite(position.x+tileMap_width*tile_width/2, position.y +85, 'nextlvl1x1').play('animNextLevel').setScale(0.63);
+				effectPlay.setOrigin(edif.originX,1);
+				console.log(position.x+tileMap_width*tile_width/2, position.y);
+				effectPlay.depth = game.global.edificios.get(msg.id).gameObject.depth;
 				pedirPuntuaciones()
 			}else{
 				Swal.fire({
