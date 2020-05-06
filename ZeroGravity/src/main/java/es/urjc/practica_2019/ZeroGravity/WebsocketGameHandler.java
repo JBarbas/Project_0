@@ -933,6 +933,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 						host.setCeldasCompradas(dbHost.getInteger("celdasCompradas", 0));
 						host.setColonos(dbHost.getInteger("colonos", 0));
 						host.setGameStarted(dbHost.getBoolean("gameStarted", false));
+						host.setCaBlocked(dbHost.getBoolean("caBlocked", true));
 					}
 				}
 				if (host != null) {
@@ -1074,34 +1075,32 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				jsonEdificio.put("id", e.getId());
 				jsonEdificio.put("x", e.getX());
 				jsonEdificio.put("y", e.getY());
-				if (player.getSession() != null) { 
-					if (e instanceof GeneradorRecursos) {
-						jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
-						jsonEdificio.put("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
-						jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
-						jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
-						jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
-						jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
-						jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
-						jsonEdificio.put("jobs", ((GeneradorRecursos) e).getJobs());
-						jsonEdificio.put("numColonos", ((GeneradorRecursos) e).getColonos());
-						if (e instanceof Taller) {
-							ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
-							for (Robot r :  ((Taller) e).getRobots()) {
-								ObjectNode jsonRobot = mapper.createObjectNode();
-								jsonRobot.put("id", r.getId());
-								jsonRobot.put("ausente", r.isAusente());
-								jsonRobot.put("nivel", r.getNivel());
-								jsonRobot.put("carga", r.getCarga());
-								jsonRobot.put("dateYear", r.getProductionBeginTime().getYear());
-								jsonRobot.put("dateMonth", r.getProductionBeginTime().getMonthValue());
-								jsonRobot.put("dateDay", r.getProductionBeginTime().getDayOfMonth());
-								jsonRobot.put("dateHour", r.getProductionBeginTime().getHour());
-								jsonRobot.put("dateMinute", r.getProductionBeginTime().getMinute());
-								arrayNodeRobots.addPOJO(jsonRobot);
-							}
-							jsonEdificio.putPOJO("robots", arrayNodeRobots);
+				if (e instanceof GeneradorRecursos) {
+					jsonEdificio.put("lleno", ((GeneradorRecursos) e).isLleno());
+					jsonEdificio.put("levelProduciendo", ((GeneradorRecursos) e).getLevelProduciendo());
+					jsonEdificio.put("dateYear", ((GeneradorRecursos) e).getProductionBeginTime().getYear());
+					jsonEdificio.put("dateMonth", ((GeneradorRecursos) e).getProductionBeginTime().getMonthValue());
+					jsonEdificio.put("dateDay", ((GeneradorRecursos) e).getProductionBeginTime().getDayOfMonth());
+					jsonEdificio.put("dateHour", ((GeneradorRecursos) e).getProductionBeginTime().getHour());
+					jsonEdificio.put("dateMinute", ((GeneradorRecursos) e).getProductionBeginTime().getMinute());
+					jsonEdificio.put("jobs", ((GeneradorRecursos) e).getJobs());
+					jsonEdificio.put("numColonos", ((GeneradorRecursos) e).getColonos());
+					if (e instanceof Taller) {
+						ArrayNode arrayNodeRobots = mapper.createArrayNode(); // JSON para el cliente
+						for (Robot r :  ((Taller) e).getRobots()) {
+							ObjectNode jsonRobot = mapper.createObjectNode();
+							jsonRobot.put("id", r.getId());
+							jsonRobot.put("ausente", r.isAusente());
+							jsonRobot.put("nivel", r.getNivel());
+							jsonRobot.put("carga", r.getCarga());
+							jsonRobot.put("dateYear", r.getProductionBeginTime().getYear());
+							jsonRobot.put("dateMonth", r.getProductionBeginTime().getMonthValue());
+							jsonRobot.put("dateDay", r.getProductionBeginTime().getDayOfMonth());
+							jsonRobot.put("dateHour", r.getProductionBeginTime().getHour());
+							jsonRobot.put("dateMinute", r.getProductionBeginTime().getMinute());
+							arrayNodeRobots.addPOJO(jsonRobot);
 						}
+						jsonEdificio.putPOJO("robots", arrayNodeRobots);
 					}
 				}
 				jsonEdificio.put("sprite", e.getSprite());

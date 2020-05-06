@@ -99,6 +99,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.audio('recogerRecursos', ['assets/sound/recogerRecursos.wav', '']);
 		this.load.audio('recursosMaximos', ['assets/sound/recursosMaximos.wav', '']);
 		this.load.audio('seleccionarEdificio', ['assets/sound/seleccionarEdificio.wav', '']);
+		this.load.audio('subirNivel', ['assets/sound/ring!.wav', '']);
 		
     }
     create (data)  {

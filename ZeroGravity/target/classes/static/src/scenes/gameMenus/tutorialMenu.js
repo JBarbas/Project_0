@@ -36,6 +36,8 @@ class TutorialScene extends Phaser.Scene {
     	jakob.setVisible(false);
     	priya.setVisible(false);
     	
+    	
+    	
     	var cort = this.cortina;
     
 
@@ -119,8 +121,19 @@ class TutorialScene extends Phaser.Scene {
     		textoDesdeXmlTut = scene.cache.xml.get(game.global.idioma + "Tut").getElementsByTagName('tut' + cont)[0].childNodes[0].nodeValue;
     		textoTut.text = textoDesdeXmlTut;
     		
-    		
+    		//voltear(jakob);
+    		if(cont%2 != 0){
+    			jakob.setVisible(true);
+    			jakob.setFlip(true,false);
+    			jakob.x = '280';
+    		}
     	})
+    	
+    	console.log(jakob);
+    	//function voltear(var pers){
+    		//pers.setVisible(true);
+    		//pers.setFlip(true,false);
+    	//}
     	
     }
     update(time, delta) {
