@@ -87,6 +87,9 @@ class FriendsScene extends Phaser.Scene {
         
         this.divAmigos = document.getElementById("divAmigos");
       	
+        if(game.scene.getScene('FriendsScene').mode == 'amigos'){
+        	this.divAmigos.innerHTML = "<span>patata</span>";
+        }
            		
 		///////////////////////////////////
     	
@@ -263,7 +266,29 @@ class FriendsScene extends Phaser.Scene {
     		}
     	}
     	else if ($("#friend").val().length === 0 && this.mode === 'addAmigos') {
-    		this.divAmigos.innerHTML = '';
+    		if(game.global.idioma == "eng"){
+    			this.divAmigos.innerHTML = '<span style=" color: #fff; font-family: pantonLight ">Enter characters in the search engine above to find your friends.</span>';
+    		}else{
+    			this.divAmigos.innerHTML = '<span style=" color: #fff; font-family: pantonLight ">Introduce caracteres en el buscador de arriba para encontrar a tus amigos.</span>';
+    		}
+    		this.divAmigos.style.marginTop = '20px';
+    		this.divAmigos.style.textAlign = 'center';
+    	}else if ($("#friend").val().length === 0 && this.mode === 'amigos') {
+    		if(game.global.idioma == "eng"){
+    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no friends right now, look in the add friends section.</span>';
+    		}else{
+    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes amigos ahora mismo, busca en la seccion añadir amigos.</span>';
+    		}
+    		this.divAmigos.style.marginTop = '20px';
+    		this.divAmigos.style.textAlign = 'center';
+    	}else if ($("#friend").val().length === 0 && this.mode === 'solicitudes') {
+    		if(game.global.idioma == "eng"){
+    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no pending friend requests</span>';
+    		}else{
+    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes solicitudes de amistad pendientes</span>';
+    		}
+    		this.divAmigos.style.marginTop = '20px';
+    		this.divAmigos.style.textAlign = 'center';
     	}
     	
     	this.searchName = $("#friend").val();
