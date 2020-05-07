@@ -55,10 +55,17 @@ class GameScene extends Phaser.Scene {
 	  		  showLoaderOnConfirm: true,
 	  		}).then((result) => {
 	  		  if (result.value) {
-	  		    /*Swal.fire({
-	  		      title: `${result.value.login}'s avatar`,
-	  		      imageUrl: result.value.avatar_url
-	  		    })*/
+	  			if (result.value.length <= 15) {
+					  let msg = new Object();
+					  msg.event = 'CHANGE CITY NAME';
+					  msg.name = result.value;
+					  game.global.socket.send(JSON.stringify(msg));
+					  Swal.fire({
+						  icon: 'success',
+						  title: 'Nice!',
+						  text: "Your name has been changed."
+						});
+				  }
 	  		  game.global.myPlayer.gameStarted = true;
 	  		    
 	  		  }
