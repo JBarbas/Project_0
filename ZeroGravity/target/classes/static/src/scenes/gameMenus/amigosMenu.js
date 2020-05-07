@@ -28,11 +28,10 @@ class FriendsScene extends Phaser.Scene {
     	//var bloqueAmigo = this.add.image(540, 420, 'bloqueAmigosBck').setOrigin(0, 0);
     	
     	var btnX = this.add.image(1500, 300, 'xBuilding').setInteractive();
-    	var btnAdd = this.add.image(1030, 420, 'btnAddFriends').setInteractive();
-    	var btnSolicitud = this.add.image(1030, 575, 'btnSolicitudFriends').setInteractive();
-    	var btnVolver = this.add.image(1030, 420, 'btnBackFriends').setInteractive();
-    	var btnVolver1 = this.add.image(1030, 575, 'btnBackFriends').setInteractive();
-    	var btnSearch = this.add.image(1030, 730, 'btnSearchFriends').setInteractive();
+    	var btnAdd = this.add.image(1030, 575, 'btnAddFriends').setInteractive();
+    	var btnSolicitud = this.add.image(1030, 730, 'btnSolicitudFriends').setInteractive();
+    	var btnAmigos = this.add.image(1030, 420, 'btnBackFriends').setInteractive();
+    	//var btnSearch = this.add.image(1030, 575, 'btnSearchFriends').setInteractive();
     	var cort = this.cortina;
     	
     	//GIF
@@ -61,12 +60,10 @@ class FriendsScene extends Phaser.Scene {
     	panelFriends.visible = false;
     	
     	btnAdd.scale = 0.7;
-    	btnSearch.scale = 0.7;
+    	//btnSearch.scale = 0.7;
     	btnSolicitud.scale = 0.7;
-    	btnVolver.scale = 0.7;
-    	btnVolver.setVisible(false);
-    	btnVolver1.scale = 0.7;
-    	btnVolver1.setVisible(false);
+    	btnAmigos.scale = 0.7;
+
     	
     	this.usersList = this.add.text(550, 420, '', {
     	    fontFamily: 'pantonBlack',
@@ -104,40 +101,36 @@ class FriendsScene extends Phaser.Scene {
 	 	})
 	
 	 	btnAdd.on('pointerout',function(pointer){
-	 	    this.setFrame(0);
+	 		if(scene.mode != "addAmigos")
+	 			this.setFrame(0);
 	 	})
 	 	
-	 	btnSearch.on('pointerover',function(pointer){
+	 	/*btnSearch.on('pointerover',function(pointer){
 	 	    this.setFrame(1);
 	 	})
 	
 	 	btnSearch.on('pointerout',function(pointer){
 	 	    this.setFrame(0);
-	 	})
+	 	})*/
 	 	
 	 	btnSolicitud.on('pointerover',function(pointer){
 	 	    this.setFrame(1);
 	 	})
 	
 	 	btnSolicitud.on('pointerout',function(pointer){
-	 	    this.setFrame(0);
+	 		if(scene.mode != "solicitudes")
+	 			this.setFrame(0);
 	 	})
 	 	
-	 	btnVolver.on('pointerover',function(pointer){
+	 	btnAmigos.on('pointerover',function(pointer){
 	 	    this.setFrame(1);
 	 	})
 	
-	 	btnVolver.on('pointerout',function(pointer){
-	 	    this.setFrame(0);
+	 	btnAmigos.on('pointerout',function(pointer){
+	 		if(scene.mode != "amigos")
+	 			this.setFrame(0);
 	 	})
 	 	
-	 	btnVolver1.on('pointerover',function(pointer){
-	 	    this.setFrame(1);
-	 	})
-	
-	 	btnVolver1.on('pointerout',function(pointer){
-	 	    this.setFrame(0);
-	 	})
     	
     	btnX.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
@@ -148,17 +141,17 @@ class FriendsScene extends Phaser.Scene {
     		game.scene.stop('FriendsScene');
     	});
     	
-    	btnVolver.on('pointerdown', function(pointer){
+    	btnAmigos.on('pointerdown', function(pointer){
+    		btnAmigos.setFrame(1);
+    		btnSolicitud.setFrame(0);
+    		btnAdd.setFrame(0);
+    		
     		document.getElementById("friend").value = "";
     		
     		let msg = new Object();
 			msg.event = 'SHOW FRIENDS';
 			game.global.socket.send(JSON.stringify(msg));
     		
-    		btnAdd.setVisible(true);
-    		btnSolicitud.setVisible(true);
-    		btnVolver.setVisible(false);
-    		btnVolver1.setVisible(false);
     		panelFriends2.visible = true;
     		panelFriends.visible = false;
     		element.setVisible(false);
@@ -169,35 +162,13 @@ class FriendsScene extends Phaser.Scene {
     		
     		scene.mode = "amigos";
     		document.getElementById("friend").value = "";
-    	});
-    	
-    	btnVolver1.on('pointerdown', function(pointer){
-    		document.getElementById("friend").value = "";
-    		
-    		let msg = new Object();
-			msg.event = 'SHOW FRIENDS';
-			game.global.socket.send(JSON.stringify(msg));
-    		
-    		btnAdd.setVisible(true);
-    		btnSolicitud.setVisible(true);
-    		btnVolver.setVisible(false);
-    		btnVolver1.setVisible(false);
-    		panelFriends2.visible = true;
-    		panelFriends.visible = false;
-    		element.setVisible(false);
-    		
-    		addamigostxt.setVisible(false);
-    		solicitudamigostxt.setVisible(false);
-    		amigostxt.setVisible(true);
-    		
-    		scene.mode = "amigos";
     	});
     	
     	btnAdd.on('pointerdown', function(pointer){
-    		btnAdd.setVisible(false);
-    		btnVolver.setVisible(true);
-    		btnVolver1.setVisible(false);
-    		btnSolicitud.setVisible(true);
+    		btnAdd.setFrame(1);
+    		btnSolicitud.setFrame(0);
+    		btnAmigos.setFrame(0);
+    		
     		element.setVisible(true);
     		
     		addamigostxt.setVisible(true);
@@ -212,16 +183,16 @@ class FriendsScene extends Phaser.Scene {
     	});
     	
     	btnSolicitud.on('pointerdown', function(pointer){
+    		btnSolicitud.setFrame(1);
+    		btnAdd.setFrame(0);
+    		btnAmigos.setFrame(0);
     		document.getElementById("friend").value = "";
     		
     		let msg = new Object();
 			msg.event = 'SHOW FRIEND REQUESTS';
 			game.global.socket.send(JSON.stringify(msg));
 			
-    		btnAdd.setVisible(true);
-    		btnVolver.setVisible(false);
-    		btnVolver1.setVisible(true);
-    		btnSolicitud.setVisible(false);
+    		
     		panelFriends2.visible = true;
     		panelFriends.visible = false;
     		element.setVisible(false);
