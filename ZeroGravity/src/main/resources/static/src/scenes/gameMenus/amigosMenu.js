@@ -86,10 +86,6 @@ class FriendsScene extends Phaser.Scene {
         elementV.setPerspective(800);
         
         this.divAmigos = document.getElementById("divAmigos");
-      	
-        if(game.scene.getScene('FriendsScene').mode == 'amigos'){
-        	this.divAmigos.innerHTML = "<span>patata</span>";
-        }
            		
 		///////////////////////////////////
     	
@@ -163,8 +159,8 @@ class FriendsScene extends Phaser.Scene {
     		btnSolicitud.setVisible(true);
     		btnVolver.setVisible(false);
     		btnVolver1.setVisible(false);
-    		panelFriends2.visible = false;
-    		panelFriends.visible = true;
+    		panelFriends2.visible = true;
+    		panelFriends.visible = false;
     		element.setVisible(false);
     		
     		addamigostxt.setVisible(false);
@@ -186,8 +182,8 @@ class FriendsScene extends Phaser.Scene {
     		btnSolicitud.setVisible(true);
     		btnVolver.setVisible(false);
     		btnVolver1.setVisible(false);
-    		panelFriends2.visible = false;
-    		panelFriends.visible = true;
+    		panelFriends2.visible = true;
+    		panelFriends.visible = false;
     		element.setVisible(false);
     		
     		addamigostxt.setVisible(false);
