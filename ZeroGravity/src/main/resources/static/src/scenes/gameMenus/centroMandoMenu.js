@@ -112,7 +112,11 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	
 	        	
 	    		var imagen = document.createElement("img");
-	    		imagen.src = edificio.listImage + edificio.level + '.png';
+	    		if(edificio.listImage != "assets/sprites/Edificios/Taller_1.png"){
+	    			imagen.src = edificio.listImage + edificio.level + '.png';
+    			}else{
+    				imagen.src = "assets/sprites/Edificios/Taller" + edificio.level + '.png';
+    			}
 	    		imagen.style.position = "absolute";
 	    		imagen.style.left = "10px";
 	    		if(i != 0){
