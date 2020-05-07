@@ -172,7 +172,10 @@ class GameInterface extends Phaser.Scene {
     	colonosContainer.add(this.unionCoinstxtdesc1Colonos);
     	colonosContainer.add(this.unionCoinstxtdesc2Colonos);
     	
-    	var cityname = this.add.text(1550,1000, "Murcia Downtown", { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
+    	this.cityname = this.add.text(1550,1000, game.global.myPlayer.cityName, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
+    	if (game.global.myPlayer.isVisitor) {
+    		this.cityname.text = game.global.myPlayer.visitorCityName;
+    	}
     	
     	//NOMBRE CIUDAD
     	cityBox.on('pointerover',function(pointer){
@@ -211,28 +214,18 @@ class GameInterface extends Phaser.Scene {
 				  },
 				  showCancelButton: true,
 				  confirmButtonText: 'Confirm',
-				  showLoaderOnConfirm: true,
-				  preConfirm: (login) => {
-				    return fetch(`//api.github.com/users/${login}`)
-				      .then(response => {
-				        if (!response.ok) {
-				          throw new Error(response.statusText)
-				        }
-				        return response.json()
-				      })
-				      .catch(error => {
-				        Swal.showValidationMessage(
-				          `Request failed: ${error}`
-				        )
-				      })
-				  },
-				  allowOutsideClick: () => !Swal.isLoading()
+				  showLoaderOnConfirm: true
 				}).then((result) => {
-				  if (result.value) {
-				    Swal.fire({
-				      title: `${result.value.login}'s avatar`,
-				      imageUrl: result.value.avatar_url
-				    })
+				  if (result.value.length <= 15) {
+					  let msg = new Object();
+					  msg.event = 'CHANGE CITY NAME';
+					  msg.name = result.value;
+					  game.global.socket.send(JSON.stringify(msg));
+					  Swal.fire({
+						  icon: 'success',
+						  title: 'Nice!',
+						  text: "Your name has been changed."
+						});
 				  }
 				})
     	});

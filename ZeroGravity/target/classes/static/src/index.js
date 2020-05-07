@@ -72,6 +72,7 @@ window.onload = function() {
 		myPlayer : {
 			gameStarted : false,
 			isVisitor : false,
+			cityName : 'your city',
 			config : {
 				volMusic : 100,
 				volEffects : 100
@@ -162,6 +163,7 @@ window.onload = function() {
 			/*al hacer el login aprovecho para tener en el cliente su id*/
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;			
+			game.global.myPlayer.cityName = msg.cityName;
 			game.global.myPlayer.config.volMusic = msg.config.volMusic;
 			game.global.myPlayer.config.volEffects = msg.config.volEffects;
 			game.global.idioma = msg.config.lang;
@@ -1089,7 +1091,22 @@ window.onload = function() {
 		    	divPuestoV.appendChild(contenidoV);
 		    	game.scene.getScene('FriendsScene').divAmigos.appendChild(divPuestoV);
 			}
-			break;			
+			break;	
+		case 'CITY NAME CHANGED':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CITY NAME CHANGED message recieved')
+				console.dir(msg);
+			}
+			game.global.myPlayer.cityName = msg.name;
+			game.scene.getScene('GameInterface').cityname.text = msg.name;
+			break;
+		case 'VISITOR CITY NAME':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] VISITOR CITY NAME message recieved')
+				console.dir(msg);
+			}
+			game.global.myPlayer.visitorCityName = msg.name;
+			break;
 		default:
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] UNKNOWN message recieved')

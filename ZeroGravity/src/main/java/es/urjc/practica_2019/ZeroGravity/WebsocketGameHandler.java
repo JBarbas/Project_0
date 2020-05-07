@@ -163,7 +163,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 
 					msg.put("event", "LOGGED");
 					msg.put("playerId", player.getId().toString());
-					msg.put("gameStarted", player.isGameStarted());					
+					msg.put("gameStarted", player.isGameStarted());	
+					msg.put("cityName", myPlayer.get("cityName", "your city").toString());
 					ObjectNode jsonConfig = mapper.createObjectNode();
 					jsonConfig.put("volMusic", config.getVolMusic());
 					jsonConfig.put("volEffects", config.getVolEffects());
@@ -914,30 +915,41 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 			case "SHOW CITY":
 				ObjectId idHost = new ObjectId(node.get("id").asText());
 				Player host = players.get(idHost);
-				if (host == null) {
-					filter = new Document("_id", idHost);
-					Document dbHost = coll.find(filter).first();
-					if (dbHost != null) {
-						host = new Player(null, idHost);
-						host.updateGrid((Collection<Document>) dbHost.get("grid"));
-						host.setEdificioId(dbHost.getInteger("edificioId", 0));
-						host.updateEdificios((Collection<Document>) dbHost.get("edificios"));
-						host.updateOfertas((Collection<Document>) dbHost.get("ofertas"));
-						host.setPuntuacion(dbHost.get("puntuacion", 0));
-						host.setEnergia(dbHost.getInteger("energia", 0));
-						host.setMetal(dbHost.getInteger("metal", 100));
-						host.setCeramica(dbHost.getInteger("ceramica", 100));
-						host.setCreditos(dbHost.getInteger("creditos", 1000));
-						host.setUnionCoins(dbHost.getInteger("unionCoins", 0));
-						host.setCosteCelda(dbHost.getInteger("costeCelda", 0));
-						host.setCeldasCompradas(dbHost.getInteger("celdasCompradas", 0));
-						host.setColonos(dbHost.getInteger("colonos", 0));
-						host.setGameStarted(dbHost.getBoolean("gameStarted", false));
-						host.setCaBlocked(dbHost.getBoolean("caBlocked", true));
-					}
+				filter = new Document("_id", idHost);
+				Document dbHost = coll.find(filter).first();
+				if (host == null && dbHost != null) {
+					host = new Player(null, idHost);
+					host.updateGrid((Collection<Document>) dbHost.get("grid"));
+					host.setEdificioId(dbHost.getInteger("edificioId", 0));
+					host.updateEdificios((Collection<Document>) dbHost.get("edificios"));
+					host.updateOfertas((Collection<Document>) dbHost.get("ofertas"));
+					host.setPuntuacion(dbHost.get("puntuacion", 0));
+					host.setEnergia(dbHost.getInteger("energia", 0));
+					host.setMetal(dbHost.getInteger("metal", 100));
+					host.setCeramica(dbHost.getInteger("ceramica", 100));
+					host.setCreditos(dbHost.getInteger("creditos", 1000));
+					host.setUnionCoins(dbHost.getInteger("unionCoins", 0));
+					host.setCosteCelda(dbHost.getInteger("costeCelda", 0));
+					host.setCeldasCompradas(dbHost.getInteger("celdasCompradas", 0));
+					host.setColonos(dbHost.getInteger("colonos", 0));
+					host.setGameStarted(dbHost.getBoolean("gameStarted", false));
+					host.setCaBlocked(dbHost.getBoolean("caBlocked", true));
 				}
 				if (host != null) {
+					msg.put("event", "VISITOR CITY NAME");
+					msg.put("name", dbHost.get("cityName", "Unknown city"));
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
 					updateInfo(host, "PLAYER INFO", player.getSession());
+				}
+				break;
+			case "CHANGE CITY NAME":
+				String cityName = node.get("name").asText();
+				if (cityName.length() <= 15) {
+					WebsocketGameHandler.getColl().updateOne(new Document("_id", player.getId()), 
+							new Document("$set", new Document("cityName", cityName)));
+					msg.put("event", "CITY NAME CHANGED");
+					msg.put("name", cityName);
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
 			case "DEBUG":
