@@ -328,9 +328,12 @@ class OptionsScene extends Phaser.Scene {
 		  	value: getVolumeEffects(),
 				range: "min",
 		  	slide: function(event, ui) {
+		  		console.log(ui.value / 100);
 		    	setVolumeEffect(ui.value / 100);
 		  	}
 		});
+        
+        console.log(getVolumeEffects());
         
         //Music
         $("#volume2").slider({
@@ -367,7 +370,6 @@ class OptionsScene extends Phaser.Scene {
 	    	game.global.musicMenu.volume = myVolume;
 	    	game.global.myPlayer.config.volMusic = myVolume*100;
 	    	updatePlayerConfig();
-	    	
 		} 
 		
 		function setVolumeEffect(myVolume) {
