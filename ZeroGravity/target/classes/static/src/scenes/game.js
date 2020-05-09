@@ -203,7 +203,7 @@ class GameScene extends Phaser.Scene {
     			if (typeof game.global.grid[i][j] !== 'undefined') {
 	        		if(game.global.grid[i][j].type > 0) {
 	        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
-	        			edificio.gameObject.tint = '0xF0F0F0';
+	        			edificio.gameObject.tint = '0xC0C0C0'; //0xF0F0F0
 	        		}
     			}
 			}
