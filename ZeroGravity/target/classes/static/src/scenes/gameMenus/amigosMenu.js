@@ -240,22 +240,6 @@ class FriendsScene extends Phaser.Scene {
     		}
     		this.divAmigos.style.marginTop = '20px';
     		this.divAmigos.style.textAlign = 'center';
-    	}else if ($("#friend").val().length === 0 && this.mode === 'amigos') {
-    		if(game.global.idioma == "eng"){
-    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no friends right now, look in the add friends section.</span>';
-    		}else{
-    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes amigos ahora mismo, busca en la seccion añadir amigos.</span>';
-    		}
-    		this.divAmigos.style.marginTop = '20px';
-    		this.divAmigos.style.textAlign = 'center';
-    	}else if ($("#friend").val().length === 0 && this.mode === 'solicitudes') {
-    		if(game.global.idioma == "eng"){
-    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no pending friend requests</span>';
-    		}else{
-    			this.divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes solicitudes de amistad pendientes</span>';
-    		}
-    		this.divAmigos.style.marginTop = '20px';
-    		this.divAmigos.style.textAlign = 'center';
     	}
     	
     	this.searchName = $("#friend").val();
