@@ -219,6 +219,7 @@ class FriendsScene extends Phaser.Scene {
     }
     update(time, delta) {
     	if ($("#friend").val() !== this.searchName && $("#friend").val().length > 0) {
+    		
     		if (this.mode === 'amigos') {
     			
     		}
@@ -234,11 +235,12 @@ class FriendsScene extends Phaser.Scene {
     	}
     	else if ($("#friend").val().length === 0 && this.mode === 'addAmigos') {
     		if(game.global.idioma == "eng"){
-    			this.divAmigos.innerHTML = '<span style=" color: #fff; font-family: pantonLight ">Enter characters in the search engine above to find your friends.</span>';
+    			this.divAmigos.innerHTML = '<span style=" color: #fff; font-family: pantonLight; margin-left: 10px">Enter characters in the search engine above to find your friends.</span>';
     		}else{
-    			this.divAmigos.innerHTML = '<span style=" color: #fff; font-family: pantonLight ">Introduce caracteres en el buscador de arriba para encontrar a tus amigos.</span>';
+    			this.divAmigos.innerHTML = '<span style=" color: #fff; font-family: pantonLight; margin-left: 10px ">Introduce caracteres en el buscador de arriba para encontrar a tus amigos.</span>';
     		}
     		this.divAmigos.style.marginTop = '20px';
+    		this.divAmigos.style.left = '460px';
     		this.divAmigos.style.textAlign = 'center';
     	}
     	

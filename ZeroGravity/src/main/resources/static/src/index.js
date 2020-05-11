@@ -1000,6 +1000,11 @@ window.onload = function() {
 				if(msg.users.length > 0){
 					game.scene.getScene('FriendsScene').usersList.text = '';
 					game.scene.getScene('FriendsScene').divAmigos.innerHTML = '';
+					game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '-80px';
+					if(game.scene.getScene('FriendsScene').mode == 'addamigos'){
+						game.scene.getScene('FriendsScene').divAmigos.style.left = '450px';
+					}
+					
 					for (let i = 0; i < msg.users.length; i++) {
 						//game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
 						let divPuestoV = document.createElement("div");
@@ -1022,7 +1027,7 @@ window.onload = function() {
 				    	
 				    	var name = document.createElement("span");
 						name.style.position = "absolute";
-						name.style.left = "20px";
+						name.style.left = "40px";
 						name.style.marginTop = "1px";
 						name.style.width = 'auto';
 						name.style.color = '#fff';
@@ -1156,7 +1161,7 @@ window.onload = function() {
 						
 						var con = document.createElement("span");
 						con.style.position = "absolute";
-						con.style.left = "20px";
+						con.style.left = "40px";
 						con.style.marginTop = "12px";
 						con.style.width = 'auto';
 						con.style.color = '#fff';
