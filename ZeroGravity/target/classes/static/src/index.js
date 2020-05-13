@@ -116,6 +116,9 @@ window.onload = function() {
 		effects: {},
 		musicMenu: null,
 		ranking: 'all',
+		idTuto: 1,
+		imgChar: null,
+		containerTut: null,
 		idioma : navigator.language
 	}
 	
