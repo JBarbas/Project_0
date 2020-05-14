@@ -21,14 +21,14 @@ class CentroMandoMenu extends Phaser.Scene {
 		msg.event = 'GET CENTRO DE MANDO MENU';
 		game.global.socket.send(JSON.stringify(msg));*/
     	
-    	
+
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	//
     	this.miEdificio = data.miEdificio;
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
-    	var textoDesdeXml;
+    	var textoDesdeXml, textoTut;
     	
     	// Contenedor del panel de mejoras
     	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
@@ -457,6 +457,8 @@ class CentroMandoMenu extends Phaser.Scene {
 				game.global.inMenu = false;*/
 	    		
 	    	});
+
+			
 			mejorasContainer.add(this.subirNivel);
     	}
     	else{
@@ -484,13 +486,7 @@ class CentroMandoMenu extends Phaser.Scene {
     	// Desactivamos al inicio los otros dos contenedores
 		detallesContainer.visible= false;
 		mejorasContainer.visible= false;
-		
-		
-		this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
-    	var cort = this.cortina;
-    	cort.alpha = 0.4;
-    	cort.depth = -2;
-		leerTutorial(this,3);
+
     }
     update(time, delta) {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/

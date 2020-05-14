@@ -24,11 +24,7 @@ class TutorialScene extends Phaser.Scene {
     	game.global.inMenu = true;
     	
     	var textoDesdeXml,textoDesdeXmlTut, textoTut;
-    	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	
-    	var cort = this.cortina;
-    	cort.alpha = 0.4;
-    	cort.depth = -2;
 		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('omitir')[0].childNodes[0].nodeValue;
 		var omitirTut = this.add.text(1400, 845, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '25px', fontWeight: 'bold'}).setInteractive();
 		
@@ -41,8 +37,9 @@ class TutorialScene extends Phaser.Scene {
 		*/
     	
     	
-    	
-    	leerTutorial(this,game.global.idTuto);
+    	if(!game.scene.isActive(CentroMandoMenu)){
+    		leerTutorial(this,game.global.idTuto);
+    	}
     	
     	var colorBlue = '#0CB7F2';
     	var colorWhite = '#fff';
@@ -108,7 +105,8 @@ class TutorialScene extends Phaser.Scene {
         		game.global.inMenu = false;
         		game.scene.stop('TutorialScene');
     		}
-    		scene.textoTut.destroy();
+    		game.global.cortina.destroy();
+    		game.global.textoTut.destroy();
     		game.global.imgChar.destroy();
     		game.global.containerTut.destroy();
     		leerTutorial(scene,game.global.idTuto);

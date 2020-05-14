@@ -119,6 +119,8 @@ window.onload = function() {
 		idTuto: 1,
 		imgChar: null,
 		containerTut: null,
+		cortina: null,
+		textoTut: null,
 		idioma : navigator.language
 	}
 	
