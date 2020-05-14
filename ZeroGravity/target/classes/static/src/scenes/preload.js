@@ -16,6 +16,8 @@ class PreloadScene extends Phaser.Scene {
 		// Cargamos los ficheros de idioma
 		this.load.xml('esp', 'assets/text/languages/esp.xml');
 		this.load.xml('eng', 'assets/text/languages/eng.xml');
+		this.load.xml('espTut', 'assets/text/tutorial/espTut.xml');
+		this.load.xml('engTut', 'assets/text/tutorial/engTut.xml');
 		
 		// Backgrounds
 		this.load.image('backgroundLoadGame', 'assets/background/loadGame.png');
@@ -97,6 +99,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.audio('recogerRecursos', ['assets/sound/recogerRecursos.wav', '']);
 		this.load.audio('recursosMaximos', ['assets/sound/recursosMaximos.wav', '']);
 		this.load.audio('seleccionarEdificio', ['assets/sound/seleccionarEdificio.wav', '']);
+		this.load.audio('subirNivel', ['assets/sound/ring!.wav', '']);
 		
     }
     create (data)  {

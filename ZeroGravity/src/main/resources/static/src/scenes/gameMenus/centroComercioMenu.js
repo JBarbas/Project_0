@@ -163,9 +163,10 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	/*LOS ICONOS */
 	        	if(oferta.recurso === "metal"){
 	        		var metal = document.createElement("img");
-	            	metal.src = "assets/interface/Gameplay/metal.png";
+	            	metal.src = "assets/interface/Gameplay/metalFloat.png";
 	            	metal.style.position = "absolute";
 	            	metal.style.left = "180px";
+	            	metal.style.width = "30px";
 	            	metal.indice = i;
 	            	metal.onclick = function(){
 	            		swal({
@@ -189,9 +190,10 @@ class CentroComercioMenu extends Phaser.Scene {
 	            	}
 	        	}else{
 	        		var ceramica = document.createElement("img");
-	            	ceramica.src = "assets/interface/Gameplay/arcilla.png";
+	            	ceramica.src = "assets/interface/Gameplay/arcillaFloat.png";
 	            	ceramica.style.position = "absolute";
 	            	ceramica.style.left = "180px";
+	            	ceramica.style.width = "30px";
 	            	ceramica.indice = i;
 	            	ceramica.onclick = function(){
 	            		swal({
@@ -216,9 +218,10 @@ class CentroComercioMenu extends Phaser.Scene {
 	        	}
 	        	
 	        	var creditos = document.createElement("img");
-	        	creditos.src = "assets/interface/Gameplay/creditos.png";
+	        	creditos.src = "assets/interface/Gameplay/creditosFloat.png";
 	        	creditos.style.position = "absolute";
 	        	creditos.style.left = "45px"; 
+	        	creditos.style.width = "30px";
 	        	creditos.indice = i;
 	        	creditos.onclick = function(){
 	        		swal({
@@ -409,9 +412,10 @@ class CentroComercioMenu extends Phaser.Scene {
         	/*LOS ICONOS */
         	if(i < (14/2)){
         		var metalV = document.createElement("img");
-            	metalV.src = "assets/interface/Gameplay/metal.png";
+            	metalV.src = "assets/interface/Gameplay/metalFloat.png";
             	metalV.style.position = "absolute";
             	metalV.style.left = "45px";
+            	metalV.style.width = "30px";
             	metalV.indice = i;
             	metalV.onclick = function(){
             		swal({
@@ -434,9 +438,10 @@ class CentroComercioMenu extends Phaser.Scene {
             	}
         	}else{
         		var ceramicaV = document.createElement("img");
-            	ceramicaV.src = "assets/interface/Gameplay/arcilla.png";
+            	ceramicaV.src = "assets/interface/Gameplay/arcillaFloat.png";
             	ceramicaV.style.position = "absolute";
             	ceramicaV.style.left = "45px";
+            	ceramicaV.style.width = "30px";
             	ceramicaV.indice = i;
             	ceramicaV.onclick = function(){
             		swal({
@@ -460,9 +465,10 @@ class CentroComercioMenu extends Phaser.Scene {
         	}
         	
         	var creditosV = document.createElement("img");
-        	creditosV.src = "assets/interface/Gameplay/creditos.png";
+        	creditosV.src = "assets/interface/Gameplay/creditosFloat.png";
         	creditosV.style.position = "absolute";
         	creditosV.style.left = "170px"; 
+        	creditosV.style.width = "30px";
         	creditosV.indice = i;
         	creditosV.onclick = function(){
         		swal({
@@ -732,9 +738,10 @@ class CentroComercioMenu extends Phaser.Scene {
         	/*LOS ICONOS */
         	if(oferta.recurso == "metal"){
         		var metalO = document.createElement("img");
-            	metalO.src = "assets/interface/Gameplay/metal.png";
+            	metalO.src = "assets/interface/Gameplay/metalFloat.png";
             	metalO.style.position = "absolute";
             	metalO.style.left = "180px";
+            	metalO.style.width = "30px";
             	metalO.indice = i;
             	metalO.onclick = function(){
             		swal({
@@ -761,9 +768,10 @@ class CentroComercioMenu extends Phaser.Scene {
             	
             }else{
         		var ceramicaO = document.createElement("img");
-            	ceramicaO.src = "assets/interface/Gameplay/arcilla.png";
+            	ceramicaO.src = "assets/interface/Gameplay/arcillaFloat.png";
             	ceramicaO.style.position = "absolute";
             	ceramicaO.style.left = "180px";
+            	ceramicaO.style.width = "30px";
             	ceramicaO.indice = i;
             	ceramicaO.onclick = function(){
             		swal({
@@ -790,9 +798,10 @@ class CentroComercioMenu extends Phaser.Scene {
             }
         	
             var creditosO = document.createElement("img");
-            creditosO.src = "assets/interface/Gameplay/creditos.png";
+            creditosO.src = "assets/interface/Gameplay/creditosFloat.png";
             creditosO.style.position = "absolute";
-            creditosO.style.left = "45px"; 
+            creditosO.style.left = "45px";
+            creditosO.style.width = "30px";
             creditosO.indice = i;
             creditosO.onclick = function(){
             	swal({

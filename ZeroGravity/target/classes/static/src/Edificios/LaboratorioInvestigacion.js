@@ -8,6 +8,9 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'laboratorioInvestigacion';
+		super.sprites = ['lab1', 'lab1',
+			'lab2', 'lab2', 'lab2',
+			'lab3'];
 		super.buildingSprite = 'enConstruccion2';
 		super.menuScene = 'LaboratorioInvestigacionMenu';
 		super.listImage = 'assets/sprites/Edificios/Laboratorio1.png';

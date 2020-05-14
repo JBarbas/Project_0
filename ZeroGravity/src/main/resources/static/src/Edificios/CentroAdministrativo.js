@@ -8,6 +8,7 @@ class CentroAdministrativo extends Edificio{
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'centroAdministrativo';
+		super.sprites = ['cAdministrativo1', 'cAdministrativo2', 'cAdministrativo3'];
 		super.buildingSprite = 'enConstruccion2';
 		super.menuScene = 'CentroAdministrativoMenu';
 		super.listImage = 'assets/sprites/Edificios/Sprite_Administrativo.png';

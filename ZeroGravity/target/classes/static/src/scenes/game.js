@@ -55,15 +55,24 @@ class GameScene extends Phaser.Scene {
 	  		  showLoaderOnConfirm: true,
 	  		}).then((result) => {
 	  		  if (result.value) {
-	  		    Swal.fire({
-	  		      title: `${result.value.login}'s avatar`,
-	  		      imageUrl: result.value.avatar_url
-	  		    })
-	  		  game.global.myPlayer.gameStarted = true;	  		   
+	  			if (result.value.length <= 15) {
+					  let msg = new Object();
+					  msg.event = 'CHANGE CITY NAME';
+					  msg.name = result.value;
+					  game.global.socket.send(JSON.stringify(msg));
+					  Swal.fire({
+						  icon: 'success',
+						  title: 'Nice!',
+						  text: "Your name has been changed."
+						});
+				  }
+	  		  game.global.myPlayer.gameStarted = true;
+	  		    
 	  		  }
 	  		})
     	}
-
+    	///Esta aqui para poder hacer pruebas/// Habra que meterlo despues en el .then((result))
+    	game.scene.run('TutorialScene');
 		var mediaQuery = window.matchMedia("(max-width: 700px)")
 		if (!mediaQuery.matches) { 
 			this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);
@@ -194,7 +203,7 @@ class GameScene extends Phaser.Scene {
     			if (typeof game.global.grid[i][j] !== 'undefined') {
 	        		if(game.global.grid[i][j].type > 0) {
 	        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
-	        			edificio.gameObject.tint = '0xF0F0F0';
+	        			edificio.gameObject.tint = '0xC0C0C0'; //0xF0F0F0
 	        		}
     			}
 			}

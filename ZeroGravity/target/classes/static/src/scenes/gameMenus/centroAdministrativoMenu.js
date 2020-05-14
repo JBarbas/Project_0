@@ -23,6 +23,8 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     	//
     	this.miEdificio = data.miEdificio;
     	
+    	
+    	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
 
@@ -124,19 +126,29 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     	
     	btnRankingAmigos.on('pointerdown', function(pointer, localX, localY, event){
     		game.global.effects.pulsarBoton.play();
-    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
-    		
-    		
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    		game.scene.stop('CentroAdministrativoMenu');
+    		//start scene
+    		game.global.inMenu = true;
+			if (game.global.menu !== null) {
+				game.scene.stop(game.global.menu);
+			}
+			game.global.menu = 'RankingMenu';
+			game.global.ranking = 'amigos';
 			
+			game.scene.run('RankingMenu');			
     	});
     	
     	btnAddAmigos.on('pointerdown', function(pointer, localX, localY, event){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
-    		
-			game.scene.stop('CentroAdministrativoMenu');
-			game.global.inMenu = false;
-			//game.scene.run('LoadGameplayScene');
+    		game.scene.stop('CentroAdministrativoMenu');
+    		game.global.inMenu = true;
+			if (game.global.menu !== null) {
+				game.scene.stop(game.global.menu);
+			}
+			game.global.menu = 'FriendsScene';
+			game.scene.run('FriendsScene');		
     	});
     	
     	btnVerAmigos.on('pointerdown', function(pointer, localX, localY, event){

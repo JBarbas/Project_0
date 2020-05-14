@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tutorial>
+	<intro>
+		<tut1 id="1" nextMsg="2" character="binnette" pos="der"> Hola y bienvenido/a. Mi nombre es Binette Naidoo y estoy al cargo de la misión.
+		Como tu supervisora, me aseguraré de darte los consejos que necesites, y tenerte al día de 
+		cualquier cambio o suceso.
+		</tut1>
+		<tut2 id="2" nextMsg="-1" character="binnette" pos="iz"> Espero de todos mis empleados independencia y determinación, por lo que después
+		de estos primeros pasos, tendrás libertad para desarrollar tus instalaciones de la forma que
+		desees.	Naturalmente, contarás con un equipo que te asistirá en las diferentes áreas. 
+		Sin más dilación, comencemos…</tut2>
+	</intro>
+	<centroMando>
+		<tut3 id="3" nextMsg="4" character="celso" pos="iz">Buenos días, o lo que sea que haga ahí fuera. Soy Celso Lebèdev, el representante
+		de Recursos Humanos, y me encargaré de solicitar nuevos colonos y monitorizar su buen estado.
+		¿Binnete ha mencionado que puedes mejorar el centro de mando?</tut3>
+		<tut4 id="4" nextMsg="-1" character="celso" pos="iz">Cada nivel de mejora te permitirá hacer lo propio con los otros centros,
+		pero antes de eso deberás conseguir que esta misión progrese. Volveré a ponerme en contacto 
+		contigo en breve. Mientras, sería buena idea construir viviendas.</tut4>
+	</centroMando>
+</tutorial>

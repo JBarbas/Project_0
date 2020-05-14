@@ -183,6 +183,8 @@ class OptionsScene extends Phaser.Scene {
 
         this.element.setPerspective(800);
         
+       
+        
         var boxe = this.element.node.children[1];
         //boxe.children[0].children[0].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('si')[0].childNodes[0].nodeValue;
         //boxe.children[0].children[0].children[1].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('no')[0].childNodes[0].nodeValue;
@@ -339,9 +341,12 @@ class OptionsScene extends Phaser.Scene {
 		  	value: getVolumeEffects(),
 				range: "min",
 		  	slide: function(event, ui) {
+		  		console.log(ui.value / 100);
 		    	setVolumeEffect(ui.value / 100);
 		  	}
 		});
+        
+        console.log(getVolumeEffects());
         
         //Music
         $("#volume2").slider({
@@ -378,7 +383,6 @@ class OptionsScene extends Phaser.Scene {
 	    	game.global.musicMenu.volume = myVolume;
 	    	game.global.myPlayer.config.volMusic = myVolume*100;
 	    	updatePlayerConfig();
-	    	
 		} 
 		
 		function setVolumeEffect(myVolume) {

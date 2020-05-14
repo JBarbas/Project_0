@@ -90,14 +90,14 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 			
 			//  CONTENEDOR EDIFICIO
 			// Añadimos el numero de colonos trabajando en este edificio
-			this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+			this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
 			edificiosContainer.add(this.colonos);
 			// Añadimos la energía necesaria y suministrada en este edificio
-			this.energia = this.add.text(100, 230, "Cargando...", { fontFamily: '"Roboto Condensed"', color: 'white' });
+			this.energia = this.add.text(100, 250, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
 			edificiosContainer.add(this.energia);
 			// Añadimos el tiempo restante para producir
 			this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
-			this.timeLeftText = this.add.text(100, 260, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
+			this.timeLeftText = this.add.text(100, 300, this.timeLeft, { fontFamily: '"pantonBlack"', color: 'white',fontSize: '20px' });
 			edificiosContainer.add(this.timeLeftText);
 			
 			//  CONTENEDOR DETALLES

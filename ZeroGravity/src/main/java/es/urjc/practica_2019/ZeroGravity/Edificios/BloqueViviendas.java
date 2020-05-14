@@ -166,27 +166,29 @@ public class BloqueViviendas extends Edificio {
 	
 	@Override
 	public void logInUpdate() {
-		if (this.enConstruccion) {
-			ObjectNode msg = mapper.createObjectNode();
-			msg.put("event", "EDIFICIO CONSTRUIDO");
-			msg.put("id", this.getId());
-			try {
-				if (player.getSession().isOpen()) {
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+		if (player.getSession() != null) {
+			if (this.enConstruccion) {
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "EDIFICIO CONSTRUIDO");
+				msg.put("id", this.getId());
+				try {
+					if (player.getSession().isOpen()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
+				} catch (IOException e) {
+					System.err.println("Exception sending message " + msg.toString());
+					e.printStackTrace(System.err);
 				}
-			} catch (IOException e) {
-				System.err.println("Exception sending message " + msg.toString());
-				e.printStackTrace(System.err);
+				Task task = null;
+				Thread callback = new Thread(() -> this.callbackConstruir());
+				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+				task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+				task.setBeginDate(buildingBeginTime);
+				if (TASKMASTER.addTask(task)) {
+					callback.start();
+				}
 			}
-			Task task = null;
-			Thread callback = new Thread(() -> this.callbackConstruir());
-			task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
-			task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
-			task.setBeginDate(buildingBeginTime);
-			if (TASKMASTER.addTask(task)) {
-				callback.start();
-			}
+			player.saveEdificios();
 		}
-		player.saveEdificios();
 	}
 }

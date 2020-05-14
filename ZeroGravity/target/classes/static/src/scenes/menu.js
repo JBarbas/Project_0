@@ -113,7 +113,9 @@ class MenuScene extends Phaser.Scene {
     		game.global.effects.puntuacion = game.sound.add('puntuacion');
     		game.global.effects.recogerRecursos = game.sound.add('recogerRecursos');
     		game.global.effects.recursosMaximos = game.sound.add('recursosMaximos');
-    		game.global.effects.seleccionarEdificio = game.sound.add('seleccionarEdificio'); //18
+    		game.global.effects.seleccionarEdificio = game.sound.add('seleccionarEdificio');
+    		game.global.effects.subirNivel = game.sound.add('subirNivel');
+    		//19
     		   		
 	    		
     	}

@@ -21,6 +21,7 @@ class CentroMandoMenu extends Phaser.Scene {
 		msg.event = 'GET CENTRO DE MANDO MENU';
 		game.global.socket.send(JSON.stringify(msg));*/
     	
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	//
@@ -36,6 +37,9 @@ class CentroMandoMenu extends Phaser.Scene {
     	// Contenedor del panel de edificios
     	var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
+    	mejorasContainer.depth = -3;
+    	detallesContainer.depth = -3;
+    	edificiosContainer.depth = -3;
     	if(game.global.idioma == 'eng'){
     		game.scene.getScene('GameInterface').panel.setTexture('commandCenter');
     	}else{
@@ -91,9 +95,12 @@ class CentroMandoMenu extends Phaser.Scene {
     	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
         elementV.setPerspective(800);
         
+       
+        
         var divMando = document.getElementById("divMando");
-      	
         var i = 0;
+        
+        
     	for(let edificio of game.global.edificios.values()){
     		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
 	    		let divPuestoV = document.createElement("div");
@@ -110,7 +117,11 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	
 	        	
 	    		var imagen = document.createElement("img");
-	    		imagen.src = edificio.listImage + edificio.level + '.png';
+	    		if(edificio.listImage != "assets/sprites/Edificios/Taller_1.png"){
+	    			imagen.src = edificio.listImage + edificio.level + '.png';
+    			}else{
+    				imagen.src = "assets/sprites/Edificios/Taller" + edificio.level + '.png';
+    			}
 	    		imagen.style.position = "absolute";
 	    		imagen.style.left = "10px";
 	    		if(i != 0){
@@ -247,6 +258,34 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	
 	        	i++;
     		}
+    	}
+    	
+    	if(i==0){
+    		let divPuestoV = document.createElement("div");
+    		divPuestoV.style.marginTop = "40px";
+    		
+    		var noInfo = document.createElement("span");
+    		noInfo.style.position = "absolute";
+    		noInfo.style.left = "0px";
+    		noInfo.style.marginTop = "5px";
+    		noInfo.style.fontFamily = "pantonLight";
+    		noInfo.style.fontSize = '10px';
+    		noInfo.style.textAlign = "center";
+    		noInfo.style.color = '#fff';
+    		noInfo.indice = i;
+    		
+    		var n;
+        	if(game.global.idioma == 'eng'){
+        		n = document.createTextNode("To manage settlers you must build houses and other buildings. The workshop, the generators or the extraction platform are some of the buildings that need settlers. Go to the Construction section on the left side of the screen.");
+        	}else{
+        		n = document.createTextNode("Para administrar colonos debe construir viviendas y otros EDIFICIOS. El taller, los generadores o la plataforma de extracción son algunos de los EDIFICIOS que necesitan colonos. Ve a la sección de Construcción que se encuentra en la parte izquierda de la pantalla.");
+        	}
+        	noInfo.appendChild(n);
+        	
+        	divPuestoV.appendChild(noInfo);
+        	
+        	
+        	divMando.appendChild(divPuestoV);
     	}
         
     	edificiosContainer.add(elementV);
@@ -445,6 +484,13 @@ class CentroMandoMenu extends Phaser.Scene {
     	// Desactivamos al inicio los otros dos contenedores
 		detallesContainer.visible= false;
 		mejorasContainer.visible= false;
+		
+		
+		this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
+    	var cort = this.cortina;
+    	cort.alpha = 0.4;
+    	cort.depth = -2;
+		leerTutorial(this,3);
     }
     update(time, delta) {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/

@@ -33,6 +33,7 @@
 	<amigos>
 		<txtamigos>Friends</txtamigos>
 		<txtadd>Add Friends</txtadd>
+		<txtsol>Requests</txtsol>
 	</amigos>
 	<edificios>
 		<taller>Workshop</taller>
@@ -97,6 +98,7 @@ Access the Upgrades panel to visualize the next level, advantages, cost and upgr
 There can only be one building of this kind, but you can position it where you wish with the Move button.
 			</ccdetalles>
 			<ccdesc>The Trade Center is the building in which you manage your base trade. From here you can trade Credits in exchange for other players' resources or offer yours in exchange of the Credits you consider fair.</ccdesc>
+			<ccdescblock>Unlock this building by raising the command center to level 2.</ccdescblock>
 			<ccmejoraNivel2>Allows you to acquire the level 2 upgrades to Research Laboratory and Extraction Platform.
 Cost:
     900 Metal units.
@@ -152,6 +154,7 @@ Access the Upgrades panel to visualize the next level, advantages, cost and upgr
 There can only be one building of this kind, but you can position it where you wish with the Move button.
 			</codetalles>
 			<codesc>The Operatons Center is the building from which you manage the Energy and your Robots.</codesc>
+			<codescblock>Unlock this building by raising the command center to level 2.</codescblock>
 			<comejoraNivel2>Allows you to acquire the Level 2 upgrades to Generator and Workshop.
 Cost:
     1500 Metal units.
@@ -238,6 +241,7 @@ Production at Level 2: 180 Credits per hour.
 Production at Level 3: 360 Credits per hour.
 			</labdetalles>
 			<labdesc>The Research Laboratory is where multiple investigations about the terraformation of the planet are carried out.</labdesc>
+			<labdescblock>Unlock this building by raising the command center to level 2.</labdescblock>
 			<labmejoraNivel2>Requires 2 Colonists. 
 Requires 2 Energy units.
 Generates 180 Credits per hour. 
@@ -327,6 +331,27 @@ Required time:
     5 days and 20 hours.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
+		<hovericonos>
+			<unioncoin>Get more in our store </unioncoin>
+			<unioncoin2>or on missions</unioncoin2>
+			<dinero>Money</dinero>
+			<dinero1>Get more in homes</dinero1>
+			<energiaT>Energy</energiaT>
+			<energia1>It is used to power</energia1>
+			<energia2>installations </energia2>
+			<metal>Get more in the Workshop </metal>
+			<ceramica>Ceramics</ceramica>
+			<ceramica1>Get more on the Extraction </ceramica1>
+			<ceramica2>Platform</ceramica2>
+			<colono>Colonists</colono>
+			<colono1>Build houses to</colono1>
+			<colono2>increase population</colono2>
+		</hovericonos>
+		<tutorial>
+			<omitir>Skip</omitir>
+			<anterior>Previous</anterior>
+			<siguiente>Next</siguiente>
+		</tutorial>
 		
 		
 	</menusEdificios>

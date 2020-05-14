@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,6 +36,8 @@ public class Player {
 	private String email;
 	private byte[] password;
 	private Config config;
+	private Collection<ObjectId> friends = new HashSet<ObjectId>();
+	private Collection<ObjectId> friendRequests = new HashSet<ObjectId>();
 	private static final int GRID_WIDTH = 20;
 	private static final int GRID_HEIGHT = 20;
 	private int[][] grid = new int[GRID_HEIGHT][GRID_WIDTH];
@@ -142,6 +145,44 @@ public class Player {
 	public void setConfig(Config config) {
 		this.config = config;
 	}
+	
+	public Collection<ObjectId> getFriends() {
+		friends.clear();
+		Bson filter = new Document("_id", getId());
+		Document myPlayer = WebsocketGameHandler.getColl().find(filter).first();
+		if (myPlayer.get("friends") != null) {
+			for (ObjectId friend : (Collection<ObjectId>) myPlayer.get("friends")) {
+				friends.add(friend);
+			}
+		}
+		return friends;
+	}
+	
+	public void addFriend(ObjectId friend) {
+		friends.add(friend);
+		//saveFriends();
+	}
+	
+	public Collection<ObjectId> getFriendRequests() {
+		friendRequests.clear();
+		Bson filter = new Document("_id", getId());
+		Document myPlayer = WebsocketGameHandler.getColl().find(filter).first();
+		if (myPlayer.get("friendRequests") != null) {
+			Collection<Document> list = (Collection<Document>) myPlayer.get("friendRequests");
+			if (!list.isEmpty()) {
+				for (ObjectId request : (Collection<ObjectId>) myPlayer.get("friendRequests")) {
+					friendRequests.add(request);
+				}
+			}			
+		}
+		return friendRequests;
+	}
+	
+	public void addFriendRequest(ObjectId friendRequest) {
+		friendRequests.add(friendRequest);
+		saveFriends();
+	}
+	
 
 	public int getEdificioId() {
 		return edificioId.get();
@@ -717,5 +758,16 @@ public class Player {
 	public void saveEmail() {
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
 				new Document("$set", new Document("email", this.email)));
+	}
+	
+	public void saveFriends() {
+		LinkedList<Document> dbFriends = new LinkedList<>(); //Bson para mongo
+		for(ObjectId friend : this.getFriends()) {
+			Document dbFriend = new Document();
+			dbFriend.append("id", friend);
+			dbFriends.add(dbFriend);
+		}
+		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
+				new Document("$set", new Document("friends", dbFriends)));
 	}
 }

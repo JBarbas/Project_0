@@ -14,6 +14,7 @@ class PreloadGameScene extends Phaser.Scene {
 	}
 	
 	preload () {
+		
 		var musicMenu = game.global.musicMenu;
 		//musicMenu.stop();
 		game.scene.run('LoadGameplayScene');
@@ -22,6 +23,8 @@ class PreloadGameScene extends Phaser.Scene {
 		let msg = new Object();
 		msg.event = 'ASK PLAYER INFO';
 		game.global.socket.send(JSON.stringify(msg));
+		
+		
 		
 		this.load.image('fondo', 'assets/sprites/Fondo/fondo2.jpg');
 		this.load.image('bg0', 'assets/sprites/0.jpg');
@@ -32,6 +35,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('tile_-1', 'assets/sprites/Tiles_prototipo/tile_-1.png');
 		
 		this.load.atlas('global', 'assets/atlas/global.png', 'assets/atlas/global.json');
+		this.load.atlas('nextlvl1x1', 'assets/atlas/nextlvl1x1.png', 'assets/atlas/nextlvl1x1.json');
+		this.load.atlas('nextlvl1x2', 'assets/atlas/nextlvl1x2.png', 'assets/atlas/nextlvl1x2.json');
 		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
@@ -47,6 +52,47 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('enConstruccion1', 'assets/sprites/Edificios/modulo1.png');
 		this.load.image('enConstruccion2', 'assets/sprites/Edificios/modulo2.png');
 		this.load.image('enConstruccion3', 'assets/sprites/Edificios/modulo3.png');
+		
+		this.load.image('apartamentos1', 'assets/sprites/Edificios/Edificio_Viviendas.png');
+		this.load.image('apartamentos2', 'assets/sprites/Edificios/Edificio_Viviendas.png');
+		this.load.image('apartamentos3', 'assets/sprites/Edificios/Edificio_Viviendas_2.png');
+		this.load.image('apartamentos4', 'assets/sprites/Edificios/Edificio_Viviendas_3.png');
+		
+		this.load.image('cAdministrativo1', 'assets/sprites/Edificios/Sprite_Administrativo_new.png');
+		this.load.image('cAdministrativo2', 'assets/sprites/Edificios/Sprite_Administrativo_2_new.png');
+		this.load.image('cAdministrativo3', 'assets/sprites/Edificios/Sprite_Administrativo_3_new.png');
+		
+		this.load.image('mercado1', 'assets/sprites/Edificios/Comercio_1.png');
+		this.load.image('mercado2', 'assets/sprites/Edificios/Comercio_1.png');
+		this.load.image('mercado3', 'assets/sprites/Edificios/Comercio_2.png');
+		this.load.image('mercado4', 'assets/sprites/Edificios/Comercio_3.png');
+		
+		this.load.image('cdm1', 'assets/sprites/Edificios/CentroDeMando1.png');
+		this.load.image('cdm2', 'assets/sprites/Edificios/CentroDeMando2.png');
+		this.load.image('cdm3', 'assets/sprites/Edificios/CentroDeMando3.png');
+		
+		this.load.image('cOperaciones1', 'assets/sprites/Edificios/Operaciones1_new.png');
+		this.load.image('cOperaciones2', 'assets/sprites/Edificios/Operaciones2_new.png');
+		this.load.image('cOperaciones3', 'assets/sprites/Edificios/Operaciones3_new.png');
+		
+		this.load.image('generador1', 'assets/sprites/Edificios/Generador1_new.png');
+		this.load.image('generador2', 'assets/sprites/Edificios/Generador2_new.png');
+		this.load.image('generador3', 'assets/sprites/Edificios/Generador3_new.png');
+		this.load.image('generador4', 'assets/sprites/Edificios/Generador4_new.png');
+		
+		this.load.image('lab1', 'assets/sprites/Edificios/Laboratorio1.png');
+		this.load.image('lab2', 'assets/sprites/Edificios/Laboratorio2.png');
+		this.load.image('lab3', 'assets/sprites/Edificios/Laboratorio3.png');
+		
+		this.load.image('pde1', 'assets/sprites/Edificios/Plataforma_1.png');
+		this.load.image('pde2', 'assets/sprites/Edificios/Plataforma_1.png');
+		this.load.image('pde3', 'assets/sprites/Edificios/Plataforma_2.png');
+		this.load.image('pde4', 'assets/sprites/Edificios/Plataforma_3.png');
+		
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller0.png');
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller1.png');
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller2.png');
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller3.png');
 		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
@@ -100,6 +146,7 @@ class PreloadGameScene extends Phaser.Scene {
 		
 		//Friends
 		this.load.image('bckAmigos', 'assets/interface/Gameplay/Friends/AmigosBck.png');
+		this.load.image('bckAmigosSinBuscar', 'assets/interface/Gameplay/Friends/AmigosBckSinBuscar.png');
 		//this.load.image('bloqueAmigosBck', 'assets/interface/Gameplay/Friends/BloqueAmigosBck.png');
 		//this.load.image('conected', 'assets/interface/Gameplay/Friends/conected.png');
 		this.load.spritesheet('btnAddFriends', 'assets/interface/Gameplay/Friends/btnAddFriends.png',{frameWidth:80,frameHeight:80});
@@ -113,16 +160,23 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('fIcon', 'assets/interface/Gameplay/Administracion/friendsIcon.png');
 		this.load.image('rankFIcon', 'assets/interface/Gameplay/Administracion/rankFriendsIcon.png');
 		
+		this.load.image('boxTimer', 'assets/interface/Gameplay/boxTimer.png');
+		
+		this.load.image('boxCityName', 'assets/interface/Gameplay/ciudadNombreCaja.png');
+		this.load.image('boxCityEdit', 'assets/interface/Gameplay/editNombreCiudad.png');
+		
 		this.load.image('intEdificios', 'assets/interface/interfazEdificios.png');
 		this.load.image('intEdificioRec', 'assets/interface/interfazEdificioRecuadro.png');
 		this.load.image('intMejoras', 'assets/interface/interfazMejoras.png');
 		this.load.image('intDetalles', 'assets/interface/interfazDetalles.png');
+		
 		
 		this.load.image('intBuildings', 'assets/interface/interfazBuildings.png');
 		this.load.image('intUpdates', 'assets/interface/interfazUpdates.png');
 		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
 		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/UiGamePlayMenu.png');
+		this.load.image('hoverMats', 'assets/interface/Gameplay/hovermats.png');
 		
 		this.load.image('cortina', 'assets/interface/Cortina.png');
 		this.load.image('panelAnuncio', 'assets/interface/Gameplay/Panel.png');
@@ -137,6 +191,13 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoComprar', 'assets/interface/iconoComprar.png');
 		this.load.image('iconoVender', 'assets/interface/iconoVender.png');
 		this.load.image('iconoOfertas', 'assets/interface/iconoOfertas.png');
+		
+		this.load.image('iconoUC', 'assets/interface/Gameplay/unioncoins.png');
+		this.load.image('iconoMoney', 'assets/interface/Gameplay/creditosFloat.png');
+		this.load.image('iconoEnergy', 'assets/interface/Gameplay/newEnergy.png');
+		this.load.image('iconoMetal', 'assets/interface/Gameplay/metalFloat.png');
+		this.load.image('iconoArcilla', 'assets/interface/Gameplay/arcillaFloat.png');
+		this.load.image('iconoColonos', 'assets/interface/Gameplay/newColon.png');
 		
 		this.load.image('panelCExtraccion', 'assets/interface/Secciones/panelCExtraccion.png');
 		this.load.image('panelCMando', 'assets/interface/Secciones/panelCMando.png');
@@ -167,6 +228,10 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('selCDComercio', 'assets/interface/Gameplay/Construccion/selCDComercio.png');
 		this.load.image('selCDOperaciones', 'assets/interface/Gameplay/Construccion/selCDOperaciones.png');
 		this.load.image('selCAdministrativo', 'assets/interface/Gameplay/Construccion/selCAdministrativo.png');
+		
+		this.load.image('selLaboratorioBlack', 'assets/interface/Gameplay/Construccion/selLaboratorioBlack.png');
+		this.load.image('selCDComercioBlack', 'assets/interface/Gameplay/Construccion/selCDComercioBlack.png');
+		this.load.image('selCDOperacionesBlack', 'assets/interface/Gameplay/Construccion/selCDOperacionesBlack.png');
 		
 		//Comercio
 		this.load.image('intCMejoras', 'assets/interface/Comercio/MejorasComercio.png');
@@ -199,6 +264,14 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('energyIcon', 'assets/sprites/stone.png');
 		this.load.image('creditIcon', 'assets/interface/Gameplay/creditosFloat.png');
 		this.load.image('colonIcon', 'assets/interface/Gameplay/newColon.png');
+		
+		//Tutorial
+
+		this.load.image('contTextTut', 'assets/interface/Tutorial/cuadro de dialogo.png');
+		this.load.image('priya', 'assets/interface/Tutorial/priya.png');
+		this.load.image('jakob', 'assets/interface/Tutorial/jakob.png');
+		this.load.image('celso', 'assets/interface/Tutorial/celso.png');
+		this.load.image('binette', 'assets/interface/Tutorial/binette.png');
 	
 		
 		//this.load.spritesheet('starIcon', 'assets/interface/estrella.png', {frameWidth:41,frameHeight:39});
@@ -209,7 +282,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
 		this.load.html('centroMandoMenu', 'assets/text/centroMandoMenu.html');
-		this.load.html('centroMandoMenu', 'assets/text/amigosMenu.html');
+		this.load.html('amigosMenu', 'assets/text/amigosMenu.html');
+		this.load.html('buscarAmigosMenu', 'assets/text/buscarAmigosMenu.html');
 		
 
 		var url;		  

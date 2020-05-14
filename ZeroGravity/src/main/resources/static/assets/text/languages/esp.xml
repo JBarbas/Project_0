@@ -40,6 +40,7 @@
 	<amigos>
 		<txtamigos>Amigos</txtamigos>
 		<txtadd>Añadir Amigos</txtadd>
+		<txtsol>Solicitudes</txtsol>
 	</amigos>
 	<edificios>
 		<taller>Taller</taller>
@@ -104,6 +105,7 @@ Accede al panel Mejoras para visualizar el siguiente nivel, ventajas, coste y me
 Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desees con el botón mover.
 			</ccdetalles>
 			<ccdesc>El Centro de Comercio es el edificio en el que gestionas el comercio de tu base. Desde aquí puedes intercambiar Créditos a cambio de recursos de otros jugadores u ofrecer los tuyos a cambio de los Créditos que creas justos.</ccdesc>
+			<ccdescblock>Desbloquea este edificio subiendo el centro de mando al nivel 2.</ccdescblock>
 			<ccmejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Laboratorio de Investigación y Planta de Extracción.
 Coste:
     900 unidades de Metal.
@@ -161,6 +163,7 @@ Sólo puede haber un edificio de este tipo, pero puedes posicionarlo donde desee
 			</codetalles>
 			<codesc>El Centro de Operaciones es el edificio desde el que gestionas la Energía y tus Robots.
 			</codesc>
+			<codescblock>Desbloquea este edificio subiendo el centro de mando al nivel 2.</codescblock>
 			<comejoraNivel2>Permite adquirir las mejoras de Nivel 2 a Generador y a Taller.
 Coste:
     1500 unidades de Metal.
@@ -249,6 +252,7 @@ Producción a Nivel 3: 360 Créditos por hora.
 			</labdetalles>
 			<labdesc>El Laboratorio de Investigación es dónde se desarrollan múltiples investigaciones sobre la terraformación del planeta.
 			</labdesc>
+			<labdescblock>Desbloquea este edificio subiendo el centro de mando al nivel 2.</labdescblock>
 			<labmejoraNivel2>Requiere 2 Colonos. 
 Requiere 2 unidades de Energía.
 Genera 180 Créditos por hora. 
@@ -339,6 +343,29 @@ Tiempo requerido:
     5 días y 20 horas.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
 		</taller>
+		<hovericonos>
+			<unioncoin>Consigue más en nuestra tienda </unioncoin>
+			<unioncoin2>o en misiones</unioncoin2>
+			<dinero>Dinero</dinero>
+			<dinero1>Consigue más en las viviendas</dinero1>
+			<energiaT>Energía</energiaT>
+			<energia1>Se usa para dar energía a las</energia1>
+			<energia2>instalaciones </energia2>
+			<metal>Consigue más en el Taller </metal>
+			<ceramica>Cerámica</ceramica>
+			<ceramica1>Consigue más en la Plataforma de </ceramica1>
+			<ceramica2>Extracción</ceramica2>
+			<colono>Colonos</colono>
+			<colono1>Construye viviendas para  </colono1>
+			<colono2>aumentar la población </colono2>
+		</hovericonos>
+		<tutorial>
+			<omitir>Omitir</omitir>
+			<anterior>Anterior</anterior>
+			<siguiente>Siguiente</siguiente>
+			
+		</tutorial>
+		
 		
 		
 	</menusEdificios>

@@ -40,6 +40,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
@@ -50,6 +52,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.Updates;
+
+import java.util.regex.*;
 
 import java.util.Properties;
 import javax.mail.*;
@@ -158,7 +164,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 					msg.put("event", "LOGGED");
 					msg.put("playerId", player.getId().toString());
-					msg.put("gameStarted", player.isGameStarted());
+					msg.put("gameStarted", player.isGameStarted());	
+					msg.put("cityName", myPlayer.get("cityName", "your city").toString());
 					ObjectNode jsonConfig = mapper.createObjectNode();
 					jsonConfig.put("volMusic", config.getVolMusic());
 					jsonConfig.put("volEffects", config.getVolEffects());
@@ -267,7 +274,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				if (!player.isGameStarted()) {
 					player.setGameStarted(true);
 				}
-				updateInfo(player, "PLAYER INFO");
+				updateInfo(player, "PLAYER INFO", player.getSession());
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("metal", player.getMetal());
 				msg.put("energia", player.getEnergia());
@@ -284,8 +291,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				player.build(node.get("x").asInt(), node.get("y").asInt(), node.get("edificio").asText(),
 						node.get("id").asInt());
 				// Pedimos al cliente que refresque el grid con la nueva info
-				updateInfo(player, "REFRESH GRID");
-				/* actualizamos la puntuacion del jugador */
+				updateInfo(player, "REFRESH GRID", player.getSession());
+				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[0]);
 				player.savePuntuacion();
 				msg.put("event", "ACTUALIZAR PUNTUACION");
@@ -299,7 +306,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					player.build(e.get("x").asInt(), e.get("y").asInt(), e.get("edificio").asText(),
 							e.get("id").asInt());
 				}
-				updateInfo(player, "REFRESH GRID");
+				updateInfo(player, "REFRESH GRID", player.getSession());
 				break;
 			case "ASK_PLAYER_RESOURCES":
 				msg.put("event", "GET_PLAYER_RESOURCES");
@@ -593,8 +600,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				break;
 			case "BUY CELL":
 				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
-				updateInfo(player, "REFRESH GRID");
-				/* actualizamos la puntuacion del jugador */
+				updateInfo(player, "REFRESH GRID", player.getSession());
+				/*actualizamos la puntuacion del jugador*/
 				player.setPuntuacion(player.getPuntuacion() + PUNTUACIONES[3]);
 				player.savePuntuacion();
 				msg.put("event", "ACTUALIZAR PUNTUACION");
@@ -602,7 +609,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "REFRESH GRID":
-				updateInfo(player, "REFRESH GRID");
+				updateInfo(player, "REFRESH GRID", player.getSession());
 				break;
 			case "PEDIR COLONOS":
 				player.requestColonos();
@@ -840,6 +847,124 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					recoverUserNameHandler.execute(node.get("email").asText());
 				}
 				break;
+			case "SEARCH USERS":
+				coll.createIndex(Indexes.text("name"));
+				Bson filterUsers = new Document("name", node.get("search").asText());
+				BasicDBObject q = new BasicDBObject();
+				q.put("name",  java.util.regex.Pattern.compile(node.get("search").asText(), Pattern.CASE_INSENSITIVE));
+				FindIterable<Document> users = coll.find(q);
+				Iterator itUsers = users.iterator();
+				Collection<ObjectId> friends = player.getFriends();
+				ArrayNode arrayNodeUsers = mapper.createArrayNode(); // JSON para el cliente
+				while (itUsers.hasNext()) {
+					Document user = (Document) itUsers.next();
+					if (!user.getString("name").equals(player.getUsername()) && !friends.contains(user.getObjectId("_id"))) {
+						ObjectNode jsonUser = mapper.createObjectNode();
+						jsonUser.put("id", user.getObjectId("_id").toString());
+						jsonUser.put("name", user.getString("name"));		
+						arrayNodeUsers.addPOJO(jsonUser);
+					}
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeUsers);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "REQUEST FRIENDSHIP":
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())), 
+						Updates.addToSet("friendRequests", new ObjectId(node.get("idTransmitter").asText())));
+				break;
+			case "SHOW FRIEND REQUESTS":
+				ArrayNode arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
+				for (ObjectId id : player.getFriendRequests()) {					
+					ObjectNode jsonRequest = mapper.createObjectNode();
+					jsonRequest.put("id", id.toString());
+					Bson filterRequest = new Document("_id", id);
+					jsonRequest.put("name", coll.find(filterRequest).first().getString("name"));		
+					arrayNodeRequests.addPOJO(jsonRequest);
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeRequests);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "ACCEPT FRIEND":
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())), 
+						Updates.addToSet("friends", new ObjectId(node.get("idReceiver").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())), 
+						Updates.addToSet("friends", new ObjectId(node.get("idTransmitter").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())),
+						Updates.pull("friendRequests", new ObjectId(node.get("idTransmitter").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())),
+						Updates.pull("friendRequests", new ObjectId(node.get("idReceiver").asText())));
+				arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
+				for (ObjectId id : player.getFriendRequests()) {					
+					ObjectNode jsonRequest = mapper.createObjectNode();
+					jsonRequest.put("id", id.toString());
+					Bson filterRequest = new Document("_id", id);
+					jsonRequest.put("name", coll.find(filterRequest).first().getString("name"));		
+					arrayNodeRequests.addPOJO(jsonRequest);
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeRequests);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "DELETE FRIEND":
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())),
+						Updates.pull("friends", new ObjectId(node.get("idTransmitter").asText())));
+				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())),
+						Updates.pull("friends", new ObjectId(node.get("idReceiver").asText())));
+			case "SHOW FRIENDS":
+				arrayNodeRequests = mapper.createArrayNode(); // JSON para el cliente
+				for (ObjectId id : player.getFriends()) {					
+					ObjectNode jsonRequest = mapper.createObjectNode();
+					jsonRequest.put("id", id.toString());
+					Bson filterRequest = new Document("_id", id);
+					jsonRequest.put("name", coll.find(filterRequest).first().getString("name"));		
+					arrayNodeRequests.addPOJO(jsonRequest);
+				}
+				msg.put("event", "USERS FOUND");
+				msg.putPOJO("users", arrayNodeRequests);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "SHOW CITY":
+				ObjectId idHost = new ObjectId(node.get("id").asText());
+				Player host = players.get(idHost);
+				filter = new Document("_id", idHost);
+				Document dbHost = coll.find(filter).first();
+				if (host == null && dbHost != null) {
+					host = new Player(null, idHost);
+					host.updateGrid((Collection<Document>) dbHost.get("grid"));
+					host.setEdificioId(dbHost.getInteger("edificioId", 0));
+					host.updateEdificios((Collection<Document>) dbHost.get("edificios"));
+					host.updateOfertas((Collection<Document>) dbHost.get("ofertas"));
+					host.setPuntuacion(dbHost.get("puntuacion", 0));
+					host.setEnergia(dbHost.getInteger("energia", 0));
+					host.setMetal(dbHost.getInteger("metal", 100));
+					host.setCeramica(dbHost.getInteger("ceramica", 100));
+					host.setCreditos(dbHost.getInteger("creditos", 1000));
+					host.setUnionCoins(dbHost.getInteger("unionCoins", 0));
+					host.setCosteCelda(dbHost.getInteger("costeCelda", 0));
+					host.setCeldasCompradas(dbHost.getInteger("celdasCompradas", 0));
+					host.setColonos(dbHost.getInteger("colonos", 0));
+					host.setGameStarted(dbHost.getBoolean("gameStarted", false));
+					host.setCaBlocked(dbHost.getBoolean("caBlocked", true));
+				}
+				if (host != null) {
+					msg.put("event", "VISITOR CITY NAME");
+					msg.put("name", dbHost.get("cityName", "Unknown city"));
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					updateInfo(host, "PLAYER INFO", player.getSession());
+				}
+				break;
+			case "CHANGE CITY NAME":
+				String cityName = node.get("name").asText();
+				if (cityName.length() <= 15) {
+					WebsocketGameHandler.getColl().updateOne(new Document("_id", player.getId()), 
+							new Document("$set", new Document("cityName", cityName)));
+					msg.put("event", "CITY NAME CHANGED");
+					msg.put("name", cityName);
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
 			case "DEBUG":
 				System.out.println("The Debug message was received");
 				break;
@@ -955,10 +1080,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			e.printStackTrace();
 		}
 	}
-
-	// Informa al cliente y a la BDD de una actualizacion en la informacion del
-	// jugador (Grid y edificios)
-	private void updateInfo(Player player, String event) {
+	
+	// Informa al cliente y a la BDD de una actualizacion en la informacion del jugador (Grid y edificios)
+	private void updateInfo(Player player, String event, WebSocketSession session) {
 		ObjectNode msg = mapper.createObjectNode();
 		try {
 			msg.put("event", event);
@@ -1027,11 +1151,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			msg.put("puntuacion", player.getPuntuacion());
 			msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 			// Enviamos el mensaje al cliente
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			session.sendMessage(new TextMessage(msg.toString()));
 		} catch (Exception e) {
 			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);
 		}
 		player.saveAll();
 	}
+	
 }
