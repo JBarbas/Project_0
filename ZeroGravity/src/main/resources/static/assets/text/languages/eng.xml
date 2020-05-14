@@ -22,6 +22,14 @@
 		<conact>Current password</conact>
 		<connueva>New password</connueva>
 		<email>E-mail</email>
+		<optionsLogs>
+			<UpdateUserNameSuccess>Success changing username</UpdateUserNameSuccess>
+			<UpdateUserNameFail>Fail changing username</UpdateUserNameFail>
+			<UpdateEmailSuccess>Success changing email</UpdateEmailSuccess>
+			<UpdateEmailFail>Fail changing email</UpdateEmailFail>
+			<UpdatePassSuccess>Success changing password</UpdatePassSuccess>
+			<UpdatePassFail>Fail changing password</UpdatePassFail>
+		</optionsLogs>
 	</opciones>
 	<login>
 		<reg>SIGN UP</reg>

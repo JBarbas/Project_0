@@ -196,11 +196,52 @@ window.onload = function() {
 				console.log('[DEBUG] UPDATE USERNAME RESPONSE message recieved')
 				console.dir(msg);
 			}
+
+			//Interpretar Resultado
+			let idRespuesta;
+			let auxIcon;
+			if(msg.resultado){
+				auxIcon = 'success'
+				idRespuesta = 0;
+			}
+			else{
+				auxIcon = 'warning'
+				idRespuesta = 1;
+			}
+
+			console.log(game.cache.xml.get(game.global.idioma).getElementsByTagName('optionsLogs')[0].childNodes[idRespuesta].nodeValue);
 			Swal.fire({
-				  icon: 'success',
+				  icon: auxIcon,
 				  title: 'Nice!',
-				  text: msg.resultado
+				  text: game.cache.xml.get(game.global.idioma).getElementsByTagName('optionsLogs')[0].childNodes[idRespuesta].nodeValue
 				});
+
+			break;
+		case 'UPDATE EMAIL RESPONSE':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] UPDATE EMAIL RESPONSE message recieved')
+				console.dir(msg);
+			}
+
+			//Interpretar Resultado
+			let idRespuesta2;
+			let auxIcon2;
+
+			if(msg.resultado){
+				auxIcon2 = 'success';
+				idRespuesta2 = 2;
+			}
+			else{
+				auxIcon2 = 'warning'
+				idRespuesta2 = 3;
+			}
+
+			Swal.fire({
+				  icon: auxIcon2,
+				  title: 'Nice!',
+				  text: game.cache.xml.get(game.global.idioma).getElementsByTagName('optionsLogs')[0].childNodes[idRespuesta2].nodeValue
+				});
+
 			break;
 		case 'PLAYER INFO':
 			if (game.global.DEBUG_MODE) {

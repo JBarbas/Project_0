@@ -715,9 +715,7 @@ public class Player {
 	}
 	
 	public void saveEmail() {
-		Document dbEmail = new Document();
-		dbEmail.append("email", email);
 		WebsocketGameHandler.getColl().updateOne(new Document("_id", getId()), 
-				new Document("$set", new Document("email", dbEmail)));
+				new Document("$set", new Document("email", this.email)));
 	}
 }

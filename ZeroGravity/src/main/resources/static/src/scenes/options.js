@@ -261,6 +261,12 @@ class OptionsScene extends Phaser.Scene {
 	    		msg.name = textUsuario.value;
 	    		game.global.socket.send(JSON.stringify(msg));
     		}
+            if (textCorreo.value !== '') {
+                let msg = new Object();
+                msg.event = 'UPDATE EMAIL';
+                msg.email = textCorreo.value;
+                game.global.socket.send(JSON.stringify(msg));
+            }
     	});
     	
     	btnModify.on('pointerdown',function(pointer){
@@ -272,6 +278,13 @@ class OptionsScene extends Phaser.Scene {
 	    		msg.name = textUsuario.value;
 	    		game.global.socket.send(JSON.stringify(msg));
     		}
+
+              if (textCorreo.value !== '') {
+                let msg = new Object();
+                msg.event = 'UPDATE EMAIL';
+                msg.email = textCorreo.value;
+                game.global.socket.send(JSON.stringify(msg));
+            }
     	});
     	
     	btnModificar2.on('pointerover',function(pointer){
