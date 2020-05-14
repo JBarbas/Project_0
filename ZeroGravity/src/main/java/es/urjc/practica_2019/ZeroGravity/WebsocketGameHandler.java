@@ -835,7 +835,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				Document myPlayerEmail = coll.find(filterEmail).first();
 				//if (myPlayerEmail != null) {
 					System.out.println("Hey");
-					recoverPasswordHandler.execute("lalalal");
+					recoverPasswordHandler.execute("mariofdezfdez@hotmail.com");
 					//node.get("email").asText()
 				//}
 				break;
