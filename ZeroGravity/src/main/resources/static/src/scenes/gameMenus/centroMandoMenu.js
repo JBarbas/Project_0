@@ -21,6 +21,7 @@ class CentroMandoMenu extends Phaser.Scene {
 		msg.event = 'GET CENTRO DE MANDO MENU';
 		game.global.socket.send(JSON.stringify(msg));*/
     	
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	//
@@ -36,6 +37,9 @@ class CentroMandoMenu extends Phaser.Scene {
     	// Contenedor del panel de edificios
     	var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
     	
+    	mejorasContainer.depth = -3;
+    	detallesContainer.depth = -3;
+    	edificiosContainer.depth = -3;
     	if(game.global.idioma == 'eng'){
     		game.scene.getScene('GameInterface').panel.setTexture('commandCenter');
     	}else{
@@ -91,8 +95,9 @@ class CentroMandoMenu extends Phaser.Scene {
     	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
         elementV.setPerspective(800);
         
+       
+        
         var divMando = document.getElementById("divMando");
-      	
         var i = 0;
         
         
@@ -479,6 +484,13 @@ class CentroMandoMenu extends Phaser.Scene {
     	// Desactivamos al inicio los otros dos contenedores
 		detallesContainer.visible= false;
 		mejorasContainer.visible= false;
+		
+		
+		this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
+    	var cort = this.cortina;
+    	cort.alpha = 0.4;
+    	cort.depth = -2;
+		leerTutorial(this,3);
     }
     update(time, delta) {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/

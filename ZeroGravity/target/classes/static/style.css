@@ -118,80 +118,88 @@ body {
 		  left: 505px;
 		  top: -140px;
 		  /* Positioning */
-		  position: absolute;
-		  -ms-transform: scale(2,2); /* IE 9 */
-  		  -webkit-transform: scale(2,2); /* Safari prior 9.0 */
- 		  transform: scale(2,2); /* Standard syntax */
-		}
-		
-		.input-box {
-		  position: relative;
-		}
-		
-		.input-box input {
-		  border-style: none;
-		  background: transparent;
-		  /*border-bottom: 1px solid white;*/
-		  width: 80%;
-		  position: relative;
-		  outline: none;
-		  padding: 10px 0;
-		  color: white;
-		  font-size: 18px;
-		  margin-bottom: 30px;
-		}
-		
-		.input-box label {
-		  color: white;
-		  position: absolute;
-		  padding: 10px 0;
-		  top: 0;
-		  left: 0;
-		  pointer-events: none;
-		  transition: 0.5s;
-		}
-		
-		.input-box input:focus ~ label,
-		.input-box input:valid ~ label {
-		  color: #0088BF;
-		  font-size: 16px;
-		  top: -20px;
-		  transition: 0.5s;
-		}
-		
-		.box input[type="submit"] {
-		  background: transparent;
-		  color: white;
-		  border-spacing: none;
-		  border: 1px solid white;
-		  padding: 10px 20px;
-		  font-size: 16px;
-		  border-radius: 3px;
-		  outline: none;
-		  cursor: pointer;
-		  transition: 0.3s;
-		}
-		
-		.box input[type="submit"]:hover {
-		  background: yellow;
-		  border: 1px solid yellow;
-		  transition: 0.3s;
-		}
-		
-		input:-webkit-autofill,
-		input:-webkit-autofill:hover, 
-		input:-webkit-autofill:focus,
-		textarea:-webkit-autofill,
-		textarea:-webkit-autofill:hover,
-		textarea:-webkit-autofill:focus,
-		select:-webkit-autofill,
-		select:-webkit-autofill:hover,
-		select:-webkit-autofill:focus {
-		  -webkit-text-fill-color: green;
-		  transition: background-color 5000s ease-in-out 0s;
-		  -webkit-text-fill-color: #fff !important;
-		  
-		}
+  position: absolute;
+  -ms-transform: scale(2,2); /* IE 9 */
+		  -webkit-transform: scale(2,2); /* Safari prior 9.0 */
+	  transform: scale(2,2); /* Standard syntax */
+}
+
+.boxSound {
+		  width: 230px;
+		  left: 505px;
+		  top: -140px;
+		  /* Positioning */
+  			position: absolute;
+}
+
+.input-box {
+  position: relative;
+}
+
+.input-box input {
+  border-style: none;
+  background: transparent;
+  /*border-bottom: 1px solid white;*/
+  width: 80%;
+  position: relative;
+  outline: none;
+  padding: 10px 0;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.input-box label {
+  color: white;
+  position: absolute;
+  padding: 10px 0;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  color: #0088BF;
+  font-size: 16px;
+  top: -20px;
+  transition: 0.5s;
+}
+
+.box input[type="submit"] {
+  background: transparent;
+  color: white;
+  border-spacing: none;
+  border: 1px solid white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.box input[type="submit"]:hover {
+  background: yellow;
+  border: 1px solid yellow;
+  transition: 0.3s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: green;
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #fff !important;
+  
+}
 
 /*
  *  STYLE 7
@@ -530,101 +538,101 @@ li {
    list-style: outside none none;
 }
 
-
 #player {
 	 width: 350px;
 	 height: 50px;
 	 position: relative;
 	 margin: 0 auto;
-	 top: 80px;
+	 top: 90px;
 }
  #player i {
 	 position: absolute;
-	 margin-top: -6px;
+	 margin-top: -3px;
 	 color: #666;
 }
  #player i.fa-volume-down {
-	 margin-left: -8px;
+	 margin-left: -16px;
 }
  #player i.fa-volume-up {
-	 margin-right: -8px;
+	 margin-right: -326px;
 	 right: 0;
 }
  #volume {
 	 position: absolute;
 	 left: 24px;
 	 margin: 0 auto;
-	 height: 5px;
-	 width: 300px;
+	 height: 10px;
+	 width: 600px;
 	 background: #555;
-	 border-radius: 15px;
+	 border-radius: 30px;
 }
  #volume .ui-slider-range-min {
-	 height: 5px;
-	 width: 300px;
+	 height: 10px;
+	 width: 600px;
 	 position: absolute;
 	 background: #2ecc71;
 	 border: none;
-	 border-radius: 10px;
+	 border-radius: 20px;
 	 outline: none;
 }
  #volume .ui-slider-handle {
-	 width: 20px;
-	 height: 20px;
-	 border-radius: 20px;
+	 width: 40px;
+	 height: 40px;
+	 border-radius: 40px;
 	 background: #fff;
 	 position: absolute;
-	 margin-left: -8px;
-	 margin-top: -8px;
+	 margin-left: -16px;
+	 margin-top: -16px;
 	 cursor: pointer;
 	 outline: none;
 }
+ 
 
 #player2 {
 	 width: 350px;
 	 height: 50px;
 	 position: relative;
 	 margin: 0 auto;
-	 top: 80px;
+	 top: 160px;
 }
  #player2 i {
 	 position: absolute;
-	 margin-top: -6px;
+	 margin-top: -3px;
 	 color: #666;
 }
  #player2 i.fa-volume-down {
-	 margin-left: -8px;
+	 margin-left: -16px;
 }
  #player2 i.fa-volume-up {
-	 margin-right: -8px;
+	 margin-right: -326px;
 	 right: 0;
 }
  #volume2 {
 	 position: absolute;
 	 left: 24px;
 	 margin: 0 auto;
-	 height: 5px;
-	 width: 300px;
+	 height: 10px;
+	 width: 600px;
 	 background: #555;
-	 border-radius: 15px;
+	 border-radius: 30px;
 }
  #volume2 .ui-slider-range-min {
-	 height: 5px;
-	 width: 300px;
+	 height: 10px;
+	 width: 600px;
 	 position: absolute;
 	 background: #2ecc71;
 	 border: none;
-	 border-radius: 10px;
+	 border-radius: 20px;
 	 outline: none;
 }
  #volume2 .ui-slider-handle {
-	 width: 20px;
-	 height: 20px;
-	 border-radius: 20px;
+	 width: 40px;
+	 height: 40px;
+	 border-radius: 40px;
 	 background: #fff;
 	 position: absolute;
-	 margin-left: -8px;
-	 margin-top: -8px;
+	 margin-left: -16px;
+	 margin-top: -16px;
 	 cursor: pointer;
 	 outline: none;
 }

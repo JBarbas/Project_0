@@ -160,6 +160,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('fIcon', 'assets/interface/Gameplay/Administracion/friendsIcon.png');
 		this.load.image('rankFIcon', 'assets/interface/Gameplay/Administracion/rankFriendsIcon.png');
 		
+		this.load.image('boxTimer', 'assets/interface/Gameplay/boxTimer.png');
+		
 		this.load.image('boxCityName', 'assets/interface/Gameplay/ciudadNombreCaja.png');
 		this.load.image('boxCityEdit', 'assets/interface/Gameplay/editNombreCiudad.png');
 		

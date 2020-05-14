@@ -23,6 +23,8 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     	//
     	this.miEdificio = data.miEdificio;
     	
+    	
+    	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
 
@@ -132,6 +134,8 @@ class CentroAdministrativoMenu extends Phaser.Scene {
 				game.scene.stop(game.global.menu);
 			}
 			game.global.menu = 'RankingMenu';
+			game.global.ranking = 'amigos';
+			
 			game.scene.run('RankingMenu');			
     	});
     	

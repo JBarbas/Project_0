@@ -23,6 +23,7 @@ class Edificio {
 		this.bienSituado = false;
 		this.inicioConstruccion = Date.now();
 		this.timeText = null;
+		this.timeBox = null;
 		this.gameObject = null;
 		this.clone = null;
 		this.originX = 0.5; // Porcentaje a lo ancho de la imagen desde donde se comenzara a pintar
@@ -60,8 +61,8 @@ class Edificio {
 				scene.tweens.add({
 			        targets: this.recolectIcon,
 			        y: position.y - 150,
-			        duration: 2000,
-			        ease: 'Power2',
+			        duration: 3000,
+			        ease: 'Linear',
 			        yoyo: true,
 			        loop: -1
 			    });
@@ -84,11 +85,15 @@ class Edificio {
 		}
 		if (this.timeText !== null) {
 			this.timeText.destroy();
+			this.timeBox.destroy();
 		}
 		if (this.enConstruccion) {
+			this.timeBox = scene.add.image(position.x, position.y - 115, 'boxTimer');
+			this.timeBox.scale =  0.2;
 			this.timeText = scene.add.text(position.x, position.y - 115, 
 					Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000) + " mins",
 					{ fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold', textShadow: "2px 2px 15px #000000, 2px 2px 15px #000000"}).setOrigin(0.5, 0.5);
+			this.timeBox.depth = this.y + this.x + 1/Math.max(this.height, this.width);
 			this.timeText.depth = this.y + this.x + 1/Math.max(this.height, this.width);
 			var that = this;
 			this.interval = setInterval(function() {
