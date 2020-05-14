@@ -8,6 +8,10 @@ class BloqueViviendas extends Edificio{
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'bloqueViviendas';
+		super.sprites = ['apartamentos1', 'apartamentos1', 'apartamentos1', 'apartamentos1',
+			'apartamentos2', 'apartamentos2', 'apartamentos2', 'apartamentos2', 'apartamentos2',
+			'apartamentos3', 'apartamentos3', 'apartamentos3', 'apartamentos3', 'apartamentos3',
+			'apartamentos4'];
 		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'BloqueViviendasMenu';
 		super.listImage = 'assets/sprites/Edificios/Edificio_Viviendas.png';

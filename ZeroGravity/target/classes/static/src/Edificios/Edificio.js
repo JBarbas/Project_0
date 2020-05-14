@@ -13,6 +13,7 @@ class Edificio {
 		this.numColonos = 0;
 		this.jobs = 0;
 		this.sprite = 'edificio';
+		this.sprites = [];
 		this.buildingSprite = 'enConstruccion1';
 		this.listImage = 'assets/sprites/Edificios/Operaciones.png';
 		this.nameEsp = 'Edificio';
@@ -45,9 +46,9 @@ class Edificio {
 			this.gameObject = scene.add.image(position.x, position.y, this.buildingSprite).setOrigin(this.originX, 1);
 		}
 		else {
-			this.gameObject = scene.add.image(position.x, position.y, this.sprite).setOrigin(this.originX, 1);
+			this.gameObject = scene.add.image(position.x, position.y, this.sprites[this.level-1]).setOrigin(this.originX, 1);
 		}
-		this.gameObject.setFrame(this.level -1);
+		//this.gameObject.setFrame(this.level -1);
 		this.gameObject.depth = this.y + this.x + 1/Math.max(this.height, this.width);
 		
 		if (this instanceof GeneradorRecursos) {
@@ -103,7 +104,7 @@ class Edificio {
 	
 	move () {
 		this.gameObject.alpha = 0.25;
-		this.gameObject.setTexture(this.sprite);
+		this.gameObject.setTexture(this.sprites[this.level - 1]);
 		for (var i = this.y-this.height+1; i <= this.y; i++) {
 			for (var j = this.x-this.width+1; j <= this.x; j++) {
 				if (typeof game.global.grid[i] !== 'undefined') {
@@ -127,7 +128,7 @@ class Edificio {
 	}
 	
 	previsualizar(scene) {
-		this.gameObject = scene.add.image(this.x, this.y, this.sprite).setOrigin(this.originX, 1);
+		this.gameObject = scene.add.image(this.x, this.y, this.sprites[this.level - 1]).setOrigin(this.originX, 1);
 		this.gameObject.alpha = 0.25;
 	}
 	
