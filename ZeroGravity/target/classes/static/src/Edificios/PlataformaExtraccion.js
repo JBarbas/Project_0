@@ -8,6 +8,10 @@ class PlataformaExtraccion extends GeneradorRecursos{
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'plataformaExtraccion';
+		super.sprites = ['pde1', 'pde1', 'pde1', 'pde1',
+			'pde2', 'pde2', 'pde2', 'pde2', 'pde2',
+			'pde3', 'pde3', 'pde3', 'pde3', 'pde3',
+			'pde4'];
 		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'PlataformaExtraccionMenu';
 		super.listImage = 'assets/sprites/Edificios/Plataforma_';

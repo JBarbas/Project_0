@@ -8,6 +8,10 @@ class Generador extends GeneradorRecursos {
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'generador';
+		super.sprites = ['generador1', 'generador1', 'generador1', 'generador1',
+			'generador2', 'generador2', 'generador2', 'generador2', 'generador2',
+			'generador3', 'generador3', 'generador3', 'generador3', 'generador3',
+			'generador4'];
 		super.buildingSprite = 'enConstruccion1';
 		super.menuScene = 'GeneradorMenu';
 		super.listImage = 'assets/sprites/Edificios/Generador';

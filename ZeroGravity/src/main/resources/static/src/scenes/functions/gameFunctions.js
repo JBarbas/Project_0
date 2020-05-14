@@ -174,7 +174,8 @@ function situarEdificio(scene, edificio) {
 	}
 	else {
 		edificio.bienSituado = false;
-		edificio.clone.setFrame(edificio.level -1 + 3);
+		//edificio.clone.setFrame(edificio.level -1 + 3);
+		edificio.gameObject.tint = '0xff0000';
 	}
 	
 	var position = new Phaser.Geom.Point(scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).x - tileMap_width*tile_width/2, scene.main_camera.getWorldPoint(scene.input.x, scene.input.y).y);
@@ -253,13 +254,15 @@ function previsualizarEdificio(edificio, scene) {
 	
 	if (typeof game.global.grid[i] !== 'undefined') {
 		if (typeof game.global.grid[i][j] !== 'undefined') {
-			edificio.gameObject.setFrame(edificio.level-1);
+			//edificio.gameObject.setFrame(edificio.level-1);
+			edificio.gameObject.tint = '0xFFFFFF';
 			for (var a = i-edificio.height+1; a <= i; a++) {
 				for (var b = j-edificio.width+1; b <= j; b++) {
 					if (typeof game.global.grid[a] !== 'undefined') {
 						if (typeof game.global.grid[a][b] !== 'undefined') {
 							if (game.global.grid[a][b].type !== 0) {
-								edificio.gameObject.setFrame(edificio.level -1 + 3);
+								//edificio.gameObject.setFrame(edificio.level -1 + 3);
+								edificio.gameObject.tint = '0xFF0000';
 								game.global.canBuild = false;
 								break;
 							}

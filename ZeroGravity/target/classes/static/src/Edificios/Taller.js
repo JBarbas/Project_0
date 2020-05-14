@@ -8,6 +8,10 @@ class Taller extends GeneradorRecursos {
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'taller';
+		super.sprites = ['taller1', 'taller1', 'taller1', 'taller1',
+			'taller2', 'taller2', 'taller2', 'taller2', 'taller2',
+			'taller3', 'taller3', 'taller3', 'taller3', 'taller3',
+			'taller4'];
 		super.buildingSprite = 'enConstruccion3';
 		super.menuScene = 'TallerMenu';
 		super.listImage = 'assets/sprites/Edificios/Taller_1.png';

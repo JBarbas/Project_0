@@ -53,6 +53,47 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('enConstruccion2', 'assets/sprites/Edificios/modulo2.png');
 		this.load.image('enConstruccion3', 'assets/sprites/Edificios/modulo3.png');
 		
+		this.load.image('apartamentos1', 'assets/sprites/Edificios/Edificio_Viviendas.png');
+		this.load.image('apartamentos2', 'assets/sprites/Edificios/Edificio_Viviendas.png');
+		this.load.image('apartamentos3', 'assets/sprites/Edificios/Edificio_Viviendas_2.png');
+		this.load.image('apartamentos4', 'assets/sprites/Edificios/Edificio_Viviendas_3.png');
+		
+		this.load.image('cAdministrativo1', 'assets/sprites/Edificios/Sprite_Administrativo_new.png');
+		this.load.image('cAdministrativo2', 'assets/sprites/Edificios/Sprite_Administrativo_2_new.png');
+		this.load.image('cAdministrativo3', 'assets/sprites/Edificios/Sprite_Administrativo_3_new.png');
+		
+		this.load.image('mercado1', 'assets/sprites/Edificios/Comercio_1.png');
+		this.load.image('mercado2', 'assets/sprites/Edificios/Comercio_1.png');
+		this.load.image('mercado3', 'assets/sprites/Edificios/Comercio_2.png');
+		this.load.image('mercado4', 'assets/sprites/Edificios/Comercio_3.png');
+		
+		this.load.image('cdm1', 'assets/sprites/Edificios/CentroDeMando1.png');
+		this.load.image('cdm2', 'assets/sprites/Edificios/CentroDeMando2.png');
+		this.load.image('cdm3', 'assets/sprites/Edificios/CentroDeMando3.png');
+		
+		this.load.image('cOperaciones1', 'assets/sprites/Edificios/Operaciones1_new.png');
+		this.load.image('cOperaciones2', 'assets/sprites/Edificios/Operaciones2_new.png');
+		this.load.image('cOperaciones3', 'assets/sprites/Edificios/Operaciones3_new.png');
+		
+		this.load.image('generador1', 'assets/sprites/Edificios/Generador1_new.png');
+		this.load.image('generador2', 'assets/sprites/Edificios/Generador2_new.png');
+		this.load.image('generador3', 'assets/sprites/Edificios/Generador3_new.png');
+		this.load.image('generador4', 'assets/sprites/Edificios/Generador4_new.png');
+		
+		this.load.image('lab1', 'assets/sprites/Edificios/Laboratorio1.png');
+		this.load.image('lab2', 'assets/sprites/Edificios/Laboratorio2.png');
+		this.load.image('lab3', 'assets/sprites/Edificios/Laboratorio3.png');
+		
+		this.load.image('pde1', 'assets/sprites/Edificios/Plataforma_1.png');
+		this.load.image('pde2', 'assets/sprites/Edificios/Plataforma_1.png');
+		this.load.image('pde3', 'assets/sprites/Edificios/Plataforma_2.png');
+		this.load.image('pde4', 'assets/sprites/Edificios/Plataforma_3.png');
+		
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller0.png');
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller1.png');
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller2.png');
+		this.load.image('taller1', 'assets/sprites/Edificios/Taller3.png');
+		
 		// Menus de Edificios
 		this.load.image('centroDeMandoMenu', 'assets/sprites/Edificios/CentroMandoMenu.png');
 		this.load.image('menuEnConstruccion', 'assets/interface/enConstruccion.png');
