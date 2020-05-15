@@ -16,6 +16,10 @@ class CentroOperacionesMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	let msg = new Object();
+		msg.event = 'GET CENTRO DE OPERACIONES MENU';
+		game.global.socket.send(JSON.stringify(msg));
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
     	//

@@ -13,11 +13,15 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     }
     
     preload () {
-    	let msg = new Object();
+    	/*let msg = new Object();
 		msg.event = 'GET JOBS';
-		game.global.socket.send(JSON.stringify(msg));
+		game.global.socket.send(JSON.stringify(msg));*/
     }
     create (data)  {
+    	let msg = new Object();
+		msg.event = 'GET CENTRO ADMINISTRATIVO MENU';
+		game.global.socket.send(JSON.stringify(msg));
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100); 
     	//

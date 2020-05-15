@@ -164,6 +164,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					msg.put("event", "LOGGED");
 					msg.put("playerId", player.getId().toString());
 					msg.put("gameStarted", player.isGameStarted());	
+					msg.put("tutorialIntro", myPlayer.getBoolean("tutorialIntro", false));
 					msg.put("cityName", myPlayer.get("cityName", "your city").toString());
 					ObjectNode jsonConfig = mapper.createObjectNode();
 					jsonConfig.put("volMusic", config.getVolMusic());
@@ -533,6 +534,52 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				player.saveEdificios();
 				break;
 			case "GET CENTRO DE MANDO MENU":
+				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				myPlayer = coll.find(filter).first();
+				boolean cdmOpened = myPlayer.getBoolean("tutorialCDM", false);
+				if (!cdmOpened) {
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("tutorialCDM", true)));
+				}
+				msg.put("event", "CENTRO DE MANDO MENU");
+				msg.put("tutorialOpened", cdmOpened);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET CENTRO ADMINISTRATIVO MENU":
+				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				myPlayer = coll.find(filter).first();
+				boolean caOpened = myPlayer.getBoolean("tutorialCA", false);
+				if (!caOpened) {
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("tutorialCA", true)));
+				}
+				msg.put("event", "CENTRO ADMINISTRATIVO MENU");
+				msg.put("tutorialOpened", caOpened);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET CENTRO DE COMERCIO MENU":
+				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				myPlayer = coll.find(filter).first();
+				boolean cdcOpened = myPlayer.getBoolean("tutorialCDC", false);
+				if (!cdcOpened) {
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("tutorialCDC", true)));
+				}
+				msg.put("event", "CENTRO DE COMERCIO MENU");
+				msg.put("tutorialOpened", cdcOpened);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET CENTRO DE OPERACIONES MENU":
+				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				myPlayer = coll.find(filter).first();
+				boolean cdoOpened = myPlayer.getBoolean("tutorialCDO", false);
+				if (!cdoOpened) {
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("tutorialCDO", true)));
+				}
+				msg.put("event", "CENTRO DE OPERACIONES MENU");
+				msg.put("tutorialOpened", cdoOpened);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
 				msg.put("event", "PLATAFORMA EXTRACCION MENU");

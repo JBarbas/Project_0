@@ -117,6 +117,13 @@ window.onload = function() {
 		musicMenu: null,
 		ranking: 'all',
 		idTuto: 1,
+		tutorial : {
+			intro : false,
+			cdm : false,
+			ca : false,
+			cdc : false,
+			cdo : false 
+		},
 		imgChar: null,
 		containerTut: null,
 		idioma : navigator.language
@@ -168,6 +175,7 @@ window.onload = function() {
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;			
 			game.global.myPlayer.cityName = msg.cityName;
+			game.global.tutorial.intro = msg.tutorialIntro;
 			game.global.myPlayer.config.volMusic = msg.config.volMusic;
 			game.global.myPlayer.config.volEffects = msg.config.volEffects;
 			game.global.idioma = msg.config.lang;
@@ -565,6 +573,34 @@ window.onload = function() {
 				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
 			}
 			pedirPuntuaciones()
+			break;
+		case 'CENTRO DE MANDO MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CENTRO DE MANDO MENU message recieved');
+				console.dir(msg);
+			}
+			game.global.tutorial.cdm = msg.tutorialOpened;
+			break;
+		case 'CENTRO ADMINISTRATIVO MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CENTRO ADMINISTRATIVO MENU message recieved');
+				console.dir(msg);
+			}
+			game.global.tutorial.ca = msg.tutorialOpened;
+			break;
+		case 'CENTRO DE COMERCIO MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CENTRO DE COMERCIO MENU message recieved');
+				console.dir(msg);
+			}
+			game.global.tutorial.cdc = msg.tutorialOpened;
+			break;
+		case 'CENTRO DE OPERACIONES MENU':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CENTRO DE OPERACIONES MENU message recieved');
+				console.dir(msg);
+			}
+			game.global.tutorial.cdo = msg.tutorialOpened;
 			break;
 		case 'PLATAFORMA EXTRACCION MENU':
 			if (game.global.DEBUG_MODE) {

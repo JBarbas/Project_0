@@ -17,9 +17,9 @@ class CentroMandoMenu extends Phaser.Scene {
     }
     create (data)  {
     	
-    	/*let msg = new Object();
+    	let msg = new Object();
 		msg.event = 'GET CENTRO DE MANDO MENU';
-		game.global.socket.send(JSON.stringify(msg));*/
+		game.global.socket.send(JSON.stringify(msg));
     	
     	
     	game.global.effects.seleccionarEdificio.play();
