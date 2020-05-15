@@ -833,11 +833,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				// Solo se manda el correo si se cumple que el email esta registrado
 				Bson filterEmail = new Document("email", node.get("email").asText());
 				Document myPlayerEmail = coll.find(filterEmail).first();
-				//if (myPlayerEmail != null) {
+				if (myPlayerEmail != null) {
 					System.out.println("Hey");
-					recoverPasswordHandler.execute("mariofdezfdez@hotmail.com");
+					recoverPasswordHandler.execute(node.get("email").asText());
 					//node.get("email").asText()
-				//}
+				}
 				break;
 			case "RECOVER USERNAME":
 				// Solo se manda el correo si se cumple que el email esta registrado
