@@ -21,6 +21,14 @@
 		<conact>Contraseña actual</conact>
 		<connueva>Contraseña nueva</connueva>
 		<email>Correo</email>
+		<optionsLogs>
+			<UpdateUserNameSuccess>Exito al cambiar de username</UpdateUserNameSuccess>
+			<UpdateUserNameFail>Error al cambiar de username</UpdateUserNameFail>
+			<UpdateEmailSuccess>Exito al cambiar de correo</UpdateEmailSuccess>
+			<UpdateEmailFail>Error al cambiar de correo</UpdateEmailFail>
+			<UpdatePassSuccess>Exito al cambiar la contraseña</UpdatePassSuccess>
+			<UpdatePassFail>Error al cambiar la contraseña</UpdatePassFail>
+		</optionsLogs>
 	</opciones>
 	<login>
 		<reg>REGÍSTRATE</reg>

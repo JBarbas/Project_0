@@ -41,6 +41,7 @@ public class RecoverPasswordHandler extends MailingHandler{
 		//Ciframos la contraseña
 		byte [] passwordBytes = cifratePassword(newPassword);
 		
+		/*
 		//Cambiamos el valor en base de datos
 		MongoCollection<Document> mongoCollection = WebsocketGameHandler.getColl();
 		Bson filterEmail = new Document("email", to);
@@ -48,6 +49,8 @@ public class RecoverPasswordHandler extends MailingHandler{
 		ObjectId objectId = myPlayerEmail.getObjectId("_id");
 		mongoCollection.updateOne(new Document("_id", objectId), 
                 new Document("$set", new Document("password", passwordBytes)));
+		
+		*/
 		
 		//Añadimos la contraseña al mensaje y lo mandamos
 		HashMap<String,String> auxHashmap =  new HashMap<String, String>(fixedContentAtributes);
