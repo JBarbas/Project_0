@@ -320,6 +320,12 @@ function previsualizarExpansion(scene) {
 	}
 }
 
+function askTutorialIntro() {
+	let msg = new Object();
+	msg.event = 'GET TUTORIAL INTRO';
+	game.global.socket.send(JSON.stringify(msg));
+}
+
 // Control del zoom
 window.addEventListener("wheel", event => {
 	if (!game.global.inMenu/* || !(game.scene.getScene('GameScene').game.input.activePointer.position.x > game.global.buildingMenu.x && 

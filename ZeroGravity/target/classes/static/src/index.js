@@ -616,6 +616,13 @@ window.onload = function() {
 				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
 			}
 			pedirPuntuaciones()
+			break;			
+		case 'TUTORIAL INTRO':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] TUTORIAL INTRO message recieved');
+				console.dir(msg);
+			}
+			game.global.tutorial.intro = msg.tutorialOpened;
 			break;
 		case 'CENTRO DE MANDO MENU':
 			if (game.global.DEBUG_MODE) {

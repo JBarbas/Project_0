@@ -534,6 +534,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				player.saveEdificios();
 				break;
+			case "GET TUTORIAL INTRO":
+				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				myPlayer = coll.find(filter).first();
+				boolean tutOpened = myPlayer.getBoolean("TutorialIntro", false);
+				if (!tutOpened) {
+					coll.updateOne(new Document("_id", player.getId()), new Document("$set", 
+							new Document("tutorialIntro", true)));
+				}
+				msg.put("event", "TUTORIAL INTRO");
+				msg.put("tutorialOpened", tutOpened);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			case "GET CENTRO DE MANDO MENU":
 				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
 				myPlayer = coll.find(filter).first();
