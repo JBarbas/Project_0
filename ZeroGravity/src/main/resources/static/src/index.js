@@ -630,6 +630,13 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.tutorial.cdm = msg.tutorialOpened;
+			//Tutorial de CM
+			if(!game.global.tutorial.cdm){
+	    		game.scene.run('TutorialScene');
+				game.global.idTuto = 3;
+	    		leerTutorial(game.scene.getScene('TutorialScene'),3);
+	    		game.global.tutorial.cdm = true;
+	    	}
 			break;
 		case 'CENTRO ADMINISTRATIVO MENU':
 			if (game.global.DEBUG_MODE) {
@@ -637,6 +644,14 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.tutorial.ca = msg.tutorialOpened;
+			//Tutorial de CA
+			if(!game.global.tutorial.ca){
+	    		game.scene.run('TutorialScene');
+				game.global.idTuto = 9;
+	    		leerTutorial(game.scene.getScene('TutorialScene'),game.global.idTuto);
+	    		game.global.tutorial.ca = true;
+	    	}
+			
 			break;
 		case 'CENTRO DE COMERCIO MENU':
 			if (game.global.DEBUG_MODE) {
@@ -644,6 +659,13 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.tutorial.cdc = msg.tutorialOpened;
+			//Tutorial de CDC
+			if(!game.global.tutorial.cdc){
+	    		game.scene.run('TutorialScene');
+				game.global.idTuto = 5;
+	    		leerTutorial(game.scene.getScene('TutorialScene'),game.global.idTuto);
+	    		game.global.tutorial.cdc = true;
+	    	}
 			break;
 		case 'CENTRO DE OPERACIONES MENU':
 			if (game.global.DEBUG_MODE) {
@@ -651,6 +673,13 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.tutorial.cdo = msg.tutorialOpened;
+			//Tutorial de CDO
+			if(!game.global.tutorial.cdo){
+	    		game.scene.run('TutorialScene');
+				game.global.idTuto = 7;
+	    		leerTutorial(game.scene.getScene('TutorialScene'),game.global.idTuto);
+	    		game.global.tutorial.cdo = true;
+	    	}
 			break;
 		case 'PLATAFORMA EXTRACCION MENU':
 			if (game.global.DEBUG_MODE) {
@@ -979,12 +1008,12 @@ window.onload = function() {
 				console.log('[DEBUG] USERS FOUND message recieved');
 				console.log(msg);
 			}
-			console.log(game.scene.isActive('RankingMenu'));
+			
 			if(game.scene.isActive('RankingMenu')){
 				
 				for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
 		    		if(i%2 == 0){
-		    			console.log(game.global.mejoresPuntuaciones[i]);
+		    			
 		    			var friendincluded = false;
 			    		for(var j = 0; j < msg.users.length; j++){
 			    			if(msg.users[j].name == game.global.mejoresPuntuaciones[i]){

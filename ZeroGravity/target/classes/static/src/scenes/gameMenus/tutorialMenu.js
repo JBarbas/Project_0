@@ -25,6 +25,9 @@ class TutorialScene extends Phaser.Scene {
     	
     	var textoDesdeXml,textoDesdeXmlTut, textoTut;
     	
+    	var cdm=false,ca=false,cdo=false,cdc=false;
+    	
+    	
 		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('omitir')[0].childNodes[0].nodeValue;
 		var omitirTut = this.add.text(1400, 845, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '25px', fontWeight: 'bold'}).setInteractive();
 		
@@ -36,29 +39,32 @@ class TutorialScene extends Phaser.Scene {
 		var antTut = this.add.text(1130, 1000, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '25px', fontWeight: 'bold'}).setInteractive();
 		*/
     	
-    	
     	if(!game.global.tutorial.intro){
-    		game.global.tutorial.intro = true;
+    		askTutorialIntro('intro');
     		leerTutorial(this,game.global.idTuto);
     		
-    	}else if(game.scene.isActive('CentroMandoMenu') && !game.global.tutorial.cdm){
+    	}/*else if(game.scene.isActive('CentroMandoMenu') && !game.global.tutorial.cdm){
     		game.global.idTuto = 3;
-    		game.global.tutorial.cdm = true;
-    		leerTutorial(this,game.global.idTuto);
+    		game.scene.stop('CentroMandoMenu');
+    		askTutorialIntro('cdm');
+    		cdm = true;
     		
     	}else if(game.scene.isActive('CentroAdministrativoMenu') && !game.global.tutorial.ca){
-    		
-    		//leerTutorial(this,game.global.idTuto);
+    		game.scene.stop('CentroAdministrativoMenu');
+    		askTutorialIntro('ca');
+    		ca = true;
     		
     	}else if(game.scene.isActive('CentroComercioMenu') && !game.global.tutorial.cdc){
+    		game.scene.stop('CentroComercioMenu');
+    		askTutorialIntro('cdc');
+    		cdc = true;
     		
-    		//leerTutorial(this,game.global.idTuto);
     		
     	}else if(game.scene.isActive('CentroOperacionesMenu') && !game.global.tutorial.cdo){
-    		
-    		//leerTutorial(this,game.global.idTuto);
-    		
-    	}
+    		game.scene.stop('CentroOperacionesMenu');
+    		askTutorialIntro('co');
+    		co = true;
+    	}*/
     
     	
     	var colorBlue = '#0CB7F2';
@@ -124,6 +130,7 @@ class TutorialScene extends Phaser.Scene {
         		//stop scene
         		game.global.inMenu = false;
         		game.scene.stop('TutorialScene');
+        		
     		}
     		game.global.cortina.destroy();
     		game.global.textoTut.destroy();

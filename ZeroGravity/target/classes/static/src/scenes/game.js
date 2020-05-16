@@ -142,6 +142,31 @@ class GameScene extends Phaser.Scene {
 		    							game.scene.stop(game.global.menu);
 		    						}
 		    						game.global.menu = edificio.menuScene;
+		    						/*switch (edificio.menuScene){
+			    						case 'CentroMandoMenu':
+			    							if(!game.global.tutorial.ca){
+			    								leerTutorial(scene,9);
+			    							}
+		    							break;
+			    						case 'CentroComercioMenu':
+			    							if(!game.global.tutorial.cdc){
+			    								leerTutorial(scene,5);
+			    							}
+		    							break;
+			    						case 'CentroMandoMenu':
+			    							if(!game.global.tutorial.cdm){
+			    								leerTutorial(scene,3);
+			    							}
+		    							break;
+			    						case 'CentroOperacionesMenu':
+			    							if(!game.global.tutorial.cdo){
+			    								leerTutorial(scene,7);
+			    							}
+		    							break;
+		    							default:
+		    								game.scene.run(edificio.menuScene, {miEdificio: edificio});
+	    								break;
+		    						}*/
 		    						game.scene.run(edificio.menuScene, {miEdificio: edificio});
 		    					}
 		        			}
