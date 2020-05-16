@@ -23,7 +23,7 @@ public class MailingHandler {
 	
 	public MailingHandler() {
 		this.executor = Executors.newFixedThreadPool(10);
-		this.from = "zerogravity@contact.com"; //Aqui se debe aportar el email de zero gravity (aunque quiza mejor leerlo de algun archivo)
+		this.from = "adriana.contact@zerogravity.com"; //Aqui se debe aportar el email de zero gravity (aunque quiza mejor leerlo de algun archivo)
 		this.fixedContentAtributes = new HashMap<String,String>();
 		this.fixedResourcesEmbebed = new HashMap<String,org.springframework.core.io.Resource>();
 		

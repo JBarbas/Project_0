@@ -37,9 +37,29 @@ class TutorialScene extends Phaser.Scene {
 		*/
     	
     	
-    	if(!game.scene.isActive(CentroMandoMenu)){
+    	if(!game.global.tutorial.intro){
+    		game.global.tutorial.intro = true;
     		leerTutorial(this,game.global.idTuto);
+    		
+    	}else if(game.scene.isActive('CentroMandoMenu') && !game.global.tutorial.cdm){
+    		game.global.idTuto = 3;
+    		game.global.tutorial.cdm = true;
+    		leerTutorial(this,game.global.idTuto);
+    		
+    	}else if(game.scene.isActive('CentroAdministrativoMenu') && !game.global.tutorial.ca){
+    		
+    		//leerTutorial(this,game.global.idTuto);
+    		
+    	}else if(game.scene.isActive('CentroComercioMenu') && !game.global.tutorial.cdc){
+    		
+    		//leerTutorial(this,game.global.idTuto);
+    		
+    	}else if(game.scene.isActive('CentroOperacionesMenu') && !game.global.tutorial.cdo){
+    		
+    		//leerTutorial(this,game.global.idTuto);
+    		
     	}
+    
     	
     	var colorBlue = '#0CB7F2';
     	var colorWhite = '#fff';

@@ -101,7 +101,7 @@ function justificaHasta(textoEntrante, width){
 }
 
 function leerTutorial(scene,idTuto){
-	
+	console.log(scene,idTuto);
 	//Reseteo de objetos para siguiente texto
 	
 	var textoDesdeXml;
@@ -112,9 +112,16 @@ function leerTutorial(scene,idTuto){
 	var jakob = scene.add.image(1460, 380, 'jakob').setOrigin(0, 0);
 	var priya = scene.add.image(1460, 380, 'priya').setOrigin(0, 0);
 	
+	celso.setVisible(false);
+	binette.setVisible(false);
+	jakob.setVisible(false);
+	priya.setVisible(false);
+	container.setVisible(false);
+	
 	scene.cortina = scene.add.image(0, 0, 'cortina').setOrigin(0, 0);
 	
 	var cort = scene.cortina;
+	cort.setVisible(false);
 	cort.alpha = 0.4;
 	cort.depth = -2;
 	
@@ -138,6 +145,10 @@ function leerTutorial(scene,idTuto){
 				binette.setVisible(false);
 				jakob.setVisible(false);
 				priya.setVisible(false);
+
+
+				cort.setVisible(true);
+				container.setVisible(true);
 				
 				game.global.imgChar = celso;
 				if(position == 'iz'){
@@ -151,6 +162,8 @@ function leerTutorial(scene,idTuto){
 				binette.setVisible(true);
 				jakob.setVisible(false);
 				priya.setVisible(false);
+				cort.setVisible(true);
+				container.setVisible(true);
 				game.global.imgChar = binette;
 				if(position == 'iz'){
 					container.setFlip(true,false);
@@ -163,6 +176,8 @@ function leerTutorial(scene,idTuto){
 				binette.setVisible(false);
 				jakob.setVisible(true);
 				priya.setVisible(false);
+				cort.setVisible(true);
+				container.setVisible(true);
 				game.global.imgChar = jakob;
 				if(position == 'iz'){
 					container.setFlip(true,false);
@@ -175,6 +190,8 @@ function leerTutorial(scene,idTuto){
 				binette.setVisible(false);
 				jakob.setVisible(false);
 				priya.setVisible(true);
+				cort.setVisible(true);
+				container.setVisible(true);
 				game.global.imgChar = priya;
 				
 				if(position == 'iz'){

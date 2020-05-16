@@ -71,8 +71,11 @@ class GameScene extends Phaser.Scene {
 	  		  }
 	  		})
     	}
-    	///Esta aqui para poder hacer pruebas/// Habra que meterlo despues en el .then((result))
-    	game.scene.run('TutorialScene');
+    	
+    	if(!game.global.tutorial.intro){
+    		game.scene.run('TutorialScene');
+    	}
+    	
 		var mediaQuery = window.matchMedia("(max-width: 700px)")
 		if (!mediaQuery.matches) { 
 			this.add.image((tileMap_width*tile_width)/2, (tileMap_height*tile_height - 2*tile_height)/2, 'fondo').setOrigin(0.5, 0.5).setScale(1, 1);

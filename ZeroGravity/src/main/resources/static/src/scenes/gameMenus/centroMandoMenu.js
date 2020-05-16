@@ -21,6 +21,13 @@ class CentroMandoMenu extends Phaser.Scene {
 		msg.event = 'GET CENTRO DE MANDO MENU';
 		game.global.socket.send(JSON.stringify(msg));
     	
+		//Tutorial de CM
+		if(!game.global.tutorial.cdm){
+    		game.scene.run('TutorialScene');
+			game.global.idTuto = 3;
+    		leerTutorial(this,3);
+    		game.global.tutorial.cdm = true;
+    	}
 
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
