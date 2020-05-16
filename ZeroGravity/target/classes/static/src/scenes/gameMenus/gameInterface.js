@@ -152,9 +152,9 @@ class GameInterface extends Phaser.Scene {
     	this.hoverMatsColonos = this.add.image(0,0, 'hoverMats').setOrigin(0,0);
     	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('colono')[0].childNodes[0].nodeValue;
     	if(game.global.idioma == 'esp'){
-    		this.unionCoinstxtColonos = this.add.text(100,10, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '18px' });
+    		this.unionCoinstxtColonos = this.add.text(40,10, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '18px' });
     	}else{
-    		this.unionCoinstxtColonos = this.add.text(80,10, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '18px' });
+    		this.unionCoinstxtColonos = this.add.text(40,10, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '18px' });
     	}
     	
     	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('colono1')[0].childNodes[0].nodeValue;

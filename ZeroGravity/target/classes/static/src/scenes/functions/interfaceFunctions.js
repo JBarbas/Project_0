@@ -101,7 +101,6 @@ function justificaHasta(textoEntrante, width){
 }
 
 function leerTutorial(scene,idTuto){
-	console.log(scene,idTuto);
 	//Reseteo de objetos para siguiente texto
 	
 	var textoDesdeXml;

@@ -320,9 +320,28 @@ function previsualizarExpansion(scene) {
 	}
 }
 
-function askTutorialIntro() {
+function askTutorialIntro(tipo) {
 	let msg = new Object();
-	msg.event = 'GET TUTORIAL INTRO';
+	switch(tipo){
+		case 'intro':
+			msg.event = 'GET TUTORIAL INTRO';
+		break;
+		case 'cdm':
+			msg.event = 'GET CENTRO DE MANDO MENU';
+		break;
+		case 'cdo':
+			msg.event = 'GET CENTRO DE OPERACIONES MENU';
+		break;
+		case 'ca':
+			msg.event = 'GET CENTRO ADMINISTRATIVO MENU';
+		break;
+		case 'cdc':
+			msg.event = 'GET CENTRO DE COMERCIO MENU';
+		break;
+		default:
+		break;
+	}
+	
 	game.global.socket.send(JSON.stringify(msg));
 }
 
