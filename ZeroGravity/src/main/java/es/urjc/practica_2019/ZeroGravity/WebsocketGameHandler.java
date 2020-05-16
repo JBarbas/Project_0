@@ -650,6 +650,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			case "GET CONSTRUCCION MENU":
 				msg.put("event", "CONSTRUCCION MENU");
 				msg.put("caBlocked", player.isCaBlocked());
+				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
+				myPlayer = coll.find(filter).first();
+				msg.put("cdcBlocked", myPlayer.getBoolean("cdcBlocked", true));
+				msg.put("cdoBlocked", myPlayer.getBoolean("cdoBlocked", true));
+				msg.put("labBlocked", myPlayer.getBoolean("labBlocked", true));
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			case "GET JOBS":

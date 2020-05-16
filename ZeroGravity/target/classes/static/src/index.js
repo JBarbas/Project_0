@@ -789,6 +789,9 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.myPlayer.caBlocked = msg.caBlocked;
+			game.global.myPlayer.cdcBlocked = msg.cdcBlocked;
+			game.global.myPlayer.cdoBlocked = msg.cdoBlocked;
+			game.global.myPlayer.labBlocked = msg.labBlocked;
 			break;
 		case 'GENERADOR MENU':
 			if (game.global.DEBUG_MODE) {

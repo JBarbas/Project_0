@@ -8,6 +8,9 @@ class CentroOperaciones extends Edificio{
 		super.level = 1;
 		super.numColonos = 0;
 		super.sprite = 'centroOperaciones';
+		super.sprites = ['cOperaciones1', 'cOperaciones1',
+			'cOperaciones2', 'cOperaciones2',
+			'cOperaciones3'];
 		super.buildingSprite = 'enConstruccion1';
 		super.listImage = 'assets/sprites/Edificios/Operaciones.png';
 		super.nameEsp = 'Centro de operaciones';

@@ -711,6 +711,7 @@ class ConstruccionMenu extends Phaser.Scene {
     	});
     	
     	
+    	
     	btnX.on('pointerdown', function(pointer){
     		game.global.effects.pulsarBoton.play();
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);

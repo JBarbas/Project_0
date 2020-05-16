@@ -47,7 +47,7 @@ public class Player {
 	private LinkedList<GeneradorRecursos> generadoresRecursos = new LinkedList<>();
 	private LinkedList<BloqueViviendas> viviendas = new LinkedList<>();
 	private LinkedList<Generador> generadores = new LinkedList<>();
-	private CentroMando centroMando = new CentroMando(GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
+	private CentroMando centroMando = new CentroMando(this, GRID_WIDTH/2, GRID_HEIGHT/2, edificioId.incrementAndGet());
 	
 	private int energia = 0;
 	private int metal = 100;
@@ -493,7 +493,7 @@ public class Player {
 			Edificio edificio = new Edificio();
 			switch (e.getString("sprite")) {
 			case "centroDeMando":
-				edificio = new CentroMando(e.getInteger("x"), e.getInteger("y"), e.getInteger("id"));
+				edificio = new CentroMando(this, e.getInteger("x"), e.getInteger("y"), e.getInteger("id"));
 				break;
 			case "centroOperaciones":
 				edificio = new CentroOperaciones(this, e.getInteger("x"), e.getInteger("y"), this.centroMando, e.getInteger("id"));
@@ -561,7 +561,7 @@ public class Player {
 		if (edificio == null) {
 			switch(sprite) {
 			case "centroDeMando":
-				edificio = new CentroMando(x, y, edificioId.incrementAndGet());
+				edificio = new CentroMando(this, x, y, edificioId.incrementAndGet());
 				break;
 			case "centroOperaciones":
 				edificio = new CentroOperaciones(this, x, y, this.centroMando, edificioId.incrementAndGet());

@@ -26,5 +26,5 @@ function askLevelUpBuilding(edificioId){
 
 function levelUp(edificio){
 	edificio.level += 1;
-	edificio.gameObject.setFrame(edificio.level -1);
+	edificio.gameObject.setTexture(edificio.sprites[edificio.level - 1]);
 }
