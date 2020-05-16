@@ -372,6 +372,7 @@ class ConstruccionMenu extends Phaser.Scene {
         		btnBuild.setFrame(0);
         		btnConstruir.setFrame(0);
         		selLaboratorio.setVisible(true);
+        		//btnLaboratorio.setVisible(true);
         		
         		//Si no esta bloqueado que salga el texto
         		if(game.global.idioma == "eng"){
