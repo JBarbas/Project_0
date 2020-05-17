@@ -81,6 +81,7 @@ class PreloadScene extends Phaser.Scene {
 		this.load.image('load', 'assets/interface/Cargando.png');
 		
 		this.load.atlas('title', 'assets/atlas/title.png', 'assets/atlas/title.json');
+		this.load.atlas('boxValidate', 'assets/atlas/boxValidate.png', 'assets/atlas/boxValidate.json');
 		
 		//Sound
 		this.load.audio('soundtrack', ['assets/sound/soundtrack.mp3', '']);

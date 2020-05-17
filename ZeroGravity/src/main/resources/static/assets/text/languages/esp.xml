@@ -12,6 +12,8 @@
 		<jugar>JUGAR</jugar>
 		<opciones>OPCIONES</opciones>
 		<creditos>CRÉDITOS</creditos>
+		<txtvalidate>Te hemos enviado un mensaje a tu correo.
+		Por favor, accede a él para VALIDAR tu cuenta.</txtvalidate>
 	</menu>
 	<opciones>
 		<esp>Español</esp>

@@ -39,6 +39,8 @@ class MenuScene extends Phaser.Scene {
     	var creditos = document.getElementById("creditostxt");
         boxe.children[2].children[0].innerHTML = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue;
         boxe.children[2].children[0].dataset.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue;
+        
+       
 
     	var size = '50px';
     	
@@ -46,7 +48,22 @@ class MenuScene extends Phaser.Scene {
     	var colorWhite = '#fff';
     	
     	this.anims.create({ key: 'everything', frames: this.anims.generateFrameNames('title'), repeat: -1 });
-    	this.add.sprite(game.config.width/2, 200, 'title').play('everything').setOrigin(0.5,0.5).setScale(1.2);    	
+    	this.add.sprite(game.config.width/2, 200, 'title').play('everything').setOrigin(0.5,0.5).setScale(1.2);    
+    	
+    	//Box Validate
+    	this.anims.create({ key: 'everything1', frames: this.anims.generateFrameNames('boxValidate')});
+    	this.add.sprite(game.config.width/2+720, 80, 'boxValidate').play('everything1').setOrigin(0.5,0.5).setScale(0.5);    
+    	
+    	
+ 		this.time.addEvent({
+ 		    delay: 1000,
+ 		    callback: ()=>{
+ 		    	var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtvalidate')[0].childNodes[0].nodeValue;
+ 		 		var validar = this.add.text(1480, 80, textoDesdeXml, { fontFamily: '"pantonBlack"', color: '#00B1E9' , fontSize: '15px', fontWeight: 'bold' ,align: 'center' });
+ 		    }
+ 		    
+ 		})
+ 		
     	var version = this.add.text(400, 1028, 'VERSION 1.0.0', { fontFamily: '"Roboto"', fontSize: 25 });
     	version.style.fontSize = '80px';
     	

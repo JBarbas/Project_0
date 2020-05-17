@@ -12,6 +12,9 @@
 		<jugar>PLAY</jugar>
 		<opciones>OPTIONS</opciones>
 		<creditos>CREDITS</creditos>
+		<txtvalidate>We have sent you a message to your email.
+		Please, access it to VALIDATE your account.
+		</txtvalidate>
 	</menu>
 	<opciones>
 		
