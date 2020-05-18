@@ -15,8 +15,8 @@ class CentroAdministrativo extends Edificio{
 		super.nameEsp = 'Centro administrativo';
 		super.nameEng = 'Administrative center';
 		super.originX = 0.67;
-		this.costes = [[5, 0],
-			[5, 0],
-			[5, 0]];
+		this.costes = [[2, 0],
+			[2, 0],
+			[2, 0]];
 	}
 }

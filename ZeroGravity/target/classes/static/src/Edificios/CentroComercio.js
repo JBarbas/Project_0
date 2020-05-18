@@ -17,8 +17,8 @@ class CentroComercio extends Edificio {
 		super.listImage = 'assets/sprites/Edificios/Comercio_1.png';
 		super.nameEsp = 'Centro de comercio';
 		super.nameEng = 'Trade center';
-		this.costes = [[5, 0],
-			[5, 0],
-			[5, 0]];
+		this.costes = [[2, 0],
+			[2, 0],
+			[2, 0]];
 	}
 }

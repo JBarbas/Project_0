@@ -8,10 +8,17 @@ import es.urjc.practica_2019.ZeroGravity.WebsocketGameHandler;
 public class CentroMando extends Edificio {
 
 	//Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 0, 0, 0, 0 };
-	public static final int[] NIVEL2 = { 0, 500, 500, 5000 };
-	public static final int[] NIVEL3 = { 0, 10000, 10000, 50000 };
+	public static final int[] NIVEL1 = { 2, 0, 0, 0, 0 };
+	public static final int[] NIVEL2 = { 7, 0, 0, 0, 19 };
+	public static final int[] NIVEL3 = { 12, 0, 0, 0, 51 };
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
+	
+	//Establecemos los recursos que generan según su nivel
+	//recurso, tiempo(minutos), colonos
+	private final static int[] RECURSOS_NIVEL1 = {0, 0, 0};
+	private final static int[] RECURSOS_NIVEL2 = {0, 0, 4};
+	private final static int[] RECURSOS_NIVEL3 = {0, 0, 8};
+	private final static int[][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3};
 	
 	private Player player;
 	
