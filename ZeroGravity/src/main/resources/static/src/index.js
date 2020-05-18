@@ -826,6 +826,26 @@ window.onload = function() {
 			game.global.myPlayer.cdoBlocked = msg.cdoBlocked;
 			game.global.myPlayer.labBlocked = msg.labBlocked;
 			
+			let scene = game.scene.getScene('ConstruccionMenu');
+			
+			if (msg.labBlocked) {
+				scene.btnLaboratorio.setTexture('btnLabBlocked');
+			}
+			else {
+				scene.btnLaboratorio.setTexture('btnLaboratorio');
+			}
+			if (msg.cdcBlocked) {
+				scene.btnCDComercio.setTexture('btnCdcBlocked');
+			}
+			else {
+				scene.btnCDComercio.setTexture('btnCDComercio');
+			}
+			if (msg.cdoBlocked) {
+				scene.btnCDOperaciones.setTexture('btnCdoBlocked');
+			}
+			else {
+				scene.btnCDOperaciones.setTexture('btnCDOperaciones');
+			}
 			break;
 		case 'GENERADOR MENU':
 			if (game.global.DEBUG_MODE) {

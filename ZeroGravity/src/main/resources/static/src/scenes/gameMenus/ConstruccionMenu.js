@@ -38,26 +38,26 @@ class ConstruccionMenu extends Phaser.Scene {
     	var btnGenerador = this.add.image(900, 420, 'btnGenerador').setInteractive();
     	var btnTaller = this.add.image(540, 600, 'btnTaller').setInteractive();
     	var btnCAdministrativo = this.add.image(720, 600, 'btnCAdministrativo').setInteractive();
-    	var btnLaboratorio;
+    	this.btnLaboratorio;
     	if (game.global.myPlayer.labBlocked) {
-    		btnLaboratorio = this.add.image(900, 600, 'btnLabBlocked').setInteractive();
+    		this.btnLaboratorio = this.add.image(900, 600, 'btnLabBlocked').setInteractive();
     	}
     	else {
-    		btnLaboratorio = this.add.image(900, 600, 'btnLaboratorio').setInteractive();
+    		this.btnLaboratorio = this.add.image(900, 600, 'btnLaboratorio').setInteractive();
     	}
-    	var btnCDComercio;
+    	this.btnCDComercio;
     	if (game.global.myPlayer.cdcBlocked) {
-    		btnCDComercio = this.add.image(540, 780, 'btnCdcBlocked').setInteractive();
+    		this.btnCDComercio = this.add.image(540, 780, 'btnCdcBlocked').setInteractive();
     	}
     	else {
-    		btnCDComercio = this.add.image(540, 780, 'btnCDComercio').setInteractive();
+    		this.btnCDComercio = this.add.image(540, 780, 'btnCDComercio').setInteractive();
     	}
-    	var btnCDOperaciones;
+    	this.btnCDOperaciones;
     	if (game.global.myPlayer.cdoBlocked) {
-    		btnCDOperaciones = this.add.image(720, 780, 'btnCdoBlocked').setInteractive();
+    		this.btnCDOperaciones = this.add.image(720, 780, 'btnCdoBlocked').setInteractive();
     	}
     	else {
-    		btnCDOperaciones = this.add.image(720, 780, 'btnCDOperaciones').setInteractive();
+    		this.btnCDOperaciones = this.add.image(720, 780, 'btnCDOperaciones').setInteractive();
     	}
     	
     	var selPDExtraccion = this.add.image(1205, 474, 'selPDExtraccion').setVisible(false);
@@ -167,9 +167,9 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnBDViviendas.setFrame(0);
         	btnGenerador.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDComercio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
@@ -215,9 +215,9 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnPDExtraccion.setFrame(0);
         	btnGenerador.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDComercio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
@@ -263,9 +263,9 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnPDExtraccion.setFrame(0);
         	btnBDViviendas.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDComercio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
@@ -311,9 +311,9 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnPDExtraccion.setFrame(0);
         	btnBDViviendas.setFrame(0);
         	btnGenerador.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDComercio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
     		btnBuild.setFrame(0);
     		btnConstruir.setFrame(0);
@@ -333,17 +333,17 @@ class ConstruccionMenu extends Phaser.Scene {
     		scene.descEdificio.text = justificaHasta(scene.cache.xml.get(game.global.idioma).getElementsByTagName('tdesc')[0].childNodes[0].nodeValue, 50);
     	})
     	
-    	btnLaboratorio.on('pointerover',function(pointer){
-    		btnLaboratorio.setFrame(1);
+    	this.btnLaboratorio.on('pointerover',function(pointer){
+    		scene.btnLaboratorio.setFrame(1);
     	})
     	
-    	btnLaboratorio.on('pointerout',function(pointer){
+    	this.btnLaboratorio.on('pointerout',function(pointer){
     		if (scene.edificioSeleccionado !== "laboratorioInvestigacion") {
-    			btnLaboratorio.setFrame(0);
+    			scene.btnLaboratorio.setFrame(0);
     		}
     	})
     	
-    	btnLaboratorio.on('pointerdown',function(pointer){
+    	this.btnLaboratorio.on('pointerdown',function(pointer){
     		if (!game.global.myPlayer.labBlocked) {
     			scene.edificioSeleccionado = "laboratorioInvestigacion";
     		}
@@ -365,8 +365,8 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnBDViviendas.setFrame(0);
         	btnGenerador.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnCDComercio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
         	if (!game.global.myPlayer.labBlocked) {
         		btnBuild.setFrame(0);
@@ -414,17 +414,17 @@ class ConstruccionMenu extends Phaser.Scene {
     		
     	})
     	
-    	btnCDComercio.on('pointerover',function(pointer){
-    		btnCDComercio.setFrame(1);
+    	this.btnCDComercio.on('pointerover',function(pointer){
+    		scene.btnCDComercio.setFrame(1);
     	})
     	
-    	btnCDComercio.on('pointerout',function(pointer){
+    	this.btnCDComercio.on('pointerout',function(pointer){
     		if (scene.edificioSeleccionado !== "centroComercio") {
-    			btnCDComercio.setFrame(0);
+    			scene.btnCDComercio.setFrame(0);
     		}
     	})
     	
-    	btnCDComercio.on('pointerdown',function(pointer){
+    	this.btnCDComercio.on('pointerdown',function(pointer){
     		if (!game.global.myPlayer.cdcBlocked) {
     			scene.edificioSeleccionado = "centroComercio";
     		}
@@ -448,8 +448,8 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnBDViviendas.setFrame(0);
         	btnGenerador.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	btnCAdministrativo.setFrame(0);
         	if (!game.global.myPlayer.cdcBlocked) {
         		btnBuild.setFrame(0);
@@ -495,17 +495,17 @@ class ConstruccionMenu extends Phaser.Scene {
     		
     	})
     	
-    	btnCDOperaciones.on('pointerover',function(pointer){
-    		btnCDOperaciones.setFrame(1);
+    	this.btnCDOperaciones.on('pointerover',function(pointer){
+    		scene.btnCDOperaciones.setFrame(1);
     	})
     	
-    	btnCDOperaciones.on('pointerout',function(pointer){
+    	this.btnCDOperaciones.on('pointerout',function(pointer){
     		if (scene.edificioSeleccionado !== "centroOperaciones") {
-    			btnCDOperaciones.setFrame(0);
+    			scene.btnCDOperaciones.setFrame(0);
     		}
     	})
     	
-    	btnCDOperaciones.on('pointerdown',function(pointer){
+    	this.btnCDOperaciones.on('pointerdown',function(pointer){
     		if (!game.global.myPlayer.cdoBlocked) {
     			scene.edificioSeleccionado = "centroOperaciones";
     		}
@@ -526,8 +526,8 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnBDViviendas.setFrame(0);
         	btnGenerador.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDComercio.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
         	btnCAdministrativo.setFrame(0);
         	if (!game.global.myPlayer.cdoBlocked) {
         		btnBuild.setFrame(0);
@@ -606,9 +606,9 @@ class ConstruccionMenu extends Phaser.Scene {
         	btnBDViviendas.setFrame(0);
         	btnGenerador.setFrame(0);
         	btnTaller.setFrame(0);
-        	btnLaboratorio.setFrame(0);
-        	btnCDComercio.setFrame(0);
-        	btnCDOperaciones.setFrame(0);
+        	scene.btnLaboratorio.setFrame(0);
+        	scene.btnCDComercio.setFrame(0);
+        	scene.btnCDOperaciones.setFrame(0);
         	if (!game.global.myPlayer.caBlocked) {
         		btnBuild.setFrame(0);
         		btnConstruir.setFrame(0);
@@ -685,6 +685,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
+    		game.global.inStrictMenu = false;
     		game.scene.stop('ConstruccionMenu');
     		game.global.editMode = true;
     		game.scene.getScene('GameScene').gridContainer.setAlpha(0.5);
@@ -698,6 +699,7 @@ class ConstruccionMenu extends Phaser.Scene {
     			aux(scene.edificioSeleccionado);
         		game.scene.getScene('GameInterface').panel.alpha = 1.0;
         		game.scene.stop('ConstruccionMenu');
+        		game.global.inStrictMenu = false;
     		}
     	});
     	
@@ -708,6 +710,7 @@ class ConstruccionMenu extends Phaser.Scene {
     			aux(scene.edificioSeleccionado);
         		game.scene.getScene('GameInterface').panel.alpha = 1.0;
         		game.scene.stop('ConstruccionMenu');
+        		game.global.inStrictMenu = false;
     		}
     	});
     	
