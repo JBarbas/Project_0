@@ -17,10 +17,22 @@ public class CentroOperaciones extends Edificio {
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 0, 0, 0, 0, 2};
-	public static final int[] NIVEL2 = { 0, 1500, 1600, 12000, 2};
-	public static final int[] NIVEL3 = { 0, 14000, 17300, 70000, 2};
-	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
+	public static final int[] NIVEL1 = { 2, 0, 0, 0, 2};
+	public static final int[] NIVEL2 = { 5, 0, 0, 0, 16};
+	public static final int[] NIVEL3 = { 7, 0, 0, 0, 43};
+	public static final int[] NIVEL4 = { 10, 0, 0, 0, 83};
+	public static final int[] NIVEL5 = { 12, 0, 0, 0, 134};
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5};
+	
+	//Establecemos los recursos que generan según su nivel
+	//recurso, tiempo(minutos), colonos
+	private final static int[] RECURSOS_NIVEL1 = {0, 0, 1};
+	private final static int[] RECURSOS_NIVEL2 = {0, 0, 4};
+	private final static int[] RECURSOS_NIVEL3 = {0, 0, 6};
+	private final static int[] RECURSOS_NIVEL4 = {0, 0, 9};
+	private final static int[] RECURSOS_NIVEL5 = {0, 0, 11};
+	private final static int[][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3, 
+														RECURSOS_NIVEL4, RECURSOS_NIVEL5};
 	
 	private ObjectMapper mapper = new ObjectMapper();
 
@@ -55,7 +67,7 @@ public class CentroOperaciones extends Edificio {
 
 	}
 	
-	/*@Override
+	@Override
 	public int[][] build(int[][] grid, int x, int y) {
 		for (int i = y - this.getHeight() + 1; i <= y; i++) {
 			for (int j = x - this.getWidth() + 1; j <= x; j++) {
@@ -95,7 +107,7 @@ public class CentroOperaciones extends Edificio {
 		this.setEnConstruccion(true);
 		this.setBuildingBeginTime(task.getBeginDate());
 		return grid;
-	}*/
+	}
 
 	public void callbackConstruir() {
 		try {

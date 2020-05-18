@@ -24,17 +24,45 @@ public class Taller extends GeneradorRecursos{
 	
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
-	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 1, 12, 20, 400, 2};
-	public static final int[] NIVEL2 = { 3, 180, 250, 600, 2};
-	public static final int[] NIVEL3 = { 5, 600, 1000, 1000, 2};
-	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
+	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos, Tiempo
+	public static final int[] NIVEL1 = { 2, 0, 0, 0, 2};
+	public static final int[] NIVEL2 = { 7, 0, 0, 0, 16};
+	public static final int[] NIVEL3 = { 11, 0, 0, 0, 43};
+	public static final int[] NIVEL4 = { 11, 0, 0, 0, 83};
+	public static final int[] NIVEL5 = { 11, 0, 0, 0, 134};
+	public static final int[] NIVEL6 = { 11, 0, 0, 0, 198};
+	public static final int[] NIVEL7 = { 11, 0, 0, 0, 275};
+	public static final int[] NIVEL8 = { 11, 0, 0, 0, 364};
+	public static final int[] NIVEL9 = { 11, 0, 0, 0, 465};
+	public static final int[] NIVEL10 = { 11, 0, 0, 0, 579};
+	public static final int[] NIVEL11 = { 11, 0, 0, 0, 705};
+	public static final int[] NIVEL12 = { 11, 0, 0, 0, 844};
+	public static final int[] NIVEL13 = { 11, 0, 0, 0, 995};
+	public static final int[] NIVEL14 = { 11, 0, 0, 0, 1158};
+	public static final int[] NIVEL15 = { 11, 0, 0, 0, 1334};
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5,
+										  NIVEL6, NIVEL7, NIVEL8, NIVEL9, NIVEL10,
+										  NIVEL11, NIVEL12, NIVEL13, NIVEL14, NIVEL15};
 	
 	//Establecemos los recursos que generan según su nivel
 	private final static int[] RECURSOS_NIVEL1 = {0, 0, 1};
-	private final static int[] RECURSOS_NIVEL2 = {0, 0, 2};
-	private final static int[] RECURSOS_NIVEL3 = {0, 0, 3};
-	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3};
+	private final static int[] RECURSOS_NIVEL2 = {0, 0, 4};
+	private final static int[] RECURSOS_NIVEL3 = {0, 0, 7};
+	private final static int[] RECURSOS_NIVEL4 = {0, 0, 10};
+	private final static int[] RECURSOS_NIVEL5 = {0, 0, 13};
+	private final static int[] RECURSOS_NIVEL6 = {0, 0, 17};
+	private final static int[] RECURSOS_NIVEL7 = {0, 0, 20};
+	private final static int[] RECURSOS_NIVEL8 = {0, 0, 23};
+	private final static int[] RECURSOS_NIVEL9 = {0, 0, 26};
+	private final static int[] RECURSOS_NIVEL10 = {0, 0, 29};
+	private final static int[] RECURSOS_NIVEL11 = {0, 0, 32};
+	private final static int[] RECURSOS_NIVEL12 = {0, 0, 35};
+	private final static int[] RECURSOS_NIVEL13 = {0, 0, 38};
+	private final static int[] RECURSOS_NIVEL14 = {0, 0, 41};
+	private final static int[] RECURSOS_NIVEL15 = {0, 0, 45};
+	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3, RECURSOS_NIVEL4, RECURSOS_NIVEL5,
+														RECURSOS_NIVEL6, RECURSOS_NIVEL7, RECURSOS_NIVEL8, RECURSOS_NIVEL9, RECURSOS_NIVEL10,
+														RECURSOS_NIVEL11, RECURSOS_NIVEL12, RECURSOS_NIVEL13, RECURSOS_NIVEL14, RECURSOS_NIVEL15};
 	
 	private int capacidadRobots;
 	private HashMap<Integer, Robot> robots = new HashMap<>();

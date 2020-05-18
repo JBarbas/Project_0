@@ -16,12 +16,26 @@ public class BloqueViviendas extends Edificio {
 	
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
-	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 0, 30, 40, 400, 2};
-	public static final int[] NIVEL2 = { 0, 1050, 1800, 9000, 2};
-	public static final int[] NIVEL3 = { 0, 15000, 20500, 80500, 2};
-	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
-	public static final int[] capacidad = {5, 10, 15};
+	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos, tiempo
+	public static final int[] NIVEL1 = { 2, 0, 0, 0, 2};
+	public static final int[] NIVEL2 = { 6, 0, 0, 0, 11};
+	public static final int[] NIVEL3 = { 9, 0, 0, 0, 28};
+	public static final int[] NIVEL4 = { 13, 0, 0, 0, 52};
+	public static final int[] NIVEL5 = { 16, 0, 0, 0, 84};
+	public static final int[] NIVEL6 = { 20, 0, 0, 0, 122};
+	public static final int[] NIVEL7 = { 23, 0, 0, 0, 169};
+	public static final int[] NIVEL8 = { 27, 0, 0, 0, 222};
+	public static final int[] NIVEL9 = { 31, 0, 0, 0, 283};
+	public static final int[] NIVEL10 = { 34, 0, 0, 0, 351};
+	public static final int[] NIVEL11 = { 38, 0, 0, 0, 427};
+	public static final int[] NIVEL12 = { 41, 0, 0, 0, 510};
+	public static final int[] NIVEL13 = { 45, 0, 0, 0, 600};
+	public static final int[] NIVEL14 = { 49, 0, 0, 0, 698};
+	public static final int[] NIVEL15 = { 52, 0, 0, 0, 803};
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5,
+										  NIVEL6, NIVEL7, NIVEL8, NIVEL9, NIVEL10,
+										  NIVEL11, NIVEL12, NIVEL13, NIVEL14, NIVEL15};
+	public static final int[] capacidad = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75};
 	
 	private int colonos;
 	

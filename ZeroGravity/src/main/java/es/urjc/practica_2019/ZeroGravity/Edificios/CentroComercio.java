@@ -16,11 +16,32 @@ public class CentroComercio extends Edificio {
 	
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
-	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
-	public static final int[] NIVEL1 = { 0, 0, 0, 0, 2};
-	public static final int[] NIVEL2 = { 0, 900, 1500, 9000, 2};
-	public static final int[] NIVEL3 = { 0, 11000, 14200, 62000, 2};
-	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
+	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos, Tiempo
+	public static final int[] NIVEL1 = { 1, 0, 0, 0, 2};
+	public static final int[] NIVEL2 = { 5, 0, 0, 0, 15};
+	public static final int[] NIVEL3 = { 9, 0, 0, 0, 39};
+	public static final int[] NIVEL4 = { 13, 0, 0, 0, 75};
+	public static final int[] NIVEL5 = { 18, 0, 0, 0, 122};
+	public static final int[] NIVEL6 = { 22, 0, 0, 0, 179};
+	public static final int[] NIVEL7 = { 26, 0, 0, 0, 248};
+	public static final int[] NIVEL8 = { 30, 0, 0, 0, 328};
+	public static final int[] NIVEL9 = { 34, 0, 0, 0, 420};
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5, NIVEL6, NIVEL7, NIVEL8, NIVEL9};
+	
+	//Establecemos los recursos que generan según su nivel
+	//recurso, tiempo(minutos), colonos
+	private final static int[] RECURSOS_NIVEL1 = {0, 0, 5};
+	private final static int[] RECURSOS_NIVEL2 = {0, 0, 8};
+	private final static int[] RECURSOS_NIVEL3 = {0, 0, 12};
+	private final static int[] RECURSOS_NIVEL4 = {0, 0, 15};
+	private final static int[] RECURSOS_NIVEL5 = {0, 0, 19};
+	private final static int[] RECURSOS_NIVEL6 = {0, 0, 22};
+	private final static int[] RECURSOS_NIVEL7 = {0, 0, 26};
+	private final static int[] RECURSOS_NIVEL8 = {0, 0, 29};
+	private final static int[] RECURSOS_NIVEL9 = {0, 0, 32};
+	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3, 
+														RECURSOS_NIVEL4, RECURSOS_NIVEL5, RECURSOS_NIVEL6,
+														RECURSOS_NIVEL7, RECURSOS_NIVEL8, RECURSOS_NIVEL9};
 	
 	private ObjectMapper mapper = new ObjectMapper();
 
@@ -48,7 +69,7 @@ public class CentroComercio extends Edificio {
 		this.sprite = "centroComercio";
 	}
 	
-	/*@Override
+	@Override
 	public int[][] build(int[][] grid, int x, int y) {
 		for (int i = y - this.getHeight() + 1; i <= y; i++) {
 			for (int j = x - this.getWidth() + 1; j <= x; j++) {
@@ -88,7 +109,7 @@ public class CentroComercio extends Edificio {
 		this.setEnConstruccion(true);
 		this.setBuildingBeginTime(task.getBeginDate());
 		return grid;
-	}*/
+	}
 
 	public void callbackConstruir() {
 		try {

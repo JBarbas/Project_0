@@ -16,10 +16,10 @@ public class CentroAdministrativo extends Edificio {
 	
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
-	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos
+	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos, tiempo
 	public static final int[] NIVEL1 = { 0, 0, 0, 0, 2};
-	public static final int[] NIVEL2 = { 0, 100, 170, 1000, 2};
-	public static final int[] NIVEL3 = { 0, 1000, 1200, 5500, 2};
+	public static final int[] NIVEL2 = { 0, 0, 0, 0, 0};
+	public static final int[] NIVEL3 = { 0, 0, 0, 0, 0};
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3};
 	
 	private ObjectMapper mapper = new ObjectMapper();
@@ -55,7 +55,7 @@ public class CentroAdministrativo extends Edificio {
 
 	}
 	
-	/*@Override
+	@Override
 	public int[][] build(int[][] grid, int x, int y) {
 		for (int i = y - this.getHeight() + 1; i <= y; i++) {
 			for (int j = x - this.getWidth() + 1; j <= x; j++) {
@@ -95,7 +95,7 @@ public class CentroAdministrativo extends Edificio {
 		this.setEnConstruccion(true);
 		this.setBuildingBeginTime(task.getBeginDate());
 		return grid;
-	}*/
+	}
 
 	public void callbackConstruir() {
 		try {

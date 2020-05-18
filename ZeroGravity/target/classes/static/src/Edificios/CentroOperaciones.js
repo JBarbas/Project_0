@@ -16,8 +16,8 @@ class CentroOperaciones extends Edificio{
 		super.nameEsp = 'Centro de operaciones';
 		super.nameEng = 'Operations center';
 		super.menuScene = 'CentroOperacionesMenu';
-		this.costes = [[5, 0],
-			[5, 0],
-			[5, 0]];
+		this.costes = [[2, 0],
+			[2, 0],
+			[2, 0]];
 	}
 }

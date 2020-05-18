@@ -20,17 +20,45 @@ public class Generador extends GeneradorRecursos {
 
 	// Establecemos los costes por cada nivel: Energia, Metal, Ceramica, Creditos,
 	// Duracion (mins)
-	public static final int[] NIVEL1 = { 0, 120, 200, 1600, 2};
-	public static final int[] NIVEL2 = { 0, 800, 1200, 8500, 2};
-	public static final int[] NIVEL3 = { 0, 7000, 12000, 35000, 2};
-	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3 };
+	public static final int[] NIVEL1 = { 0, 0, 0, 0, 2};
+	public static final int[] NIVEL2 = { 0, 0, 0, 0, 11};
+	public static final int[] NIVEL3 = { 0, 0, 0, 0, 28};
+	public static final int[] NIVEL4 = { 0, 0, 0, 0, 52};
+	public static final int[] NIVEL5 = { 0, 0, 0, 0, 84};
+	public static final int[] NIVEL6 = { 0, 0, 0, 0, 122};
+	public static final int[] NIVEL7 = { 0, 0, 0, 0, 169};
+	public static final int[] NIVEL8 = { 0, 0, 0, 0, 222};
+	public static final int[] NIVEL9 = { 0, 0, 0, 0, 283};
+	public static final int[] NIVEL10 = { 0, 0, 0, 0, 351};
+	public static final int[] NIVEL11 = { 0, 0, 0, 0, 427};
+	public static final int[] NIVEL12 = { 0, 0, 0, 0, 510};
+	public static final int[] NIVEL13 = { 0, 0, 0, 0, 600};
+	public static final int[] NIVEL14 = { 0, 0, 0, 0, 698};
+	public static final int[] NIVEL15 = { 0, 0, 0, 0, 803};
+	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5,
+										  NIVEL6, NIVEL7, NIVEL8, NIVEL9, NIVEL10,
+										  NIVEL11, NIVEL12, NIVEL13, NIVEL14, NIVEL15};
 
 	// Establecemos los recursos que generan según su nivel
-	private final static int[] RECURSOS_NIVEL1 = { 5, 0, 1 };
-	private final static int[] RECURSOS_NIVEL2 = { 12, 0, 2 };
-	private final static int[] RECURSOS_NIVEL3 = { 16, 0, 3 };
-	private final static int[][] RECURSOS_GENERADOS = { RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3 };
-
+	private final static int[] RECURSOS_NIVEL1 = {5, 0, 1};
+	private final static int[] RECURSOS_NIVEL2 = {10, 0, 4};
+	private final static int[] RECURSOS_NIVEL3 = {15, 0, 6};
+	private final static int[] RECURSOS_NIVEL4 = {20, 0, 9};
+	private final static int[] RECURSOS_NIVEL5 = {25, 0, 11};
+	private final static int[] RECURSOS_NIVEL6 = {30, 0, 14};
+	private final static int[] RECURSOS_NIVEL7 = {35, 0, 16};
+	private final static int[] RECURSOS_NIVEL8 = {40, 0, 19};
+	private final static int[] RECURSOS_NIVEL9 = {45, 0, 22};
+	private final static int[] RECURSOS_NIVEL10 = {50, 0, 24};
+	private final static int[] RECURSOS_NIVEL11 = {55, 0, 27};
+	private final static int[] RECURSOS_NIVEL12 = {60, 0, 29};
+	private final static int[] RECURSOS_NIVEL13 = {65, 0, 32};
+	private final static int[] RECURSOS_NIVEL14 = {70, 0, 35};
+	private final static int[] RECURSOS_NIVEL15 = {75, 0, 37};
+	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3, RECURSOS_NIVEL4, RECURSOS_NIVEL5,
+														RECURSOS_NIVEL6, RECURSOS_NIVEL7, RECURSOS_NIVEL8, RECURSOS_NIVEL9, RECURSOS_NIVEL10,
+														RECURSOS_NIVEL11, RECURSOS_NIVEL12, RECURSOS_NIVEL13, RECURSOS_NIVEL14, RECURSOS_NIVEL15};
+	
 	private ObjectMapper mapper = new ObjectMapper();
 
 	public Generador(Player player, int x, int y, Edificio depends, int id) {
