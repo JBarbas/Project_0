@@ -27,6 +27,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
 
+    	
 
     	if(game.global.idioma == 'eng'){
     		game.scene.getScene('GameInterface').panel.setTexture('households');
@@ -34,6 +35,18 @@ class BloqueViviendasMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.setTexture('panelBViviendas');
     	}
     	
+    	var enconst = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccionEng').setOrigin(0, 0);
+    	var enconstEsp = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0);
+    	var btnFinishConstruccion = this.add.image(1350, 850, 'btnAdministracion').setOrigin(0, 0).setInteractive();
+    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('terminarahora')[0].childNodes[0].nodeValue;
+		var txtTerminarAhora = this.add.text(1380, 875, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
+		var iconMonedas = this.add.image(1700, 865, 'iconoUC').setOrigin(0, 0);
+    	btnFinishConstruccion.visible = false;
+    	txtTerminarAhora.visible = false;
+    	btnFinishConstruccion.setScale(1.1, 0.9);
+    	
+    	var costoMonedas = this.add.text(1650, 875, '43', { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
+    	costoMonedas.visible = false;
     	
 	    if (!this.miEdificio.enConstruccion) {
 	    	// Contenedor del panel de mejoras
@@ -199,11 +212,45 @@ class BloqueViviendasMenu extends Phaser.Scene {
 		}
     	else {
     		if(game.global.idioma == "eng"){
-    			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccionEng').setOrigin(0, 0);
+    			enconst.visible = true;
+    			btnFinishConstruccion.visible = true;
+    			txtTerminarAhora.visible = true;
+    			costoMonedas.visible = true;
+    			iconMonedas.visible = true;
     		}else{
-    			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0);
+    			enconstEsp.visible = true;
+    			btnFinishConstruccion.visible = true;
+    			txtTerminarAhora.visible = true;
+    			costoMonedas.visible = true;
+    			iconMonedas.visible = true;
     		}
 	    }
+	    
+	    btnFinishConstruccion.on('pointerover',function(pointer){
+	    	btnFinishConstruccion.setFrame(1);
+    	});
+    	
+	    btnFinishConstruccion.on('pointerout',function(pointer){
+	    	btnFinishConstruccion.setFrame(0);
+    	});
+    	
+	    btnFinishConstruccion.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+    		
+    		Swal.fire({
+				text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora')[0].childNodes[0].nodeValue + '43' + game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora2')[0].childNodes[0].nodeValue,
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('btnSwConfirmar')[0].childNodes[0].nodeValue
+			}).then((result) => {
+				if (result.value) {
+					//Aqui hacer lo que se requiera de terminar construccion
+				}
+			})
+    	});
 		
 		// El botón cerrar será el mismo, por lo que no se incluirá en ningún contenerdor
     	var cerrar = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 60, 'xBuilding').setInteractive();

@@ -365,6 +365,7 @@ Required time:
 		</tutorial>
 		<construccion>
 			<edifConst>You already have such a building</edifConst>
+			<terminarahora>Finish Now</terminarahora>
 		</construccion>
 		<swal>
 			<bien>Nice!</bien>
@@ -390,6 +391,8 @@ Required time:
 			<necesitas>You need </necesitas>
 			<necesitas2> credits to be able to expand the base.</necesitas2>
 			<nosubirNivel>You don't have the resources to level up this building.</nosubirNivel>
+			<construirahora>Do you want to spend </construirahora>
+			<construirahora2> to build immediately?</construirahora2>
 		</swal>
 		
 		

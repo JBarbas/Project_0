@@ -233,7 +233,7 @@ window.onload = function() {
 
 			Swal.fire({
 				  icon: auxIcon,
-				  title: 'Nice!',
+				  title: game.cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[idRespuesta].nodeValue,
 				  text: game.cache.xml.get(game.global.idioma).getElementsByTagName('optionsLogs')[0].childNodes[idRespuesta].nodeValue
 				});
 

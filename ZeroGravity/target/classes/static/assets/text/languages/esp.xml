@@ -369,6 +369,7 @@ Tiempo requerido:
 		</tutorial>
 		<construccion>
 			<edifConst>Ya tienes un edificio de este tipo</edifConst>
+			<terminarahora>Terminar Ahora</terminarahora>
 		</construccion>
 		<swal>
 			<bien>¡Bien!</bien>
@@ -394,6 +395,8 @@ Tiempo requerido:
 			<necesitas>Necesitas </necesitas>
 			<necesitas2> créditos más para poder expandir la base.</necesitas2>
 			<nosubirNivel>No dispones de los recursos para aumentar de nivel a este edificio</nosubirNivel>
+			<construirahora>¿Deseas gastar </construirahora>
+			<construirahora2> para construir inmediatamente?</construirahora2>
 		</swal>
 		
 		game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[0].nodeValue,
