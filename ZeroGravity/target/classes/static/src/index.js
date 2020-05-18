@@ -199,7 +199,7 @@ window.onload = function() {
 	    		game.scene.stop('RegisterScene');
 			}
 			/*y yo aprovecho para precargar las puntuaciones y las ofertas disponibles*/
-			pedirPuntuaciones();
+			//pedirPuntuaciones();
 			pedirOfertas();
 			break;
 		case 'LOGIN FAILED':
@@ -537,7 +537,7 @@ window.onload = function() {
 	    		}
 				effectPlay.setOrigin(edif.originX,1);
 				effectPlay.depth = game.global.edificios.get(msg.id).gameObject.depth;
-				pedirPuntuaciones()
+				//pedirPuntuaciones()
 				
 			}else{
 				Swal.fire({
@@ -591,7 +591,7 @@ window.onload = function() {
     		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			game.global.resources.ceramica = msg.ceramica;
 			particulasRecurso("ceramica");
-			pedirPuntuaciones()
+			//pedirPuntuaciones()
 			break;
 		case 'CREDITOS RECOLECTADOS':
 			if (game.global.DEBUG_MODE) {
@@ -602,7 +602,7 @@ window.onload = function() {
     		game.global.effects.cambianRecursos.setVolume(game.global.myPlayer.config.volEffects/100);
 			game.global.resources.creditos = msg.creditos;
 			particulasRecurso("creditos");
-			pedirPuntuaciones()
+			//pedirPuntuaciones()
 			break;
 		case 'METAL RECOLECTADO':
 			if (game.global.DEBUG_MODE) {
@@ -617,7 +617,7 @@ window.onload = function() {
 				game.scene.stop('TallerMenu');
 				game.scene.start('TallerMenu', {miEdificio: game.global.edificios.get(msg.id)});
 			}
-			pedirPuntuaciones()
+			//pedirPuntuaciones()
 			break;			
 		case 'TUTORIAL INTRO':
 			if (game.global.DEBUG_MODE) {
@@ -1009,7 +1009,7 @@ window.onload = function() {
 				event: 'ASK_PLAYER_RESOURCES'
 			}
 			game.global.socket.send(JSON.stringify(messag));
-			pedirPuntuaciones();
+			//pedirPuntuaciones();
 			pedirOfertas();
 			break;
 		
@@ -1023,350 +1023,343 @@ window.onload = function() {
 		case 'ALL PUNCTUATIONS':
 			if (game.global.DEBUG_MODE) {
 				console.log('[DEBUG] ALL PUNCTUATIONS message recieved');
+				console.log(msg);
 			}
 			game.global.mejoresPuntuaciones = [];
 			let arrayAux = msg.todasLasPuntuaciones.split("\n");
 			arrayAux.pop(); //por alguna razón mete un undefined al final
 			game.global.mejoresPuntuaciones = arrayAux;
-			break;
-		case 'USERS FOUND':
-			if (game.global.DEBUG_MODE) {
-				console.log('[DEBUG] USERS FOUND message recieved');
-				console.log(msg);
-			}
 			
 			if(game.scene.isActive('RankingMenu')){
 				
 				for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
 		    		if(i%2 == 0){
 		    			
-		    			var friendincluded = false;
-			    		for(var j = 0; j < msg.users.length; j++){
-			    			if(msg.users[j].name == game.global.mejoresPuntuaciones[i]){
-			    				friendincluded = true;
-			    				break;
-			    			}
-			    		}
-		    			if(friendincluded){
-				    		let divPuesto = document.createElement("div");
-				    		
-				    		var box = document.createElement("img");
-				        	box.src = "assets/interface/Gameplay/boxRanking.png";
-				        	box.style.marginLeft ="0px";
-				        	box.style.marginTop = "30px";
-				        	box.style.width = '95%';
-				        	box.style.height = '70%';
-				        	
-				        	
-				        	var contenido = document.createElement("div");
-				        	contenido.style.cssText = "position:relative;color:white;margin-top:-30px;margin-left:5px";
-				        	
-				        	var numRankingValue = document.createTextNode(""+ (Math.round(i/2)+1));
-				        	var numRanking = document.createElement("span");
-				        	numRanking.style.position="absolute";
-				        	numRanking.style.left="10px";
-				        	numRanking.style.top="-10px";
-				        	//numRanking.style.paddingTop="-50px";
-				        	numRanking.style.fontSize = "20px";
-				        	numRanking.style.fontFamily = "Roboto";
-				        	
-				        	numRanking.appendChild(numRankingValue);
-				        	
-				        	var nombreRankingValue = document.createTextNode(" "+game.global.mejoresPuntuaciones[i]);
-				        	var nombreRanking = document.createElement("span");
-				        	nombreRanking.style.position="absolute";
-				        	nombreRanking.style.left="50px";
-				        	nombreRanking.style.top="-7px";
-				        	nombreRanking.style.fontSize = "15px";
-				        	nombreRanking.style.fontFamily = "Roboto";
-				        	nombreRanking.appendChild(nombreRankingValue);
-				        	
-				        	var puntuacionRankingValue = document.createTextNode(" "+game.global.mejoresPuntuaciones[i+1]);
-				        	var puntuacionRanking = document.createElement("span");
-				        	puntuacionRanking.style.position="absolute";
-				        	puntuacionRanking.style.textAlign="center";
-				        	puntuacionRanking.style.left="150px";
-				        	puntuacionRanking.style.top="-7px";
-				        	puntuacionRanking.style.fontSize = "15px";
-				        	puntuacionRanking.style.fontFamily = "Roboto";
-				        	puntuacionRanking.appendChild(puntuacionRankingValue);
-				        	
-				        	switch (i){
-				        		case 0:
-				        			var n1 = document.createElement("img");
-				        			n1.src = "assets/interface/Gameplay/n1.png";
-				            		n1.style.position="absolute";
-				            		n1.style.textAlign="center";
-				            		n1.style.left="125px";
-				            		n1.style.top="-10px";
-				            		n1.style.width="20px";
-				        			n1.style.height="auto";
-				            		contenido.appendChild(n1);
-				            	break;
-				        		case 2:
-				        			var n2 = document.createElement("img");
-				        			n2.src = "assets/interface/Gameplay/n2.png";
-				        			n2.style.position="absolute";
-				        			n2.style.textAlign="center";
-				        			n2.style.left="125px";
-				        			n2.style.top="-10px";
-				        			n2.style.width="20px";
-				        			n2.style.height="auto";
-				        			contenido.appendChild(n2);
-				        		break;
-				        		case 4:
-				        			var n3 = document.createElement("img");
-				        			n3.src = "assets/interface/Gameplay/n3.png";
-				        			n3.style.position="absolute";
-				        			n3.style.textAlign="center";
-				        			n3.style.left="125px";
-				        			n3.style.top="-10px";
-				        			n3.style.width="20px";
-				        			n3.style.height="auto";
-				        			contenido.appendChild(n3);
-				        		break;
-				        		default:
-				        			break;
-				        	}
-				        	contenido.appendChild(numRanking);
-				        	contenido.appendChild(nombreRanking);
-				        	contenido.appendChild(puntuacionRanking);
-		
-				        	divPuesto.appendChild(box);
-				        	divPuesto.appendChild(contenido);
-				        	
-				        	
-				        	game.scene.getScene('RankingMenu').divPuntuaciones.appendChild(divPuesto);
-			    		}
+	    				let divPuesto = document.createElement("div");
+			    		
+			    		var box = document.createElement("img");
+			        	box.src = "assets/interface/Gameplay/boxRanking.png";
+			        	box.style.marginLeft ="0px";
+			        	box.style.marginTop = "30px";
+			        	box.style.width = '95%';
+			        	box.style.height = '70%';
+			        	
+			        	
+			        	var contenido = document.createElement("div");
+			        	contenido.style.cssText = "position:relative;color:white;margin-top:-30px;margin-left:5px";
+			        	
+			        	var numRankingValue = document.createTextNode(""+ (Math.round(i/2)+1));
+			        	var numRanking = document.createElement("span");
+			        	numRanking.style.position="absolute";
+			        	numRanking.style.left="10px";
+			        	numRanking.style.top="-10px";
+			        	//numRanking.style.paddingTop="-50px";
+			        	numRanking.style.fontSize = "20px";
+			        	numRanking.style.fontFamily = "Roboto";
+			        	
+			        	numRanking.appendChild(numRankingValue);
+			        	
+			        	var nombreRankingValue = document.createTextNode(" "+game.global.mejoresPuntuaciones[i]);
+			        	var nombreRanking = document.createElement("span");
+			        	nombreRanking.style.position="absolute";
+			        	nombreRanking.style.left="50px";
+			        	nombreRanking.style.top="-7px";
+			        	nombreRanking.style.fontSize = "15px";
+			        	nombreRanking.style.fontFamily = "Roboto";
+			        	nombreRanking.appendChild(nombreRankingValue);
+			        	
+			        	var puntuacionRankingValue = document.createTextNode(" "+game.global.mejoresPuntuaciones[i+1]);
+			        	var puntuacionRanking = document.createElement("span");
+			        	puntuacionRanking.style.position="absolute";
+			        	puntuacionRanking.style.textAlign="center";
+			        	puntuacionRanking.style.left="150px";
+			        	puntuacionRanking.style.top="-7px";
+			        	puntuacionRanking.style.fontSize = "15px";
+			        	puntuacionRanking.style.fontFamily = "Roboto";
+			        	puntuacionRanking.appendChild(puntuacionRankingValue);
+			        	
+			        	switch (i){
+			        		case 0:
+			        			var n1 = document.createElement("img");
+			        			n1.src = "assets/interface/Gameplay/n1.png";
+			            		n1.style.position="absolute";
+			            		n1.style.textAlign="center";
+			            		n1.style.left="125px";
+			            		n1.style.top="-10px";
+			            		n1.style.width="20px";
+			        			n1.style.height="auto";
+			            		contenido.appendChild(n1);
+			            	break;
+			        		case 2:
+			        			var n2 = document.createElement("img");
+			        			n2.src = "assets/interface/Gameplay/n2.png";
+			        			n2.style.position="absolute";
+			        			n2.style.textAlign="center";
+			        			n2.style.left="125px";
+			        			n2.style.top="-10px";
+			        			n2.style.width="20px";
+			        			n2.style.height="auto";
+			        			contenido.appendChild(n2);
+			        		break;
+			        		case 4:
+			        			var n3 = document.createElement("img");
+			        			n3.src = "assets/interface/Gameplay/n3.png";
+			        			n3.style.position="absolute";
+			        			n3.style.textAlign="center";
+			        			n3.style.left="125px";
+			        			n3.style.top="-10px";
+			        			n3.style.width="20px";
+			        			n3.style.height="auto";
+			        			contenido.appendChild(n3);
+			        		break;
+			        		default:
+			        			break;
+			        	}
+			        	contenido.appendChild(numRanking);
+			        	contenido.appendChild(nombreRanking);
+			        	contenido.appendChild(puntuacionRanking);
+	
+			        	divPuesto.appendChild(box);
+			        	divPuesto.appendChild(contenido);
+			        	
+			        	
+			        	game.scene.getScene('RankingMenu').divPuntuaciones.appendChild(divPuesto);			    		
 		    		}
-		    	}
-			}else{
-				if(msg.users.length > 0){
-					game.scene.getScene('FriendsScene').usersList.text = '';
-					game.scene.getScene('FriendsScene').divAmigos.innerHTML = '';
-					game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '-80px';
-					if(game.scene.getScene('FriendsScene').mode == 'addamigos'){
-						game.scene.getScene('FriendsScene').divAmigos.style.left = '450px';
-					}
-					
-					for (let i = 0; i < msg.users.length; i++) {
-						//game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
-						let divPuestoV = document.createElement("div");
-						divPuestoV.style.width = "220px";
-						
-						let boxV = document.createElement("img");
-				    	boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
-				    	boxV.style.marginLeft ="0px";
-				    	boxV.style.marginTop = "0px";
-				    	boxV.style.width = '80%';
-				    	boxV.style.height = 'auto';
-				    	
-				    	let connect = document.createElement("img");
-				    	connect.src = 'assets/interface/Gameplay/Friends/conected.png';
-				    	connect.style.position = "absolute";
-				    	connect.style.marginLeft ="8px";
-				    	connect.style.marginTop = "8px";
-				    	connect.style.width = '2%';
-				    	connect.style.height = 'auto';
-				    	
-				    	var name = document.createElement("span");
-						name.style.position = "absolute";
-						name.style.left = "40px";
-						name.style.marginTop = "1px";
-						name.style.width = 'auto';
-						name.style.color = '#fff';
-						name.style.fontFamily = 'pantonBlack';
-						name.style.fontSize = '11px';
-						
-						switch(game.scene.getScene('FriendsScene').mode){
-							case 'amigos':
-								var city = document.createElement("img");
-								city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
-								city.style.position = "absolute";
-								city.style.marginLeft ="140px";
-								city.style.marginTop = "3px";
-								city.style.width = '7%';
-								city.style.height = 'auto';
-								city.style.cursor = 'pointer';
-								city.onmousedown = function(){
-									Swal.fire({
-									  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('vercolonia')[0].childNodes[0].nodeValue + msg.users[i].name + '?',
-									  icon: 'question',
-									  showCancelButton: true,
-									  confirmButtonColor: '#3085d6',
-									  cancelButtonColor: '#d33',
-									  confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('mostrar')[0].childNodes[0].nodeValue
-									}).then((result) => {
-									  if (result.value) {
-									    let msgAux = new Object();
-										msgAux.event = 'SHOW CITY';
-										msgAux.id = msg.users[i].id;
-										game.global.socket.send(JSON.stringify(msgAux));
-										game.global.myPlayer.isVisitor = true;
-										game.scene.stop('GameScene');
-										game.scene.stop('GameInterface');
-										game.scene.stop('FriendsScene');
-										game.scene.run('LoadGameplayScene');
-									  }
-									})
-									
-								}
-								
-								var borrar = document.createElement("img");
-								borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
-								borrar.style.position = "absolute";
-								borrar.style.marginLeft ="155px";
-								borrar.style.marginTop = "3px";
-								borrar.style.width = '7%';
-								borrar.style.height = 'auto';
-								borrar.style.cursor = 'pointer';
-								borrar.onmousedown = function(){
-									Swal.fire({
-									  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('seguro')[0].childNodes[0].nodeValue,
-									  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('revertir')[0].childNodes[0].nodeValue,
-									  icon: 'warning',
-									  showCancelButton: true,
-									  confirmButtonColor: '#3085d6',
-									  cancelButtonColor: '#d33',
-									  confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('borrar')[0].childNodes[0].nodeValue,
-									}).then((result) => {
-									  if (result.value) {
-									    Swal.fire(
-								    		game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('borrado')[0].childNodes[0].nodeValue,
-								    		game.cache.xml.get(game.global.idioma).getElementsByTagName('amigBorrado')[0].childNodes[0].nodeValue,
-								    		'success'
-									    )
-									    let msgAux = new Object();
-										msgAux.event = 'DELETE FRIEND';
-										msgAux.idReceiver = msg.users[i].id;
-										msgAux.idTransmitter = game.global.myPlayerId;
-										game.global.socket.send(JSON.stringify(msgAux));
-									  }
-									})
-									
-								}
-							break;
-							case 'addAmigos':
-								var add = document.createElement("img");
-								add.src = 'assets/interface/Gameplay/Friends/btncrearamigo.png';
-								add.style.position = "absolute";
-								add.style.marginLeft ="155px";
-								add.style.marginTop = "3px";
-								add.style.width = '7%';
-								add.style.height = 'auto';
-								add.style.cursor = 'pointer';
-								
-								add.onmousedown = function(){
-									Swal.fire({
-										  icon: 'success',
-										  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[0].nodeValue,
-										  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('enviado')[0].childNodes[0].nodeValue,
-										});
-									let msgAux = new Object();
-									msgAux.event = 'REQUEST FRIENDSHIP';
-									msgAux.idReceiver = msg.users[i].id;
-									msgAux.idTransmitter = game.global.myPlayerId;
-									game.global.socket.send(JSON.stringify(msgAux));
-								}
-							break;
-							case 'solicitudes':
-								var accept = document.createElement("img");
-								accept.src = 'assets/interface/Gameplay/Friends/btnaceptaramigos.png';
-								accept.style.position = "absolute";
-								accept.style.marginLeft ="140px";
-								accept.style.marginTop = "3px";
-								accept.style.width = '7%';
-								accept.style.height = 'auto';
-								accept.style.cursor = 'pointer';
-								accept.onmousedown = function(){
-									let msgAux = new Object();
-									msgAux.event = 'ACCEPT FRIEND';
-									msgAux.idReceiver = msg.users[i].id;
-									msgAux.idTransmitter = game.global.myPlayerId;
-									game.global.socket.send(JSON.stringify(msgAux));
-								}
-								
-								var destroyFriend = document.createElement("img");
-								destroyFriend.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
-								destroyFriend.style.position = "absolute";
-								destroyFriend.style.marginLeft ="155px";
-								destroyFriend.style.marginTop = "3px";
-								destroyFriend.style.width = '7%';
-								destroyFriend.style.height = 'auto';
-								destroyFriend.style.cursor = 'pointer';
-							break;
-							default:
-							break;
-							
-						}
-						
-						var n = document.createTextNode(msg.users[i].name);
-						name.appendChild(n);
-						
-						var con = document.createElement("span");
-						con.style.position = "absolute";
-						con.style.left = "40px";
-						con.style.marginTop = "12px";
-						con.style.width = 'auto';
-						con.style.color = '#fff';
-						con.style.fontFamily = 'pantonLight';
-						con.style.fontSize = '6px';
-						
-						var c;
-						
-						if(game.global.idioma == 'eng'){
-				    		c = document.createTextNode("connected");
-				    	}else{
-				    		c = document.createTextNode("conectado");
-				    	}
-						con.appendChild(c);
-				    	
-				    	
-				    	var contenidoV = document.createElement("div");
-				    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px;margin-bottom:5px;";
-				    	
-				    	divPuestoV.appendChild(name);
-				    	divPuestoV.appendChild(connect);
-				    	
-				    	switch(game.scene.getScene('FriendsScene').mode){
-							case 'amigos':
-								divPuestoV.appendChild(city);
-						    	divPuestoV.appendChild(borrar);
-							break;
-							case 'addAmigos':
-								divPuestoV.appendChild(add);
-							break;
-							case 'solicitudes':
-								divPuestoV.appendChild(accept);
-						    	divPuestoV.appendChild(destroyFriend);
-							break;
-				    	}
-						
-					
-				    	
-				    	divPuestoV.appendChild(con);
-				    	divPuestoV.appendChild(boxV);
-				    	divPuestoV.appendChild(contenidoV);
-				    	game.scene.getScene('FriendsScene').divAmigos.appendChild(divPuestoV);
-					}
-				}else if (game.scene.getScene('FriendsScene').mode === 'amigos') {
-		    		if(game.global.idioma == "eng"){
-		    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no friends right now, look in the add friends section.</span>';
-		    		}else{
-		    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes amigos ahora mismo, busca en la seccion añadir amigos.</span>';
-		    		}
-		    		game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '20px';
-		    		game.scene.getScene('FriendsScene').divAmigos.style.textAlign = 'center';
-		    	}else if (game.scene.getScene('FriendsScene').mode === 'solicitudes') {
-		    		if(game.global.idioma == "eng"){
-		    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no pending friend requests</span>';
-		    		}else{
-		    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes solicitudes de amistad pendientes</span>';
-		    		}
-		    		game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '20px';
-		    		game.scene.getScene('FriendsScene').divAmigos.style.textAlign = 'center';
 		    	}
 			}
+			
+			break;
+		case 'USERS FOUND':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] USERS FOUND message recieved');
+				console.log(msg);
+			}
+			if(msg.users.length > 0){
+				game.scene.getScene('FriendsScene').usersList.text = '';
+				game.scene.getScene('FriendsScene').divAmigos.innerHTML = '';
+				game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '-80px';
+				if(game.scene.getScene('FriendsScene').mode == 'addamigos'){
+					game.scene.getScene('FriendsScene').divAmigos.style.left = '450px';
+				}
+				
+				for (let i = 0; i < msg.users.length; i++) {
+					//game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
+					let divPuestoV = document.createElement("div");
+					divPuestoV.style.width = "220px";
+	
+					let boxV = document.createElement("img");
+					boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
+					boxV.style.marginLeft ="0px";
+					boxV.style.marginTop = "0px";
+					boxV.style.width = '80%';
+					boxV.style.height = 'auto';
+					
+					let connect = document.createElement("img");
+					connect.src = 'assets/interface/Gameplay/Friends/conected.png';
+					connect.style.position = "absolute";
+					connect.style.marginLeft ="8px";
+					connect.style.marginTop = "8px";
+					connect.style.width = '2%';
+					connect.style.height = 'auto';
+					
+					var name = document.createElement("span");
+					name.style.position = "absolute";
+					name.style.left = "40px";
+					name.style.marginTop = "1px";
+					name.style.width = 'auto';
+					name.style.color = '#fff';
+					name.style.fontFamily = 'pantonBlack';
+					name.style.fontSize = '11px';
+					
+					switch(game.scene.getScene('FriendsScene').mode){
+						case 'amigos':
+							var city = document.createElement("img");
+							city.src = 'assets/interface/Gameplay/Friends/btnciudadamigo.png';
+							city.style.position = "absolute";
+							city.style.marginLeft ="140px";
+							city.style.marginTop = "3px";
+							city.style.width = '7%';
+							city.style.height = 'auto';
+							city.style.cursor = 'pointer';
+							city.onmousedown = function(){
+								Swal.fire({
+									title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('vercolonia')[0].childNodes[0].nodeValue + msg.users[i].name + '?',
+									icon: 'question',
+									showCancelButton: true,
+									confirmButtonColor: '#3085d6',
+									cancelButtonColor: '#d33',
+									confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('mostrar')[0].childNodes[0].nodeValue
+								}).then((result) => {
+									if (result.value) {
+									let msgAux = new Object();
+									msgAux.event = 'SHOW CITY';
+									msgAux.id = msg.users[i].id;
+									game.global.socket.send(JSON.stringify(msgAux));
+									game.global.myPlayer.isVisitor = true;
+									game.scene.stop('GameScene');
+									game.scene.stop('GameInterface');
+									game.scene.stop('FriendsScene');
+									game.scene.run('LoadGameplayScene');
+									}
+								})
+								
+							}
+							
+							var borrar = document.createElement("img");
+							borrar.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
+							borrar.style.position = "absolute";
+							borrar.style.marginLeft ="155px";
+							borrar.style.marginTop = "3px";
+							borrar.style.width = '7%';
+							borrar.style.height = 'auto';
+							borrar.style.cursor = 'pointer';
+							borrar.onmousedown = function(){
+								Swal.fire({
+									title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('seguro')[0].childNodes[0].nodeValue,
+									text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('revertir')[0].childNodes[0].nodeValue,
+									icon: 'warning',
+									showCancelButton: true,
+									confirmButtonColor: '#3085d6',
+									cancelButtonColor: '#d33',
+									confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('borrar')[0].childNodes[0].nodeValue,
+								}).then((result) => {
+									if (result.value) {
+									Swal.fire(
+										game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('borrado')[0].childNodes[0].nodeValue,
+										game.cache.xml.get(game.global.idioma).getElementsByTagName('amigBorrado')[0].childNodes[0].nodeValue,
+										'success'
+									)
+									let msgAux = new Object();
+									msgAux.event = 'DELETE FRIEND';
+									msgAux.idReceiver = msg.users[i].id;
+									msgAux.idTransmitter = game.global.myPlayerId;
+									game.global.socket.send(JSON.stringify(msgAux));
+									}
+								})
+								
+							}
+						break;
+						
+						case 'addAmigos':
+							var add = document.createElement("img");
+							add.src = 'assets/interface/Gameplay/Friends/btncrearamigo.png';
+							add.style.position = "absolute";
+							add.style.marginLeft ="155px";
+							add.style.marginTop = "3px";
+							add.style.width = '7%';
+							add.style.height = 'auto';
+							add.style.cursor = 'pointer';
+							
+							add.onmousedown = function(){
+								Swal.fire({
+										icon: 'success',
+										title: 'Nice!',
+										text: "Your request has been sent."
+									});
+								let msgAux = new Object();
+								msgAux.event = 'REQUEST FRIENDSHIP';
+								msgAux.idReceiver = msg.users[i].id;
+								msgAux.idTransmitter = game.global.myPlayerId;
+								game.global.socket.send(JSON.stringify(msgAux));
+							}
+						break;
+						case 'solicitudes':
+							var accept = document.createElement("img");
+							accept.src = 'assets/interface/Gameplay/Friends/btnaceptaramigos.png';
+							accept.style.position = "absolute";
+							accept.style.marginLeft ="140px";
+							accept.style.marginTop = "3px";
+							accept.style.width = '7%';
+							accept.style.height = 'auto';
+							accept.style.cursor = 'pointer';
+							accept.onmousedown = function(){
+								let msgAux = new Object();
+								msgAux.event = 'ACCEPT FRIEND';
+								msgAux.idReceiver = msg.users[i].id;
+								msgAux.idTransmitter = game.global.myPlayerId;
+								game.global.socket.send(JSON.stringify(msgAux));
+							}
+							
+							var destroyFriend = document.createElement("img");
+							destroyFriend.src = 'assets/interface/Gameplay/Friends/btneliminaramigos.png';
+							destroyFriend.style.position = "absolute";
+							destroyFriend.style.marginLeft ="155px";
+							destroyFriend.style.marginTop = "3px";
+							destroyFriend.style.width = '7%';
+							destroyFriend.style.height = 'auto';
+							destroyFriend.style.cursor = 'pointer';
+						break;
+						default:
+						break;
+							
+					}
+					
+					var n = document.createTextNode(msg.users[i].name);
+					name.appendChild(n);
+					
+					var con = document.createElement("span");
+					con.style.position = "absolute";
+					con.style.left = "40px";
+					con.style.marginTop = "12px";
+					con.style.width = 'auto';
+					con.style.color = '#fff';
+					con.style.fontFamily = 'pantonLight';
+					con.style.fontSize = '6px';
+					
+					var c;
+					
+					if(game.global.idioma == 'eng'){
+			    		c = document.createTextNode("connected");
+			    	}else{
+			    		c = document.createTextNode("conectado");
+			    	}
+					con.appendChild(c);
+			    	
+			    	
+			    	var contenidoV = document.createElement("div");
+			    	contenidoV.style.cssText = "position:relative;color:white;margin-left:15px;margin-bottom:5px;";
+			    	
+			    	divPuestoV.appendChild(name);
+			    	divPuestoV.appendChild(connect);
+			    	
+			    	switch(game.scene.getScene('FriendsScene').mode){
+						case 'amigos':
+							divPuestoV.appendChild(city);
+					    	divPuestoV.appendChild(borrar);
+						break;
+						case 'addAmigos':
+							divPuestoV.appendChild(add);
+						break;
+						case 'solicitudes':
+							divPuestoV.appendChild(accept);
+					    	divPuestoV.appendChild(destroyFriend);
+						break;
+			    	}
+					
+				
+			    	
+			    	divPuestoV.appendChild(con);
+			    	divPuestoV.appendChild(boxV);
+			    	divPuestoV.appendChild(contenidoV);
+			    	game.scene.getScene('FriendsScene').divAmigos.appendChild(divPuestoV);
+				}
+			}else if (game.scene.getScene('FriendsScene').mode === 'amigos') {
+	    		if(game.global.idioma == "eng"){
+	    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no friends right now, look in the add friends section.</span>';
+	    		}else{
+	    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes amigos ahora mismo, busca en la seccion añadir amigos.</span>';
+	    		}
+	    		game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '20px';
+	    		game.scene.getScene('FriendsScene').divAmigos.style.textAlign = 'center';
+	    	}else if (game.scene.getScene('FriendsScene').mode === 'solicitudes') {
+	    		if(game.global.idioma == "eng"){
+	    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">You have no pending friend requests</span>';
+	    		}else{
+	    			game.scene.getScene('FriendsScene').divAmigos.innerHTML = '<span style="color: #fff; font-family: pantonLight ">No tienes solicitudes de amistad pendientes</span>';
+	    		}
+	    		game.scene.getScene('FriendsScene').divAmigos.style.marginTop = '20px';
+	    		game.scene.getScene('FriendsScene').divAmigos.style.textAlign = 'center';
+	    	}
 			break;	
 				
 		case 'CITY NAME CHANGED':
