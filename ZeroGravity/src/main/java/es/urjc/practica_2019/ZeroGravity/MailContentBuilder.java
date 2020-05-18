@@ -24,5 +24,11 @@ public class MailContentBuilder {
         }
         return templateEngine.process(layout, context);
     }
+    
+    public static String build(String layout) {
+        Context context = new Context();
+        
+        return templateEngine.process(layout, context);
+    }
  
 }

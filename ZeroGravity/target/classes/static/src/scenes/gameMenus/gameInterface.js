@@ -510,6 +510,7 @@ class GameInterface extends Phaser.Scene {
     			    		msg.event = 'ASK PLAYER INFO';
     			    		game.global.socket.send(JSON.stringify(msg));
     			    		game.global.myPlayer.isVisitor = false;
+    			    		game.global.inStrictMenu = false;
     			    		game.scene.stop('GameVisitorScene');
     			    		game.scene.stop('GameInterface');
     						game.scene.run('LoadGameplayScene');
