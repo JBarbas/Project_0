@@ -53,6 +53,7 @@ class GameScene extends Phaser.Scene {
 	  		  showCancelButton: false,
 	  		  confirmButtonText: 'Aceptar',
 	  		  showLoaderOnConfirm: true,
+	  		  allowOutsideClick: false
 	  		}).then((result) => {
 	  		  if (result.value) {
 	  			if (result.value.length <= 15) {
