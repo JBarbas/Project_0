@@ -14,7 +14,12 @@ class RankingMenu extends Phaser.Scene {
     }
     
     preload () {
-
+    	if(game.global.ranking === 'all'){
+    		pedirPuntuaciones();
+    	}
+    	else {
+    		pedirPuntuacionesAmigos();
+    	}
     }
     create (data)  {
     	
@@ -58,11 +63,8 @@ class RankingMenu extends Phaser.Scene {
     	
     	this.divPuntuaciones = document.getElementById("divPuntuaciones");
   	
-    	let msg = new Object();
-        msg.event = 'SHOW FRIENDS';
-        game.global.socket.send(JSON.stringify(msg));
         
-        if(game.global.ranking === 'all'){
+        /*if(game.global.ranking === 'all'){
 	    	for(var i = 0; i < game.global.mejoresPuntuaciones.length; i+=2){
 		    		
 		    		let divPuesto = document.createElement("div");
@@ -162,7 +164,7 @@ class RankingMenu extends Phaser.Scene {
 		        	divPuntuaciones.appendChild(divPuesto);
 		    	
 	    	}
-        }
+        }*/
     }
     update(time, delta) {
     	

@@ -893,7 +893,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				break;
 
 			case "GIVE ME PUNCTUATIONS":
-				sendPunctuations(player);
+				sendRankingGlobal(getRanking(), player);
+				break;
+			case "GIVE ME FRIEND PUNCTUATIONS":
+				sendRankingAmigos(getRanking(), player);
 				break;
 			case "RECOVER PASSWORD":
 				System.out.println("Hey");
@@ -1083,12 +1086,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	}
 
 	/* Enviamos las puntuaciones maximas ordenas al jugador */
-	private void sendPunctuations(Player player) {
+	private Map<String, Integer> getRanking() {
 
-		ObjectNode msg = mapper.createObjectNode();
 		HashMap<String, Integer> puntuaciones = new HashMap<>();
-		String todasLasPuntuaciones = "";
-		int numMaxPuntuaciones = 0;
 
 		/* extraemos los nombres y las puntuaciones de los jugadores en un mapa */
 		try {
@@ -1103,7 +1103,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			}
 
 		} catch (Exception e) {
-			System.err.println("Exception sending message " + msg.toString());
+			System.err.println("Exception sending ranking message");
 			e.printStackTrace(System.err);
 		}
 
@@ -1124,12 +1124,54 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		for (Map.Entry<String, Integer> entry : list) {
 			sortedMap.put(entry.getKey(), entry.getValue());
 		}
-
+		return sortedMap;
+	}
+	
+	private void sendRankingGlobal(Map<String, Integer> sortedMap, Player player) {
+		ObjectNode msg = mapper.createObjectNode();
+		String todasLasPuntuaciones = "";
+		int numMaxPuntuaciones = 0;
 		/* con las puntuaciones ordenadas se las mandamos al cliente en un String */
 		for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
 			if (numMaxPuntuaciones < NUM_MAX_PUNTUACIONES_MOSTRAR) {
 				todasLasPuntuaciones += entry.getKey() + "\n" + entry.getValue() + "\n";
 				numMaxPuntuaciones++;
+			} else {
+				break;
+			}
+		}
+
+		try {
+			msg.put("event", "ALL PUNCTUATIONS");
+			msg.put("todasLasPuntuaciones", todasLasPuntuaciones);
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			msg = mapper.createObjectNode();
+			msg.put("event", "ACTUALIZAR PUNTUACION");
+			msg.put("punctuacion", player.getPuntuacion());
+			player.getSession().sendMessage(new TextMessage(msg.toString()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void sendRankingAmigos(Map<String, Integer> sortedMap, Player player) {
+		HashMap <ObjectId, String> friends = new HashMap<>();
+		for (ObjectId key : player.getFriends()) {
+			Bson filter = new Document("_id", key);
+			Document dbFriend = coll.find(filter).first();
+			friends.put(key, dbFriend.getString("name"));
+		}
+		
+		ObjectNode msg = mapper.createObjectNode();
+		String todasLasPuntuaciones = "";
+		int numMaxPuntuaciones = 0;
+		/* con las puntuaciones ordenadas se las mandamos al cliente en un String */
+		for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+			if (numMaxPuntuaciones < NUM_MAX_PUNTUACIONES_MOSTRAR) {
+				if (friends.containsValue(entry.getKey()) || entry.getKey().equals(player.getUsername())) {
+					todasLasPuntuaciones += entry.getKey() + "\n" + entry.getValue() + "\n";
+					numMaxPuntuaciones++;
+				}
 			} else {
 				break;
 			}
