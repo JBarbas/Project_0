@@ -16,6 +16,8 @@ class AnuncioMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	game.global.inStrictMenu = true;
+    	
     	var panelA;
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	var panelAnuncio = this.add.image(560, 300, 'panelAnuncio').setOrigin(0, 0);
@@ -85,6 +87,7 @@ class AnuncioMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
+    		game.global.inStrictMenu = false;
     		game.scene.stop('AnuncioMenu');
     	});
     	

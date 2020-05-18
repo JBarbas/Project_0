@@ -16,6 +16,7 @@ class FriendsScene extends Phaser.Scene {
     	
     }
     create (data)  {
+    	game.global.inStrictMenu = true;    	
     	
     	var scene = this;
     	
@@ -138,6 +139,7 @@ class FriendsScene extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
+    		game.global.inStrictMenu = false;
     		game.scene.stop('FriendsScene');
     	});
     	

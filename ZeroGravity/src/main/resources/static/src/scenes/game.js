@@ -125,7 +125,7 @@ class GameScene extends Phaser.Scene {
 		    			else if (game.global.expandiendo && !game.global.inMenu) {
 		    				buyCell(i, j);
 		    			}
-		        		else if (game.global.grid[i][j].type > 0) {
+		        		else if (game.global.grid[i][j].type > 0 && !game.global.inStrictMenu) {
 		        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
 		        			if (game.global.editMode) {
 		        				edificio.move();
@@ -182,22 +182,26 @@ class GameScene extends Phaser.Scene {
     	var camera = this.cameras.main;
         dragScale
             .on('drag1', function (dragScale) {
-            	//game.scene.getScene('GameScene').isDragging = true;
-                var drag1Vector = dragScale.drag1Vector;
-                camera.scrollX -= drag1Vector.x / camera.zoom;
-                camera.scrollY -= drag1Vector.y / camera.zoom;
+            	if (!game.global.inStrictMenu) {
+	            	//game.scene.getScene('GameScene').isDragging = true;
+	                var drag1Vector = dragScale.drag1Vector;
+	                camera.scrollX -= drag1Vector.x / camera.zoom;
+	                camera.scrollY -= drag1Vector.y / camera.zoom;
+            	}
             })
             .on('pinch', function (dragScale) {
-            	game.scene.getScene('GameScene').isDragging = true;
-            	game.global.inZoom = true;
-                var scaleFactor = dragScale.scaleFactor;
-                zoom *= scaleFactor;
-                if (zoom < minZoom) {
-                	zoom = minZoom;
-                }
-                else if (zoom > maxZoom) {
-                	zoom = maxZoom;
-                }
+            	if (!game.global.inStrictMenu) {
+	            	game.scene.getScene('GameScene').isDragging = true;
+	            	game.global.inZoom = true;
+	                var scaleFactor = dragScale.scaleFactor;
+	                zoom *= scaleFactor;
+	                if (zoom < minZoom) {
+	                	zoom = minZoom;
+	                }
+	                else if (zoom > maxZoom) {
+	                	zoom = maxZoom;
+	                }
+            	}
             }, this);
     }
     update(time, delta) {
@@ -229,7 +233,7 @@ class GameScene extends Phaser.Scene {
 			
     		if (typeof game.global.grid[i] !== 'undefined') {
     			if (typeof game.global.grid[i][j] !== 'undefined') {
-	        		if(game.global.grid[i][j].type > 0) {
+	        		if(game.global.grid[i][j].type > 0 && !game.global.inStrictMenu) {
 	        			var edificio = game.global.edificios.get(game.global.grid[i][j].type);
 	        			edificio.gameObject.tint = '0xC0C0C0'; //0xF0F0F0
 	        		}
@@ -246,7 +250,7 @@ class GameScene extends Phaser.Scene {
     	/* Codigo extraido de http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
     	 * by sanojian - 14 October 2014
     	 */
-    	if (this.game.input.activePointer.isDown) {
+    	if (this.game.input.activePointer.isDown && !game.global.inStrictMenu) {
     		if (!game.global.inMenu || !(this.game.input.activePointer.position.x > game.global.buildingMenu.x && 
     				this.game.input.activePointer.position.x < game.global.buildingMenu.x + game.global.buildingMenu.width && 
     				this.game.input.activePointer.position.y > game.global.buildingMenu.y && 

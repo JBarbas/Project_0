@@ -18,6 +18,8 @@ class RankingMenu extends Phaser.Scene {
     }
     create (data)  {
     	
+    	game.global.inStrictMenu = true;
+    	
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	this.panelRanking = this.add.image(760, 100, 'panelRanking').setOrigin(0, 0);
     	
@@ -47,6 +49,7 @@ class RankingMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
+    		game.global.inStrictMenu = false;
     		game.global.ranking = 'all';
     		game.scene.stop('RankingMenu');
     	});
