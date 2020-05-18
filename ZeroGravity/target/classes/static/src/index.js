@@ -83,6 +83,7 @@ window.onload = function() {
 			caBlocked : false
 		},
 		myPlayerId: "",
+		myPlayerEmail: "",
 		puntuacion: 0,
 		mejoresPuntuaciones:[],
 		ofertasListas : false,
@@ -182,6 +183,8 @@ window.onload = function() {
 			game.global.myPlayer.config.volMusic = msg.config.volMusic;
 			game.global.myPlayer.config.volEffects = msg.config.volEffects;
 			game.global.idioma = msg.config.lang;
+			game.global.myPlayerEmail = msg.email;
+			console.log(game.global.myPlayerEmail);
 			
 			game.global.musicMenu.setVolume(game.global.myPlayer.config.volMusic/100);
 			console.log(game.global.musicMenu.volume);
