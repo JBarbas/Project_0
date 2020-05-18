@@ -207,13 +207,13 @@ class GameInterface extends Phaser.Scene {
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		//Sweet Alert para editar nombre Ciudad  --------------------- HAY QUE CONFIGURARLO BIEN ------------------------------------------
 			Swal.fire({
-				  title: 'Change your city name',
+				  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('cambiarCity')[0].childNodes[0].nodeValue,
 				  input: 'text',
 				  inputAttributes: {
 				    autocapitalize: 'off'
 				  },
 				  showCancelButton: true,
-				  confirmButtonText: 'Confirm',
+				  confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('btnSwConfirmar')[0].childNodes[0].nodeValue,
 				  showLoaderOnConfirm: true
 				}).then((result) => {
 				  if (result.value.length <= 15) {
@@ -223,8 +223,8 @@ class GameInterface extends Phaser.Scene {
 					  game.global.socket.send(JSON.stringify(msg));
 					  Swal.fire({
 						  icon: 'success',
-						  title: 'Nice!',
-						  text: "Your name has been changed."
+						  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[0].nodeValue,
+						  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('nombreCamb')[0].childNodes[0].nodeValue
 						});
 				  }
 				})
@@ -498,18 +498,19 @@ class GameInterface extends Phaser.Scene {
         	
         	button.setInteractive().on('pointerdown', function(pointer, localX, localY, event){
         		Swal.fire({
-    				  title: 'Do you want to go back to your colony?',
+    				  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('volverColonia')[0].childNodes[0].nodeValue,
     				  icon: 'warning',
     				  showCancelButton: true,
     				  confirmButtonColor: '#3085d6',
     				  cancelButtonColor: '#d33',
-    				  confirmButtonText: 'Yes!'
+    				  confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('btnAfirmacion')[0].childNodes[0].nodeValue
     				}).then((result) => {
     				  if (result.value) {
     			    		let msg = new Object();
     			    		msg.event = 'ASK PLAYER INFO';
     			    		game.global.socket.send(JSON.stringify(msg));
     			    		game.global.myPlayer.isVisitor = false;
+    			    		game.global.inStrictMenu = false;
     			    		game.scene.stop('GameVisitorScene');
     			    		game.scene.stop('GameInterface');
     						game.scene.run('LoadGameplayScene');

@@ -379,3 +379,17 @@ function isometricToCartesian(isoPt){
     tempPt.y=(2*isoPt.y-isoPt.x)/2;
     return (tempPt);
 }
+
+function validarEmailReg(mail) 
+{
+	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+	{
+	    return (true);
+	}
+	Swal.fire({
+		  icon: 'error',
+		  title: game.scene.getScene('RegisterScene').cache.xml.get(game.global.idioma).getElementsByTagName('errorRegTit')[0].childNodes[0].nodeValue,
+		  text: game.scene.getScene('RegisterScene').cache.xml.get(game.global.idioma).getElementsByTagName('errorRegDes')[0].childNodes[0].nodeValue
+	});
+	    return (false);
+}

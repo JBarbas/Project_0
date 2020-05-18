@@ -65,6 +65,7 @@ import es.urjc.practica_2019.ZeroGravity.Edificios.*;
 import es.urjc.practica_2019.ZeroGravity.Mailing.ConfirmEmailHandler;
 import es.urjc.practica_2019.ZeroGravity.Mailing.RecoverPasswordHandler;
 import es.urjc.practica_2019.ZeroGravity.Mailing.RecoverUserNameHandler;
+import es.urjc.practica_2019.ZeroGravity.Mailing.validateEmailHandler;
 import es.urjc.practica_2019.ZeroGravity.Robots.Robot;
 import es.urjc.practica_2019.ZeroGravity.Robots.RobotEstandar;
 
@@ -116,7 +117,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	private RecoverUserNameHandler recoverUserNameHandler;
 
 	@Autowired
-	private ConfirmEmailHandler confirmEmailHandler;
+	private validateEmailHandler validateEmailHandler;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -214,6 +215,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						msg.putPOJO("config", jsonConfig);
 						
 						//Aqui mandamos un mensaje de correo electronico
+						validateEmailHandler.execute(player.getEmail());
 					}
 				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));

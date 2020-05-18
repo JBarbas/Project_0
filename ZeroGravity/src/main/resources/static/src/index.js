@@ -184,7 +184,6 @@ window.onload = function() {
 			game.global.myPlayer.config.volEffects = msg.config.volEffects;
 			game.global.idioma = msg.config.lang;
 			game.global.myPlayerEmail = msg.email;
-			console.log(game.global.myPlayerEmail);
 			
 			game.global.musicMenu.setVolume(game.global.myPlayer.config.volMusic/100);
 			console.log(game.global.musicMenu.volume);
@@ -232,7 +231,6 @@ window.onload = function() {
 				idRespuesta = 1;
 			}
 
-			console.log(game.cache.xml.get(game.global.idioma).getElementsByTagName('optionsLogs')[0].childNodes[idRespuesta].nodeValue);
 			Swal.fire({
 				  icon: auxIcon,
 				  title: 'Nice!',
@@ -261,7 +259,7 @@ window.onload = function() {
 
 			Swal.fire({
 				  icon: auxIcon2,
-				  title: 'Nice!',
+				  title: game.cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[0].nodeValue,
 				  text: game.cache.xml.get(game.global.idioma).getElementsByTagName('optionsLogs')[0].childNodes[idRespuesta2].nodeValue
 				});
 
@@ -544,7 +542,7 @@ window.onload = function() {
 			}else{
 				Swal.fire({
 					  icon: 'warning',
-					  text: "No dispones de los recursos para aumentar de nivel a este edificio",
+					  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('nosubirNivel')[0].childNodes[0].nodeValue,
 					  showClass: {
 					    popup: 'animated fadeInDown faster'
 					  },
@@ -929,7 +927,7 @@ window.onload = function() {
 			
 			Swal.fire({
 				  icon: 'warning',
-				  text: "Necesitas " + msg.cantidad + " créditos más para poder expandir la base",
+				  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('necesitas')[0].childNodes[0].nodeValue + msg.cantidad + game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('necesitas2')[0].childNodes[0].nodeValue,
 				  showClass: {
 				    popup: 'animated fadeInDown faster'
 				  },
@@ -947,7 +945,7 @@ window.onload = function() {
 			if(!msg.respuesta){
 				Swal.fire({
 					  icon: 'warning',
-					  text: "Necesitas más recursos para enviar esta oferta al mercado",
+					  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('masrecursos')[0].childNodes[0].nodeValue,
 					  showClass: {
 					    popup: 'animated fadeInDown faster'
 					  },
@@ -998,7 +996,7 @@ window.onload = function() {
 				
 				Swal.fire({
 					  icon: 'error',
-					  text: "Lo sentimos, esta oferta ya no está disponible",
+					  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('nodisponible')[0].childNodes[0].nodeValue,
 					  showClass: {
 					    popup: 'animated fadeInDown faster'
 					  },
@@ -1148,23 +1146,23 @@ window.onload = function() {
 					//game.scene.getScene('FriendsScene').usersList.text += msg.users[i].name + '\n';
 					let divPuestoV = document.createElement("div");
 					divPuestoV.style.width = "220px";
-					
+	
 					let boxV = document.createElement("img");
-			    	boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
-			    	boxV.style.marginLeft ="0px";
-			    	boxV.style.marginTop = "0px";
-			    	boxV.style.width = '80%';
-			    	boxV.style.height = 'auto';
-			    	
-			    	let connect = document.createElement("img");
-			    	connect.src = 'assets/interface/Gameplay/Friends/conected.png';
-			    	connect.style.position = "absolute";
-			    	connect.style.marginLeft ="8px";
-			    	connect.style.marginTop = "8px";
-			    	connect.style.width = '2%';
-			    	connect.style.height = 'auto';
-			    	
-			    	var name = document.createElement("span");
+					boxV.src = "assets/interface/Gameplay/Friends/BloqueAmigosBck.png";
+					boxV.style.marginLeft ="0px";
+					boxV.style.marginTop = "0px";
+					boxV.style.width = '80%';
+					boxV.style.height = 'auto';
+					
+					let connect = document.createElement("img");
+					connect.src = 'assets/interface/Gameplay/Friends/conected.png';
+					connect.style.position = "absolute";
+					connect.style.marginLeft ="8px";
+					connect.style.marginTop = "8px";
+					connect.style.width = '2%';
+					connect.style.height = 'auto';
+					
+					var name = document.createElement("span");
 					name.style.position = "absolute";
 					name.style.left = "40px";
 					name.style.marginTop = "1px";
@@ -1185,15 +1183,15 @@ window.onload = function() {
 							city.style.cursor = 'pointer';
 							city.onmousedown = function(){
 								Swal.fire({
-								  title: 'Do you want to see the colony of ' + msg.users[i].name + '?',
-								  icon: 'question',
-								  showCancelButton: true,
-								  confirmButtonColor: '#3085d6',
-								  cancelButtonColor: '#d33',
-								  confirmButtonText: 'Yes, show me!'
+									title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('vercolonia')[0].childNodes[0].nodeValue + msg.users[i].name + '?',
+									icon: 'question',
+									showCancelButton: true,
+									confirmButtonColor: '#3085d6',
+									cancelButtonColor: '#d33',
+									confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('mostrar')[0].childNodes[0].nodeValue
 								}).then((result) => {
-								  if (result.value) {
-								    let msgAux = new Object();
+									if (result.value) {
+									let msgAux = new Object();
 									msgAux.event = 'SHOW CITY';
 									msgAux.id = msg.users[i].id;
 									game.global.socket.send(JSON.stringify(msgAux));
@@ -1202,7 +1200,7 @@ window.onload = function() {
 									game.scene.stop('GameInterface');
 									game.scene.stop('FriendsScene');
 									game.scene.run('LoadGameplayScene');
-								  }
+									}
 								})
 								
 							}
@@ -1217,30 +1215,31 @@ window.onload = function() {
 							borrar.style.cursor = 'pointer';
 							borrar.onmousedown = function(){
 								Swal.fire({
-								  title: 'Are you sure?',
-								  text: "You won't be able to revert this!",
-								  icon: 'warning',
-								  showCancelButton: true,
-								  confirmButtonColor: '#3085d6',
-								  cancelButtonColor: '#d33',
-								  confirmButtonText: 'Yes, delete it!'
+									title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('seguro')[0].childNodes[0].nodeValue,
+									text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('revertir')[0].childNodes[0].nodeValue,
+									icon: 'warning',
+									showCancelButton: true,
+									confirmButtonColor: '#3085d6',
+									cancelButtonColor: '#d33',
+									confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('borrar')[0].childNodes[0].nodeValue,
 								}).then((result) => {
-								  if (result.value) {
-								    Swal.fire(
-								      'Deleted!',
-								      'Your friend has been deleted.',
-								      'success'
-								    )
-								    let msgAux = new Object();
+									if (result.value) {
+									Swal.fire(
+										game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('borrado')[0].childNodes[0].nodeValue,
+										game.cache.xml.get(game.global.idioma).getElementsByTagName('amigBorrado')[0].childNodes[0].nodeValue,
+										'success'
+									)
+									let msgAux = new Object();
 									msgAux.event = 'DELETE FRIEND';
 									msgAux.idReceiver = msg.users[i].id;
 									msgAux.idTransmitter = game.global.myPlayerId;
 									game.global.socket.send(JSON.stringify(msgAux));
-								  }
+									}
 								})
 								
 							}
 						break;
+						
 						case 'addAmigos':
 							var add = document.createElement("img");
 							add.src = 'assets/interface/Gameplay/Friends/btncrearamigo.png';
@@ -1253,9 +1252,9 @@ window.onload = function() {
 							
 							add.onmousedown = function(){
 								Swal.fire({
-									  icon: 'success',
-									  title: 'Nice!',
-									  text: "Your request has been sent."
+										icon: 'success',
+										title: 'Nice!',
+										text: "Your request has been sent."
 									});
 								let msgAux = new Object();
 								msgAux.event = 'REQUEST FRIENDSHIP';
@@ -1292,7 +1291,7 @@ window.onload = function() {
 						break;
 						default:
 						break;
-						
+							
 					}
 					
 					var n = document.createTextNode(msg.users[i].name);

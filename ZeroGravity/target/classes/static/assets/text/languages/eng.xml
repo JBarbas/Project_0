@@ -363,6 +363,34 @@ Required time:
 			<anterior>Previous</anterior>
 			<siguiente>Next</siguiente>
 		</tutorial>
+		<construccion>
+			<edifConst>You already have such a building</edifConst>
+		</construccion>
+		<swal>
+			<bien>Nice!</bien>
+			<cambiarCity>Change your colony name</cambiarCity>
+			<nombreCamb>Your city name has been changed</nombreCamb>
+			<crearNombre>Add the name of your colony!</crearNombre>
+			<btnSwAceptar>Accept</btnSwAceptar>
+			<btnSwConfirmar>Confirm</btnSwConfirmar>
+			<volverColonia>Do you want to go back to your colony?</volverColonia>
+			<btnAfirmacion>Yes!</btnAfirmacion>
+			<errorRegTit>Error</errorRegTit>
+			<errorRegDes>It seems that you have not completed all the fields correctly. Try again!</errorRegDes>
+			<enviado> Your request has been sent.</enviado>
+			<seguro> Are you sure?</seguro>
+			<revertir> You will not be able to reverse this change.</revertir>
+			<borrar> Yes, delete.</borrar>
+			<borrado> Deleted</borrado>
+			<amigBorrado>Your friend has been removed from your list.</amigBorrado>
+			<vercolonia> Do you want to see the colony of </vercolonia>
+			<mostrar>Yes, I did.</mostrar>
+			<nodisponible>Sorry, this offer is no longer available.</nodisponible>
+			<masrecursos>You need more resources to send this offer to the market</masrecursos>
+			<necesitas>You need </necesitas>
+			<necesitas2> credits to be able to expand the base.</necesitas2>
+			<nosubirNivel>You don't have the resources to level up this building.</nosubirNivel>
+		</swal>
 		
 		
 	</menusEdificios>

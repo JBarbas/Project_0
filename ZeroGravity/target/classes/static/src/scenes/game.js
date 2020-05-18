@@ -41,7 +41,7 @@ class GameScene extends Phaser.Scene {
     	
     	if (!game.global.myPlayer.gameStarted) {
 	    	Swal.fire({
-	  		  title: '¡Añade el nombre de tu colonia!',
+	  		  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('crearNombre')[0].childNodes[0].nodeValue,
 	  		  imageUrl: 'assets/interface/colonyicon.png',
 	  		  imageWidth: 200,
 	  		  imageHeight: 200,
@@ -51,7 +51,7 @@ class GameScene extends Phaser.Scene {
 	  		    autocapitalize: 'off'
 	  		  },
 	  		  showCancelButton: false,
-	  		  confirmButtonText: 'Aceptar',
+	  		  confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('btnSwAceptar')[0].childNodes[0].nodeValue,
 	  		  showLoaderOnConfirm: true,
 	  		  allowOutsideClick: false
 	  		}).then((result) => {
@@ -63,8 +63,8 @@ class GameScene extends Phaser.Scene {
 					  game.global.socket.send(JSON.stringify(msg));
 					  Swal.fire({
 						  icon: 'success',
-						  title: 'Nice!',
-						  text: "Your name has been changed."
+						  title: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[0].nodeValue,
+						  text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('nombreCamb')[0].childNodes[0].nodeValue 
 						});
 				  }
 	  		  game.global.myPlayer.gameStarted = true;

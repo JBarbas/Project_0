@@ -616,7 +616,7 @@ class ConstruccionMenu extends Phaser.Scene {
         	else {
         		btnBuild.setFrame(2);
         		btnConstruir.setFrame(2);
-        		scene.blockMessage.text = "Ya tienes un edificio de este tipo";
+        		scene.blockMessage.text = scene.cache.xml.get(game.global.idioma).getElementsByTagName('edifConst')[0].childNodes[0].nodeValue;
         	}
     		if(game.global.idioma == "eng"){
         		scene.nombreEdificio.text = "Administrative\ncenter";
