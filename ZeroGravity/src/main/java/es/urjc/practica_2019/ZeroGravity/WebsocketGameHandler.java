@@ -164,6 +164,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 					msg.put("event", "LOGGED");
 					msg.put("playerId", player.getId().toString());
+					msg.put("email", myPlayer.getString("email"));
 					msg.put("gameStarted", player.isGameStarted());	
 					msg.put("tutorialIntro", myPlayer.getBoolean("tutorialIntro", false));
 					msg.put("cityName", myPlayer.get("cityName", "your city").toString());
@@ -211,6 +212,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						jsonConfig.put("volEffects", player.getConfig().getVolEffects());
 						jsonConfig.put("lang", player.getConfig().getLang());
 						msg.putPOJO("config", jsonConfig);
+						
+						//Aqui mandamos un mensaje de correo electronico
 					}
 				}
 				player.getSession().sendMessage(new TextMessage(msg.toString()));

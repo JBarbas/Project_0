@@ -37,7 +37,7 @@ docButt.addEventListener('click',function(){
 	
 });
 
-//Esto es para que al dar sumit no se recargue la pagina de nuevo
+//Esto es para que al dar submit no se recargue la pagina de nuevo
 var form = document.getElementById("myForm");
 function handleForm(event) { event.preventDefault(); } 
 form.addEventListener('submit', handleForm);
