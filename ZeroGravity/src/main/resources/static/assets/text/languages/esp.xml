@@ -367,8 +367,36 @@ Tiempo requerido:
 			<siguiente>Siguiente</siguiente>
 			
 		</tutorial>
+		<construccion>
+			<edifConst>Ya tienes un edificio de este tipo</edifConst>
+		</construccion>
+		<swal>
+			<bien>¡Bien!</bien>
+			<cambiarCity>Cambia tu nombre de colonia</cambiarCity>
+			<nombreCamb>Tu nombre de ciudad ha sido cambiado</nombreCamb>
+			<crearNombre>¡Añade el nombre de tu colonia!</crearNombre>
+			<btnSwAceptar>Aceptar</btnSwAceptar>
+			<btnSwConfirmar>Confirmar</btnSwConfirmar>
+			<volverColonia>¿Quieres volver a tu colonia?</volverColonia>
+			<btnAfirmacion>¡Si!</btnAfirmacion>
+			<errorRegTit>Error</errorRegTit>
+			<errorRegDes>Parece que no has completado todos los campos correctamente. Vuelve a intentarlo</errorRegDes>
+			<enviado> Tu solicitud se ha enviado.</enviado>
+			<seguro> ¿Estás seguro?</seguro>
+			<revertir> No podrás revertir este cambio.</revertir>
+			<borrar> Sí, borrar.</borrar>
+			<borrado> Borrado</borrado>
+			<amigBorrado>Tu amigo ha sido borrado de tu lista.</amigBorrado>
+			<vercolonia> ¿Quieres ver la colonia de </vercolonia>
+			<mostrar>Sí, quiero verla.</mostrar>
+			<nodisponible>Lo sentimos, esta oferta ya no está disponible.</nodisponible>
+			<masrecursos>Necesitas más recursos para enviar esta oferta al mercado</masrecursos>
+			<necesitas>Necesitas </necesitas>
+			<necesitas2> créditos más para poder expandir la base.</necesitas2>
+			<nosubirNivel>No dispones de los recursos para aumentar de nivel a este edificio</nosubirNivel>
+		</swal>
 		
-		
+		game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('bien')[0].childNodes[0].nodeValue,
 		
 	</menusEdificios>
 </patata>

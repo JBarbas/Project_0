@@ -95,7 +95,7 @@ class RegisterScene extends Phaser.Scene {
             var inputPassword = element.getChildByName('password');
 
             //  Have they entered anything?
-            if (inputUsername.value !== '' && inputEmail.value !== '' && inputPassword.value !== '')
+            if (inputUsername.value !== '' && inputEmail.value !== '' && inputPassword.value !== '' && validarEmailReg(inputEmail.value))
             {
                 
                 let msg = new Object();
