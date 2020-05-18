@@ -20,7 +20,7 @@ class ConstruccionMenu extends Phaser.Scene {
 		msg.event = 'GET CONSTRUCCION MENU';
 		game.global.socket.send(JSON.stringify(msg));
     	
-    	game.global.inMenu = true;
+    	game.global.inStrictMenu = true;
     	
     	this.cortina = this.add.image(0, 0, 'cortina').setOrigin(0, 0);
     	this.panelConstruccion = this.add.image(430, 300, 'panelConstruccion').setOrigin(0, 0);
@@ -719,6 +719,7 @@ class ConstruccionMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
+    		game.global.inStrictMenu = false;
     		game.scene.stop('ConstruccionMenu');
     	});
     	

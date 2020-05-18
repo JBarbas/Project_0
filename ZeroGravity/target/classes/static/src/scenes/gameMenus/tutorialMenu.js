@@ -17,6 +17,8 @@ class TutorialScene extends Phaser.Scene {
     }
     create (data)  {
     	
+    	game.global.inStrictMenu = true;
+    	
     	var scene = this;
     	
     	var cont = 0;
@@ -84,6 +86,7 @@ class TutorialScene extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.alpha = 1.0;
     		//stop scene
     		game.global.inMenu = false;
+    		game.global.inStrictMenu = false;
     		game.scene.stop('TutorialScene');
     	})
     	
@@ -129,6 +132,7 @@ class TutorialScene extends Phaser.Scene {
     			game.scene.getScene('GameInterface').panel.alpha = 1.0;
         		//stop scene
         		game.global.inMenu = false;
+        		game.global.inStrictMenu = false;
         		game.scene.stop('TutorialScene');
         		
     		}
