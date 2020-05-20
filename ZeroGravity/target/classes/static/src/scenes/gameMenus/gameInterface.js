@@ -22,7 +22,7 @@ class GameInterface extends Phaser.Scene {
     	this.panel.depth = -1;
     	this.panel.visible = false;
     	
-    	this.intPrincipal = this.add.image(game.global.intPrincipal.x, game.global.intPrincipal.y, 'intPrincipal').setOrigin(0, 0); 
+    	var intPrincipal = this.add.image(game.global.intPrincipal.x, game.global.intPrincipal.y, 'intPrincipal').setOrigin(0, 0); 
     	var btnMision = this.add.image(game.global.btnMision.x, game.global.btnMision.y, 'intMision').setOrigin(0, 0); 
     	
     	var btnRanking = this.add.image(game.global.btnRanking.x, game.global.btnRanking.y, 'intRanking').setOrigin(0, 0); 
@@ -486,13 +486,33 @@ class GameInterface extends Phaser.Scene {
     	});
     	
     	if (game.global.myPlayer.isVisitor) {
-    		var button = this.add.image(950, 900, 'back').setInteractive();
+    		if(game.global.idioma == 'eng'){
+    			var button = this.add.image(950, 900, 'backEng').setInteractive();
+    		}else{
+    			var button = this.add.image(950, 900, 'back').setInteractive();
+    		}
             button.setOrigin(0.5, 0.5);
             
             btnMision.visible = false;
             btnRanking.visible = false;
             btnOpciones.visible = false;
+            btnAnuncios.visible = false;
             intPrincipal.visible = false;
+            creditosicon.visible = false;
+            ceramicaicon.visible = false;
+            metalicon.visible = false;
+            colonosicon.visible = false;
+            energiaicon.visible = false;
+            energiaicon.visible = false;
+            unionCoinsicon.visible = false;
+            
+            this.unionCoins.visible = false;
+            this.creditos.visible = false;
+            this.energia.visible = false;
+            this.metal.visible = false;
+            this.ceramica.visible = false;
+            this.colonos.visible = false;
+            
             
             button.on('pointerover',function(pointer){
         	    button.setFrame(1);
@@ -517,23 +537,21 @@ class GameInterface extends Phaser.Scene {
     			    		game.global.socket.send(JSON.stringify(msg));
     			    		game.global.myPlayer.isVisitor = false;
     			    		game.global.inStrictMenu = false;
+    			    		game.global.inMenu = false;
     			    		game.scene.stop('GameVisitorScene');
     			    		game.scene.stop('GameInterface');
     						game.scene.run('LoadGameplayScene');
     				  }
     				})
         	});
-    	}else{
-    		btnMision.visible = true;
-            btnRanking.visible = true;
-            btnOpciones.visible = true;
-            intPrincipal.visible = true;
-            
     	}
     }
     update(time, delta) {
+    	
     	if(game.global.inMenu){
-    		this.panel.visible = true;
+    		if(!game.global.myPlayer.isVisitor){
+    			this.panel.visible = true;
+    		}
     	}
     	else{
     		this.panel.visible = false;
