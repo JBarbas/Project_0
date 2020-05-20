@@ -72,7 +72,7 @@ public class Generador extends GeneradorRecursos {
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "generador";
-
+		this.maxLevel = 15;
 	}
 
 	public Generador(int id) {
@@ -83,7 +83,7 @@ public class Generador extends GeneradorRecursos {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "generador";
-
+		this.maxLevel = 15;
 	}
 
 	@Override

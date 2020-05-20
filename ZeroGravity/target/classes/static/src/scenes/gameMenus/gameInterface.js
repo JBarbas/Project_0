@@ -544,6 +544,12 @@ class GameInterface extends Phaser.Scene {
     				  }
     				})
         	});
+    	}else{
+    		btnMision.visible = true;
+            btnRanking.visible = true;
+            btnOpciones.visible = true;
+            intPrincipal.visible = true;
+            
     	}
     }
     update(time, delta) {

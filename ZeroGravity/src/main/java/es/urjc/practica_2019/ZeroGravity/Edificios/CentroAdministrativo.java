@@ -35,6 +35,7 @@ public class CentroAdministrativo extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "centroAdministrativo";
+		this.maxLevel = 1;
 	}
 	
 	public CentroAdministrativo(int id) {
@@ -45,6 +46,7 @@ public class CentroAdministrativo extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroAdministrativo";
+		this.maxLevel = 1;
 	}
 
 	public void solicitarColonos() {

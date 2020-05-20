@@ -56,6 +56,7 @@ public class CentroComercio extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "centroComercio";
+		this.maxLevel = 9;
 	}
 	
 	public CentroComercio(Player player, int id) {
@@ -67,6 +68,7 @@ public class CentroComercio extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroComercio";
+		this.maxLevel = 9;
 	}
 	
 	@Override

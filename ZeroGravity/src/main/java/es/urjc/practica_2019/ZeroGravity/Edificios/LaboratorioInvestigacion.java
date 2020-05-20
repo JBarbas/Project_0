@@ -48,7 +48,8 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "laboratorioInvestigacion";
-		this.producir();
+		//this.producir();
+		this.maxLevel = 6;
 	}
 	
 	public LaboratorioInvestigacion(int id) {
@@ -59,8 +60,8 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "laboratorioInvestigacion";
-		this.producir();
-
+		//this.producir();
+		this.maxLevel = 6;
 	}
 	
 	public LaboratorioInvestigacion(Player player, int x, int y, Edificio depends, int id, boolean lleno, boolean produciendo, Document date) {

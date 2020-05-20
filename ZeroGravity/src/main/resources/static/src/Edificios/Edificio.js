@@ -91,10 +91,10 @@ class Edificio {
 			this.timeBox = scene.add.image(position.x, position.y - 115, 'boxTimer');
 			this.timeBox.scale =  0.2;
 			this.timeText = scene.add.text(position.x, position.y - 115, 
-					Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000) + " mins",
+					timeStyle(Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000)),
 					{ fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold', textShadow: "2px 2px 15px #000000, 2px 2px 15px #000000"}).setOrigin(0.5, 0.5);
-			this.timeBox.depth = this.y + this.x + 1/Math.max(this.height, this.width);
-			this.timeText.depth = this.y + this.x + 1/Math.max(this.height, this.width);
+			this.timeBox.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
+			this.timeText.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
 			var that = this;
 			this.interval = setInterval(function() {
 				updateTimeText(that);
@@ -140,6 +140,6 @@ class Edificio {
 }
 
 function updateTimeText(edificio) {
-	edificio.timeText.text = Math.floor(edificio.costes[edificio.level-1][0] - (Date.now() - edificio.inicioConstruccion)/60000) + " mins";
+	edificio.timeText.text = timeStyle(Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000));
 }
 

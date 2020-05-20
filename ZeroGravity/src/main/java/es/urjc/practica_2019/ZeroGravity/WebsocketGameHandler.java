@@ -340,7 +340,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= BloqueViviendas.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= BloqueViviendas.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= BloqueViviendas.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setColonosMax(player.getColonosMax() - BloqueViviendas.capacidad[edificio.getLevel() - 1]
@@ -356,7 +356,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= CentroAdministrativo.COSTS[edificio.getLevel()][1]
 							&& player.getCeramica() >= CentroAdministrativo.COSTS[edificio.getLevel()][2]
 							&& player.getCreditos() >= CentroAdministrativo.COSTS[edificio.getLevel()][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroAdministrativo.COSTS[edificio.getLevel()][1]);
@@ -371,7 +371,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= CentroComercio.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= CentroComercio.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= CentroComercio.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroComercio.COSTS[edificio.getLevel() - 1][1]);
@@ -385,7 +385,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= CentroMando.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= CentroMando.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= CentroMando.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroMando.COSTS[edificio.getLevel() - 1][1]);
@@ -399,7 +399,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= CentroOperaciones.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= CentroOperaciones.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= CentroOperaciones.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - CentroOperaciones.COSTS[edificio.getLevel() - 1][1]);
@@ -413,7 +413,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= Generador.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= Generador.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= Generador.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - Generador.COSTS[edificio.getLevel() - 1][1]);
@@ -427,7 +427,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= LaboratorioInvestigacion.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= LaboratorioInvestigacion.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= LaboratorioInvestigacion.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - LaboratorioInvestigacion.COSTS[edificio.getLevel() - 1][1]);
@@ -443,7 +443,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= PlataformaExtraccion.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= PlataformaExtraccion.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= PlataformaExtraccion.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - PlataformaExtraccion.COSTS[edificio.getLevel() - 1][1]);
@@ -459,7 +459,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					if (player.getMetal() >= Taller.COSTS[edificio.getLevel() - 1][1]
 							&& player.getCeramica() >= Taller.COSTS[edificio.getLevel() - 1][2]
 							&& player.getCreditos() >= Taller.COSTS[edificio.getLevel() - 1][3]
-							&& edificio.getLevel() < NIVEL_MAX_EDIFICIO) {
+							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
 						player.setMetal(player.getMetal() - Taller.COSTS[edificio.getLevel() - 1][1]);
