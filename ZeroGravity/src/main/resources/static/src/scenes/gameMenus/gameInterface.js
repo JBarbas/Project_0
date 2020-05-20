@@ -175,6 +175,7 @@ class GameInterface extends Phaser.Scene {
     	this.cityname = this.add.text(1550,1000, game.global.myPlayer.cityName, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
     	if (game.global.myPlayer.isVisitor) {
     		this.cityname.text = game.global.myPlayer.visitorCityName;
+    		
     	}
     	
     	//NOMBRE CIUDAD
@@ -488,6 +489,11 @@ class GameInterface extends Phaser.Scene {
     		var button = this.add.image(950, 900, 'back').setInteractive();
             button.setOrigin(0.5, 0.5);
             
+            btnMision.visible = false;
+            btnRanking.visible = false;
+            btnOpciones.visible = false;
+            intPrincipal.visible = false;
+            
             button.on('pointerover',function(pointer){
         	    button.setFrame(1);
         	})
@@ -517,6 +523,12 @@ class GameInterface extends Phaser.Scene {
     				  }
     				})
         	});
+    	}else{
+    		btnMision.visible = true;
+            btnRanking.visible = true;
+            btnOpciones.visible = true;
+            intPrincipal.visible = true;
+            
     	}
     }
     update(time, delta) {
