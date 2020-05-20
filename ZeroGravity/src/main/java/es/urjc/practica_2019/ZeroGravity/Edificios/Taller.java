@@ -83,6 +83,7 @@ public class Taller extends GeneradorRecursos{
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "taller";	
+		this.maxLevel = 15;
 	}
 	
 	public Taller(Player player, int id) {
@@ -96,6 +97,7 @@ public class Taller extends GeneradorRecursos{
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "taller";
+		this.maxLevel = 15;
 	}
 	
 	public Player getPlayer() {

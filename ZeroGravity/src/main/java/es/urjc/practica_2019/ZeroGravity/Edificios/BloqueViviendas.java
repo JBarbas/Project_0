@@ -35,7 +35,7 @@ public class BloqueViviendas extends Edificio {
 	public static final int[][] COSTS = { NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5,
 										  NIVEL6, NIVEL7, NIVEL8, NIVEL9, NIVEL10,
 										  NIVEL11, NIVEL12, NIVEL13, NIVEL14, NIVEL15};
-	public static final int[] capacidad = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75};
+	public static final int[] capacidad = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75};	
 	
 	private int colonos;
 	
@@ -52,6 +52,7 @@ public class BloqueViviendas extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "bloqueViviendas";
+		this.maxLevel = 15;
 	}
 	
 	public BloqueViviendas(int id) {
@@ -61,6 +62,7 @@ public class BloqueViviendas extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "bloqueViviendas";
+		this.maxLevel = 15;
 	}
 
 	public int getCapacidad() {

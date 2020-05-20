@@ -47,6 +47,7 @@ public class CentroOperaciones extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = depends;
 		this.sprite = "centroOperaciones";
+		this.maxLevel = 5;
 	}
 	
 	public CentroOperaciones(int id) {
@@ -57,6 +58,7 @@ public class CentroOperaciones extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroOperaciones";
+		this.maxLevel = 5;
 	}
 
 	public void mostrarMisiones() {

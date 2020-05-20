@@ -76,6 +76,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		this.buildingDependsOn = depends;
 		this.sprite = "plataformaExtraccion";
 		this.producir();
+		this.maxLevel = 15;
 	}
 
 	public PlataformaExtraccion(int id) {
@@ -88,6 +89,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		this.buildingDependsOn = null;
 		this.sprite = "plataformaExtraccion";
 		this.producir();
+		this.maxLevel = 15;
 	}
 
 	public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id, boolean lleno, boolean produciendo, Document date) {

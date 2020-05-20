@@ -44,6 +44,7 @@ public class CentroMando extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroDeMando";
+		this.maxLevel = 3;
 	}
 	
 	public CentroMando(int id) {
@@ -54,6 +55,7 @@ public class CentroMando extends Edificio {
 		this.level = 1;
 		this.buildingDependsOn = null;
 		this.sprite = "centroDeMando";
+		this.maxLevel = 3;
 	}
 	
 	@Override

@@ -527,7 +527,7 @@ class GameInterface extends Phaser.Scene {
     		btnMision.visible = true;
             btnRanking.visible = true;
             btnOpciones.visible = true;
-            intPrincipal.visible = true;
+            //intPrincipal.visible = true;
             
     	}
     }

@@ -202,3 +202,21 @@ function leerTutorial(scene,idTuto){
 		}
 	}
 }
+
+function timeStyle(mins) {
+	let hours = Math.floor(mins/60);
+	mins -= 60 * hours;
+	let days = Math.floor(hours/24);
+	hours -= days * 24;	
+	var timeText = '';
+	if (days > 0) {
+		timeText += days + 'd ';		
+	}
+	if (hours > 0) {
+		timeText += hours + 'h ';
+	}
+	if (mins > 0) {
+		timeText += mins + 'm';
+	}
+	return timeText;
+}
