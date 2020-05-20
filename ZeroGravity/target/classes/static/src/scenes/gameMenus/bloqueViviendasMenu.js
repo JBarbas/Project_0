@@ -212,7 +212,6 @@ class BloqueViviendasMenu extends Phaser.Scene {
 	    	// Desactivamos al inicio los otros dos contenedores
 			detallesContainer.visible= false;
 			mejorasContainer.visible= false;
-			mejorasContainer.add(this.subirNivel);
 		}
     	else {
     		let msg = new Object();

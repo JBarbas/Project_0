@@ -210,7 +210,6 @@ class TallerMenu extends Phaser.Scene {
 			mejorasContainer.visible= false;
 	
 			
-			mejorasContainer.add(this.subirNivel);
 		}
     	else {
     		if(game.global.idioma == "eng"){
