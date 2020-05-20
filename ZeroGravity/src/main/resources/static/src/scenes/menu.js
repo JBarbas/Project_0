@@ -54,12 +54,18 @@ class MenuScene extends Phaser.Scene {
     	this.anims.create({ key: 'everything4', frames: this.anims.generateFrameNames('boxValidate')});
     	this.add.sprite(game.config.width/2+720, 80, 'boxValidate').play('everything4').setOrigin(0.5,0.5).setScale(0.5);    
     	
+    	//Box Update
+    	this.anims.create({ key: 'everything5', frames: this.anims.generateFrameNames('boxUpdates')});
+    	var animUpdate = this.add.sprite(game.config.width/2+720, 380, 'boxUpdates').setOrigin(0.5,0.5).setScale(0.5);    
+    	animUpdate.play('everything5');
     	
+    	
+    	//Texto de enviar correo validacion
  		this.time.addEvent({
  		    delay: 1000,
  		    callback: ()=>{
  		    	var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('txtvalidate')[0].childNodes[0].nodeValue;
- 		 		var validar = this.add.text(1480, 80, textoDesdeXml, { fontFamily: '"pantonBlack"', color: '#00B1E9' , fontSize: '15px', fontWeight: 'bold' ,align: 'center' });
+ 		 		var validar = this.add.text(1495, 80, textoDesdeXml, { fontFamily: '"pantonBlack"', color: '#00B1E9' , fontSize: '15px', fontWeight: 'bold' ,align: 'center' });
  		    }
  		    
  		})
