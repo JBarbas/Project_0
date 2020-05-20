@@ -23,6 +23,11 @@ class GeneradorMenu extends Phaser.Scene {
     create (data)  {
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100);
+		
+		var scene = this;
+		
+		this.price = 0;
+		
     	//
     	this.miEdificio = data.miEdificio;
     	

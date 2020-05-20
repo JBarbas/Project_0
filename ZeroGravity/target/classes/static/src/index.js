@@ -472,6 +472,34 @@ window.onload = function() {
 					if (typeof msg.jobs !== 'undefined') {
 						game.global.edificios.get(msg.id).jobs = msg.jobs;
 					}
+					
+					var edif = game.global.edificios.get(msg.id);
+					var effect = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevel', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x1')});
+					var effect2 = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevelLarge', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x2')});
+					
+					//Sacamos coordenadas cartesianas
+					var position = new Phaser.Geom.Point(edif.x*tile_width/2 , edif.y*tile_height);
+		            position = cartesianToIsometric(position);
+		            
+		            //Ejecutamos sonido de subir nivel
+		            game.global.effects.subirNivel.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		//Se crean las animaciones segun el tamaño del edificio
+		    		if(edif.width === 2 && edif.height === 2){
+		    			//Guay
+		    			var effectPlay = game.scene.getScene('GameScene').add.sprite(position.x+tileMap_width*tile_width/2-10, position.y +200, 'nextlvl1x1').play('animNextLevel').setScale(1.4);
+		    		}else if(edif.width === 1 && edif.height === 2){
+		    			//
+		    			var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)-25, position.y +85, 'nextlvl1x2').play('animNextLevelLarge').setScale(0.65);
+		    		}else if(edif.width === 2 && edif.height === 1){
+		    			var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)+25, position.y +85, 'nextlvl1x2').play('animNextLevelLarge').setScale(0.65).setFlip(true,false);
+		    		}else{
+		    			//Guay
+			    		var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)-5, position.y +90, 'nextlvl1x1').play('animNextLevel').setScale(0.65);
+		    		}
+					effectPlay.setOrigin(edif.originX,1);
+					effectPlay.depth = game.global.edificios.get(msg.id).gameObject.depth;
 				}
 			}
 			break;
@@ -510,33 +538,7 @@ window.onload = function() {
 			}	
 			if(msg.resultado){
 				levelUp(game.global.edificios.get(msg.id));
-				var edif = game.global.edificios.get(msg.id);
-				var effect = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevel', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x1')});
-				var effect2 = game.scene.getScene('GameScene').anims.create({ key: 'animNextLevelLarge', frames: game.scene.getScene('GameScene').anims.generateFrameNames('nextlvl1x2')});
 				
-				//Sacamos coordenadas cartesianas
-				var position = new Phaser.Geom.Point(edif.x*tile_width/2 , edif.y*tile_height);
-	            position = cartesianToIsometric(position);
-	            
-	            //Ejecutamos sonido de subir nivel
-	            game.global.effects.subirNivel.play();
-	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
-	    		
-	    		//Se crean las animaciones segun el tamaño del edificio
-	    		if(edif.width === 2 && edif.height === 2){
-	    			//Guay
-	    			var effectPlay = game.scene.getScene('GameScene').add.sprite(position.x+tileMap_width*tile_width/2-10, position.y +200, 'nextlvl1x1').play('animNextLevel').setScale(1.4);
-	    		}else if(edif.width === 1 && edif.height === 2){
-	    			//
-	    			var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)-25, position.y +85, 'nextlvl1x2').play('animNextLevelLarge').setScale(0.65);
-	    		}else if(edif.width === 2 && edif.height === 1){
-	    			var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)+25, position.y +85, 'nextlvl1x2').play('animNextLevelLarge').setScale(0.65).setFlip(true,false);
-	    		}else{
-	    			//Guay
-		    		var effectPlay = game.scene.getScene('GameScene').add.sprite((position.x+tileMap_width*tile_width/2)-5, position.y +90, 'nextlvl1x1').play('animNextLevel').setScale(0.65);
-	    		}
-				effectPlay.setOrigin(edif.originX,1);
-				effectPlay.depth = game.global.edificios.get(msg.id).gameObject.depth;
 				//pedirPuntuaciones()
 				
 			}else{
@@ -1376,6 +1378,15 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.myPlayer.visitorCityName = msg.name;
+			break;
+		case 'FINISH CONSTRUCTION PRICE':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] FINISH CONSTRUCTION PRICE message recieved')
+				console.dir(msg);
+			}
+			let scene2 = game.scene.getScene(game.global.edificios.get(msg.id).menuScene);
+			scene2.price = msg.price;
+			scene2.costoMonedas.text = msg.price;
 			break;
 		default:
 			if (game.global.DEBUG_MODE) {

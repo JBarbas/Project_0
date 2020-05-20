@@ -20,12 +20,16 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	
     }
     create (data)  {
+    	var scene = this;
+    	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100); 
     	this.miEdificio = data.miEdificio;
     	
     	// Aquí se guardan y usan los datos leidos desde xml multiidioma
     	var textoDesdeXml;
+    	
+    	this.price = 0;
 
     	
 
@@ -45,8 +49,8 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	txtTerminarAhora.visible = false;
     	btnFinishConstruccion.setScale(1.1, 0.9);
     	
-    	var costoMonedas = this.add.text(1650, 875, '43', { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
-    	costoMonedas.visible = false;
+    	this.costoMonedas = this.add.text(1650, 875, this.price, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
+    	this.costoMonedas.visible = false;
     	
 	    if (!this.miEdificio.enConstruccion) {
 	    	// Contenedor del panel de mejoras
@@ -211,17 +215,22 @@ class BloqueViviendasMenu extends Phaser.Scene {
 			mejorasContainer.add(this.subirNivel);
 		}
     	else {
+    		let msg = new Object();
+			msg.event = 'GET FINISH CONSTRUCTION PRICE';
+			msg.id = this.miEdificio.id;
+			game.global.socket.send(JSON.stringify(msg));		
+    		
     		if(game.global.idioma == "eng"){
     			enconst.visible = true;
     			btnFinishConstruccion.visible = true;
     			txtTerminarAhora.visible = true;
-    			costoMonedas.visible = true;
+    			this.costoMonedas.visible = true;
     			iconMonedas.visible = true;
     		}else{
     			enconstEsp.visible = true;
     			btnFinishConstruccion.visible = true;
     			txtTerminarAhora.visible = true;
-    			costoMonedas.visible = true;
+    			this.costoMonedas.visible = true;
     			iconMonedas.visible = true;
     		}
 	    }
@@ -239,7 +248,7 @@ class BloqueViviendasMenu extends Phaser.Scene {
     		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
     		
     		Swal.fire({
-				text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora')[0].childNodes[0].nodeValue + '43' + game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora2')[0].childNodes[0].nodeValue,
+				text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora')[0].childNodes[0].nodeValue + scene.price + game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora2')[0].childNodes[0].nodeValue,
 				icon: 'question',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -248,6 +257,10 @@ class BloqueViviendasMenu extends Phaser.Scene {
 			}).then((result) => {
 				if (result.value) {
 					//Aqui hacer lo que se requiera de terminar construccion
+					let msg = new Object();
+					msg.event = 'FINISH CONSTRUCTION';
+					msg.id = scene.miEdificio.id;
+					game.global.socket.send(JSON.stringify(msg));
 				}
 			})
     	});

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -34,15 +35,17 @@ public class TaskMaster {
 		startLoop();
 	}
 	
-	public synchronized boolean addTask(Task task) {
-		if (task != null) {
-			if (!tasks.containsKey(task.getId())) {
-				tasks.put(task.getId(), task);	
-				System.out.println("tarea añadida");
-				return true;
-			}			
-		}
-		return false;
+	public boolean addTask(Task task) {
+		synchronized (tasks) {
+			if (task != null) {
+				if (!tasks.containsKey(task.getId())) {
+					tasks.put(task.getId(), task);	
+					System.out.println("tarea añadida");
+					return true;
+				}			
+			}
+			return false;
+		}		
 	}
 	
 	public void startLoop() {
@@ -86,7 +89,43 @@ public class TaskMaster {
 			}
 		}
 		for (Task t : completedTasks) {
-			tasks.remove(t.getId());
+			synchronized (tasks) {
+				tasks.remove(t.getId());
+			}
+		}
+	}
+	
+	public void completeTask(String id) {
+		synchronized (tasks) {
+			Task t = tasks.remove(id);
+			try {
+				// Informa al cliente de que la tarea ha terminado
+				if (t.getPlayer().getSession().isOpen()) {
+					t.getPlayer().getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+				}
+				else {
+					Player p = WebsocketGameHandler.getPlayers().get(t.getPlayer().getId());
+					if (p != null) {
+						if (p.getSession().isOpen()) {
+							p.getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+						}
+					}
+				}
+				
+				// Ejecuta una callback en caso de que ésta se haya definido
+				if (t.getCallback() != null) {
+					t.getCallback().interrupt();
+				}
+			} catch (IOException e) {
+				System.err.println("Exception sending message " + t.getMsg().toString());
+				e.printStackTrace(System.err);
+			}
+		}
+	}
+	
+	public Task getTask(String id) {
+		synchronized (tasks) {
+			return tasks.get(id);
 		}
 	}
 }

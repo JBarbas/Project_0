@@ -2,6 +2,8 @@ package es.urjc.practica_2019.ZeroGravity;
 
 import java.awt.List;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -78,6 +80,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	private static final int[] PUNTUACIONES = { 2, 4, 1, 10, 2 };
 	private static final int NIVEL_MAX_EDIFICIO = 3;
 	private static final int NUM_MAX_PUNTUACIONES_MOSTRAR = 15;
+	
+	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 	private ObjectMapper mapper = new ObjectMapper();
@@ -1035,6 +1039,30 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("event", "CITY NAME CHANGED");
 					msg.put("name", cityName);
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
+			case "GET FINISH CONSTRUCTION PRICE":
+				edificio = player.getEdificio(node.get("id").asInt());
+				LocalDateTime currentDate = LocalDateTime.now();
+				Duration diff = Duration.between(edificio.getBuildingBeginTime(), currentDate);
+				long diffMins = diff.toMinutes();
+				int duration = TASKMASTER.getTask(player.getId().toString() + edificio.getId() + 0).getDuration();
+				int price = (int) ((duration - diffMins) * 2);
+				msg.put("event",  "FINISH CONSTRUCTION PRICE");
+				msg.put("id", edificio.getId());
+				msg.put("price", price);
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "FINISH CONSTRUCTION":
+				edificio = player.getEdificio(node.get("id").asInt());
+				currentDate = LocalDateTime.now();
+				diff = Duration.between(edificio.getBuildingBeginTime(), currentDate);
+				diffMins = diff.toMinutes();
+				duration = TASKMASTER.getTask(player.getId().toString() + edificio.getId() + 0).getDuration();
+				price = (int) ((duration - diffMins) * 2);
+				if (player.getUnionCoins() >= price) {
+					player.setUnionCoins(player.getUnionCoins() - price);
+					TASKMASTER.completeTask(player.getId().toString() + edificio.getId() + 0);
 				}
 				break;
 			case "DEBUG":

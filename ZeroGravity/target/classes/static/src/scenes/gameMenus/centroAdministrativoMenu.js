@@ -21,6 +21,10 @@ class CentroAdministrativoMenu extends Phaser.Scene {
     	let msg = new Object();
 		msg.event = 'GET CENTRO ADMINISTRATIVO MENU';
 		game.global.socket.send(JSON.stringify(msg));
+		
+		var scene = this;
+		
+		this.price = 0;
     	
     	game.global.effects.seleccionarEdificio.play();
 		game.global.effects.seleccionarEdificio.setVolume(game.global.myPlayer.config.volEffects/100); 

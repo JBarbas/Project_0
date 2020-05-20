@@ -209,10 +209,30 @@ public class Taller extends GeneradorRecursos{
 	
 	@Override
 	public void levelUp() {
-		this.setLevel(this.getLevel() + 1);
+		this.setLevel(this.getLevel()+1);
+		ObjectNode msg = mapper.createObjectNode();
+		msg.put("event", "CONSTRUYENDO EDIFICIO");
+		msg.put("id", this.getId());
+		try {
+			if (player.getSession().isOpen()) {
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
+		} catch (IOException e) {
+			System.err.println("Exception sending message " + msg.toString());
+			e.printStackTrace(System.err);
+		}
+		msg.put("event", "EDIFICIO CONSTRUIDO");
+		Task task = null;
+		Thread callback = new Thread(() -> this.callbackConstruir());
+		callback.start();
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+		TASKMASTER.addTask(task);
+		this.setEnConstruccion(true);
+		this.setBuildingBeginTime(task.getBeginDate());
 		Robot r = new RobotEstandar(robotId.incrementAndGet(), this);
 		robots.put(r.getId(), r);
-		ObjectNode msg = mapper.createObjectNode();			
+		msg = mapper.createObjectNode();			
 		msg.put("event", "REFRESH MENU");
 		msg.put("id", this.getId());
 		try {	
