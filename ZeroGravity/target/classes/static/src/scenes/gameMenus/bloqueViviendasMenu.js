@@ -31,8 +31,6 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	
     	this.price = 0;
 
-    	
-
     	if(game.global.idioma == 'eng'){
     		game.scene.getScene('GameInterface').panel.setTexture('households');
     	}else{

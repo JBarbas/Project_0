@@ -41,6 +41,19 @@ class GeneradorMenu extends Phaser.Scene {
     		game.scene.getScene('GameInterface').panel.setTexture('panelGenerador');
     	}
     	
+    	var enconst = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccionEng').setOrigin(0, 0);
+    	var enconstEsp = this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0);
+    	var btnFinishConstruccion = this.add.image(1350, 850, 'btnAdministracion').setOrigin(0, 0).setInteractive();
+    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('terminarahora')[0].childNodes[0].nodeValue;
+		var txtTerminarAhora = this.add.text(1380, 875, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
+		var iconMonedas = this.add.image(1700, 865, 'iconoUC').setOrigin(0, 0);
+    	btnFinishConstruccion.visible = false;
+    	txtTerminarAhora.visible = false;
+    	btnFinishConstruccion.setScale(1.1, 0.9);
+    	
+    	this.costoMonedas = this.add.text(1650, 875, this.price, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
+    	this.costoMonedas.visible = false;
+    	
 		if (!this.miEdificio.enConstruccion) {
 	    	// Contenedor del panel de mejoras
 	    	var mejorasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
@@ -203,9 +216,22 @@ class GeneradorMenu extends Phaser.Scene {
     	}
     	else {
     		if(game.global.idioma == "eng"){
+    			
     			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccionEng').setOrigin(0, 0);
+    			
+    			enconst.visible = true;
+    			btnFinishConstruccion.visible = true;
+    			txtTerminarAhora.visible = true;
+    			this.costoMonedas.visible = true;
+    			iconMonedas.visible = true;
     		}else{
     			this.add.image(game.global.buildingMenu.x, game.global.buildingMenu.y, 'menuEnConstruccion').setOrigin(0, 0);
+    		
+    			enconstEsp.visible = true;
+    			btnFinishConstruccion.visible = true;
+    			txtTerminarAhora.visible = true;
+    			this.costoMonedas.visible = true;
+    			iconMonedas.visible = true;
     		}
 	    }
 		

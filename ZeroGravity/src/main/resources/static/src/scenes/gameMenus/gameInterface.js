@@ -31,6 +31,10 @@ class GameInterface extends Phaser.Scene {
     	
     	var cityBox = this.add.image(game.global.btnOpciones.x-150, game.global.btnOpciones.y+970, 'boxCityName').setInteractive();
     	var cityEdit = this.add.image(game.global.btnOpciones.x+20, game.global.btnOpciones.y+965, 'boxCityEdit').setInteractive();
+    	
+    	var boxCityVisitor = this.add.image(1040, 0, 'boxCity').setInteractive();
+    	boxCityVisitor.visible = false;
+    	boxCityVisitor.setScale(0.5,0.5);
     	cityEdit.visible = false;
     	
     	//NOMBRE CIUDAD
@@ -175,6 +179,9 @@ class GameInterface extends Phaser.Scene {
     	this.cityname = this.add.text(1550,1000, game.global.myPlayer.cityName, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
     	if (game.global.myPlayer.isVisitor) {
     		this.cityname.text = game.global.myPlayer.visitorCityName;
+    		this.cityname.x = 960;
+    		this.cityname.y = 50;
+    		boxCityVisitor.visible = true;
     		
     	}
     	
@@ -487,9 +494,9 @@ class GameInterface extends Phaser.Scene {
     	
     	if (game.global.myPlayer.isVisitor) {
     		if(game.global.idioma == 'eng'){
-    			var button = this.add.image(950, 900, 'backEng').setInteractive();
+    			var button = this.add.image(150, 100, 'backEng').setInteractive();
     		}else{
-    			var button = this.add.image(950, 900, 'back').setInteractive();
+    			var button = this.add.image(150, 100, 'back').setInteractive();
     		}
             button.setOrigin(0.5, 0.5);
             
@@ -505,6 +512,8 @@ class GameInterface extends Phaser.Scene {
             energiaicon.visible = false;
             energiaicon.visible = false;
             unionCoinsicon.visible = false;
+            
+            cityBox.visible = false;
             
             this.unionCoins.visible = false;
             this.creditos.visible = false;
