@@ -2,47 +2,47 @@
 <tutorial>
 
 	<intro>
-		<tut1 id="1" nextMsg="2" character="binnette" pos="der"> Hola y bienvenido/a. Mi nombre es Binette Naidoo y estoy al cargo de la misión.
+		<tut1 id="1" nextMsg="2" target="none" character="binnette" pos="der"> Hola y bienvenido/a. Mi nombre es Binette Naidoo y estoy al cargo de la misión.
 		Como tu supervisora, me aseguraré de darte los consejos que necesites, y tenerte al día de 
 		cualquier cambio o suceso.
 		</tut1>
-		<tut2 id="2" nextMsg="-1" character="binnette" pos="iz"> Espero de todos mis empleados independencia y determinación, por lo que después
+		<tut2 id="2" nextMsg="-1" target="centroDeMando" character="binnette" pos="iz"> Espero de todos mis empleados independencia y determinación, por lo que después
 		de estos primeros pasos, tendrás libertad para desarrollar tus instalaciones de la forma que
 		desees.	Naturalmente, contarás con un equipo que te asistirá en las diferentes áreas. 
 		Sin más dilación, comencemos…</tut2>
 	</intro>
 	<centroMando>
-		<tut3 id="3" nextMsg="4" character="celso" pos="iz">Buenos días, o lo que sea que haga ahí fuera. Soy Celso Lebèdev, el representante
+		<tut3 id="3" nextMsg="4" target="none" character="celso" pos="iz">Buenos días, o lo que sea que haga ahí fuera. Soy Celso Lebèdev, el representante
 		de Recursos Humanos, y me encargaré de solicitar nuevos colonos y monitorizar su buen estado.
 		¿Binnete ha mencionado que puedes mejorar el centro de mando?</tut3>
-		<tut4 id="4" nextMsg="-1" character="celso" pos="iz">Cada nivel de mejora te permitirá hacer lo propio con los otros centros,
+		<tut4 id="4" nextMsg="-1" target="none" character="celso" pos="iz">Cada nivel de mejora te permitirá hacer lo propio con los otros centros,
 		pero antes de eso deberás conseguir que esta misión progrese. Volveré a ponerme en contacto 
 		contigo en breve. Mientras, sería buena idea construir viviendas.</tut4>
 	</centroMando>
 	<centroComercio>
-		<tut5 id="5" nextMsg="6" character="jakob" pos="iz">En el centro de comercio podrás… Disculpa, no me he presentado como es debido. 
+		<tut5 id="5" nextMsg="6" target="none" character="jakob" pos="iz">En el centro de comercio podrás… Disculpa, no me he presentado como es debido. 
 		Soy Jakob Audritzky, gestor de las relaciones comerciales con los otros individuos de la misión.
 		Aquí podrás suministrar y adquirir otros recursos, tan simple como publicar qué ofertas y cuánto demandas.
 		</tut5>
-		<tut6 id="6" nextMsg="-1" character="jakob" pos="iz">Así generarás un libre intercambio de recursos entre la comunidad. 
+		<tut6 id="6" nextMsg="-1" target="centroAdministrativo" character="jakob" pos="iz">Así generarás un libre intercambio de recursos entre la comunidad. 
 		Excepto los UnionCoins. El departamento legal podría ponerse reticente con esas operaciones… 
 		Comenzaré a organizar todo y me pondré en contacto cuando esté listo para proceder.
 		</tut6>
 	</centroComercio>
 	<centroOperaciones>
-		<tut7 id="7" nextMsg="8" character="priya" pos="iz"> ¿Qué tal? Prija Kyung, dirijo control de operaciones. Me encargo de
+		<tut7 id="7" nextMsg="8" target="none" character="priya" pos="iz"> ¿Qué tal? Prija Kyung, dirijo control de operaciones. Me encargo de
 		mantener todo en funcionamiento y vigilar los peligros… Si, los peligros, ¿no venían en el manual?
 		¡Que aburrido sería sin sorpresas! No te preocupes, gracias a los satélites, podré avisarte con 
 		antelación de la llegada de tormentas. En esta época no son muy frecuentes, pero pronto comenzarán a producirse…
 		</tut7>
-		<tut8 id="8" nextMsg="-1" character="priya" pos="iz">¿No es emocionante? Tranquilo, con los UnionCoins podrás pagarte 
+		<tut8 id="8" nextMsg="-1" target="none" character="priya" pos="iz">¿No es emocionante? Tranquilo, con los UnionCoins podrás pagarte 
 		una protección para toda la base. Y si no, bueno, ¿a quién no le gusta un buen desafío? Mientras
 		no queden muy dañados, los edificios seguirán produciendo, y si se dañan, siempre saldrá más barato
 		repararlos que construir uno nuevo.		
 		</tut8>
 	</centroOperaciones>
 	<centroAdministrativo>
-		<tut9 id="9" nextMsg="-1" character="jakob" pos="iz"> ¡Bien! Has construido el Centro Administrativo. En él podrás ver a tus
+		<tut9 id="9" nextMsg="-1" target="none" character="jakob" pos="iz"> ¡Bien! Has construido el Centro Administrativo. En él podrás ver a tus
 		amigos, buscar a otros nuevos y aceptar solicitudes. No solo eso sino que en la sección Ranking, 
 		puedes ver la posición que estás respecto a tus amigos.</tut9>
 	</centroAdministrativo>

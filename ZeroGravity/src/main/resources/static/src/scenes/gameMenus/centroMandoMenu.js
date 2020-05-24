@@ -330,7 +330,8 @@ class CentroMandoMenu extends Phaser.Scene {
 	    	 */
 	    	
 	    	
-	    	function aux(edificioCons){if(!game.global.construyendo){
+	    	function aux(edificioCons){
+	    		if(!game.global.construyendo){
 	    			var edificio;
 	    			switch(edificioCons){
 	    			case 'centroOperaciones':

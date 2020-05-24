@@ -2,47 +2,47 @@
 <tutorial>
 
 	<intro>
-		<tut1 id="1" nextMsg="2" character="binnette" pos="der"> Hello and welcome. My name is Binette Naidoo and I am in charge of the mission.
+		<tut1 id="1" nextMsg="2" target="none" character="binnette" pos="der"> Hello and welcome. My name is Binette Naidoo and I am in charge of the mission.
 		As your supervisor, I will make sure to give you the advice you need, and keep you up to date with
 		any change or event.
 		</tut1>
-		<tut2 id="2" nextMsg="-1" character="binnette" pos="iz"> I expect independence and determination from all my employees, so after
+		<tut2 id="2" nextMsg="-1" target="centroDeMando" character="binnette" pos="iz"> I expect independence and determination from all my employees, so after
 		of these first steps, you will have freedom to develop your facilities in the way that
 		you want. Naturally, you will have a team that will assist you in the different areas.
 		Without further delay, let's begin ...</tut2>
 	</intro>
 	<centroMando>
-		<tut3 id="3" nextMsg="4" character="celso" pos="iz">Good morning, or whatever you do out there. I'm Celso Lebèdev, the representative
+		<tut3 id="3" nextMsg="4" target="none" character="celso" pos="iz">Good morning, or whatever you do out there. I'm Celso Lebèdev, the representative
 		of Human Resources, and I will be in charge of requesting new settlers and monitoring their good condition.
 		Has Binnete mentioned that you can improve the command center?</tut3>
-		<tut4 id="4" nextMsg="-1" character="celso" pos="iz">Each level of improvement will allow you to do the same with the other centers,
+		<tut4 id="4" nextMsg="-1" target="none" character="celso" pos="iz">Each level of improvement will allow you to do the same with the other centers,
 		but before that you must make this mission progress. I will get back in touch
 		with you shortly. Meanwhile, it would be a good idea to build houses.</tut4>
 	</centroMando>
 	<centroComercio>
-		<tut5 id="5" nextMsg="6" character="jakob" pos="iz">In the trade center you can ... Excuse me, I have not presented myself properly.
+		<tut5 id="5" nextMsg="6" target="none" character="jakob" pos="iz">In the trade center you can ... Excuse me, I have not presented myself properly.
 		I am Jakob Audritzky, manager of business relations with the other individuals in the mission.
 		Here you can supply and acquire other resources, as simple as publishing what offers and how many demands.
 		</tut5>
-		<tut6 id="6" nextMsg="-1" character="jakob" pos="iz">This will generate a free exchange of resources between the community.
+		<tut6 id="6" nextMsg="-1" target="centroAdministrativo" character="jakob" pos="iz">This will generate a free exchange of resources between the community.
 		Except UnionCoins. The legal department could be reluctant with these operations ...
 		I'll start organizing everything and get in touch when I'm ready to proceed.
 		</tut6>
 	</centroComercio>
 	<centroOperaciones>
-		<tut7 id="7" nextMsg="8" character="priya" pos="iz"> How are you? Prija Kyung, I run operations control. I take care of
+		<tut7 id="7" nextMsg="8" target="none" character="priya" pos="iz"> How are you? Prija Kyung, I run operations control. I take care of
 		keep everything running and watch out for dangers… Yes, the dangers, didn't they come in the manual?
 		How boring it would be without surprises! Do not worry, thanks to the satellites, I will be able to notify you with
 		advance of the arrival of storms. At this time they are not very frequent, but soon they will begin to take place…
 		</tut7>
-		<tut8 id="8" nextMsg="-1" character="priya" pos="iz">It's not exciting? Don't worry, with UnionCoins you can pay yourself
+		<tut8 id="8" nextMsg="-1" target="none" character="priya" pos="iz">It's not exciting? Don't worry, with UnionCoins you can pay yourself
 		protection for the entire base. And if not, well, who doesn't like a good challenge? While
 		do not get badly damaged, the buildings will continue to produce, and if they are damaged, it will always be cheaper
 		repair them than build a new one.
 		</tut8>
 	</centroOperaciones>
 	<centroAdministrativo>
-		<tut9 id="9" nextMsg="-1" character="jakob" pos="iz"> All right! You have built the Administrative Center. In it you can see your
+		<tut9 id="9" nextMsg="-1" target="none" character="jakob" pos="iz"> All right! You have built the Administrative Center. In it you can see your
 		friends, find new ones and accept requests. Not only that, but in the Ranking section,
 		you can see the position you are with your friends.</tut9>
 	</centroAdministrativo>

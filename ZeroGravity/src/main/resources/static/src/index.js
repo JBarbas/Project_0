@@ -1155,6 +1155,7 @@ window.onload = function() {
 					boxV.style.marginTop = "0px";
 					boxV.style.width = '80%';
 					boxV.style.height = 'auto';
+					boxV.indice = i;
 					
 					let connect = document.createElement("img");
 					connect.src = 'assets/interface/Gameplay/Friends/conected.png';
@@ -1240,6 +1241,30 @@ window.onload = function() {
 								})
 								
 							}
+							
+							boxV.city = city;
+							boxV.borrar = borrar;
+							city.borrar = borrar;
+							borrar.city = city;
+							boxV.onmouseover = function(){
+								this.city.style.opacity = "1.0";
+								this.borrar.style.opacity = "1.0";
+							}
+							boxV.onmouseout = function(){
+								this.city.style.opacity = "0.0";
+								this.borrar.style.opacity = "0.0";
+							}
+							
+							city.onmouseover = function(){
+								this.style.opacity = "1.0";
+								this.borrar.style.opacity = "1.0";
+							}
+							
+							borrar.onmouseover = function(){
+								this.city.style.opacity = "1.0";
+								this.style.opacity = "1.0";
+							}
+							
 						break;
 						
 						case 'addAmigos':
@@ -1251,7 +1276,15 @@ window.onload = function() {
 							add.style.width = '7%';
 							add.style.height = 'auto';
 							add.style.cursor = 'pointer';
+							add.style.opacity = "0.0";
 							
+							boxV.add = add;
+							boxV.onmouseover = function(){
+								this.add.style.opacity = "1.0";
+							}
+							boxV.onmouseout = function(){
+								this.add.style.opacity = "0.0";
+							}
 							add.onmousedown = function(){
 								Swal.fire({
 										icon: 'success',
@@ -1263,6 +1296,10 @@ window.onload = function() {
 								msgAux.idReceiver = msg.users[i].id;
 								msgAux.idTransmitter = game.global.myPlayerId;
 								game.global.socket.send(JSON.stringify(msgAux));
+							}
+							
+							add.onmouseover = function(){
+								this.style.opacity = "1.0";
 							}
 						break;
 						case 'solicitudes':
@@ -1290,6 +1327,29 @@ window.onload = function() {
 							destroyFriend.style.width = '7%';
 							destroyFriend.style.height = 'auto';
 							destroyFriend.style.cursor = 'pointer';
+							
+							boxV.accept = accept;
+							boxV.destroyFriend = destroyFriend;
+							accept.destroy = destroyFriend;
+							destroyFriend.accept = accept;
+							boxV.onmouseover = function(){
+								this.accept.style.opacity = "1.0";
+								this.destroyFriend.style.opacity = "1.0";
+							}
+							boxV.onmouseout = function(){
+								this.accept.style.opacity = "0.0";
+								this.destroyFriend.style.opacity = "0.0";
+							}
+							
+							accept.onmouseover = function(){
+								this.destroyFriend.style.opacity = "1.0";
+								this.style.opacity = "1.0";
+							}
+							
+							destroyFriend.onmouseover = function(){
+								this.accept.style.opacity = "1.0";
+								this.style.opacity = "1.0";
+							}
 						break;
 						default:
 						break;
@@ -1378,6 +1438,7 @@ window.onload = function() {
 				console.dir(msg);
 			}
 			game.global.myPlayer.visitorCityName = msg.name;
+			game.global.myPlayer.visitorUsername = msg.username;
 			break;
 		case 'FINISH CONSTRUCTION PRICE':
 			if (game.global.DEBUG_MODE) {
