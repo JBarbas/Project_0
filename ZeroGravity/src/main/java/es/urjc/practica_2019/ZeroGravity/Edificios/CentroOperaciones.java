@@ -44,7 +44,7 @@ public class CentroOperaciones extends Edificio {
 		this.y = y;
 		this.height = 1;
 		this.width = 1;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = depends;
 		this.sprite = "centroOperaciones";
 		this.maxLevel = 5;
@@ -55,7 +55,7 @@ public class CentroOperaciones extends Edificio {
 		this.id = id;
 		this.height = 1;
 		this.width = 1;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = null;
 		this.sprite = "centroOperaciones";
 		this.maxLevel = 5;
@@ -91,6 +91,11 @@ public class CentroOperaciones extends Edificio {
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -100,10 +105,11 @@ public class CentroOperaciones extends Edificio {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, CentroOperaciones.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, CentroOperaciones.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
@@ -115,7 +121,7 @@ public class CentroOperaciones extends Edificio {
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
-			System.out.println("Centro de Operaciones " + id + " construido");
+			this.setLevel(this.getLevel()+1);
 			if (this.player.getSession().isOpen()) {
 				this.setEnConstruccion(false);
 				this.player.saveEdificios();
@@ -131,10 +137,14 @@ public class CentroOperaciones extends Edificio {
 	
 	@Override
 	public void levelUp() {
-		this.setLevel(this.getLevel()+1);
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -144,10 +154,11 @@ public class CentroOperaciones extends Edificio {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
@@ -160,6 +171,7 @@ public class CentroOperaciones extends Edificio {
 			if (this.enConstruccion) {
 				ObjectNode msg = mapper.createObjectNode();
 				msg.put("event", "EDIFICIO CONSTRUIDO");
+				msg.put("level", this.getLevel()+1);
 				msg.put("id", this.getId());
 				try {
 					if (player.getSession().isOpen()) {
@@ -171,7 +183,7 @@ public class CentroOperaciones extends Edificio {
 				}
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackConstruir());
-				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 				task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				task.setBeginDate(buildingBeginTime);
 				if (TASKMASTER.addTask(task)) {

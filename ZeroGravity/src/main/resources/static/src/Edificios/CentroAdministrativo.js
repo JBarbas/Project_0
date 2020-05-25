@@ -5,7 +5,7 @@ class CentroAdministrativo extends Edificio{
 		super(x, y)
 		super.height = 1;
 		super.width = 2;
-		super.level = 1;
+		super.level = 0;
 		super.numColonos = 0;
 		super.sprite = 'centroAdministrativo';
 		super.sprites = ['cAdministrativo1', 'cAdministrativo2', 'cAdministrativo3'];
@@ -16,7 +16,7 @@ class CentroAdministrativo extends Edificio{
 		super.nameEng = 'Administrative center';
 		super.originX = 0.67;
 		this.costes = [[2, 0],
-			[2, 0],
-			[2, 0]];
+			[0, 0],
+			[0, 0]];
 	}
 }

@@ -60,10 +60,14 @@ public class CentroMando extends Edificio {
 	
 	@Override
 	public void levelUp() {
-		this.setLevel(this.getLevel()+1);
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -73,32 +77,33 @@ public class CentroMando extends Edificio {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
 		this.setBuildingBeginTime(task.getBeginDate());
-		
-		if (this.getLevel() == 2) {
-			player.setCdcBlocked(false);
-			WebsocketGameHandler.getColl().updateOne(new Document("_id", player.getId()), new Document("$set", 
-					new Document("cdcBlocked", false)
-					.append("labBlocked", false)));
-		}
-		else if (this.getLevel() == 3) {
-			player.setCdoBlocked(false);
-			WebsocketGameHandler.getColl().updateOne(new Document("_id", player.getId()), new Document("$set", 
-					new Document("cdoBlocked", false)));
-		}
 	}
 	
 	public void callbackConstruir() {
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
+			this.setLevel(this.getLevel()+1);
+			if (this.getLevel() == 2) {
+				player.setCdcBlocked(false);
+				WebsocketGameHandler.getColl().updateOne(new Document("_id", player.getId()), new Document("$set", 
+						new Document("cdcBlocked", false)
+						.append("labBlocked", false)));
+			}
+			else if (this.getLevel() == 3) {
+				player.setCdoBlocked(false);
+				WebsocketGameHandler.getColl().updateOne(new Document("_id", player.getId()), new Document("$set", 
+						new Document("cdoBlocked", false)));
+			}
 			if (this.player.getSession().isOpen()) {
 				this.setEnConstruccion(false);
 				this.player.saveRecursos();
@@ -150,6 +155,7 @@ public class CentroMando extends Edificio {
 			if (this.enConstruccion) {
 				ObjectNode msg = mapper.createObjectNode();
 				msg.put("event", "EDIFICIO CONSTRUIDO");
+				msg.put("level", this.getLevel()+1);
 				msg.put("id", this.getId());
 				try {
 					if (player.getSession().isOpen()) {
@@ -161,7 +167,7 @@ public class CentroMando extends Edificio {
 				}
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackConstruir());
-				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 				task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				task.setBeginDate(buildingBeginTime);
 				if (TASKMASTER.addTask(task)) {

@@ -161,11 +161,11 @@ function cancelConstruir (scene, edificio) {
 function situarEdificio(scene, edificio) {
 	edificio.situado = true;
 	if (edificio.clone === null) {
-		edificio.clone = scene.add.image(edificio.gameObject.x, edificio.gameObject.y, edificio.sprites[edificio.level - 1]).setOrigin(edificio.originX, 1);
+		edificio.clone = scene.add.image(edificio.gameObject.x, edificio.gameObject.y, edificio.sprites[edificio.level]).setOrigin(edificio.originX, 1);
 	}
 	else {
 		edificio.clone.destroy();
-		edificio.clone = scene.add.image(edificio.gameObject.x, edificio.gameObject.y, edificio.sprites[edificio.level - 1]).setOrigin(edificio.originX, 1);
+		edificio.clone = scene.add.image(edificio.gameObject.x, edificio.gameObject.y, edificio.sprites[edificio.level]).setOrigin(edificio.originX, 1);
 	}
 	edificio.clone.depth = edificio.gameObject.depth;
 	edificio.clone.alpha = 0.6;

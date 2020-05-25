@@ -79,6 +79,11 @@ public class CentroAdministrativo extends Edificio {
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -88,6 +93,7 @@ public class CentroAdministrativo extends Edificio {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", 1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
@@ -123,6 +129,7 @@ public class CentroAdministrativo extends Edificio {
 			if (this.enConstruccion) {
 				ObjectNode msg = mapper.createObjectNode();
 				msg.put("event", "EDIFICIO CONSTRUIDO");
+				msg.put("level", 1);
 				msg.put("id", this.getId());
 				try {
 					if (player.getSession().isOpen()) {

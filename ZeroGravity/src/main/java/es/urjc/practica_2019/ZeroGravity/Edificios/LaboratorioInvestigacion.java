@@ -45,7 +45,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.y = y;
 		this.height = 1;
 		this.width = 2;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = depends;
 		this.sprite = "laboratorioInvestigacion";
 		//this.producir();
@@ -57,7 +57,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.id = id;	
 		this.height = 1;
 		this.width = 2;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = null;
 		this.sprite = "laboratorioInvestigacion";
 		//this.producir();
@@ -72,7 +72,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.y = y;
 		this.height = 1;
 		this.width = 2;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = depends;
 		this.sprite = "laboratorioInvestigacion";
 		this.setLleno(lleno);
@@ -91,15 +91,22 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 	
 	@Override
 	public void addColono() {
-		this.setColonos(this.getColonos() + 1);
-		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2]) {
-			producir();
+		if (this.getLevel() > 0) {
+			this.setColonos(this.getColonos() + 1);
+			if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2]) {
+				producir();
+			}
 		}
 	}
 	
 	@Override
 	public String getColonosString() {
-		return this.getColonos() + "/" + this.RECURSOS_GENERADOS[this.level-1][2];
+		if (this.getLevel() > 0) {
+			return this.getColonos() + "/" + this.RECURSOS_GENERADOS[this.level-1][2];
+		}
+		else {
+			return "";
+		}
 	}
 	
 	@Override
@@ -112,29 +119,31 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 	
 	@Override
 	public void producir() {
-		if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2] && !this.needsEnergy() && !this.getProduciendo() && !this.isLleno() && !this.isEnConstruccion()) {
-			ObjectNode msg = mapper.createObjectNode();
-			msg.put("event", "EDIFICIO PRODUCIENDO");
-			msg.put("id", this.id);
-			try {
-				if (player.getSession().isOpen()) {				
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+		if (!this.enConstruccion && this.getLevel() > 0) {
+			if (this.getColonos() >= this.RECURSOS_GENERADOS[this.level-1][2] && !this.needsEnergy() && !this.getProduciendo() && !this.isLleno() && !this.isEnConstruccion()) {
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "EDIFICIO PRODUCIENDO");
+				msg.put("id", this.id);
+				try {
+					if (player.getSession().isOpen()) {				
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
+				} catch (IOException e) {
+					System.err.println("Exception sending message " + msg.toString());
+					e.printStackTrace(System.err);
 				}
-			} catch (IOException e) {
-				System.err.println("Exception sending message " + msg.toString());
-				e.printStackTrace(System.err);
+				msg.put("event", "EDIFICIO LLENO");
+				Task task = null;
+				Thread callback = new Thread(() -> this.callbackProducir());
+				callback.start();
+				task = new Task(this.player, this.RECURSOS_GENERADOS[this.level-1][1], msg, callback);
+				task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+				TASKMASTER.addTask(task);
+				this.setProduciendo(true);
+				this.setProductionBeginTime(task.getBeginDate());
+				this.setLevelProduciendo(this.getLevel());
+				player.saveEdificios();
 			}
-			msg.put("event", "EDIFICIO LLENO");
-			Task task = null;
-			Thread callback = new Thread(() -> this.callbackProducir());
-			callback.start();
-			task = new Task(this.player, this.RECURSOS_GENERADOS[this.level-1][1], msg, callback);
-			task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
-			TASKMASTER.addTask(task);
-			this.setProduciendo(true);
-			this.setProductionBeginTime(task.getBeginDate());
-			this.setLevelProduciendo(this.getLevel());
-			player.saveEdificios();
 		}
 	}
 	
@@ -182,7 +191,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 	
 	@Override
 	public int getJobs() {
-		if (!this.isEnConstruccion()) {
+		if (!this.isEnConstruccion() && this.getLevel() > 0) {
 			return this.RECURSOS_GENERADOS[this.level-1][2] - this.getColonos();
 		}
 		else {
@@ -192,7 +201,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 	
 	@Override
 	public boolean needsEnergy() {		
-		if (!this.isEnConstruccion()) {
+		if (!this.isEnConstruccion() && this.getLevel() > 0) {
 			return this.getEnergia() < LaboratorioInvestigacion.COSTS[this.level-1][0];
 		}
 		else {
@@ -222,6 +231,11 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -231,10 +245,11 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, LaboratorioInvestigacion.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, LaboratorioInvestigacion.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
@@ -246,7 +261,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
-			System.out.println("Generador " + id + " construido");
+			this.setLevel(this.getLevel()+1);
 			if (this.player.getSession().isOpen()) {
 				this.setEnConstruccion(false);
 				this.player.saveEdificios();
@@ -264,10 +279,14 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 	
 	@Override
 	public void levelUp() {
-		this.setLevel(this.getLevel()+1);
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -277,10 +296,11 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
@@ -293,6 +313,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 			if (this.enConstruccion) {
 				ObjectNode msg = mapper.createObjectNode();
 				msg.put("event", "EDIFICIO CONSTRUIDO");
+				msg.put("level", this.getLevel()+1);
 				msg.put("id", this.getId());
 				try {
 					if (player.getSession().isOpen()) {
@@ -304,7 +325,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 				}
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackConstruir());
-				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 				task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				task.setBeginDate(buildingBeginTime);
 				if (TASKMASTER.addTask(task)) {

@@ -80,7 +80,7 @@ public class Taller extends GeneradorRecursos{
 		this.y = y;
 		this.height = 2;
 		this.width = 1;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = depends;
 		this.sprite = "taller";	
 		this.maxLevel = 15;
@@ -94,7 +94,7 @@ public class Taller extends GeneradorRecursos{
 		this.y = 0;
 		this.height = 2;
 		this.width = 1;
-		this.level = 1;
+		this.level = 0;
 		this.buildingDependsOn = null;
 		this.sprite = "taller";
 		this.maxLevel = 15;
@@ -155,12 +155,23 @@ public class Taller extends GeneradorRecursos{
 	}
 	
 	public boolean needsColonos() {
-		return this.getColonos() < Taller.RECURSOS_GENERADOS[this.getLevel()-1][2];
+		if (this.getLevel() > 0) {
+			return this.getColonos() < Taller.RECURSOS_GENERADOS[this.getLevel()-1][2];
+		}
+		else {
+			return false;
+		}
 	}
 	
 	@Override
 	public String getColonosString() {
-		return this.getColonos() + "/" + Taller.RECURSOS_GENERADOS[this.getLevel()-1][2];
+		if (this.getLevel() > 0) {
+			return this.getColonos() + "/" + Taller.RECURSOS_GENERADOS[this.getLevel()-1][2];
+		}
+
+		else {
+			return "";
+		}
 	}
 	
 	@Override
@@ -201,7 +212,7 @@ public class Taller extends GeneradorRecursos{
 	
 	@Override
 	public int getJobs() {
-		if (!this.isEnConstruccion()) {
+		if (!this.isEnConstruccion() && this.getLevel() > 0) {
 			return Taller.RECURSOS_GENERADOS[this.level-1][2] - this.getColonos();
 		}
 		else {
@@ -211,10 +222,14 @@ public class Taller extends GeneradorRecursos{
 	
 	@Override
 	public void levelUp() {
-		this.setLevel(this.getLevel()+1);
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -224,27 +239,16 @@ public class Taller extends GeneradorRecursos{
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
 		this.setBuildingBeginTime(task.getBeginDate());
-		Robot r = new RobotEstandar(robotId.incrementAndGet(), this);
-		robots.put(r.getId(), r);
-		msg = mapper.createObjectNode();			
-		msg.put("event", "REFRESH MENU");
-		msg.put("id", this.getId());
-		try {	
-			if (player.getSession().isOpen()) {				
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
-			}
-		} catch (IOException e) {
-			System.err.println("Exception sending message " + msg.toString());
-			e.printStackTrace(System.err);
-		}
+		
 	}
 	
 	@Override
@@ -269,6 +273,11 @@ public class Taller extends GeneradorRecursos{
 		ObjectNode msg = mapper.createObjectNode();
 		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
+		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
+		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
+		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
+		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
 				player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -278,10 +287,11 @@ public class Taller extends GeneradorRecursos{
 			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, Taller.COSTS[this.getLevel() - 1][4], msg, callback);
+		task = new Task(this.player, Taller.COSTS[this.getLevel()][4], msg, callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
@@ -293,7 +303,9 @@ public class Taller extends GeneradorRecursos{
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {
-			System.out.println("Generador " + id + " construido");
+			this.setLevel(this.getLevel()+1);
+			Robot r = new RobotEstandar(robotId.incrementAndGet(), this);
+			robots.put(r.getId(), r);
 			if (this.player.getSession().isOpen()) {
 				this.setEnConstruccion(false);
 				this.player.getEnergia();
@@ -315,6 +327,7 @@ public class Taller extends GeneradorRecursos{
 			if (this.enConstruccion) {
 				ObjectNode msg = mapper.createObjectNode();
 				msg.put("event", "EDIFICIO CONSTRUIDO");
+				msg.put("level", this.getLevel()+1);
 				msg.put("id", this.getId());
 				try {
 					if (player.getSession().isOpen()) {
@@ -326,7 +339,7 @@ public class Taller extends GeneradorRecursos{
 				}
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackConstruir());
-				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel() - 1][4], msg, callback);
+				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
 				task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				task.setBeginDate(buildingBeginTime);
 				if (TASKMASTER.addTask(task)) {

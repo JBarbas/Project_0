@@ -5,7 +5,7 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super(x, y)
 		super.height = 1;
 		super.width = 2;
-		super.level = 1;
+		super.level = 0;
 		super.numColonos = 0;
 		super.sprite = 'laboratorioInvestigacion';
 		super.sprites = ['lab1', 'lab1',
@@ -22,7 +22,10 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 						[100, 30],
 						[225, 60]];
 		this.costes = [[2, 0],
-			[2, 0],
-			[2, 0]];
+			[16, 0],
+			[43, 0],
+			[83, 0],
+			[134, 0],
+			[198, 0]];
 	}
 }

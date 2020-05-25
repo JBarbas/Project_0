@@ -5,7 +5,7 @@ class CentroOperaciones extends Edificio{
 		super(x, y)
 		super.height = 1;
 		super.width = 1;
-		super.level = 1;
+		super.level = 0;
 		super.numColonos = 0;
 		super.sprite = 'centroOperaciones';
 		super.sprites = ['cOperaciones1', 'cOperaciones1',
@@ -17,7 +17,9 @@ class CentroOperaciones extends Edificio{
 		super.nameEng = 'Operations center';
 		super.menuScene = 'CentroOperacionesMenu';
 		this.costes = [[2, 0],
-			[2, 0],
-			[2, 0]];
+			[16, 0],
+			[43, 0],
+			[83, 0],
+			[134, 0]];
 	}
 }

@@ -452,7 +452,8 @@ window.onload = function() {
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
 					game.global.edificios.get(msg.id).enConstruccion = true;
-					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
+					game.global.edificios.get(msg.id).inicioConstruccion = Date.UTC(msg.construccionDateYear, msg.construccionDateMonth-1, msg.construccionDateDay, msg.construccionDateHour, msg.construccionDateMinute+1, 0);
+					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));					
 				}
 			}
 			break;
@@ -464,11 +465,13 @@ window.onload = function() {
 			
 			if (typeof game.global.edificios !== 'undefined') {
 				if (typeof game.global.edificios.get(msg.id) !== 'undefined') {
+					game.global.edificios.get(msg.id).level = msg.level;
 					game.global.effects.construido.play();
 		    		game.global.effects.construido.setVolume(game.global.myPlayer.config.volEffects/100);
 					game.global.edificios.get(msg.id).enConstruccion = false;
 					game.global.edificios.get(msg.id).build(game.scene.getScene("GameScene"));
 					clearInterval(game.global.edificios.get(msg.id).interval);
+					game.global.edificios.get(msg.id).timeText = null;
 					if (typeof msg.jobs !== 'undefined') {
 						game.global.edificios.get(msg.id).jobs = msg.jobs;
 					}
@@ -537,7 +540,7 @@ window.onload = function() {
 				console.log(msg.resultado);
 			}	
 			if(msg.resultado){
-				levelUp(game.global.edificios.get(msg.id));
+				//levelUp(game.global.edificios.get(msg.id));
 				
 				//pedirPuntuaciones()
 				

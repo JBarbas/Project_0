@@ -5,7 +5,7 @@ class Taller extends GeneradorRecursos {
 		super(x, y)
 		super.height = 2;
 		super.width = 1;
-		super.level = 1;
+		super.level = 0;
 		super.numColonos = 0;
 		super.sprite = 'taller';
 		super.sprites = ['taller1', 'taller1', 'taller1', 'taller1',
@@ -21,7 +21,19 @@ class Taller extends GeneradorRecursos {
 		this.robots = new Map();
 		super.resourceSprite = 'metalIcon';
 		this.costes = [[2, 0],
-			[2, 0],
-			[2, 0]];
+					[16, 0],
+					[43, 0],
+					[83, 0],
+					[134, 0],
+					[198, 0],
+					[275, 0],
+					[364, 0],
+					[465, 0],
+					[579, 0],
+					[705, 0],
+					[844, 0],
+					[995, 0],
+					[1158, 0],
+					[1334, 0]];
 	}
 }

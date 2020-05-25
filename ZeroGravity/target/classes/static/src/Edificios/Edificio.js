@@ -9,7 +9,7 @@ class Edificio {
 		this.j = 0;
 		this.height = 1;
 		this.width = 1;
-		this.level = 1;
+		this.level = 0;
 		this.numColonos = 0;
 		this.jobs = 0;
 		this.sprite = 'edificio';
@@ -91,7 +91,7 @@ class Edificio {
 			this.timeBox = scene.add.image(position.x, position.y - 115, 'boxTimer');
 			this.timeBox.scale =  0.2;
 			this.timeText = scene.add.text(position.x, position.y - 115, 
-					timeStyle(Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000)),
+					timeStyle(Math.floor(this.costes[this.level][0] - (Date.now() - this.inicioConstruccion)/60000)),
 					{ fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold', textShadow: "2px 2px 15px #000000, 2px 2px 15px #000000"}).setOrigin(0.5, 0.5);
 			this.timeBox.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
 			this.timeText.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
@@ -128,7 +128,7 @@ class Edificio {
 	}
 	
 	previsualizar(scene) {
-		this.gameObject = scene.add.image(this.x, this.y, this.sprites[this.level - 1]).setOrigin(this.originX, 1);
+		this.gameObject = scene.add.image(this.x, this.y, this.sprites[this.level]).setOrigin(this.originX, 1);
 		this.gameObject.alpha = 0.25;
 	}
 	
@@ -140,6 +140,11 @@ class Edificio {
 }
 
 function updateTimeText(edificio) {
-	edificio.timeText.text = timeStyle(Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000));
+	if (edificio.timeText != null) {
+		edificio.timeText.text = timeStyle(Math.floor(edificio.costes[edificio.level][0] - (Date.now() - edificio.inicioConstruccion)/60000));
+	}
+	else {
+		clearInterval(edificio.interval);
+	}
 }
 

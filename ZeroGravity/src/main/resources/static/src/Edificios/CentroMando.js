@@ -9,5 +9,8 @@ class CentroMando extends Edificio {
 		super.sprite = 'centroDeMando';
 		super.sprites = ['cdm1', 'cdm2', 'cdm3'];
 		super.menuScene = 'CentroMandoMenu';
+		this.costes = [[2, 0],
+			[19, 0],
+			[51, 0]];
 	}
 }
