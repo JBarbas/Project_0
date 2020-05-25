@@ -173,6 +173,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("gameStarted", player.isGameStarted());	
 					msg.put("tutorialIntro", myPlayer.getBoolean("tutorialIntro", false));
 					msg.put("cityName", myPlayer.get("cityName", "your city").toString());
+					msg.put("validatedAccount", myPlayer.getBoolean("validatedAccount", false));
 					ObjectNode jsonConfig = mapper.createObjectNode();
 					jsonConfig.put("volMusic", config.getVolMusic());
 					jsonConfig.put("volEffects", config.getVolEffects());

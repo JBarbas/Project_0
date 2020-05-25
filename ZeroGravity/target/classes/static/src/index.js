@@ -179,6 +179,7 @@ window.onload = function() {
 			game.global.myPlayerId = msg.playerId;
 			game.global.myPlayer.gameStarted = msg.gameStarted;			
 			game.global.myPlayer.cityName = msg.cityName;
+			game.global.myPlayer.validated = msg.validatedAccount;
 			game.global.tutorial.intro = msg.tutorialIntro;
 			game.global.myPlayer.config.volMusic = msg.config.volMusic;
 			game.global.myPlayer.config.volEffects = msg.config.volEffects;
