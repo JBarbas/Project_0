@@ -37,6 +37,8 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.atlas('global', 'assets/atlas/global.png', 'assets/atlas/global.json');
 		this.load.atlas('nextlvl1x1', 'assets/atlas/nextlvl1x1.png', 'assets/atlas/nextlvl1x1.json');
 		this.load.atlas('nextlvl1x2', 'assets/atlas/nextlvl1x2.png', 'assets/atlas/nextlvl1x2.json');
+		this.load.atlas('arrows', 'assets/atlas/arrows.png', 'assets/atlas/arrows.json');
+		this.load.atlas('rectangle', 'assets/atlas/rectangulo.png', 'assets/atlas/rectangulo.json');
 		
 		// Edificios
 		this.load.image('edificio', 'assets/sprites/Edificio.png');
@@ -161,7 +163,9 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('rankFIcon', 'assets/interface/Gameplay/Administracion/rankFriendsIcon.png');
 		
 		this.load.image('boxTimer', 'assets/interface/Gameplay/boxTimer.png');
+		this.load.image('boxTimerHover', 'assets/interface/Gameplay/boxTimerHover.png');
 		
+		this.load.image('boxCity', 'assets/interface/Secciones/clearBox.png');
 		this.load.image('boxCityName', 'assets/interface/Gameplay/ciudadNombreCaja.png');
 		this.load.image('boxCityEdit', 'assets/interface/Gameplay/editNombreCiudad.png');
 		

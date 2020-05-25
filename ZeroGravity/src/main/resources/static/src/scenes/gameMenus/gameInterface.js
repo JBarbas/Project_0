@@ -31,6 +31,10 @@ class GameInterface extends Phaser.Scene {
     	
     	var cityBox = this.add.image(game.global.btnOpciones.x-150, game.global.btnOpciones.y+970, 'boxCityName').setInteractive();
     	var cityEdit = this.add.image(game.global.btnOpciones.x+20, game.global.btnOpciones.y+965, 'boxCityEdit').setInteractive();
+    	
+    	var boxCityVisitor = this.add.image(1040, 0, 'boxCity').setInteractive();
+    	boxCityVisitor.visible = false;
+    	//boxCityVisitor.setScale(0.5,0.5);
     	cityEdit.visible = false;
     	
     	//NOMBRE CIUDAD
@@ -87,6 +91,12 @@ class GameInterface extends Phaser.Scene {
     	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('unioncoin2')[0].childNodes[0].nodeValue;
     	this.unionCoinstxtdesc2UC = this.add.text(90,45, textoDesdeXml, { fontFamily: '"pantonLight"', color: 'white', fontSize: '14px' });
     	
+    	
+    	
+    	//GIF RECTANGLE
+    	this.anims.create({ key: 'rect', frames: this.anims.generateFrameNames('rectangle'), repeat: -1 });
+    	var rectangulo = this.add.sprite(55, 370, 'rectangle').play('rect').setOrigin(0.5,0.5).setScale(0.9);
+    	rectangulo.depth = 0;
     	
     	ucContainer.add(this.hoverMatsUC);
     	ucContainer.add(this.unionCoinstxtUC);
@@ -173,8 +183,16 @@ class GameInterface extends Phaser.Scene {
     	colonosContainer.add(this.unionCoinstxtdesc2Colonos);
     	
     	this.cityname = this.add.text(1550,1000, game.global.myPlayer.cityName, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
+    	
+    	
     	if (game.global.myPlayer.isVisitor) {
+    		
+    		this.friendname = this.add.text(800,10, game.global.myPlayer.visitorUsername, { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
+    		this.guion = this.add.text(1050,10, "-", { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px' });
     		this.cityname.text = game.global.myPlayer.visitorCityName;
+    		this.cityname.x = 1100;
+    		this.cityname.y = 10;
+    		boxCityVisitor.visible = true;
     		
     	}
     	
@@ -487,9 +505,9 @@ class GameInterface extends Phaser.Scene {
     	
     	if (game.global.myPlayer.isVisitor) {
     		if(game.global.idioma == 'eng'){
-    			var button = this.add.image(950, 900, 'backEng').setInteractive();
+    			var button = this.add.image(150, 100, 'backEng').setInteractive();
     		}else{
-    			var button = this.add.image(950, 900, 'back').setInteractive();
+    			var button = this.add.image(150, 100, 'back').setInteractive();
     		}
             button.setOrigin(0.5, 0.5);
             
@@ -505,6 +523,8 @@ class GameInterface extends Phaser.Scene {
             energiaicon.visible = false;
             energiaicon.visible = false;
             unionCoinsicon.visible = false;
+            
+            cityBox.visible = false;
             
             this.unionCoins.visible = false;
             this.creditos.visible = false;

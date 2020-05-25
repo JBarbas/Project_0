@@ -1008,6 +1008,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				Document dbHost = coll.find(filter).first();
 				if (host == null && dbHost != null) {
 					host = new Player(null, idHost);
+					host.setUsername(dbHost.getString("name"));
 					host.updateGrid((Collection<Document>) dbHost.get("grid"));
 					host.setEdificioId(dbHost.getInteger("edificioId", 0));
 					host.updateEdificios((Collection<Document>) dbHost.get("edificios"));
@@ -1027,6 +1028,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				if (host != null) {
 					msg.put("event", "VISITOR CITY NAME");
 					msg.put("name", dbHost.get("cityName", "Unknown city"));
+					msg.put("username", host.getUsername());
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 					updateInfo(host, "PLAYER INFO", player.getSession());
 				}

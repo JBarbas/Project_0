@@ -24,6 +24,7 @@ class Edificio {
 		this.inicioConstruccion = Date.now();
 		this.timeText = null;
 		this.timeBox = null;
+		this.timeBoxHover = null;
 		this.gameObject = null;
 		this.clone = null;
 		this.originX = 0.5; // Porcentaje a lo ancho de la imagen desde donde se comenzara a pintar
@@ -86,18 +87,26 @@ class Edificio {
 		if (this.timeText !== null) {
 			this.timeText.destroy();
 			this.timeBox.destroy();
+			this.timeBoxHover.destroy();
 		}
 		if (this.enConstruccion) {
 			this.timeBox = scene.add.image(position.x, position.y - 115, 'boxTimer');
+			this.timeBoxHover = scene.add.image(position.x-70, position.y - 115, 'boxTimerHover');
 			this.timeBox.scale =  0.2;
+			
+			//Se ajusta el tamaño de timeBoxHover segun progreso
+			var timeLeft = Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000);
+			var porcentaje = ((this.costes[this.level-1][0]-(timeLeft-120))/this.costes[this.level-1][0]);
+			this.timeBoxHover.setScale(porcentaje,1).setOrigin(0,0.5);
 			this.timeText = scene.add.text(position.x, position.y - 115, 
 					timeStyle(Math.floor(this.costes[this.level][0] - (Date.now() - this.inicioConstruccion)/60000)),
 					{ fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold', textShadow: "2px 2px 15px #000000, 2px 2px 15px #000000"}).setOrigin(0.5, 0.5);
 			this.timeBox.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
+			this.timeBoxHover.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
 			this.timeText.depth = this.y + this.x + 1/Math.max(this.height, this.width) + 100;
 			var that = this;
 			this.interval = setInterval(function() {
-				updateTimeText(that);
+				updateTimeText(that,scene);
 			}, 30000);
 		}
 	}
@@ -141,7 +150,21 @@ class Edificio {
 
 function updateTimeText(edificio) {
 	if (edificio.timeText != null) {
-		edificio.timeText.text = timeStyle(Math.floor(edificio.costes[edificio.level][0] - (Date.now() - edificio.inicioConstruccion)/60000));
+		var timeLeft = Math.floor(edificio.costes[edificio.level-1][0] - (Date.now() - edificio.inicioConstruccion)/60000);
+		
+		edificio.timeText.text = timeStyle(timeLeft);
+		var porcentaje = ((edificio.costes[edificio.level-1][0]-(timeLeft-120))/edificio.costes[edificio.level-1][0]);
+
+		scene.tweens.add({
+		  targets     : [ edificio.timeBoxHover ],
+		  scaleX: porcentaje,
+		  scaleY: 1,
+		  ease        : 'Linear',
+		  duration    : 500,
+		  yoyo        : false,
+		  repeat      : 0,
+		  callbackScope   : this
+		});
 	}
 	else {
 		clearInterval(edificio.interval);

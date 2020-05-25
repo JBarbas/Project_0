@@ -138,6 +138,25 @@ function leerTutorial(scene,idTuto){
 		game.global.containerTut = container;
 		game.global.cortina = cort;
 		
+		//Recorrer todos los edificios compare to target
+		var target = elemento.getAttribute("target");
+		if(target != "none"){
+			
+			var edifIterator = game.global.edificios.values();
+			var edificio = edifIterator.next().value;
+			while(edificio != undefined){
+				if(edificio.sprite == target){
+					//Agregar switch dependiendo del menu que quiera cargarse
+			      //GIF ARROWS
+			    	game.scene.getScene("GameScene").anims.create({ key: 'arrow', frames: game.scene.getScene("GameScene").anims.generateFrameNames('arrows'), repeat: -1 });
+			    	var anim = game.scene.getScene("GameScene").add.sprite(edificio.gameObject.x, edificio.gameObject.y-200, 'arrows').play('arrow').setOrigin(0.5,0.5).setScale(0.57);
+			    	anim.depth = 1000;
+			    	break;
+				}
+				edificio = edifIterator.next().value;
+			}
+		}
+		
 		switch (elemento.getAttribute("character")){
 			case 'celso':
 				celso.setVisible(true);
@@ -200,6 +219,15 @@ function leerTutorial(scene,idTuto){
 				}
 			break;
 		}
+	}
+	
+	
+}
+
+function showAnim(value,key){
+	console.log("emo yejao! 2", value);
+	if(this == value.sprite){
+		console.log("emo yejao! 3");
 	}
 }
 
