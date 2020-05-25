@@ -127,6 +127,11 @@ Required time:
     6 days and 10 hours.
 			</ccmejoraNivel3>
 			<ccmejoraNivel4>N/A</ccmejoraNivel4>
+			<ccmejoraNivel5>N/A</ccmejoraNivel5>
+			<ccmejoraNivel6>N/A</ccmejoraNivel6>
+			<ccmejoraNivel7>N/A</ccmejoraNivel7>
+			<ccmejoraNivel8>N/A</ccmejoraNivel8>
+			<ccmejoraNivel9>N/A</ccmejoraNivel9>
 		</centroComercio>
 		<centroAdministrativo>
 			<capuestos>Available job positions:</capuestos>
@@ -183,6 +188,7 @@ Required time:
     6 days and 10 hours.
 			</comejoraNivel3>
 			<comejoraNivel4>N/A</comejoraNivel4>
+			<comejoraNivel5>N/A</comejoraNivel5>
 		</centroOperaciones>
 		<bloqueViviendas>
 			<bvdetalles>The Block of Apartments is the building in which your Colonists reside. It answers to the Administrative Center.
@@ -211,6 +217,17 @@ Required time:
     5 days and 20 hours.
 			</bvmejoraNivel3>
 			<bvmejoraNivel4>N/A</bvmejoraNivel4>
+			<bvmejoraNivel5>N/A</bvmejoraNivel5>
+			<bvmejoraNivel6>N/A</bvmejoraNivel6>
+			<bvmejoraNivel7>N/A</bvmejoraNivel7>
+			<bvmejoraNivel8>N/A</bvmejoraNivel8>
+			<bvmejoraNivel9>N/A</bvmejoraNivel9>
+			<bvmejoraNivel10>N/A</bvmejoraNivel10>
+			<bvmejoraNivel11>N/A</bvmejoraNivel11>
+			<bvmejoraNivel12>N/A</bvmejoraNivel12>
+			<bvmejoraNivel13>N/A</bvmejoraNivel13>
+			<bvmejoraNivel14>N/A</bvmejoraNivel14>
+			<bvmejoraNivel15>N/A</bvmejoraNivel15>
 		</bloqueViviendas>
 		<generador>
 			<gendetalles>The Generator supplies Energy to the buildings that produce resources. Without the electric supply your buildings cannot produce. Colonists working in it are needed to produce Energy. It answers to the Operations Center.
@@ -241,6 +258,17 @@ Required time:
     5 days and 20 hours.
 			</genmejoraNivel3>
 			<genmejoraNivel4>N/A</genmejoraNivel4>
+			<genmejoraNivel5>N/A</genmejoraNivel5>
+			<genmejoraNivel6>N/A</genmejoraNivel6>
+			<genmejoraNivel7>N/A</genmejoraNivel7>
+			<genmejoraNivel8>N/A</genmejoraNivel8>
+			<genmejoraNivel9>N/A</genmejoraNivel9>
+			<genmejoraNivel10>N/A</genmejoraNivel10>
+			<genmejoraNivel11>N/A</genmejoraNivel11>
+			<genmejoraNivel12>N/A</genmejoraNivel12>
+			<genmejoraNivel13>N/A</genmejoraNivel13>
+			<genmejoraNivel14>N/A</genmejoraNivel14>
+			<genmejoraNivel15>N/A</genmejoraNivel15>
 		</generador>
 		<laboratorio>
 			<labdetalles>The Research Laboratory is where multiple investigations about the terraformation of the planet are carried out. You will receive Credits in exchange for keeping it going. Colonists and Energy are needed to produce. It answers to the Trading Center.
@@ -274,6 +302,8 @@ Cost:
 Required time:
     5 days and 20 hours.</labmejoraNivel3>
 			<labmejoraNivel4>N/A</labmejoraNivel4>
+			<labmejoraNivel5>N/A</labmejoraNivel5>
+			<labmejoraNivel6>N/A</labmejoraNivel6>
 		</laboratorio>
 		<plataforma>
 			<pedetalles>The Extraction Platform extracts Ceramic from the underground to use it as thermal insulator for your buildings. Colonists and Energy are needed to produce. It answers to the Trading Center.
@@ -306,6 +336,17 @@ Cost:
 Required time:
     5 days and 20 hours.</pemejoraNivel3>
 			<pemejoraNivel4>N/A</pemejoraNivel4>
+			<pemejoraNivel5>N/D</pemejoraNivel5>
+			<pemejoraNivel6>N/D</pemejoraNivel6>
+			<pemejoraNivel7>N/D</pemejoraNivel7>
+			<pemejoraNivel8>N/D</pemejoraNivel8>
+			<pemejoraNivel9>N/D</pemejoraNivel9>
+			<pemejoraNivel10>N/D</pemejoraNivel10>
+			<pemejoraNivel11>N/D</pemejoraNivel11>
+			<pemejoraNivel12>N/D</pemejoraNivel12>
+			<pemejoraNivel13>N/D</pemejoraNivel13>
+			<pemejoraNivel14>N/D</pemejoraNivel14>
+			<pemejoraNivel15>N/D</pemejoraNivel15>
 		</plataforma>
 		<taller>
 			<tdetalles>The Workshop houses your Robots. You can send them to gather Metal and they will return when they fill their deposit, though in the future they will be useful for more things. Colonists and Energy are needed to produce. It answers to the Operations Center.
@@ -341,6 +382,17 @@ Cost:
 Required time:
     5 days and 20 hours.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
+			<tmejoraNivel5>N/D</tmejoraNivel5>
+			<tmejoraNivel6>N/D</tmejoraNivel6>
+			<tmejoraNivel7>N/D</tmejoraNivel7>
+			<tmejoraNivel8>N/D</tmejoraNivel8>
+			<tmejoraNivel9>N/D</tmejoraNivel9>
+			<tmejoraNivel10>N/D</tmejoraNivel10>
+			<tmejoraNivel11>N/D</tmejoraNivel11>
+			<tmejoraNivel12>N/D</tmejoraNivel12>
+			<tmejoraNivel13>N/D</tmejoraNivel13>
+			<tmejoraNivel14>N/D</tmejoraNivel14>
+			<tmejoraNivel15>N/D</tmejoraNivel15>
 		</taller>
 		<hovericonos>
 			<unioncoin>Get more in our store </unioncoin>

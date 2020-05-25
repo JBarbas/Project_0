@@ -142,7 +142,7 @@ public class BloqueViviendas extends Edificio {
 			this.setLevel(this.getLevel()+1);
 			if (this.player.getSession().isOpen()) {
 				this.setEnConstruccion(false);
-				this.player.setColonosMax(this.player.getColonosMax() + this.getCapacidad());
+				this.player.updateColonosMax();
 				this.player.saveRecursos();
 				this.player.saveEdificios();
 				ObjectNode msg = mapper.createObjectNode();
@@ -164,7 +164,7 @@ public class BloqueViviendas extends Edificio {
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
 					p.getEdificio(this.getId()).setEnConstruccion(false);
-					p.setColonosMax(this.player.getColonosMax() + this.getCapacidad());
+					p.updateColonosMax();
 					p.saveRecursos();
 					p.saveEdificios();
 					ObjectNode msg = mapper.createObjectNode();

@@ -125,6 +125,11 @@ Tiempo requerido:
     6 días y 10 horas.
 			</ccmejoraNivel3>
 			<ccmejoraNivel4>N/D</ccmejoraNivel4>
+			<ccmejoraNivel5>N/A</ccmejoraNivel5>
+			<ccmejoraNivel6>N/A</ccmejoraNivel6>
+			<ccmejoraNivel7>N/A</ccmejoraNivel7>
+			<ccmejoraNivel8>N/A</ccmejoraNivel8>
+			<ccmejoraNivel9>N/A</ccmejoraNivel9>
 		</centroComercio>
 		<centroAdministrativo>
 			<capuestos>Puestos de trabajo disponibles:</capuestos>
@@ -183,6 +188,7 @@ Tiempo requerido:
     6 días y 10 horas.
 			</comejoraNivel3>
 			<comejoraNivel4>N/D</comejoraNivel4>
+			<comejoraNivel5>N/A</comejoraNivel5>
 		</centroOperaciones>
 		<bloqueViviendas>
 			<bvdetalles>El Bloque de Viviendas es el edificio en el que residen tus Colonos. Depende del Centro Administrativo.
@@ -211,6 +217,17 @@ Tiempo requerido:
     5 días y 20 horas.
 			</bvmejoraNivel3>
 			<bvmejoraNivel4>N/D</bvmejoraNivel4>
+			<bvmejoraNivel5>N/D</bvmejoraNivel5>
+			<bvmejoraNivel6>N/D</bvmejoraNivel6>
+			<bvmejoraNivel7>N/D</bvmejoraNivel7>
+			<bvmejoraNivel8>N/D</bvmejoraNivel8>
+			<bvmejoraNivel9>N/D</bvmejoraNivel9>
+			<bvmejoraNivel10>N/D</bvmejoraNivel10>
+			<bvmejoraNivel11>N/D</bvmejoraNivel11>
+			<bvmejoraNivel12>N/D</bvmejoraNivel12>
+			<bvmejoraNivel13>N/D</bvmejoraNivel13>
+			<bvmejoraNivel14>N/D</bvmejoraNivel14>
+			<bvmejoraNivel15>N/D</bvmejoraNivel15>
 		</bloqueViviendas>
 		<generador>
 			<gendetalles>El Generador suministra Energía a los edificios que producen recursos. Sin el suministro eléctrico tus edificios no pueden producir. Necesita Colonos trabajando en él para producir Energía. Depende del Centro de Operaciones.
@@ -242,6 +259,17 @@ Tiempo requerido:
     5 días y 20 horas.
 			</genmejoraNivel3>
 			<genmejoraNivel4>N/D</genmejoraNivel4>
+			<genmejoraNivel5>N/A</genmejoraNivel5>
+			<genmejoraNivel6>N/A</genmejoraNivel6>
+			<genmejoraNivel7>N/A</genmejoraNivel7>
+			<genmejoraNivel8>N/A</genmejoraNivel8>
+			<genmejoraNivel9>N/A</genmejoraNivel9>
+			<genmejoraNivel10>N/A</genmejoraNivel10>
+			<genmejoraNivel11>N/A</genmejoraNivel11>
+			<genmejoraNivel12>N/A</genmejoraNivel12>
+			<genmejoraNivel13>N/A</genmejoraNivel13>
+			<genmejoraNivel14>N/A</genmejoraNivel14>
+			<genmejoraNivel15>N/A</genmejoraNivel15>
 		</generador>
 		<laboratorio>
 			<labdetalles>El Laboratorio de Investigación es dónde se desarrollan múltiples investigaciones sobre la terraformación del planeta. Recibirás Créditos a cambio de tenerlo en marcha. Necesita Colonos y Energía para producir. Depende del Centro de Comercio.
@@ -276,6 +304,8 @@ Coste:
 Tiempo requerido:
     5 días y 20 horas.</labmejoraNivel3>
 			<labmejoraNivel4>N/D</labmejoraNivel4>
+			<labmejoraNivel5>N/A</labmejoraNivel5>
+			<labmejoraNivel6>N/A</labmejoraNivel6>
 		</laboratorio>
 		<plataforma>
 			<pedetalles>La Plataforma de Extracción extrae Cerámica desde el subsuelo para usar como aislante térmico en tus edificios. Necesita Colonos y Energía para producir. Depende del Centro de Comercio.
@@ -309,6 +339,17 @@ Coste:
 Tiempo requerido:
     5 días y 20 horas.</pemejoraNivel3>
 			<pemejoraNivel4>N/D</pemejoraNivel4>
+			<pemejoraNivel5>N/D</pemejoraNivel5>
+			<pemejoraNivel6>N/D</pemejoraNivel6>
+			<pemejoraNivel7>N/D</pemejoraNivel7>
+			<pemejoraNivel8>N/D</pemejoraNivel8>
+			<pemejoraNivel9>N/D</pemejoraNivel9>
+			<pemejoraNivel10>N/D</pemejoraNivel10>
+			<pemejoraNivel11>N/D</pemejoraNivel11>
+			<pemejoraNivel12>N/D</pemejoraNivel12>
+			<pemejoraNivel13>N/D</pemejoraNivel13>
+			<pemejoraNivel14>N/D</pemejoraNivel14>
+			<pemejoraNivel15>N/D</pemejoraNivel15>
 		</plataforma>
 		<taller>
 			<tdetalles>El Taller alberga a tus Robots. Puedes mandarlos a recolectar Metal y regresarán cuando llenen su depósito, aunque en el futuro te servirán para más cosas. Necesita Colonos y Energía para producir. Depende del Centro de Operaciones.
@@ -344,6 +385,17 @@ Coste:
 Tiempo requerido:
     5 días y 20 horas.</tmejoraNivel3>
 			<tmejoraNivel4>N/D</tmejoraNivel4>
+			<tmejoraNivel5>N/D</tmejoraNivel5>
+			<tmejoraNivel6>N/D</tmejoraNivel6>
+			<tmejoraNivel7>N/D</tmejoraNivel7>
+			<tmejoraNivel8>N/D</tmejoraNivel8>
+			<tmejoraNivel9>N/D</tmejoraNivel9>
+			<tmejoraNivel10>N/D</tmejoraNivel10>
+			<tmejoraNivel11>N/D</tmejoraNivel11>
+			<tmejoraNivel12>N/D</tmejoraNivel12>
+			<tmejoraNivel13>N/D</tmejoraNivel13>
+			<tmejoraNivel14>N/D</tmejoraNivel14>
+			<tmejoraNivel15>N/D</tmejoraNivel15>
 		</taller>
 		<hovericonos>
 			<unioncoin>Consigue más en nuestra tienda </unioncoin>

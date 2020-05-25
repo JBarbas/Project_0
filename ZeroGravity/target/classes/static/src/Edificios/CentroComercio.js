@@ -6,6 +6,7 @@ class CentroComercio extends Edificio {
 		super.height = 1;
 		super.width = 1;
 		super.level = 0;
+		super.levelMax = 9;
 		super.numColonos = 0;
 		super.sprite = 'centroComercio';
 		super.sprites = ['mercado1', 'mercado1',

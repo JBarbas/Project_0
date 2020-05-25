@@ -73,6 +73,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		this.height = 1;
 		this.width = 2;
 		this.level = 0;
+		this.maxLevel = 15;
 		this.buildingDependsOn = depends;
 		this.sprite = "laboratorioInvestigacion";
 		this.setLleno(lleno);
@@ -266,6 +267,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 				this.setEnConstruccion(false);
 				this.player.saveEdificios();
 				this.player.getEnergia();
+				WebsocketGameHandler.updateInfo(player, "REFRESH GRID", player.getSession());
 			} else {
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
@@ -286,7 +288,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 		Task task = null;
 		Thread callback = new Thread(() -> this.callbackConstruir());
 		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg.deepCopy(), callback);
+		task = new Task(this.player, LaboratorioInvestigacion.COSTS[this.getLevel()][4], msg.deepCopy(), callback);
 		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 		TASKMASTER.addTask(task);
 		this.setEnConstruccion(true);
@@ -325,7 +327,7 @@ public class LaboratorioInvestigacion extends GeneradorRecursos {
 				}
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackConstruir());
-				task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
+				task = new Task(this.player, LaboratorioInvestigacion.COSTS[this.getLevel()][4], msg, callback);
 				task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				task.setBeginDate(buildingBeginTime);
 				if (TASKMASTER.addTask(task)) {

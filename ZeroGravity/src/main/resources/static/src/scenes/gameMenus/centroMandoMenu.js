@@ -17,6 +17,9 @@ class CentroMandoMenu extends Phaser.Scene {
     }
     create (data)  {
     	
+    	var scene = this;
+    	this.price = 0;
+    	
     	let msg = new Object();
 		msg.event = 'GET CENTRO DE MANDO MENU';
 		game.global.socket.send(JSON.stringify(msg));
@@ -37,8 +40,11 @@ class CentroMandoMenu extends Phaser.Scene {
     	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('terminarahora')[0].childNodes[0].nodeValue;
 		var txtTerminarAhora = this.add.text(1380, 875, textoDesdeXml, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
 		var iconMonedas = this.add.image(1700, 865, 'iconoUC').setOrigin(0, 0);
-    	btnFinishConstruccion.visible = false;
+		enconst.visible = false;
+		enconstEsp.visible = false;
+		btnFinishConstruccion.visible = false;
     	txtTerminarAhora.visible = false;
+    	iconMonedas.visible = false;
     	btnFinishConstruccion.setScale(1.1, 0.9);
     	
     	this.costoMonedas = this.add.text(1650, 875, this.price, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '30px', fontWeight: 'bold'});
@@ -483,21 +489,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	mejorasContainer.add(this.descSigNivel);
 	    	}
 	
-	    	// El botón cerrar será el mismo, por lo que no se incluirá en ningún contenerdor
-	    	var cerrar = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 60, 'xBuilding').setInteractive();
-	    	cerrar.setOrigin(0, 0);
-	    	cerrar.on('pointerover',function(pointer){
-	    	    this.setFrame(1);
-	    	});
-	    	cerrar.on('pointerout',function(pointer){
-	    	    this.setFrame(0);
-	    	});
-	    	cerrar.on('pointerdown', function(pointer, localX, localY, event){
-	    		game.global.effects.pulsarBoton.play();
-	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
-				game.scene.stop(data.miEdificio.menuScene);
-				game.global.inMenu = false;
-	    	});
+	    	
     	
 	    	// Desactivamos al inicio los otros dos contenedores
 			detallesContainer.visible= false;
@@ -522,7 +514,57 @@ class CentroMandoMenu extends Phaser.Scene {
     			this.costoMonedas.visible = true;
     			iconMonedas.visible = true;
     		}
+    		
+    		btnFinishConstruccion.on('pointerover',function(pointer){
+    	    	btnFinishConstruccion.setFrame(1);
+        	});
+        	
+    	    btnFinishConstruccion.on('pointerout',function(pointer){
+    	    	btnFinishConstruccion.setFrame(0);
+        	});
+        	
+    	    btnFinishConstruccion.on('pointerdown', function(pointer, localX, localY, event){
+        		game.global.effects.pulsarBoton.play();
+        		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
+        		
+        		Swal.fire({
+    				text: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora')[0].childNodes[0].nodeValue + scene.price + game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('construirahora2')[0].childNodes[0].nodeValue,
+    				icon: 'question',
+    				showCancelButton: true,
+    				confirmButtonColor: '#3085d6',
+    				cancelButtonColor: '#d33',
+    				confirmButtonText: game.scene.getScene('GameInterface').cache.xml.get(game.global.idioma).getElementsByTagName('btnSwConfirmar')[0].childNodes[0].nodeValue
+    			}).then((result) => {
+    				if (result.value) {
+    					//Aqui hacer lo que se requiera de terminar construccion
+    					let msg = new Object();
+    					msg.event = 'FINISH CONSTRUCTION';
+    					msg.id = scene.miEdificio.id;
+    					game.global.socket.send(JSON.stringify(msg));
+    				}
+    			})
+        	});
+    		
 	    }
+	    
+	    
+	    
+	 // El botón cerrar será el mismo, por lo que no se incluirá en ningún contenerdor
+    	var cerrar = this.add.image(game.global.buildingMenu.x + 505, game.global.buildingMenu.y + 60, 'xBuilding').setInteractive();
+    	cerrar.setOrigin(0, 0);
+    	cerrar.on('pointerover',function(pointer){
+    	    this.setFrame(1);
+    	});
+    	cerrar.on('pointerout',function(pointer){
+    	    this.setFrame(0);
+    	});
+    	cerrar.on('pointerdown', function(pointer, localX, localY, event){
+    		game.global.effects.pulsarBoton.play();
+    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+			game.scene.stop(data.miEdificio.menuScene);
+			game.global.inMenu = false;
+    	});
+	    
     }
     update(time, delta) {
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/

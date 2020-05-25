@@ -175,18 +175,13 @@ class BloqueViviendasMenu extends Phaser.Scene {
 	    	this.titulo = this.add.text(300, 180, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
 	    	mejorasContainer.add(this.titulo);
 	    	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
-	    	if(data.miEdificio.level < 3){
+	    	if(data.miEdificio.level < data.miEdificio.levelMax){
 	        	// Se añade la imagen de siguiente nivel
-	    		this.edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprite).setOrigin(0.5, 0.5).setScale(0.8, 0.8).setFrame(this.miEdificio.level);
+	    		this.edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprites[this.miEdificio.level]).setOrigin(0.5, 0.5).setScale(0.8, 0.8);
 	    		mejorasContainer.add(this.edificioSigNivel);
 	    		
-	    		// Se añade la descripción del siguiente nivel
-	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('bvmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
-	    		this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
-	    		mejorasContainer.add(this.descSigNivel);
-	        	
 	    		this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-		    		    	
+		    	
 		    	this.subirNivel.on('pointerover',function(pointer){
 		    		this.setFrame(1);
 		    	})
@@ -201,6 +196,11 @@ class BloqueViviendasMenu extends Phaser.Scene {
 					askLevelUpBuilding(data.miEdificio.id); 		
 		    	});
 				mejorasContainer.add(this.subirNivel);
+	    		
+	    		// Se añade la descripción del siguiente nivel
+	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('bvmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
+	    		this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
+	    		mejorasContainer.add(this.descSigNivel);
 	    	}
 	    	else{
 	    		this.descSigNivel = this.add.text(300, 210, "N/A", { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
@@ -279,12 +279,6 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	});			
 	}
     update(time, delta) {
-    	if (!this.miEdificio.enConstruccion) {	
-	    	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
-	    	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
-	    		this.subirNivel.destroy();
-	    	}
-    	}
     }
 
 }

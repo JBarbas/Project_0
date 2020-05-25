@@ -6,6 +6,7 @@ class CentroOperaciones extends Edificio{
 		super.height = 1;
 		super.width = 1;
 		super.level = 0;
+		super.levelMax = 5;
 		super.numColonos = 0;
 		super.sprite = 'centroOperaciones';
 		super.sprites = ['cOperaciones1', 'cOperaciones1',

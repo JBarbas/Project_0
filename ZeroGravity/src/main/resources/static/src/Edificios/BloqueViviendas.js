@@ -6,6 +6,7 @@ class BloqueViviendas extends Edificio{
 		super.height = 1;
 		super.width = 1;
 		super.level = 0;
+		super.levelMax = 15;
 		super.numColonos = 0;
 		super.sprite = 'bloqueViviendas';
 		super.sprites = ['apartamentos1', 'apartamentos1', 'apartamentos1', 'apartamentos1',

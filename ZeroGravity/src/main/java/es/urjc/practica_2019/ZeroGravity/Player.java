@@ -315,8 +315,11 @@ public class Player {
 		return colonosMax;
 	}
 
-	public void setColonosMax(int colonosMax) {
-		this.colonosMax = colonosMax;
+	public void updateColonosMax() {
+		this.colonosMax = 0;
+		for (BloqueViviendas v : viviendas) {
+			this.colonosMax += v.getCapacidad();
+		}
 	}
 
 	public void requestColonos() {

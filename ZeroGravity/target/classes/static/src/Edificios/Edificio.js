@@ -10,6 +10,7 @@ class Edificio {
 		this.height = 1;
 		this.width = 1;
 		this.level = 0;
+		this.levelMax = 3;
 		this.numColonos = 0;
 		this.jobs = 0;
 		this.sprite = 'edificio';

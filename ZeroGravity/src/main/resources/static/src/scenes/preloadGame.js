@@ -54,6 +54,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('enConstruccion1', 'assets/sprites/Edificios/modulo1.png');
 		this.load.image('enConstruccion2', 'assets/sprites/Edificios/modulo2.png');
 		this.load.image('enConstruccion3', 'assets/sprites/Edificios/modulo3.png');
+		this.load.image('enConstruccion4', 'assets/sprites/Edificios/EnConstruccion4.png');
 		
 		this.load.image('apartamentos1', 'assets/sprites/Edificios/Edificio_Viviendas.png');
 		this.load.image('apartamentos2', 'assets/sprites/Edificios/Edificio_Viviendas.png');

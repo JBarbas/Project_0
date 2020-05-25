@@ -389,6 +389,9 @@ window.onload = function() {
 				else {
 					edificio.x = e.x;
 					edificio.y = e.y;
+					if (typeof e.jobs != 'undefined') {
+						edificio.jobs = e.jobs;
+					}
 				}
 			}
 			game.global.resources.energia = msg.energia;

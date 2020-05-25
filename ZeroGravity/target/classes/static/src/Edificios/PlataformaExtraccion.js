@@ -6,6 +6,7 @@ class PlataformaExtraccion extends GeneradorRecursos{
 		super.height = 1;
 		super.width = 1;
 		super.level = 0;
+		super.levelMax = 15;
 		super.numColonos = 0;
 		super.sprite = 'plataformaExtraccion';
 		super.sprites = ['pde1', 'pde1', 'pde1', 'pde1',
@@ -19,6 +20,18 @@ class PlataformaExtraccion extends GeneradorRecursos{
 		super.nameEng = 'Extraction platform';
 		super.resourceSprite = 'clayIcon';
 		this.recursos = [[4, 2],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
+						[100, 30],
 						[100, 30],
 						[225, 60]];
 		this.costes = [[2, 0],

@@ -6,6 +6,7 @@ class Generador extends GeneradorRecursos {
 		super.height = 1;
 		super.width = 1;
 		super.level = 0;
+		super.levelMax = 15;
 		super.numColonos = 0;
 		super.sprite = 'generador';
 		super.sprites = ['generador1', 'generador1', 'generador1', 'generador1',

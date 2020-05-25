@@ -84,7 +84,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
-	private ObjectMapper mapper = new ObjectMapper();
+	private static ObjectMapper mapper = new ObjectMapper();
 
 	private static MongoClientURI uri = new MongoClientURI(
 			"mongodb+srv://ZeroGravity:webyrrss@polaris-u3pvb.mongodb.net/POLARIS?retryWrites=true&w=majority");
@@ -343,8 +343,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 							&& edificio.getLevel() < edificio.getMaxLevel()) {
 
 						canILevelUp = true;
-						player.setColonosMax(player.getColonosMax() - BloqueViviendas.capacidad[edificio.getLevel() - 1]
-								+ BloqueViviendas.capacidad[edificio.getLevel()]);
+						
 						player.setMetal(player.getMetal() - BloqueViviendas.COSTS[edificio.getLevel() - 1][1]);
 						player.setCeramica(player.getCeramica() - BloqueViviendas.COSTS[edificio.getLevel() - 1][2]);
 						player.setCreditos(player.getCreditos() - BloqueViviendas.COSTS[edificio.getLevel() - 1][3]);
@@ -1065,6 +1064,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				if (player.getUnionCoins() >= price) {
 					player.setUnionCoins(player.getUnionCoins() - price);
 					TASKMASTER.completeTask(player.getId().toString() + edificio.getId() + 0);
+					msg.put("event", "REFRESH MENU");
+					msg.put("id", edificio.getId());
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
 			case "DEBUG":
@@ -1223,7 +1225,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	}
 	
 	// Informa al cliente y a la BDD de una actualizacion en la informacion del jugador (Grid y edificios)
-	private void updateInfo(Player player, String event, WebSocketSession session) {
+	public static void updateInfo(Player player, String event, WebSocketSession session) {
 		ObjectNode msg = mapper.createObjectNode();
 		try {
 			msg.put("event", event);

@@ -6,6 +6,7 @@ class Taller extends GeneradorRecursos {
 		super.height = 2;
 		super.width = 1;
 		super.level = 0;
+		super.levelMax = 15;
 		super.numColonos = 0;
 		super.sprite = 'taller';
 		super.sprites = ['taller1', 'taller1', 'taller1', 'taller1',

@@ -6,6 +6,7 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.height = 1;
 		super.width = 2;
 		super.level = 0;
+		super.levelMax = 6;
 		super.numColonos = 0;
 		super.sprite = 'laboratorioInvestigacion';
 		super.sprites = ['lab1', 'lab1',
@@ -19,6 +20,9 @@ class LaboratorioInvestigacion extends GeneradorRecursos {
 		super.resourceSprite = 'creditIcon';
 		super.originX = 0.67;
 		this.recursos = [[4, 2],
+						[100, 30],
+						[100, 30],
+						[100, 30],
 						[100, 30],
 						[225, 60]];
 		this.costes = [[2, 0],
