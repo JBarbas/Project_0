@@ -95,8 +95,8 @@ class Edificio {
 			this.timeBox.scale =  0.2;
 			
 			//Se ajusta el tamaño de timeBoxHover segun progreso
-			var timeLeft = Math.floor(this.costes[this.level-1][0] - (Date.now() - this.inicioConstruccion)/60000);
-			var porcentaje = ((this.costes[this.level-1][0]-(timeLeft-120))/this.costes[this.level-1][0]);
+			var timeLeft = Math.floor(this.costes[this.level][0] - (Date.now() - this.inicioConstruccion)/60000);
+			var porcentaje = ((this.costes[this.level][0]-(timeLeft-120))/this.costes[this.level][0]);
 			this.timeBoxHover.setScale(porcentaje,1).setOrigin(0,0.5);
 			this.timeText = scene.add.text(position.x, position.y - 115, 
 					timeStyle(Math.floor(this.costes[this.level][0] - (Date.now() - this.inicioConstruccion)/60000)),
@@ -148,12 +148,12 @@ class Edificio {
 	}
 }
 
-function updateTimeText(edificio) {
+function updateTimeText(edificio, scene) {
 	if (edificio.timeText != null) {
-		var timeLeft = Math.floor(edificio.costes[edificio.level-1][0] - (Date.now() - edificio.inicioConstruccion)/60000);
+		var timeLeft = Math.floor(edificio.costes[edificio.level][0] - (Date.now() - edificio.inicioConstruccion)/60000);
 		
 		edificio.timeText.text = timeStyle(timeLeft);
-		var porcentaje = ((edificio.costes[edificio.level-1][0]-(timeLeft-120))/edificio.costes[edificio.level-1][0]);
+		var porcentaje = ((edificio.costes[edificio.level][0]-(timeLeft-120))/edificio.costes[edificio.level][0]);
 
 		scene.tweens.add({
 		  targets     : [ edificio.timeBoxHover ],

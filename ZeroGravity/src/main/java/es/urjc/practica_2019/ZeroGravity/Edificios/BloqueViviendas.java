@@ -1,6 +1,7 @@
 package es.urjc.practica_2019.ZeroGravity.Edificios;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import org.springframework.web.socket.TextMessage;
 
@@ -189,8 +190,18 @@ public class BloqueViviendas extends Edificio {
 	@Override
 	public void levelUp() {
 		ObjectNode msg = mapper.createObjectNode();
-		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("id", this.getId());
+		msg.put("event", "EDIFICIO CONSTRUIDO");
+		msg.put("level", this.getLevel()+1);
+		Task task = null;
+		Thread callback = new Thread(() -> this.callbackConstruir());
+		callback.start();
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg.deepCopy(), callback);
+		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+		TASKMASTER.addTask(task);
+		this.setEnConstruccion(true);
+		this.setBuildingBeginTime(task.getBeginDate());
+		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
 		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
 		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
@@ -204,16 +215,6 @@ public class BloqueViviendas extends Edificio {
 			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);
 		}
-		msg.put("event", "EDIFICIO CONSTRUIDO");
-		msg.put("level", this.getLevel()+1);
-		Task task = null;
-		Thread callback = new Thread(() -> this.callbackConstruir());
-		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
-		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
-		TASKMASTER.addTask(task);
-		this.setEnConstruccion(true);
-		this.setBuildingBeginTime(task.getBeginDate());
 	}
 	
 	@Override

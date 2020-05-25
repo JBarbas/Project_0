@@ -223,8 +223,18 @@ public class Taller extends GeneradorRecursos{
 	@Override
 	public void levelUp() {
 		ObjectNode msg = mapper.createObjectNode();
-		msg.put("event", "CONSTRUYENDO EDIFICIO");
+		msg.put("event", "EDIFICIO CONSTRUIDO");
 		msg.put("id", this.getId());
+		msg.put("level", this.getLevel()+1);
+		Task task = null;
+		Thread callback = new Thread(() -> this.callbackConstruir());
+		callback.start();
+		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg.deepCopy(), callback);
+		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+		TASKMASTER.addTask(task);
+		this.setEnConstruccion(true);
+		this.setBuildingBeginTime(task.getBeginDate());
+		msg.put("event", "CONSTRUYENDO EDIFICIO");
 		msg.put("construccionDateYear", this.getBuildingBeginTime().getYear());
 		msg.put("construccionDateMonth", this.getBuildingBeginTime().getMonthValue());
 		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
@@ -237,18 +247,7 @@ public class Taller extends GeneradorRecursos{
 		} catch (IOException e) {
 			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);
-		}
-		msg.put("event", "EDIFICIO CONSTRUIDO");
-		msg.put("level", this.getLevel()+1);
-		Task task = null;
-		Thread callback = new Thread(() -> this.callbackConstruir());
-		callback.start();
-		task = new Task(this.player, BloqueViviendas.COSTS[this.getLevel()][4], msg, callback);
-		task.setId(player.getId().toString() + this.id + 0); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
-		TASKMASTER.addTask(task);
-		this.setEnConstruccion(true);
-		this.setBuildingBeginTime(task.getBeginDate());
-		
+		}		
 	}
 	
 	@Override
