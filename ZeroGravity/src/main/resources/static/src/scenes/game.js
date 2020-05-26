@@ -168,6 +168,13 @@ class GameScene extends Phaser.Scene {
 		    								game.scene.run(edificio.menuScene, {miEdificio: edificio});
 	    								break;
 		    						}*/
+		    						
+		    						//Aqui controlamos si hay flecha de tutorial o no
+		    						if(game.global.animArrow != null && game.global.edifTutArrow == edificio.sprite){
+		    							game.global.animArrow.destroy();
+		    							game.global.animArrow = null;
+		    						} 
+		    						
 		    						game.scene.run(edificio.menuScene, {miEdificio: edificio});
 		    					}
 		        			}

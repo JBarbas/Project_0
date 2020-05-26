@@ -149,8 +149,9 @@ function leerTutorial(scene,idTuto){
 					//Agregar switch dependiendo del menu que quiera cargarse
 			      //GIF ARROWS
 			    	game.scene.getScene("GameScene").anims.create({ key: 'arrow', frames: game.scene.getScene("GameScene").anims.generateFrameNames('arrows'), repeat: -1 });
-			    	var anim = game.scene.getScene("GameScene").add.sprite(edificio.gameObject.x, edificio.gameObject.y-200, 'arrows').play('arrow').setOrigin(0.5,0.5).setScale(0.57);
-			    	anim.depth = 1000;
+			    	game.global.animArrow = game.scene.getScene("GameScene").add.sprite(edificio.gameObject.x, edificio.gameObject.y-200, 'arrows').play('arrow').setOrigin(0.5,0.5).setScale(0.57);
+			    	game.global.edifTutArrow = edificio.sprite;
+			    	game.global.animArrow.depth = 1000;
 			    	break;
 				}
 				edificio = edifIterator.next().value;

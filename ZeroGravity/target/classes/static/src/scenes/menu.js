@@ -50,9 +50,13 @@ class MenuScene extends Phaser.Scene {
     	this.anims.create({ key: 'everything', frames: this.anims.generateFrameNames('title'), repeat: -1 });
     	this.add.sprite(game.config.width/2, 200, 'title').play('everything').setOrigin(0.5,0.5).setScale(1.2);    
     	
+    	
     	//Box Validate
-    	this.anims.create({ key: 'everything4', frames: this.anims.generateFrameNames('boxValidate')});
-    	this.add.sprite(game.config.width/2+720, 80, 'boxValidate').play('everything4').setOrigin(0.5,0.5).setScale(0.5);    
+    	console.log(game.global.myPlayer.validated);
+    	if(!game.global.myPlayer.validated){
+    		this.anims.create({ key: 'everything4', frames: this.anims.generateFrameNames('boxValidate')});
+    		this.add.sprite(game.config.width/2+720, 80, 'boxValidate').play('everything4').setOrigin(0.5,0.5).setScale(0.5);    
+    	}
     	
     	//Box Update
     	this.anims.create({ key: 'everything5', frames: this.anims.generateFrameNames('boxUpdates')});

@@ -446,13 +446,38 @@ class CentroMandoMenu extends Phaser.Scene {
 	    	// Se añade el titulo de siguiente mejora
 	    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('sigMejora')[0].childNodes[0].nodeValue;
 	    	this.titulo = this.add.text(300, 180, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
+	    	this.arrowleft = this.add.image(100, 280, 'arrow').setOrigin(0.5, 0.5).setInteractive().setFlip(true,false);
+	    	this.arrowright = this.add.image(450, 280, 'arrow').setOrigin(0.5, 0.5).setInteractive();
+	    	game.scene.getScene('CentroMandoMenu').arrowleft.visible = false;
+	    	mejorasContainer.add(this.arrowleft);
+	    	mejorasContainer.add(this.arrowright);
 	    	mejorasContainer.add(this.titulo);
+	    	
+	    	this.arrowleft.on('pointerover',function(pointer){
+	    		this.setFrame(1);
+	    	})
+	    	
+	    	this.arrowleft.on('pointerout',function(pointer){
+		    		this.setFrame(0);
+		    })
+		    
+		    this.arrowright.on('pointerover',function(pointer){
+	    		this.setFrame(1);
+	    	})
+	    	
+	    	this.arrowright.on('pointerout',function(pointer){
+		    		this.setFrame(0);
+		    })
+		    
+		    
 	    	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
-	    	if(data.miEdificio.level < 3){
+	    	if(data.miEdificio.level < data.miEdificio.levelMax){
 	        	// Se añade la imagen de siguiente nivel
-	    		this.edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprite).setOrigin(0.5, 0.5).setScale(0.8, 0.8).setFrame(this.miEdificio.level);
-	    		mejorasContainer.add(this.edificioSigNivel);
-	    		
+	    		var edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprite).setOrigin(0.5, 0.5).setScale(0.8, 0.8).setFrame(this.miEdificio.level);
+	    		mejorasContainer.add(edificioSigNivel);
+	    		var nivelEdifSprite = this.miEdificio.level;
+	    		//var nE = data.miEdificio.level;
+	    		//var nivelEdificioActual = nE;
 	    		// Se añade la descripción del siguiente nivel
 	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('cmmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
 	    		
@@ -460,6 +485,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	mejorasContainer.add(this.descSigNivel);
 	        	
 	    		this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
+	    		this.nivelSuperior = this.add.text(340, 799, data.miEdificio.level+1, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
 		    		    	
 		    	this.subirNivel.on('pointerover',function(pointer){
 		    		this.setFrame(1);
@@ -479,9 +505,48 @@ class CentroMandoMenu extends Phaser.Scene {
 					game.global.inMenu = false;*/
 		    		
 		    	});
+		    	
+		    	this.arrowleft.on('pointerdown', function(pointer, localX, localY, event){
+		    		game.global.effects.pulsarBoton.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		nivelEdifSprite-=1;
+		    		game.scene.getScene('CentroMandoMenu').arrowright.visible = true;
+		    		if(nivelEdifSprite == data.miEdificio.level){
+		    			game.scene.getScene('CentroMandoMenu').arrowleft.visible = false;
+		    		}else{
+		    			edificioSigNivel.setFrame(nivelEdifSprite);
+		    			
+		    		}
+		    		
+		    		/*scene.tweens.add({
+				        targets: this.edificioSigNivel,
+				        duration: 1500,
+				        ease: 'Linear'
+				    });*/
+		    		
+		    	});
+		    	
+		    	this.arrowright.on('pointerdown', function(pointer, localX, localY, event){
+		    		game.global.effects.pulsarBoton.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		game.scene.getScene('CentroMandoMenu').arrowleft.visible = true;
+		    		nivelEdifSprite+=1;
+		    		if(nivelEdifSprite == data.miEdificio.levelMax){
+		    			game.scene.getScene('CentroMandoMenu').arrowright.visible = false;
+		    			
+		    		}else{
+		    			edificioSigNivel.setFrame(nivelEdifSprite);
+		    			
+		    		}
+		    	});
+		    	
+		    	
 	
 				
 				mejorasContainer.add(this.subirNivel);
+				mejorasContainer.add(this.nivelSuperior);
 	    	}
 	    	else{
 	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('cmmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;

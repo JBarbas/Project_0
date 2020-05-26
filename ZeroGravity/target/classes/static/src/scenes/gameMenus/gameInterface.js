@@ -98,6 +98,7 @@ class GameInterface extends Phaser.Scene {
     	var rectangulo = this.add.sprite(55, 370, 'rectangle').play('rect').setOrigin(0.5,0.5).setScale(0.9);
     	rectangulo.depth = 0;
     	
+    	
     	ucContainer.add(this.hoverMatsUC);
     	ucContainer.add(this.unionCoinstxtUC);
     	ucContainer.add(this.unionCoinstxtdesc1UC);
@@ -396,8 +397,7 @@ class GameInterface extends Phaser.Scene {
 			}
 			game.global.menu = 'ConstruccionMenu';
 			game.scene.run('ConstruccionMenu');
-			
-			
+			rectangulo.destroy();
     	});
     	
     	

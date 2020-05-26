@@ -51,6 +51,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.spritesheet( 'generador' , 'assets/sprites/Edificios/Generador.png', {frameWidth:127,frameHeight:102});
 		this.load.spritesheet( 'laboratorioInvestigacion' , 'assets/sprites/Edificios/LaboratorioInvestigacion.png', {frameWidth:194,frameHeight:154});
 		this.load.spritesheet( 'centroComercio' , 'assets/sprites/Edificios/CentroComercio.png', {frameWidth:128,frameHeight:169});
+		this.load.spritesheet( 'arrow' , 'assets/interface/Gameplay/arrow1.png', {frameWidth:26,frameHeight:40});
 		this.load.image('enConstruccion1', 'assets/sprites/Edificios/modulo1.png');
 		this.load.image('enConstruccion2', 'assets/sprites/Edificios/modulo2.png');
 		this.load.image('enConstruccion3', 'assets/sprites/Edificios/modulo3.png');
