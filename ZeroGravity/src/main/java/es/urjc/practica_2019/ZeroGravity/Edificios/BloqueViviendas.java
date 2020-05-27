@@ -3,6 +3,7 @@ package es.urjc.practica_2019.ZeroGravity.Edificios;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import org.bson.Document;
 import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +14,7 @@ import es.urjc.practica_2019.ZeroGravity.Task;
 import es.urjc.practica_2019.ZeroGravity.TaskMaster;
 import es.urjc.practica_2019.ZeroGravity.WebsocketGameHandler;
 
-public class BloqueViviendas extends Edificio {
+public class BloqueViviendas extends GeneradorRecursos {
 	
 	private static final TaskMaster TASKMASTER = TaskMaster.INSTANCE;
 
@@ -37,6 +38,8 @@ public class BloqueViviendas extends Edificio {
 										  NIVEL6, NIVEL7, NIVEL8, NIVEL9, NIVEL10,
 										  NIVEL11, NIVEL12, NIVEL13, NIVEL14, NIVEL15};
 	public static final int[] capacidad = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75};	
+	
+	public static final int DINERO_POR_COLONO = 4;
 	
 	private int colonos;
 	
@@ -65,6 +68,32 @@ public class BloqueViviendas extends Edificio {
 		this.sprite = "bloqueViviendas";
 		this.maxLevel = 15;
 	}
+	
+	public BloqueViviendas(Player player, int x, int y, Edificio depends, int id, boolean lleno, boolean produciendo, Document date) {
+		
+		this.player = player;
+		this.id = id;
+		this.x = x;
+		this.y = y;
+		this.height = 1;
+		this.width = 1;
+		this.level = 0;
+		this.maxLevel = 15;
+		this.buildingDependsOn = depends;
+		this.sprite = "bloqueViviendas";
+		this.setLleno(lleno);
+		this.setProduciendo(produciendo);
+		int year = date.getInteger("year");
+		int month = date.getInteger("month");
+		int day = date.getInteger("day");
+		int hour = date.getInteger("hour");
+		int minute = date.getInteger("minute");
+		this.setProductionBeginTime(LocalDateTime.of(year, month, day, hour, minute));
+		
+		if (!this.isLleno() && !this.isProduciendo()) {
+			this.producir();
+		}
+	}
 
 	public int getCapacidad() {
 		if (!this.isEnConstruccion() && this.getLevel() > 0) {
@@ -85,6 +114,96 @@ public class BloqueViviendas extends Edificio {
 
 	public void setColonos(int colonos) {
 		this.colonos = colonos;
+	}
+	
+	@Override
+	public boolean needsEnergy() {		
+		if (!this.isEnConstruccion() && this.getLevel() > 0) {
+			return this.getEnergia() < BloqueViviendas.COSTS[this.level-1][0];
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Override
+	public void addEnergy() {
+		this.setEnergia(this.getEnergia()+1);
+		if (!this.needsEnergy()) {
+			this.producir();
+		}
+	}
+	
+	@Override
+	public void producir() {
+		if (this.getLevel() > 0) {
+			if (this.getColonos() > 0 && !this.needsEnergy() && !this.getProduciendo()) {
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "EDIFICIO PRODUCIENDO");
+				msg.put("id", this.id);
+				synchronized (player.getSession()) {
+					try {
+						if (player.getSession().isOpen()) {				
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+					} catch (IOException e) {
+						System.err.println("Exception sending message " + msg.toString());
+						e.printStackTrace(System.err);
+					}
+				}
+				msg.put("event", "PRODUCCION DE EDIFICIO");
+				Task task = null;
+				Thread callback = new Thread(() -> this.callbackProducir());
+				callback.start();
+				task = new Task(this.player, 1, msg, callback);
+				task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+				TASKMASTER.addTask(task);
+				this.setProduciendo(true);
+				this.setProductionBeginTime(task.getBeginDate());
+				this.setLevelProduciendo(this.getLevel());
+				player.saveEdificios();
+			}
+		}
+	}
+	
+	@Override
+	public void callbackProducir() {
+		try {
+			Thread.currentThread().join();
+		} catch (InterruptedException e) {
+			System.out.println("Bloque de viviendas " + id + " ha producido");
+			if (this.player.getSession().isOpen()) {
+				player.setCreditos(player.getCreditos() + this.DINERO_POR_COLONO);
+				this.setProduciendo(false);
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "GET_PLAYER_RESOURCES");
+				msg.put("metal", player.getMetal());
+				msg.put("energia", player.getEnergia());
+				msg.put("ceramica", player.getCeramica());
+				msg.put("creditos", player.getCreditos());
+				msg.put("punctuacion", player.getPuntuacion());
+				msg.put("unionCoins", player.getUnionCoins());
+				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
+				this.producir();
+				try {
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
+				}
+				catch (IOException e1) {
+					System.err.println("Exception sending message " + msg.toString());
+					e.printStackTrace(System.err);
+				}		
+			}
+			else {
+				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
+				if (p != null) {
+					p.setCreditos(p.getCreditos() + this.DINERO_POR_COLONO);
+					((GeneradorRecursos) p.getEdificio(this.getId())).setProduciendo(false);
+					((GeneradorRecursos) p.getEdificio(this.getId())).producir();					
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -240,6 +359,29 @@ public class BloqueViviendas extends Edificio {
 				task.setBeginDate(buildingBeginTime);
 				if (TASKMASTER.addTask(task)) {
 					callback.start();
+				}
+			}
+			else if (this.isProduciendo()){
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "PRODUCCION DE EDIFICIO");
+				msg.put("id", this.id);
+				try {
+					if (player.getSession().isOpen()) {				
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+					}
+				} catch (IOException e) {
+					System.err.println("Exception sending message " + msg.toString());
+					e.printStackTrace(System.err);
+				}
+				Task task = null;
+				Thread callback = new Thread(() -> this.callbackProducir());
+				task = new Task(this.player, 1, msg, callback);
+				task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+				task.setBeginDate(this.getProductionBeginTime());
+				if (TASKMASTER.addTask(task)) {
+					callback.start();				
 				}
 			}
 			player.saveEdificios();

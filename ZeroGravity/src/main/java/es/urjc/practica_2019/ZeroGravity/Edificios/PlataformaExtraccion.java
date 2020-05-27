@@ -223,7 +223,7 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 						synchronized (player.getSession()) {
 							player.getSession().sendMessage(new TextMessage(msg.toString()));
 						} 
-						
+						this.player.saveEdificios();	
 					}
 					else {
 						this.producir();
@@ -232,22 +232,22 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 				catch (IOException e1) {
 					System.err.println("Exception sending message " + msg.toString());
 					e.printStackTrace(System.err);
-				}
-				this.player.saveEdificios();				
+				}		
 			}
 			else {
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
-					((GeneradorRecursos) p.getEdificio(this.getId())).setStock(this.getStock() + this.COSTS[this.level-1][0]);
+					((GeneradorRecursos) p.getEdificio(this.getId())).setStock(this.getStock() + this.RECURSOS_GENERADOS[this.level-1][0]);
 					((GeneradorRecursos) p.getEdificio(this.getId())).setProduciendo(false);
-					if (((GeneradorRecursos) p.getEdificio(this.getId())).getStock() > this.COSTS[this.level-1][1]) {
-						((GeneradorRecursos) p.getEdificio(this.getId())).setStock(this.COSTS[this.level-1][1]);
+					if (((GeneradorRecursos) p.getEdificio(this.getId())).getStock() > this.RECURSOS_GENERADOS[this.level-1][1]) {
+						((GeneradorRecursos) p.getEdificio(this.getId())).setStock(this.RECURSOS_GENERADOS[this.level-1][1]);
 						((GeneradorRecursos) p.getEdificio(this.getId())).setLleno(true);
+						p.saveEdificios();
 					}
 					else {
 						((GeneradorRecursos) p.getEdificio(this.getId())).producir();
 					}
-					p.saveEdificios();
+					
 				}
 			}
 		}
@@ -272,7 +272,7 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 			}
 		}
 		this.producir();
-		player.saveEdificios();
+		//player.saveEdificios();
 	}
 	
 	@Override
@@ -420,7 +420,7 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 			}
 			else if (this.isProduciendo()){
 				ObjectNode msg = mapper.createObjectNode();
-				msg.put("event", "EDIFICIO LLENO");
+				msg.put("event", "PRODUCCION DE EDIFICIO");
 				msg.put("id", this.id);
 				try {
 					if (player.getSession().isOpen()) {				

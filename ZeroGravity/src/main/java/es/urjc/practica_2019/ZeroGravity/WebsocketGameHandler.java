@@ -677,6 +677,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event", "BLOQUE VIVIENDAS MENU");
 				msg.put("id", node.get("id").asInt());
 				msg.put("colonos", ((BloqueViviendas) player.getEdificio(node.get("id").asInt())).getColonosString());
+				msg.put("energy", ((BloqueViviendas) player.getEdificio(node.get("id").asInt())).getEnergia());
+				msg.put("energiaNecesaria", 
+						BloqueViviendas.COSTS[player.getEdificio(node.get("id").asInt()).getLevel() - 1][0]);
 				synchronized (player.getSession()) {
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
 				}

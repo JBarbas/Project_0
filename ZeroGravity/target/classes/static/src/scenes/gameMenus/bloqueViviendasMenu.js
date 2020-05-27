@@ -10,10 +10,12 @@ class BloqueViviendasMenu extends Phaser.Scene {
     	if (game.global.DEBUG_MODE) {
 			console.log("[DEBUG] Entering **BLOQUE DE VIVIENDAS** menu");
 		}
-    	let msg = new Object();
-		msg.event = 'GET BLOQUE VIVIENDAS MENU';
-		msg.id = data.miEdificio.id;
-		game.global.socket.send(JSON.stringify(msg));
+    	if (!data.miEdificio.enConstruccion) {
+	    	let msg = new Object();
+			msg.event = 'GET BLOQUE VIVIENDAS MENU';
+			msg.id = data.miEdificio.id;
+			game.global.socket.send(JSON.stringify(msg));
+    	}
     }
     
     preload () {
@@ -102,8 +104,14 @@ class BloqueViviendasMenu extends Phaser.Scene {
 	    	});
 	    	
 	    	//  CONTENEDOR EDIFICIO
-	    	this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px', fontWeight: 'bold' });
+	    	this.colonos = this.add.text(100, 200, "Colonos: Cargando...", { fontFamily: '"pantonBlack"', color: 'white', fontSize: '30px', fontWeight: 'bold' });
 	    	edificiosContainer.add(this.colonos);
+	    	// Añadimos la energía necesaria y suministrada en este edificio
+			this.energia = this.add.text(100, 250, "Energía: Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
+			edificiosContainer.add(this.energia);
+			// Añadimos la cerámica almacenada
+			this.produccion = this.add.text(100, 300, "Creditos/m: cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '20px' });
+			edificiosContainer.add(this.produccion);
 	    	
 	    	//  CONTENEDOR DETALLES
 	    	// Se añade la descripción del edificio
