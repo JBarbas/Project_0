@@ -475,7 +475,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	// Se añade la imagen de siguiente nivel
 	    		var edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprite).setOrigin(0.5, 0.5).setScale(0.8, 0.8).setFrame(this.miEdificio.level);
 	    		mejorasContainer.add(edificioSigNivel);
-	    		var nivelEdifSprite = this.miEdificio.level;
+	    		this.nivelEdifSprite = this.miEdificio.level+1;
 	    		//var nE = data.miEdificio.level;
 	    		//var nivelEdificioActual = nE;
 	    		// Se añade la descripción del siguiente nivel
@@ -485,7 +485,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	        	mejorasContainer.add(this.descSigNivel);
 	        	
 	    		this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-	    		this.nivelSuperior = this.add.text(340, 799, data.miEdificio.level+1, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
+	    		this.nivelSuperior = this.add.text(340, 799, this.nivelEdifSprite, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
 		    		    	
 		    	this.subirNivel.on('pointerover',function(pointer){
 		    		this.setFrame(1);
@@ -510,13 +510,12 @@ class CentroMandoMenu extends Phaser.Scene {
 		    		game.global.effects.pulsarBoton.play();
 		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
 		    		
-		    		nivelEdifSprite-=1;
+		    		scene.nivelEdifSprite-=1;
 		    		game.scene.getScene('CentroMandoMenu').arrowright.visible = true;
-		    		if(nivelEdifSprite == data.miEdificio.level){
+
+	    			edificioSigNivel.setFrame(scene.nivelEdifSprite-1);
+		    		if(scene.nivelEdifSprite <= data.miEdificio.level+1){
 		    			game.scene.getScene('CentroMandoMenu').arrowleft.visible = false;
-		    		}else{
-		    			edificioSigNivel.setFrame(nivelEdifSprite);
-		    			
 		    		}
 		    		
 		    		/*scene.tweens.add({
@@ -532,12 +531,10 @@ class CentroMandoMenu extends Phaser.Scene {
 		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
 		    		
 		    		game.scene.getScene('CentroMandoMenu').arrowleft.visible = true;
-		    		nivelEdifSprite+=1;
-		    		if(nivelEdifSprite == data.miEdificio.levelMax){
+		    		scene.nivelEdifSprite+=1;
+		    		edificioSigNivel.setFrame(scene.nivelEdifSprite-1);
+		    		if(scene.nivelEdifSprite == data.miEdificio.levelMax){
 		    			game.scene.getScene('CentroMandoMenu').arrowright.visible = false;
-		    			
-		    		}else{
-		    			edificioSigNivel.setFrame(nivelEdifSprite);
 		    			
 		    		}
 		    	});
@@ -632,6 +629,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    
     }
     update(time, delta) {
+    	this.nivelSuperior.text = this.nivelEdifSprite;
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();
