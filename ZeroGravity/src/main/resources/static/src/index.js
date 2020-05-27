@@ -130,6 +130,8 @@ window.onload = function() {
 		containerTut: null,
 		cortina: null,
 		textoTut: null,
+		animArrow: null,
+		edifTutArrow: null,
 		idioma : navigator.language
 	}
 	

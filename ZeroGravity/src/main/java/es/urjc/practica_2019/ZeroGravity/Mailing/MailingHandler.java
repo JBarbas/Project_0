@@ -34,6 +34,7 @@ public class MailingHandler {
 		fixedContentAtributes.put("youtube", "youtube");
 		fixedContentAtributes.put("instagram", "instagram");
 		fixedContentAtributes.put("mail", "mail");
+		fixedContentAtributes.put("check", "check");
 		
 		//Añadimos la referencia a los archivos(resources)
 		fixedResourcesEmbebed.put("logo",new ClassPathResource("mailing/images/logo.png"));
@@ -42,6 +43,7 @@ public class MailingHandler {
 		fixedResourcesEmbebed.put("youtube",new ClassPathResource("mailing/images/youtube-circle-colored.png"));
 		fixedResourcesEmbebed.put("instagram",new ClassPathResource("mailing/images/instagram-circle-colored.png"));
 		fixedResourcesEmbebed.put("mail",new ClassPathResource("mailing/images/mail-circle-colored.png"));
+		fixedResourcesEmbebed.put("check", new ClassPathResource("mailing/images/check.png"));
 	}
 	
 	public void execute() {

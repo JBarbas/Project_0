@@ -37,7 +37,9 @@ public class validateEmailHandler extends MailingHandler{
 	private void validateEmailHandler(String to) {
 	
 		//Añadimos la contraseña al mensaje y lo mandamos
-		String content = MailContentBuilder.build(layout);
+		HashMap<String,String> auxHashmap =  new HashMap<String, String>(fixedContentAtributes);
+		
+		String content = MailContentBuilder.build(auxHashmap,layout);
 		emailService.prepareAndSend(to,from, subject,content,fixedResourcesEmbebed);
 	}
 }
