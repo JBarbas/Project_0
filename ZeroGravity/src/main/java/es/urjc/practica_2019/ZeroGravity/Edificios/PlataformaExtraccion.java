@@ -420,7 +420,7 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 			}
 			else if (this.isProduciendo()){
 				ObjectNode msg = mapper.createObjectNode();
-				msg.put("event", "EDIFICIO LLENO");
+				msg.put("event", "PRODUCCION DE EDIFICIO");
 				msg.put("id", this.id);
 				try {
 					if (player.getSession().isOpen()) {				

@@ -719,6 +719,9 @@ window.onload = function() {
 			    		msgBack.id = msg.id;
 			    		game.global.socket.send(JSON.stringify(msgBack));
 			    		game.scene.getScene("PlataformaExtraccionMenu").stock.text = 'Stock: 0/' + game.global.edificios.get(msg.id).recursos[game.global.edificios.get(msg.id).level-1][1];
+			    		if (game.global.edificios.get(msg.id).recolectIcon != null) {
+			    			game.global.edificios.get(msg.id).recolectIcon.destroy();
+			    		}
 			    		this.destroy();
 			    	});
 					game.scene.getScene("PlataformaExtraccionMenu").edificiosContainer.add(btnRecolectar);
@@ -751,6 +754,9 @@ window.onload = function() {
 			    		msgBack.id = msg.id;
 			    		game.global.socket.send(JSON.stringify(msgBack));
 			    		game.scene.getScene("PlataformaExtraccionMenu").stock.text = 'Stock: 0/' + game.global.edificios.get(msg.id).recursos[game.global.edificios.get(msg.id).level-1][1];
+			    		if (game.global.edificios.get(msg.id).recolectIcon != null) {
+			    			game.global.edificios.get(msg.id).recolectIcon.destroy();
+			    		}
 			    		this.destroy();
 			    	});
 					game.scene.getScene("PlataformaExtraccionMenu").edificiosContainer.add(btnRecolectar);
@@ -773,6 +779,8 @@ window.onload = function() {
 			}
 			if (!game.global.edificios.get(msg.id).enConstruccion) {
 				game.scene.getScene("BloqueViviendasMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
+				game.scene.getScene("BloqueViviendasMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energy + '/' + msg.energiaNecesaria;
+				game.scene.getScene("BloqueViviendasMenu").produccion.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue + '/m: +' + msg.colonos.split('/')[0] * 4;
 			}
 			break;
 		case 'TALLER MENU':

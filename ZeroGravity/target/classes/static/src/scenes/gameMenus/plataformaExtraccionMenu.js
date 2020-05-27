@@ -88,7 +88,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 		    	
 				detallesContainer.visible= true;
 				mejorasContainer.visible= false;
-				this.edificiosContainer.visible= false;
+				scene.edificiosContainer.visible= false;
 			});
 			this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
 			this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -96,7 +96,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 				detallesContainer.visible= false;
 				mejorasContainer.visible= true;
-				this.edificiosContainer.visible= false;
+				scene.edificiosContainer.visible= false;
 			});
 			this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
 			this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -104,7 +104,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 				detallesContainer.visible= false;
 				mejorasContainer.visible= false;
-				this.edificiosContainer.visible= true;
+				scene.edificiosContainer.visible= true;
 			});
 			
 			//  CONTENEDOR EDIFICIO

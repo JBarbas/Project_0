@@ -217,19 +217,19 @@ public class Player {
 		
 	}
 
-	public int getMetal() {
+	public synchronized int getMetal() {
 		return metal;
 	}
 
-	public void setMetal(int metal) {
+	public synchronized void setMetal(int metal) {
 		this.metal = metal;
 	}
 
-	public int getCeramica() {
+	public synchronized int getCeramica() {
 		return ceramica;
 	}
 
-	public void setCeramica(int ceramica) {
+	public synchronized void setCeramica(int ceramica) {
 		this.ceramica = ceramica;
 	}
 
@@ -251,35 +251,35 @@ public class Player {
 		return energia;
 	}
 
-	public void setEnergia(int energia) {
+	public synchronized void setEnergia(int energia) {
 		this.energia = energia;
 	}
 
-	public int getCreditos() {
+	public synchronized int getCreditos() {
 		return creditos;
 	}
 
-	public void setCreditos(int creditos) {
+	public synchronized void setCreditos(int creditos) {
 		this.creditos = creditos;
 	}
 
-	public int getUnionCoins() {
+	public synchronized int getUnionCoins() {
 		return unionCoins;
 	}
 
-	public void setUnionCoins(int unionCoins) {
+	public synchronized void setUnionCoins(int unionCoins) {
 		this.unionCoins = unionCoins;
 	}
 
-	public int getColonos() {
+	public synchronized int getColonos() {
 		return colonos;
 	}
 
-	public void setColonos(int colonos) {
+	public synchronized void setColonos(int colonos) {
 		this.colonos = colonos;
 	}
 
-	public void addColono() {
+	public synchronized void addColono() {
 		if (colonosMax - colonos > 0) {
 			colonos++;
 			for (BloqueViviendas v : viviendas) {
@@ -291,7 +291,7 @@ public class Player {
 		}
 	}
 	
-	public void quitarColono() {
+	public synchronized void quitarColono() {
 		if (colonos > 0) {
 			colonos--;
 			for (BloqueViviendas v : viviendas) {
