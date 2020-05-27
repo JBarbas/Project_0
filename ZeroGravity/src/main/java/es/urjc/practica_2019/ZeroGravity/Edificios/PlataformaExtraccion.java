@@ -40,22 +40,22 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 										  NIVEL11, NIVEL12, NIVEL13, NIVEL14, NIVEL15};
 	
 	//Establecemos los recursos que generan según su nivel
-	//recurso, tiempo(minutos), colonos
-	private final static int[] RECURSOS_NIVEL1 = {4, 2, 1};
-	private final static int[] RECURSOS_NIVEL2 = {100, 30, 4};
-	private final static int[] RECURSOS_NIVEL3 = {225, 60, 7};
-	private final static int[] RECURSOS_NIVEL4 = {225, 60, 10};
-	private final static int[] RECURSOS_NIVEL5 = {225, 60, 13};
-	private final static int[] RECURSOS_NIVEL6 = {225, 60, 17};
-	private final static int[] RECURSOS_NIVEL7 = {225, 60, 20};
-	private final static int[] RECURSOS_NIVEL8 = {225, 60, 23};
-	private final static int[] RECURSOS_NIVEL9 = {225, 60, 26};
-	private final static int[] RECURSOS_NIVEL10 = {225, 60, 29};
-	private final static int[] RECURSOS_NIVEL11 = {225, 60, 32};
-	private final static int[] RECURSOS_NIVEL12 = {225, 60, 35};
-	private final static int[] RECURSOS_NIVEL13 = {225, 60, 38};
-	private final static int[] RECURSOS_NIVEL14 = {225, 60, 41};
-	private final static int[] RECURSOS_NIVEL15 = {225, 60, 45};
+	//recurso por minuto, almacenamiento, colonos
+	private final static int[] RECURSOS_NIVEL1 = {4, 120, 1};
+	private final static int[] RECURSOS_NIVEL2 = {6, 270, 4};
+	private final static int[] RECURSOS_NIVEL3 = {8, 480, 7};
+	private final static int[] RECURSOS_NIVEL4 = {10, 900, 10};
+	private final static int[] RECURSOS_NIVEL5 = {14, 1680, 13};
+	private final static int[] RECURSOS_NIVEL6 = {18, 3240, 17};
+	private final static int[] RECURSOS_NIVEL7 = {22, 5280, 20};
+	private final static int[] RECURSOS_NIVEL8 = {26, 7800, 23};
+	private final static int[] RECURSOS_NIVEL9 = {30, 10800, 26};
+	private final static int[] RECURSOS_NIVEL10 = {36, 15120, 29};
+	private final static int[] RECURSOS_NIVEL11 = {42, 20160, 32};
+	private final static int[] RECURSOS_NIVEL12 = {48, 25920, 35};
+	private final static int[] RECURSOS_NIVEL13 = {54, 32400, 38};
+	private final static int[] RECURSOS_NIVEL14 = {60, 39600, 41};
+	private final static int[] RECURSOS_NIVEL15 = {70, 50400, 45};
 	private final static int [][] RECURSOS_GENERADOS = {RECURSOS_NIVEL1, RECURSOS_NIVEL2, RECURSOS_NIVEL3,
 														RECURSOS_NIVEL4, RECURSOS_NIVEL5, RECURSOS_NIVEL6,
 														RECURSOS_NIVEL7, RECURSOS_NIVEL8, RECURSOS_NIVEL9,
@@ -64,7 +64,7 @@ public class PlataformaExtraccion extends GeneradorRecursos {
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
-public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id) {
+	public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int id) {
 		
 		this.player = player;
 		this.id = id;
@@ -174,19 +174,21 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 				ObjectNode msg = mapper.createObjectNode();
 				msg.put("event", "EDIFICIO PRODUCIENDO");
 				msg.put("id", this.id);
-				try {
-					if (player.getSession().isOpen()) {				
-						player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					try {
+						if (player.getSession().isOpen()) {				
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+					} catch (IOException e) {
+						System.err.println("Exception sending message " + msg.toString());
+						e.printStackTrace(System.err);
 					}
-				} catch (IOException e) {
-					System.err.println("Exception sending message " + msg.toString());
-					e.printStackTrace(System.err);
 				}
-				msg.put("event", "EDIFICIO LLENO");
+				msg.put("event", "PRODUCCION DE EDIFICIO");
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackProducir());
 				callback.start();
-				task = new Task(this.player, this.RECURSOS_GENERADOS[this.level-1][1], msg, callback);
+				task = new Task(this.player, 1, msg, callback);
 				task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				TASKMASTER.addTask(task);
 				this.setProduciendo(true);
@@ -204,15 +206,47 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		} catch (InterruptedException e) {
 			System.out.println("Plataforma de Extracción " + id + " ha producido");
 			if (this.player.getSession().isOpen()) {
-				this.setLleno(true);
+				this.setStock(this.getStock() + this.RECURSOS_GENERADOS[this.level-1][0]);
 				this.setProduciendo(false);
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "CERAMICA PRODUCIDA");
+				msg.put("id", this.id);
+				msg.put("stock", this.getStock());
+				try {
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
+					if (this.getStock() > this.RECURSOS_GENERADOS[this.level-1][1]) {
+						this.setStock(this.RECURSOS_GENERADOS[this.level-1][1]);
+						this.setLleno(true);
+						msg.put("event", "EDIFICIO LLENO");
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						} 
+						
+					}
+					else {
+						this.producir();
+					}
+				}
+				catch (IOException e1) {
+					System.err.println("Exception sending message " + msg.toString());
+					e.printStackTrace(System.err);
+				}
 				this.player.saveEdificios();				
 			}
 			else {
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
-					((GeneradorRecursos) p.getEdificio(this.getId())).setLleno(true);
+					((GeneradorRecursos) p.getEdificio(this.getId())).setStock(this.getStock() + this.COSTS[this.level-1][0]);
 					((GeneradorRecursos) p.getEdificio(this.getId())).setProduciendo(false);
+					if (((GeneradorRecursos) p.getEdificio(this.getId())).getStock() > this.COSTS[this.level-1][1]) {
+						((GeneradorRecursos) p.getEdificio(this.getId())).setStock(this.COSTS[this.level-1][1]);
+						((GeneradorRecursos) p.getEdificio(this.getId())).setLleno(true);
+					}
+					else {
+						((GeneradorRecursos) p.getEdificio(this.getId())).producir();
+					}
 					p.saveEdificios();
 				}
 			}
@@ -221,12 +255,13 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 	
 	@Override
 	public void recolectar() {
-		if (this.isLleno()) {
-			this.setLleno(false);	
-			ObjectNode msg = mapper.createObjectNode();			
-			msg.put("event", "CERAMICA RECOLECTADA");
-			player.setCeramica(player.getCeramica() + PlataformaExtraccion.RECURSOS_GENERADOS[this.getLevelProduciendo()-1][0]);
-			msg.put("ceramica", player.getCeramica());
+		this.setLleno(false);	
+		ObjectNode msg = mapper.createObjectNode();			
+		msg.put("event", "CERAMICA RECOLECTADA");
+		player.setCeramica(player.getCeramica() + this.getStock());
+		this.setStock(0);
+		msg.put("ceramica", player.getCeramica());
+		synchronized (player.getSession()) {
 			try {	
 				if (player.getSession().isOpen()) {				
 					player.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -235,8 +270,9 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 				System.err.println("Exception sending message " + msg.toString());
 				e.printStackTrace(System.err);
 			}
-			this.producir();
 		}
+		this.producir();
+		player.saveEdificios();
 	}
 	
 	@Override
@@ -276,13 +312,15 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		msg.put("construccionDateDay", this.getBuildingBeginTime().getDayOfMonth());
 		msg.put("construccionDateHour", this.getBuildingBeginTime().getHour());
 		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
-		try {
-			if (player.getSession().isOpen()) {
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+		synchronized (player.getSession()) {
+			try {
+				if (player.getSession().isOpen()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
+			} catch (IOException e) {
+				System.err.println("Exception sending message " + msg.toString());
+				e.printStackTrace(System.err);
 			}
-		} catch (IOException e) {
-			System.err.println("Exception sending message " + msg.toString());
-			e.printStackTrace(System.err);
 		}
 		msg.put("event", "EDIFICIO CONSTRUIDO");
 		msg.put("level", this.getLevel()+1);
@@ -307,7 +345,9 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 				this.setEnConstruccion(false);
 				this.player.saveEdificios();
 				this.player.getEnergia();
-				WebsocketGameHandler.updateInfo(player, "REFRESH GRID", player.getSession());
+				synchronized (player.getSession()) {
+					WebsocketGameHandler.updateInfo(player, "REFRESH GRID", player.getSession());
+				}
 			} else {
 				Player p = WebsocketGameHandler.getPlayers().get(this.player.getId());
 				if (p != null) {
@@ -341,7 +381,9 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 		msg.put("construccionDateMinute", this.getBuildingBeginTime().getMinute());
 		try {
 			if (player.getSession().isOpen()) {
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 			}
 		} catch (IOException e) {
 			System.err.println("Exception sending message " + msg.toString());
@@ -359,7 +401,9 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 				msg.put("id", this.getId());
 				try {
 					if (player.getSession().isOpen()) {
-						player.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 					}
 				} catch (IOException e) {
 					System.err.println("Exception sending message " + msg.toString());
@@ -380,7 +424,9 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 				msg.put("id", this.id);
 				try {
 					if (player.getSession().isOpen()) {				
-						player.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 					}
 				} catch (IOException e) {
 					System.err.println("Exception sending message " + msg.toString());
@@ -388,7 +434,7 @@ public PlataformaExtraccion(Player player, int x, int y, Edificio depends, int i
 				}
 				Task task = null;
 				Thread callback = new Thread(() -> this.callbackProducir());
-				task = new Task(this.player, this.RECURSOS_GENERADOS[this.level-1][1], msg, callback);
+				task = new Task(this.player, 1, msg, callback);
 				task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
 				task.setBeginDate(this.getProductionBeginTime());
 				if (TASKMASTER.addTask(task)) {

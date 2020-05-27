@@ -700,8 +700,60 @@ window.onload = function() {
 			if (!game.global.edificios.get(msg.id).enConstruccion) {
 				game.scene.getScene("PlataformaExtraccionMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
 				game.scene.getScene("PlataformaExtraccionMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energia + "/" + msg.energiaNecesaria;
+				game.scene.getScene("PlataformaExtraccionMenu").stock.text = 'Stock: ' + msg.stock + '/' + game.global.edificios.get(msg.id).recursos[game.global.edificios.get(msg.id).level-1][1];
+				
+				if (msg.stock > 0) {
+					btnRecolectar = game.scene.getScene("PlataformaExtraccionMenu").add.image(100, 350, 'btnRecolectar').setOrigin(0, 0).setInteractive();
+					game.scene.getScene("PlataformaExtraccionMenu").btnRecolectar = btnRecolectar;
+					btnRecolectar.on('pointerover',function(pointer){
+			    	    this.setFrame(1);
+			    	})
+			    	btnRecolectar.on('pointerout',function(pointer){
+			    	    this.setFrame(0);
+			    	})			    	
+			    	btnRecolectar.on('pointerdown', function(pointer, localX, localY, event){
+			    		let msgBack = new Object();
+			    		msgBack.event = 'RECOLECT';
+			    		msgBack.id = msg.id;
+			    		game.global.socket.send(JSON.stringify(msgBack));
+			    		game.scene.getScene("PlataformaExtraccionMenu").stock.text = 'Stock: 0/' + game.global.edificios.get(msg.id).recursos[game.global.edificios.get(msg.id).level-1][1];
+			    		this.destroy();
+			    	});
+					game.scene.getScene("PlataformaExtraccionMenu").edificiosContainer.add(btnRecolectar);
+				}
 			}
 			game.global.edificios.get(msg.id).produciendo = msg.produciendo;
+			break;
+		case 'CERAMICA PRODUCIDA':
+			if (game.global.DEBUG_MODE) {
+				console.log('[DEBUG] CERAMICA PRODUCIDA message recieved');
+				console.dir(msg);
+			}
+			if (game.scene.isActive(game.global.edificios.get(msg.id).menuScene)) {
+				if (game.scene.getScene("PlataformaExtraccionMenu").miEdificio.id == msg.id) {
+					game.scene.getScene("PlataformaExtraccionMenu").stock.text = 'Stock: ' + msg.stock + '/' + game.global.edificios.get(msg.id).recursos[game.global.edificios.get(msg.id).level-1][1];
+					if (game.scene.getScene("PlataformaExtraccionMenu").btnRecolectar != null) {
+						game.scene.getScene("PlataformaExtraccionMenu").btnRecolectar.destroy();
+					}
+					btnRecolectar = game.scene.getScene("PlataformaExtraccionMenu").add.image(100, 350, 'btnRecolectar').setOrigin(0, 0).setInteractive();
+					game.scene.getScene("PlataformaExtraccionMenu").btnRecolectar = btnRecolectar;
+					btnRecolectar.on('pointerover',function(pointer){
+			    	    this.setFrame(1);
+			    	})
+			    	btnRecolectar.on('pointerout',function(pointer){
+			    	    this.setFrame(0);
+			    	})			    	
+			    	btnRecolectar.on('pointerdown', function(pointer, localX, localY, event){
+			    		let msgBack = new Object();
+			    		msgBack.event = 'RECOLECT';
+			    		msgBack.id = msg.id;
+			    		game.global.socket.send(JSON.stringify(msgBack));
+			    		game.scene.getScene("PlataformaExtraccionMenu").stock.text = 'Stock: 0/' + game.global.edificios.get(msg.id).recursos[game.global.edificios.get(msg.id).level-1][1];
+			    		this.destroy();
+			    	});
+					game.scene.getScene("PlataformaExtraccionMenu").edificiosContainer.add(btnRecolectar);
+				}
+			}
 			break;
 		case 'LABORATORIO INVESTIGACION MENU':
 			if (game.global.DEBUG_MODE) {

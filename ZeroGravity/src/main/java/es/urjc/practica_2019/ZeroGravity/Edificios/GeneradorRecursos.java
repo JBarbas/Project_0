@@ -13,6 +13,7 @@ public class GeneradorRecursos extends Edificio {
 	private int colonos;
 	private boolean averiado;
 	private boolean lleno = false;	
+	private int stock = 0;
 	private boolean produciendo = false;
 	private int levelProduciendo = 1;
 	private LocalDateTime productionBeginTime = LocalDateTime.now();
@@ -50,6 +51,14 @@ public class GeneradorRecursos extends Edificio {
 		this.lleno = lleno;
 	}
 	
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
 	public boolean isProduciendo() {
 		return produciendo;
 	}

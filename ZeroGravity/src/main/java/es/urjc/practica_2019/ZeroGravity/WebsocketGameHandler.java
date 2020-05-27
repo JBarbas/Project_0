@@ -183,7 +183,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("event", "LOGIN FAILED");
 					msg.put("data", "Usuario y contraseña no válidos");
 				}
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "REGISTER":
 				filter = new Document("name", node.get("name").asText());
@@ -223,7 +225,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						validateEmailHandler.execute(player.getEmail());
 					}
 				}
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "UPDATE USERNAME":
 				filter = new Document("name", node.get("name").asText());
@@ -240,7 +244,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("resultado", false);
 				}
 				msg.put("event", "UPDATE USERNAME RESPONSE");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "UPDATE PASSWORD":
 				if (player.passwordMatches(node.get("oldPassword").asText())
@@ -250,7 +256,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 							new Document("$set", new Document("password", player.getPassword())));
 					msg.put("event", "UPDATE USERNAME RESPONSE");
 					msg.put("resultado", "Contraseña cambiada correctamente");
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 					System.out.println("Hola");
 				}
 				System.out.println("Ciao");
@@ -279,7 +287,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("resultado", false);
 				}
 				msg.put("event", "UPDATE EMAIL RESPONSE");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "ASK PLAYER INFO":
 				if (!player.isGameStarted()) {
@@ -294,7 +304,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 
 			case "BUILD":
@@ -308,7 +320,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				player.savePuntuacion();
 				msg.put("event", "ACTUALIZAR PUNTUACION");
 				msg.put("punctuacion", player.getPuntuacion());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "EDIT":
 				Iterator<JsonNode> edificios = node.get("edificios").iterator();
@@ -328,7 +342,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 
 			case "LEVELUP_BUILDING":
@@ -480,15 +496,21 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					player.savePuntuacion();
 					msg.put("event", "ACTUALIZAR PUNTUACION");
 					msg.put("punctuacion", player.getPuntuacion());
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				msg.put("event", "ANSWER_LEVELUP_BUILDING");
 				msg.put("resultado", canILevelUp);
 				msg.put("id", node.get("id").asInt());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 
 				msg.put("event", "REFRESH MENU");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 
 				msg = mapper.createObjectNode();
 				msg.put("event", "GET_PLAYER_RESOURCES");
@@ -499,14 +521,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "ASK_LEVELUP_ROBOT":
 				canILevelUp = ((Taller) player.getEdificio(node.get("taller").asInt())).getRobot(node.get("id").asInt())
 						.levelUp();
 				msg.put("event", "REFRESH MENU");
 				msg.put("id", node.get("taller").asInt());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "RECOLECT":
 				player.recolect(node.get("id").asInt());
@@ -515,7 +541,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				player.savePuntuacion();
 				msg.put("event", "ACTUALIZAR PUNTUACION");
 				msg.put("punctuacion", player.getPuntuacion());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "RECOLECTAR ROBOT":
 				((Taller) player.getEdificio(node.get("id").asInt())).getRobot(node.get("robotId").asInt())
@@ -533,14 +561,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.putPOJO("robots", arrayNodeRobots);
 				msg.put("metal", player.getMetal());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "ENVIAR":
 				((Taller) player.getEdificio(node.get("tallerId").asInt())).getRobot(node.get("robotId").asInt())
 						.producir();
 				msg.put("event", "REFRESH MENU");
 				msg.put("id", node.get("tallerId").asInt());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				player.saveEdificios();
 				break;
 			case "GET TUTORIAL INTRO":
@@ -553,7 +585,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "TUTORIAL INTRO");
 				msg.put("tutorialOpened", tutOpened);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET CENTRO DE MANDO MENU":
 				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
@@ -565,7 +599,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "CENTRO DE MANDO MENU");
 				msg.put("tutorialOpened", cdmOpened);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET CENTRO ADMINISTRATIVO MENU":
 				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
@@ -577,7 +613,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "CENTRO ADMINISTRATIVO MENU");
 				msg.put("tutorialOpened", caOpened);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET CENTRO DE COMERCIO MENU":
 				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
@@ -589,7 +627,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "CENTRO DE COMERCIO MENU");
 				msg.put("tutorialOpened", cdcOpened);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET CENTRO DE OPERACIONES MENU":
 				filter = new Document("name", player.getUsername()).append("password", player.getPassword());
@@ -601,7 +641,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "CENTRO DE OPERACIONES MENU");
 				msg.put("tutorialOpened", cdoOpened);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET PLATAFORMA EXTRACCION MENU":
 				msg.put("event", "PLATAFORMA EXTRACCION MENU");
@@ -610,9 +652,13 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("produciendo",
 						((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getProduciendo());
 				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
+				msg.put("stock", 
+						((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getStock());
 				msg.put("energiaNecesaria",
 						PlataformaExtraccion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel() - 1][0]);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET LABORATORIO INVESTIGACION MENU":
 				msg.put("event", "LABORATORIO INVESTIGACION MENU");
@@ -623,19 +669,25 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("energia", player.getEdificio(node.get("id").asInt()).getEnergia());
 				msg.put("energiaNecesaria",
 						LaboratorioInvestigacion.COSTS[player.getEdificio(node.get("id").asInt()).getLevel() - 1][0]);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET BLOQUE VIVIENDAS MENU":
 				msg.put("event", "BLOQUE VIVIENDAS MENU");
 				msg.put("id", node.get("id").asInt());
 				msg.put("colonos", ((BloqueViviendas) player.getEdificio(node.get("id").asInt())).getColonosString());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET GENERADOR MENU":
 				msg.put("event", "GENERADOR MENU");
 				msg.put("id", node.get("id").asInt());
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET TALLER MENU":
 				msg.put("event", "TALLER MENU");
@@ -654,7 +706,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.putPOJO("robots", arrayNodeRobots2);
 				msg.put("colonos", ((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).getColonosString());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET CONSTRUCCION MENU":
 				msg.put("event", "CONSTRUCCION MENU");
@@ -664,12 +718,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("cdcBlocked", myPlayer.getBoolean("cdcBlocked", true));
 				msg.put("cdoBlocked", myPlayer.getBoolean("cdoBlocked", true));
 				msg.put("labBlocked", myPlayer.getBoolean("labBlocked", true));
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "GET JOBS":
 				msg.put("event", "JOBS");
 				msg.put("jobs", player.getJobs());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "BUY CELL":
 				player.buyCell(node.get("i").asInt(), node.get("j").asInt());
@@ -679,7 +737,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				player.savePuntuacion();
 				msg.put("event", "ACTUALIZAR PUNTUACION");
 				msg.put("punctuacion", player.getPuntuacion());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "REFRESH GRID":
 				updateInfo(player, "REFRESH GRID", player.getSession());
@@ -689,7 +749,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event", "ENVIO DE COLONOS");
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 				msg.put("jobs", player.getJobs());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				msg = mapper.createObjectNode();
 				msg.put("event", "GET_PLAYER_RESOURCES");
 				msg.put("metal", player.getMetal());
@@ -699,7 +761,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "ADD COLONO":
 				((GeneradorRecursos) player.getEdificio(node.get("id").asInt())).addColono();
@@ -711,7 +775,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				player.saveEdificios();
 				player.saveRecursos();
 				break;
@@ -725,7 +791,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("punctuacion", player.getPuntuacion());
 				msg.put("unionCoins", player.getUnionCoins());
 				msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				player.saveEdificios();
 				player.saveRecursos();
 				break;
@@ -776,12 +844,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 						// informamos al cliente
 						msg.put("respuesta", ofertaAceptada);
-						player.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 					}
 				} else {
 
 					msg.put("respuesta", false);
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 
@@ -819,7 +891,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 
 				msg.put("event", "DELETED OFFER");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 
 			case "BUY AN OFFER":
@@ -883,19 +957,25 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						msg = mapper.createObjectNode();
 						msg.put("event", "OFFER PURCHASED");
 						msg.put("respuesta", puedoComprar);
-						player.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 						msg = mapper.createObjectNode();
 
 					} else {
 						msg.put("respuesta", puedoComprar);
-						player.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized (player.getSession()) {
+							player.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 					}
 				}
 				break;
 
 			case "I AM HERE":
 				msg.put("event", "OK");
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 
 			case "GIVE ME PUNCTUATIONS":
@@ -943,7 +1023,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "USERS FOUND");
 				msg.putPOJO("users", arrayNodeUsers);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "REQUEST FRIENDSHIP":
 				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())), 
@@ -960,7 +1042,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "USERS FOUND");
 				msg.putPOJO("users", arrayNodeRequests);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "ACCEPT FRIEND":
 				coll.updateOne(new Document("_id", new ObjectId(node.get("idTransmitter").asText())), 
@@ -981,7 +1065,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "USERS FOUND");
 				msg.putPOJO("users", arrayNodeRequests);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "DELETE FRIEND":
 				coll.updateOne(new Document("_id", new ObjectId(node.get("idReceiver").asText())),
@@ -999,7 +1085,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				msg.put("event", "USERS FOUND");
 				msg.putPOJO("users", arrayNodeRequests);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "SHOW CITY":
 				ObjectId idHost = new ObjectId(node.get("id").asText());
@@ -1029,7 +1117,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("event", "VISITOR CITY NAME");
 					msg.put("name", dbHost.get("cityName", "Unknown city"));
 					msg.put("username", host.getUsername());
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 					updateInfo(host, "PLAYER INFO", player.getSession());
 				}
 				break;
@@ -1040,7 +1130,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 							new Document("$set", new Document("cityName", cityName)));
 					msg.put("event", "CITY NAME CHANGED");
 					msg.put("name", cityName);
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 			case "GET FINISH CONSTRUCTION PRICE":
@@ -1053,7 +1145,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event",  "FINISH CONSTRUCTION PRICE");
 				msg.put("id", edificio.getId());
 				msg.put("price", price);
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "FINISH CONSTRUCTION":
 				edificio = player.getEdificio(node.get("id").asInt());
@@ -1067,7 +1161,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					TASKMASTER.completeTask(player.getId().toString() + edificio.getId() + 0);
 					msg.put("event", "REFRESH MENU");
 					msg.put("id", edificio.getId());
-					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized (player.getSession()) {
+						player.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 			case "DEBUG":
@@ -1076,7 +1172,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			case "REFRESH MY MENU":
 				msg.put("event", "REFRESH MENU");
 				msg.put("id", node.get("edificioId").asInt());
-				player.getSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized (player.getSession()) {
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+				}
 			default:
 				break;
 			}
@@ -1112,7 +1210,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 			msg.put("event", "SEND OFFERS");
 			msg.putPOJO("ofertas", offers);
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			synchronized (player.getSession()) {
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
 
 		} catch (Exception e) {
 			System.err.println("Exception sending message " + msg.toString());
@@ -1179,11 +1279,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		try {
 			msg.put("event", "ALL PUNCTUATIONS");
 			msg.put("todasLasPuntuaciones", todasLasPuntuaciones);
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			synchronized (player.getSession()) {
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
 			msg = mapper.createObjectNode();
 			msg.put("event", "ACTUALIZAR PUNTUACION");
 			msg.put("punctuacion", player.getPuntuacion());
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			synchronized (player.getSession()) {
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1215,11 +1319,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		try {
 			msg.put("event", "ALL PUNCTUATIONS");
 			msg.put("todasLasPuntuaciones", todasLasPuntuaciones);
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			synchronized (player.getSession()) {
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
 			msg = mapper.createObjectNode();
 			msg.put("event", "ACTUALIZAR PUNTUACION");
 			msg.put("punctuacion", player.getPuntuacion());
-			player.getSession().sendMessage(new TextMessage(msg.toString()));
+			synchronized (player.getSession()) {
+				player.getSession().sendMessage(new TextMessage(msg.toString()));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1295,7 +1403,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			msg.put("puntuacion", player.getPuntuacion());
 			msg.put("colonos", player.getColonos() + "/" + player.getColonosMax());
 			// Enviamos el mensaje al cliente
-			session.sendMessage(new TextMessage(msg.toString()));
+			synchronized (session) {
+				session.sendMessage(new TextMessage(msg.toString()));
+			}
 		} catch (Exception e) {
 			System.err.println("Exception sending message " + msg.toString());
 			e.printStackTrace(System.err);

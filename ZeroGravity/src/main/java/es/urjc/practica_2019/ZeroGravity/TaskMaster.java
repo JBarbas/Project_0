@@ -64,13 +64,17 @@ public class TaskMaster {
 				try {
 					// Informa al cliente de que la tarea ha terminado
 					if (t.getPlayer().getSession().isOpen()) {
-						t.getPlayer().getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+						synchronized (t.getPlayer().getSession()) {
+							t.getPlayer().getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+						}
 					}
 					else {
 						Player p = WebsocketGameHandler.getPlayers().get(t.getPlayer().getId());
 						if (p != null) {
 							if (p.getSession().isOpen()) {
-								p.getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+								synchronized (p.getSession()) {
+									p.getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+								}
 							}
 						}
 					}
@@ -101,13 +105,17 @@ public class TaskMaster {
 			try {
 				// Informa al cliente de que la tarea ha terminado
 				if (t.getPlayer().getSession().isOpen()) {
-					t.getPlayer().getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+					synchronized (t.getPlayer().getSession()) {
+						t.getPlayer().getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+					}
 				}
 				else {
 					Player p = WebsocketGameHandler.getPlayers().get(t.getPlayer().getId());
 					if (p != null) {
 						if (p.getSession().isOpen()) {
-							p.getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+							synchronized (p.getSession()) {
+								p.getSession().sendMessage(new TextMessage(t.getMsg().toString()));
+							}
 						}
 					}
 				}
