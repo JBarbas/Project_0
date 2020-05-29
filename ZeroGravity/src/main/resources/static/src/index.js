@@ -780,7 +780,12 @@ window.onload = function() {
 			if (!game.global.edificios.get(msg.id).enConstruccion) {
 				game.scene.getScene("BloqueViviendasMenu").colonos.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('colonos')[0].childNodes[0].nodeValue + msg.colonos;
 				game.scene.getScene("BloqueViviendasMenu").energia.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('energia')[0].childNodes[0].nodeValue + msg.energy + '/' + msg.energiaNecesaria;
-				game.scene.getScene("BloqueViviendasMenu").produccion.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue + '/m: +' + msg.colonos.split('/')[0] * 4;
+				if (msg.energy >= msg.energiaNecesaria) {
+					game.scene.getScene("BloqueViviendasMenu").produccion.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue + '/m: +' + msg.colonos.split('/')[0] * 4;
+				}
+				else {
+					game.scene.getScene("BloqueViviendasMenu").produccion.text = game.cache.xml.get(game.global.idioma).getElementsByTagName('creditos')[0].childNodes[0].nodeValue + '/m: +' + 0;
+				}
 			}
 			break;
 		case 'TALLER MENU':

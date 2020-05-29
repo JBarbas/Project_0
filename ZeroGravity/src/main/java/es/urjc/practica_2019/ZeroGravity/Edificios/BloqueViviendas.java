@@ -137,31 +137,36 @@ public class BloqueViviendas extends GeneradorRecursos {
 	@Override
 	public void producir() {
 		if (this.getLevel() > 0) {
-			if (this.getColonos() > 0 && !this.needsEnergy() && !this.getProduciendo()) {
-				ObjectNode msg = mapper.createObjectNode();
-				msg.put("event", "EDIFICIO PRODUCIENDO");
-				msg.put("id", this.id);
-				synchronized (player.getSession()) {
-					try {
-						if (player.getSession().isOpen()) {				
-							player.getSession().sendMessage(new TextMessage(msg.toString()));
+			if (this.getColonos() > 0 && !this.needsEnergy()) {
+				if (!this.getProduciendo()) {
+					ObjectNode msg = mapper.createObjectNode();
+					msg.put("event", "EDIFICIO PRODUCIENDO");
+					msg.put("id", this.id);
+					synchronized (player.getSession()) {
+						try {
+							if (player.getSession().isOpen()) {				
+								player.getSession().sendMessage(new TextMessage(msg.toString()));
+							}
+						} catch (IOException e) {
+							System.err.println("Exception sending message " + msg.toString());
+							e.printStackTrace(System.err);
 						}
-					} catch (IOException e) {
-						System.err.println("Exception sending message " + msg.toString());
-						e.printStackTrace(System.err);
 					}
+					msg.put("event", "PRODUCCION DE EDIFICIO");
+					Task task = null;
+					Thread callback = new Thread(() -> this.callbackProducir());
+					callback.start();
+					task = new Task(this.player, 1, msg, callback);
+					task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
+					TASKMASTER.addTask(task);
+					this.setProduciendo(true);
+					this.setProductionBeginTime(task.getBeginDate());
+					this.setLevelProduciendo(this.getLevel());
+					player.saveEdificios();
 				}
-				msg.put("event", "PRODUCCION DE EDIFICIO");
-				Task task = null;
-				Thread callback = new Thread(() -> this.callbackProducir());
-				callback.start();
-				task = new Task(this.player, 1, msg, callback);
-				task.setId(player.getId().toString() + this.id + 1); //Identificador global, la ultima cifra depende de si va a construir (0) o a producir (1)
-				TASKMASTER.addTask(task);
-				this.setProduciendo(true);
-				this.setProductionBeginTime(task.getBeginDate());
-				this.setLevelProduciendo(this.getLevel());
-				player.saveEdificios();
+				else {
+					logInUpdate();
+				}
 			}
 		}
 	}
