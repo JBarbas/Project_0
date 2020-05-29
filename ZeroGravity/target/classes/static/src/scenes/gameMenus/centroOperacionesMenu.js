@@ -158,8 +158,8 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		    		
 		    		var number = document.createElement("span");
 		    		number.style.position = "absolute";
-		    		number.style.left = "70px";
-		    		number.style.marginTop = "15px";
+		    		number.style.left = "150px";
+		    		number.style.marginTop = "14px";
 		    		number.style.width = '10px';
 		    		number.style.color = '#fff';
 		    		number.style.fontSize = '10px';
@@ -177,8 +177,8 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		    		
 		    		var timetxt = document.createElement("span");
 		    		timetxt.style.position = "absolute";
-		    		timetxt.style.left = "90px";
-		    		timetxt.style.marginTop = "15px";
+		    		timetxt.style.left = "170px";
+		    		timetxt.style.marginTop = "14px";
 		    		timetxt.style.width = '300px';
 		    		timetxt.style.fontSize = '10px';
 		    		timetxt.style.color = '#fff';
@@ -197,13 +197,29 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		    		var num = document.createTextNode("4:36");
 		    		number.appendChild(num);
 		    		var n;
-		        	/*if(game.global.idioma == 'eng'){
-		        		n = document.createTextNode(edificio.nameEng);
-		        	}else{
-		        		n = document.createTextNode(edificio.nameEsp);
-		        	}
-		        	name.appendChild(n);*/
 		        	
+		    		var recursotxt = document.createElement("span");
+		    		recursotxt.style.position = "absolute";
+		    		recursotxt.style.left = "65px";
+		    		recursotxt.style.marginTop = "12px";
+		    		recursotxt.style.width = '300px';
+		    		recursotxt.style.fontSize = '13px';
+		    		recursotxt.style.color = '#fff';
+		    		recursotxt.indice = i;
+		    		recursotxt.fontWeight = 'bold';
+		    		
+		    		let caja = document.createElement("img");
+		    		caja.src = 'assets/interface/Gameplay/Operaciones/cajaIcono.png';
+		    		caja.style.position = "absolute";
+		    		caja.style.left = "90px";
+		    		caja.style.marginTop = "13px";
+		    		caja.style.width = '15px';
+		    		caja.style.heigth = 'auto';
+		    		caja.indice = i;
+		    		
+		    		var interrogaciones = document.createTextNode("???");
+		    		recursotxt.appendChild(interrogaciones);
+		    		
 		        	enviar.onmouseover = function(){
 		        		enviar.src = 'assets/interface/Gameplay/Operaciones/botonExpedicionHover.png';
 		        	}
@@ -225,7 +241,9 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		        	
 		        	divPuestoV.appendChild(desc);
 		        	divPuestoV.appendChild(timetxt);
+		        	divPuestoV.appendChild(recursotxt);
 		        	divPuestoV.appendChild(enviar);
+		        	divPuestoV.appendChild(caja);
 		        	divPuestoV.appendChild(number);
 		        	divPuestoV.appendChild(boxV);
 		        	divPuestoV.appendChild(contenidoV);
