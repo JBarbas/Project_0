@@ -112,6 +112,24 @@ class CentroOperacionesMenu extends Phaser.Scene {
 	        var divMando = document.getElementById("divMando");
 	        var i = 0;
 	        
+	        var desc = document.createElement("span");
+	        desc.style.position = "absolute";
+	        desc.style.left = "10px";
+	        desc.style.marginTop = "-240px";
+	        desc.style.width = '250px';
+	        desc.style.color = '#fff';
+	        desc.style.fontSize = '10px';
+	        desc.style.fontFamily = 'pantonLight';
+	        
+	        var desctxt;
+    		if(game.global.idioma == 'esp'){
+    			desctxt = document.createTextNode("Aquí puedes enviar tus colonos a hacer expediciones");
+    			desc.appendChild(desctxt);
+        	}else{
+        		desctxt = document.createTextNode("Here you can send your settlers to make expeditions");
+        		desc.appendChild(desctxt);
+        	}
+	        
 	    	for(let edificio of game.global.edificios.values()){
 	    		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
 		    		let divPuestoV = document.createElement("div");
@@ -127,24 +145,21 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		        	boxV.indice = i;
 		        	
 		    		let enviar = document.createElement("img");
-		    		if(game.global.idioma == 'esp'){
-		    			enviar.src = 'assets/interface/Gameplay/Operaciones/btnEnviar.png';
-		        	}else{
-		        		enviar.src = 'assets/interface/Gameplay/Operaciones/btnSend.png';
-		        	}
+		    		enviar.src = 'assets/interface/Gameplay/Operaciones/botonExpedicion.png';
 		    		enviar.style.position = "absolute";
-		    		enviar.style.left = "150px";
-		    		enviar.style.marginTop = "15px";
-		    		enviar.style.width = '70px';
+		    		enviar.style.left = "200px";
+		    		enviar.style.marginTop = "5px";
+		    		enviar.style.width = '30px';
 		    		enviar.style.heigth = 'auto';
 		    		enviar.style.cursor = "pointer";
 		    		enviar.indice = i;
 		    		enviar.edificio = edificio;
 		    		
+		    		
 		    		var number = document.createElement("span");
 		    		number.style.position = "absolute";
-		    		number.style.left = "70px";
-		    		number.style.marginTop = "15px";
+		    		number.style.left = "150px";
+		    		number.style.marginTop = "14px";
 		    		number.style.width = '10px';
 		    		number.style.color = '#fff';
 		    		number.style.fontSize = '10px';
@@ -162,8 +177,8 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		    		
 		    		var timetxt = document.createElement("span");
 		    		timetxt.style.position = "absolute";
-		    		timetxt.style.left = "90px";
-		    		timetxt.style.marginTop = "15px";
+		    		timetxt.style.left = "170px";
+		    		timetxt.style.marginTop = "14px";
 		    		timetxt.style.width = '300px';
 		    		timetxt.style.fontSize = '10px';
 		    		timetxt.style.color = '#fff';
@@ -182,29 +197,40 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		    		var num = document.createTextNode("4:36");
 		    		number.appendChild(num);
 		    		var n;
-		        	/*if(game.global.idioma == 'eng'){
-		        		n = document.createTextNode(edificio.nameEng);
-		        	}else{
-		        		n = document.createTextNode(edificio.nameEsp);
-		        	}
-		        	name.appendChild(n);*/
 		        	
+		    		var recursotxt = document.createElement("span");
+		    		recursotxt.style.position = "absolute";
+		    		recursotxt.style.left = "65px";
+		    		recursotxt.style.marginTop = "12px";
+		    		recursotxt.style.width = '300px';
+		    		recursotxt.style.fontSize = '13px';
+		    		recursotxt.style.color = '#fff';
+		    		recursotxt.indice = i;
+		    		recursotxt.fontWeight = 'bold';
+		    		
+		    		let caja = document.createElement("img");
+		    		caja.src = 'assets/interface/Gameplay/Operaciones/cajaIcono.png';
+		    		caja.style.position = "absolute";
+		    		caja.style.left = "90px";
+		    		caja.style.marginTop = "13px";
+		    		caja.style.width = '15px';
+		    		caja.style.heigth = 'auto';
+		    		caja.indice = i;
+		    		
+		    		var interrogaciones = document.createTextNode("???");
+		    		recursotxt.appendChild(interrogaciones);
+		    		
 		        	enviar.onmouseover = function(){
-		        		if(game.global.idioma == 'esp'){
-			    			enviar.src = 'assets/interface/Gameplay/Operaciones/btnEnviarHover.png';
-			        	}else{
-			        		enviar.src = 'assets/interface/Gameplay/Operaciones/btnSendHover.png';
-			        	}
+		        		enviar.src = 'assets/interface/Gameplay/Operaciones/botonExpedicionHover.png';
 		        	}
 		        	enviar.onmouseout = function(){
-		        		if(game.global.idioma == 'esp'){
-			    			enviar.src = 'assets/interface/Gameplay/Operaciones/btnEnviar.png';
-			        	}else{
-			        		enviar.src = 'assets/interface/Gameplay/Operaciones/btnSend.png';
-			        	}
+		        		enviar.src = 'assets/interface/Gameplay/Operaciones/botonExpedicion.png';
 		        	}
 		        	enviar.onmousedown = function(){
-		        		
+		        		//Icono se cambia a recolectar con menos alpha
+		        		enviar.src = 'assets/interface/Gameplay/Operaciones/botonRecolectar.png';
+		        		enviar.style.cursor = 'no-drop';
+		        		enviar.style.opacity = '0.5';
 		        		//Aqui hacer que se envie el colono a la expedición
 		        	}
 		        	
@@ -213,9 +239,11 @@ class CentroOperacionesMenu extends Phaser.Scene {
 		        	var contenidoV = document.createElement("div");
 		        	contenidoV.style.cssText = "position:relative;color:white;margin-top:-30px;margin-left:15px;";
 		        	
-		        	//divPuestoV.appendChild(name);
+		        	divPuestoV.appendChild(desc);
 		        	divPuestoV.appendChild(timetxt);
+		        	divPuestoV.appendChild(recursotxt);
 		        	divPuestoV.appendChild(enviar);
+		        	divPuestoV.appendChild(caja);
 		        	divPuestoV.appendChild(number);
 		        	divPuestoV.appendChild(boxV);
 		        	divPuestoV.appendChild(contenidoV);
