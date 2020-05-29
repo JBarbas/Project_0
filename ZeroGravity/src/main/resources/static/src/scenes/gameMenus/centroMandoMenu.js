@@ -476,8 +476,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    		var edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprite).setOrigin(0.5, 0.5).setScale(0.8, 0.8).setFrame(this.miEdificio.level);
 	    		mejorasContainer.add(edificioSigNivel);
 	    		this.nivelEdifSprite = this.miEdificio.level+1;
-	    		//var nE = data.miEdificio.level;
-	    		//var nivelEdificioActual = nE;
+	    		
 	    		// Se añade la descripción del siguiente nivel
 	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('cmmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
 	    		
@@ -535,7 +534,9 @@ class CentroMandoMenu extends Phaser.Scene {
 		    		edificioSigNivel.setFrame(scene.nivelEdifSprite-1);
 		    		if(scene.nivelEdifSprite == data.miEdificio.levelMax){
 		    			game.scene.getScene('CentroMandoMenu').arrowright.visible = false;
-		    			
+		    		}
+		    		if(scene.nivelEdifSprite-data.miEdificio.level > 1){
+		    			//edificioSigNivel.setFrame(6);
 		    		}
 		    	});
 		    	
@@ -549,6 +550,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('cmmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
 	    		this.descSigNivel = this.add.text(300, 210, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
 	        	mejorasContainer.add(this.descSigNivel);
+	        	game.scene.getScene('CentroMandoMenu').arrowright.visible = false;
 	    	}
 	
 	    	
@@ -629,7 +631,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    
     }
     update(time, delta) {
-    	this.nivelSuperior.text = this.nivelEdifSprite;
+    	//this.nivelSuperior.text = this.nivelEdifSprite;
     	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
     	if(this.miEdificio.level >= 3 && this.subirNivel !== null && typeof this.subirNivel !== "undefined"){
     		this.subirNivel.destroy();

@@ -1038,10 +1038,33 @@ class CentroComercioMenu extends Phaser.Scene {
 	    	// Se añade el titulo de siguiente mejora
 	    	textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('sigMejora')[0].childNodes[0].nodeValue;
 	    	this.titulo = this.add.text(300, 180, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
+	    	this.arrowleft = this.add.image(100, 280, 'arrow').setOrigin(0.5, 0.5).setInteractive().setFlip(true,false);
+	    	this.arrowright = this.add.image(450, 280, 'arrow').setOrigin(0.5, 0.5).setInteractive();
+	    	game.scene.getScene('CentroComercioMenu').arrowleft.visible = false;
+	    	mejorasContainer.add(this.arrowleft);
+	    	mejorasContainer.add(this.arrowright);
 	    	mejorasContainer.add(this.titulo);
+	    	
+	    	this.arrowleft.on('pointerover',function(pointer){
+	    		this.setFrame(1);
+	    	})
+	    	
+	    	this.arrowleft.on('pointerout',function(pointer){
+		    		this.setFrame(0);
+		    })
+		    
+		    this.arrowright.on('pointerover',function(pointer){
+	    		this.setFrame(1);
+	    	})
+	    	
+	    	this.arrowright.on('pointerout',function(pointer){
+		    		this.setFrame(0);
+		    })
+		    
 	    	/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
 	    	if(data.miEdificio.level < data.miEdificio.levelMax){
 	        	// Se añade la imagen de siguiente nivel
+	    		var edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprite).setOrigin(0.5, 0.5).setScale(0.8, 0.8).setFrame(this.miEdificio.level);
 	    		this.edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprites[this.miEdificio.level]).setOrigin(0.5, 0.5).setScale(0.8, 0.8);
 	    		mejorasContainer.add(this.edificioSigNivel);
 	    		
@@ -1049,9 +1072,12 @@ class CentroComercioMenu extends Phaser.Scene {
 	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('ccmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
 	    		this.descSigNivel = this.add.text(80, 360, justifica(textoDesdeXml), { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'});
 	    		mejorasContainer.add(this.descSigNivel);
-	        	
+	    		this.nivelEdifSprite = this.miEdificio.level+1;
+	    		
 	    		this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-		    	this.subirNivel.on('pointerover',function(pointer){
+	    		this.nivelSuperior = this.add.text(340, 799, this.nivelEdifSprite, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
+		    	
+	    		this.subirNivel.on('pointerover',function(pointer){
 		    		this.setFrame(1);
 		    	});
 		    	this.subirNivel.on('pointerout',function(pointer){
@@ -1060,12 +1086,53 @@ class CentroComercioMenu extends Phaser.Scene {
 		    	this.subirNivel.on('pointerdown', function(pointer, localX, localY, event){
 		    		askLevelUpBuilding(data.miEdificio.id);	    		
 		    	});
+
+
+
+		    	this.arrowleft.on('pointerdown', function(pointer, localX, localY, event){
+		    		game.global.effects.pulsarBoton.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		scene.nivelEdifSprite-=1;
+		    		game.scene.getScene('CentroComercioMenu').arrowright.visible = true;
+
+	    			edificioSigNivel.setFrame(scene.nivelEdifSprite-1);
+		    		if(scene.nivelEdifSprite <= data.miEdificio.level+1){
+		    			game.scene.getScene('CentroComercioMenu').arrowleft.visible = false;
+		    		}
+		    		
+		    		/*scene.tweens.add({
+				        targets: this.edificioSigNivel,
+				        duration: 1500,
+				        ease: 'Linear'
+				    });*/
+		    		
+		    	});
+		    	
+		    	this.arrowright.on('pointerdown', function(pointer, localX, localY, event){
+		    		game.global.effects.pulsarBoton.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		game.scene.getScene('CentroComercioMenu').arrowleft.visible = true;
+		    		scene.nivelEdifSprite+=1;
+		    		edificioSigNivel.setFrame(scene.nivelEdifSprite-1);
+		    		if(scene.nivelEdifSprite == data.miEdificio.levelMax){
+		    			game.scene.getScene('CentroComercioMenu').arrowright.visible = false;
+		    		}
+		    		if(scene.nivelEdifSprite-data.miEdificio.level > 1){
+		    			edificioSigNivel.setFrame(6);
+		    		}
+		    	});
+		    	
+				
 				mejorasContainer.add(this.subirNivel);
+				mejorasContainer.add(this.nivelSuperior);
 	    	}
 	    	else{
 	    		textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('ccmejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;
 	    		this.descSigNivel = this.add.text(300, 210, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
 	        	mejorasContainer.add(this.descSigNivel);
+	        	game.scene.getScene('CentroComercioMenu').arrowright.visible = false;
 	    	}
 	    	
 	    	// Desactivamos al inicio los otros dos contenedores

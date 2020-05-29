@@ -61,7 +61,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 			// Contenedor del panel de detalles
 			var detallesContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			// Contenedor del panel de gestion
-			this.edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+			var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			
 			//Se añade a cada contenedor su imagen de fondo			
 			if(game.global.idioma == "eng"){
@@ -70,14 +70,14 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
 				mejorasContainer.add(this.intUpdates);
 				detallesContainer.add(this.intDetails);
-				this.edificiosContainer.add(this.intBuildings);
+				edificiosContainer.add(this.intBuildings);
 			}else{
 				this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
 				this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
 				this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
 				mejorasContainer.add(this.intMejoras);
 				detallesContainer.add(this.intDetalles);
-				this.edificiosContainer.add(this.intEdificios);
+				edificiosContainer.add(this.intEdificios);
 			}
 			
 			//Se alterna entre contenedores según el icono seleccionado
@@ -88,7 +88,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 		    	
 				detallesContainer.visible= true;
 				mejorasContainer.visible= false;
-				scene.edificiosContainer.visible= false;
+				edificiosContainer.visible= false;
 			});
 			this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
 			this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -96,7 +96,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 				detallesContainer.visible= false;
 				mejorasContainer.visible= true;
-				scene.edificiosContainer.visible= false;
+				edificiosContainer.visible= false;
 			});
 			this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
 			this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -104,19 +104,19 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 				detallesContainer.visible= false;
 				mejorasContainer.visible= false;
-				scene.edificiosContainer.visible= true;
+				edificiosContainer.visible= true;
 			});
 			
 			//  CONTENEDOR EDIFICIO
 			// Añadimos el numero de colonos trabajando en este edificio
 			this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
-			this.edificiosContainer.add(this.colonos);
+			edificiosContainer.add(this.colonos);
 			// Añadimos la energía necesaria y suministrada en este edificio
 			this.energia = this.add.text(100, 250, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
-			this.edificiosContainer.add(this.energia);
+			edificiosContainer.add(this.energia);
 			// Añadimos la cerámica almacenada
 			this.stock = this.add.text(100, 300, "Stock: cargando", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '20px' });
-			this.edificiosContainer.add(this.stock);
+			edificiosContainer.add(this.stock);
 			
 			//  CONTENEDOR DETALLES
 			// Se añade la descripción del edificio
@@ -185,12 +185,35 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 			// Se añade el titulo de siguiente mejora
 			textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('sigMejora')[0].childNodes[0].nodeValue;
 			this.titulo = this.add.text(300, 180, textoDesdeXml, { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
-			mejorasContainer.add(this.titulo);
+	    	this.arrowleft = this.add.image(100, 280, 'arrow').setOrigin(0.5, 0.5).setInteractive().setFlip(true,false);
+	    	this.arrowright = this.add.image(450, 280, 'arrow').setOrigin(0.5, 0.5).setInteractive();
+	    	game.scene.getScene('PlataformaExtraccionMenu').arrowleft.visible = false;
+	    	mejorasContainer.add(this.arrowleft);
+	    	mejorasContainer.add(this.arrowright);
+	    	mejorasContainer.add(this.titulo);
+	    	
+
+	    	this.arrowleft.on('pointerover',function(pointer){
+	    		this.setFrame(1);
+	    	})
+	    	
+	    	this.arrowleft.on('pointerout',function(pointer){
+		    		this.setFrame(0);
+		    })
+		    
+		    this.arrowright.on('pointerover',function(pointer){
+	    		this.setFrame(1);
+	    	})
+	    	
+	    	this.arrowright.on('pointerout',function(pointer){
+		    		this.setFrame(0);
+		    })
 			/*si nuestro edificio tiene todavia opcion de seguir subiendo de nivel...*/
 			if(data.miEdificio.level < data.miEdificio.levelMax){
 				// Se añade la imagen de siguiente nivel
-				this.edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprites[this.miEdificio.level]).setOrigin(0.5, 0.5).setScale(0.8, 0.8);
-				mejorasContainer.add(this.edificioSigNivel);
+				var edificioSigNivel = this.add.image(300, 280, this.miEdificio.sprites[this.miEdificio.level]).setOrigin(0.5, 0.5).setScale(0.8, 0.8);
+				mejorasContainer.add(edificioSigNivel);
+				this.nivelEdifSprite = this.miEdificio.level+1;
 				
 				// Se añade la descripción del siguiente nivel
 				textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('pemejoraNivel' + (this.miEdificio.level + 1))[0].childNodes[0].nodeValue;let textoEntrante2 = "Lorem ipsum dolor sit amet consectetur adipiscing elit aptent, augue consequat torquent facilisis morbi elementum varius urna, vitae inceptos ligula libero in aenean nostra. Dapibus diam nibh lectus turpis nec eu nunc sem fringilla hac, donec velit integer tempor litora massa dictum a aptent in potenti, mattis rutrum gravida vitae viverra cursus montes blandit maecenas. Nunc bibendum nullam rutrum volutpat inceptos et rhoncus cum faucibus euismod aptent fames litora, condimentum varius mus laoreet ac a erat hac auctor nisi mi id.";
@@ -198,7 +221,8 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				mejorasContainer.add(this.descSigNivel);
 						
 				this.subirNivel = this.add.image(300,800, 'btnSubirNivel').setOrigin(0.5,0.5).setInteractive();
-							
+				this.nivelSuperior = this.add.text(340, 799, this.nivelEdifSprite, { fontFamily: '"pantonBlack"', color: 'white' , fontSize: '18px'}).setOrigin(0.5, 0.5);
+		    				
 				this.subirNivel.on('pointerover',function(pointer){
 					this.setFrame(1);
 				})
@@ -212,11 +236,50 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 					game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 					askLevelUpBuilding(data.miEdificio.id);
 				});   
+				
+				this.arrowleft.on('pointerdown', function(pointer, localX, localY, event){
+		    		game.global.effects.pulsarBoton.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		scene.nivelEdifSprite-=1;
+		    		game.scene.getScene('PlataformaExtraccionMenu').arrowright.visible = true;
+
+		    		edificioSigNivel.setTexture(scene.miEdificio.sprites[scene.nivelEdifSprite]);
+		    		if(scene.nivelEdifSprite <= data.miEdificio.level+1){
+		    			game.scene.getScene('PlataformaExtraccionMenu').arrowleft.visible = false;
+		    		}
+		    		
+		    		/*scene.tweens.add({
+				        targets: this.edificioSigNivel,
+				        duration: 1500,
+				        ease: 'Linear'
+				    });*/
+		    		
+		    	});
+		    	
+		    	this.arrowright.on('pointerdown', function(pointer, localX, localY, event){
+		    		game.global.effects.pulsarBoton.play();
+		    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+		    		
+		    		game.scene.getScene('PlataformaExtraccionMenu').arrowleft.visible = true;
+		    		scene.nivelEdifSprite+=1;
+		    		edificioSigNivel.setTexture(scene.miEdificio.sprites[scene.nivelEdifSprite]);
+		    		if(scene.nivelEdifSprite == data.miEdificio.levelMax){
+		    			game.scene.getScene('PlataformaExtraccionMenu').arrowright.visible = false;
+		    		}
+		    		if(scene.nivelEdifSprite-data.miEdificio.level > 1){
+		    			//edificioSigNivel.setTexture(scene.miEdificio.sprites[scene.nivelEdifSprite]);
+		    		}
+		    	});
+		    	
 				mejorasContainer.add(this.subirNivel);
+				mejorasContainer.add(this.nivelSuperior);
+	    		
 			}
 			else{
 				this.descSigNivel = this.add.text(300, 210, "N/A", { fontFamily: '"Roboto Condensed"', color: 'white' , fontSize: '24px', fontWeight: 'bold'}).setOrigin(0.5, 0.5);
 				mejorasContainer.add(this.descSigNivel);
+				game.scene.getScene('PlataformaExtraccionMenu').arrowright.visible = false;
 			}
 					
 			// Desactivamos al inicio los otros dos contenedores
