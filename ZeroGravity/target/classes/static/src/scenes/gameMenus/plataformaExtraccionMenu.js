@@ -61,7 +61,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 			// Contenedor del panel de detalles
 			var detallesContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			// Contenedor del panel de gestion
-			var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+			this.edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			
 			//Se añade a cada contenedor su imagen de fondo			
 			if(game.global.idioma == "eng"){
@@ -70,14 +70,14 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
 				mejorasContainer.add(this.intUpdates);
 				detallesContainer.add(this.intDetails);
-				edificiosContainer.add(this.intBuildings);
+				this.edificiosContainer.add(this.intBuildings);
 			}else{
 				this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
 				this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
 				this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
 				mejorasContainer.add(this.intMejoras);
 				detallesContainer.add(this.intDetalles);
-				edificiosContainer.add(this.intEdificios);
+				this.edificiosContainer.add(this.intEdificios);
 			}
 			
 			//Se alterna entre contenedores según el icono seleccionado
@@ -88,7 +88,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 		    	
 				detallesContainer.visible= true;
 				mejorasContainer.visible= false;
-				edificiosContainer.visible= false;
+				scene.edificiosContainer.visible= false;
 			});
 			this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
 			this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -96,7 +96,7 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 				detallesContainer.visible= false;
 				mejorasContainer.visible= true;
-				edificiosContainer.visible= false;
+				scene.edificiosContainer.visible= false;
 			});
 			this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
 			this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
@@ -104,19 +104,19 @@ class PlataformaExtraccionMenu extends Phaser.Scene {
 				game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100);
 				detallesContainer.visible= false;
 				mejorasContainer.visible= false;
-				edificiosContainer.visible= true;
+				scene.edificiosContainer.visible= true;
 			});
 			
 			//  CONTENEDOR EDIFICIO
 			// Añadimos el numero de colonos trabajando en este edificio
 			this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
-			edificiosContainer.add(this.colonos);
+			scene.edificiosContainer.add(this.colonos);
 			// Añadimos la energía necesaria y suministrada en este edificio
 			this.energia = this.add.text(100, 250, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
-			edificiosContainer.add(this.energia);
+			scene.edificiosContainer.add(this.energia);
 			// Añadimos la cerámica almacenada
 			this.stock = this.add.text(100, 300, "Stock: cargando", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '20px' });
-			edificiosContainer.add(this.stock);
+			scene.edificiosContainer.add(this.stock);
 			
 			//  CONTENEDOR DETALLES
 			// Se añade la descripción del edificio
