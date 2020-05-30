@@ -110,7 +110,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 			
 			//  CONTENEDOR EDIFICIO
 			// Añadimos el numero de colonos trabajando en este edificio
-			this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
+			/*this.colonos = this.add.text(100, 200, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
 			edificiosContainer.add(this.colonos);
 			// Añadimos la energía necesaria y suministrada en este edificio
 			this.energia = this.add.text(100, 230, "Cargando...", { fontFamily: '"pantonBlack"', color: 'white',fontSize: '30px', fontWeight: 'bold' });
@@ -118,7 +118,161 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 			// Añadimos el tiempo restante para producir
 			this.timeLeft = 'Quedan ' + Math.floor(this.miEdificio.recursos[this.miEdificio.level-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000) + ' minutos';
 			this.timeLeftText = this.add.text(100, 260, this.timeLeft, { fontFamily: '"Roboto Condensed"', color: 'white' });
-			edificiosContainer.add(this.timeLeftText);
+			edificiosContainer.add(this.timeLeftText);*/
+			
+
+	    	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
+	        elementV.setPerspective(800);
+	        
+	        var divMando = document.getElementById("divMando");
+	        var i = 0;
+	        
+	        var desc = document.createElement("span");
+	        desc.style.position = "absolute";
+	        desc.style.left = "10px";
+	        desc.style.marginTop = "-240px";
+	        desc.style.width = '250px';
+	        desc.style.color = '#fff';
+	        desc.style.fontSize = '10px';
+	        desc.style.fontFamily = 'pantonLight';
+	        
+	        var desctxt;
+    		if(game.global.idioma == 'esp'){
+    			desctxt = document.createTextNode("Aquí puedes desbloquear nuevas mejoras para tus edificios");
+    			desc.appendChild(desctxt);
+        	}else{
+        		desctxt = document.createTextNode("Here you can unlock new upgrades for your buildings");
+        		desc.appendChild(desctxt);
+        	}
+	        
+	    	for(let edificio of game.global.edificios.values()){
+	    		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
+		    		let divPuestoV = document.createElement("div");
+		    		divPuestoV.style.marginTop = "40px";
+		    		
+		    		/*la imagen*/
+		    		let boxV = document.createElement("img");
+		        	boxV.src = "assets/interface/Gameplay/Investigacion/cajaInvestigar.png";
+		        	boxV.style.marginLeft ="0px";
+		        	boxV.style.marginTop = "0px";
+		        	boxV.style.width = '98%';
+		        	boxV.style.height = 'auto';
+		        	boxV.indice = i;
+		        	
+		        	let circunf = document.createElement("img");
+		        	circunf.src = 'assets/interface/Gameplay/Investigacion/cajaInvestigarAzul.png';
+		        	circunf.style.position = "absolute";
+		        	circunf.style.left = "3px";
+		        	circunf.style.marginTop = "1px";
+		        	circunf.style.width = '39px';
+		        	circunf.style.heigth = 'auto';
+		        	circunf.style.cursor = "pointer";
+		        	circunf.indice = i;
+		        	circunf.edificio = edificio;
+		        	circunf.style.zIndex = "-3";
+		        	
+		        	let edif = document.createElement("img");
+		        	edif.src = 'assets/interface/Gameplay/Construccion/selTaller1.png';
+		        	edif.style.position = "absolute";
+		        	edif.style.left = "0px";
+		        	edif.style.marginTop = "-15px";
+		        	edif.style.width = '60px';
+		        	edif.style.heigth = 'auto';
+		        	edif.style.cursor = "pointer";
+		        	edif.indice = i;
+		        	edif.edificio = edificio;
+		        	edif.style.zIndex = "-3";
+		        	
+		    		let enviar = document.createElement("img");
+		    		enviar.src = 'assets/interface/Gameplay/Investigacion/botonInv.png';
+		    		enviar.style.position = "absolute";
+		    		enviar.style.left = "200px";
+		    		enviar.style.marginTop = "5px";
+		    		enviar.style.width = '30px';
+		    		enviar.style.heigth = 'auto';
+		    		enviar.style.cursor = "pointer";
+		    		enviar.indice = i;
+		    		enviar.edificio = edificio;
+
+		    		var timetxt = document.createElement("span");
+		    		timetxt.style.position = "absolute";
+		    		timetxt.style.left = "50px";
+		    		timetxt.style.marginTop = "4px";
+		    		timetxt.style.width = '300px';
+		    		timetxt.style.fontSize = '10px';
+		    		timetxt.style.color = '#fff';
+		    		timetxt.indice = i;
+		    		
+		    		var hourstxt;
+	    		
+		    		//Aqui se debe cambiar el valor de inv1 por el inv + indice 
+	    			var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('inv1')[0].childNodes[0].nodeValue;
+	    			hourstxt = document.createTextNode(textoDesdeXml);
+	    			timetxt.appendChild(hourstxt);
+		    
+		        	enviar.onmouseover = function(){
+		        		enviar.src = 'assets/interface/Gameplay/Investigacion/botonInvHover.png';
+		        	}
+		        	enviar.onmouseout = function(){
+		        		enviar.src = 'assets/interface/Gameplay/Investigacion/botonInv.png';
+		        	}
+		        	enviar.onmousedown = function(){
+		        		//Icono se cambia a recolectar con menos alpha
+		        		enviar.src = 'assets/interface/Gameplay/Investigacion/botonCancel.png';
+		        		enviar.style.cursor = 'no-drop';
+		        		enviar.style.opacity = '0.5';
+		        		//Aqui hacer que se envie el colono a la expedición
+		        	}
+		        	
+		        	
+		        	/*el div de los span*/
+		        	var contenidoV = document.createElement("div");
+		        	contenidoV.style.cssText = "position:relative;color:white;margin-top:-30px;margin-left:15px;";
+		        	
+		        	divPuestoV.appendChild(desc);
+		        	divPuestoV.appendChild(timetxt);
+		        	divPuestoV.appendChild(enviar);
+		        	divPuestoV.appendChild(circunf);
+		        	divPuestoV.appendChild(edif);
+		        	divPuestoV.appendChild(boxV);
+		        	divPuestoV.appendChild(contenidoV);
+		        	
+		        	
+		        	divMando.appendChild(divPuestoV);
+		        	
+		        	i++;
+	    		}
+	    	}
+	    	
+	    	if(i==0){
+	    		let divPuestoV = document.createElement("div");
+	    		divPuestoV.style.marginTop = "40px";
+	    		
+	    		var noInfo = document.createElement("span");
+	    		noInfo.style.position = "absolute";
+	    		noInfo.style.left = "0px";
+	    		noInfo.style.marginTop = "5px";
+	    		noInfo.style.fontFamily = "pantonLight";
+	    		noInfo.style.fontSize = '10px';
+	    		noInfo.style.textAlign = "center";
+	    		noInfo.style.color = '#fff';
+	    		noInfo.indice = i;
+	    		
+	    		var n;
+	        	if(game.global.idioma == 'eng'){
+	        		n = document.createTextNode("To manage settlers you must build houses and other buildings. The workshop, the generators or the extraction platform are some of the buildings that need settlers. Go to the Construction section on the left side of the screen.");
+	        	}else{
+	        		n = document.createTextNode("Para administrar colonos debe construir viviendas y otros EDIFICIOS. El taller, los generadores o la plataforma de extracción son algunos de los EDIFICIOS que necesitan colonos. Ve a la sección de Construcción que se encuentra en la parte izquierda de la pantalla.");
+	        	}
+	        	noInfo.appendChild(n);
+	        	
+	        	divPuestoV.appendChild(noInfo);
+	        	
+	        	
+	        	divMando.appendChild(divPuestoV);
+	    	}
+	        
+	    	edificiosContainer.add(elementV);
 			
 			//  CONTENEDOR DETALLES
 			// Se añade la descripción del edificio
@@ -358,7 +512,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 		
     }
     update(time, delta) {
-    	if (!this.miEdificio.enConstruccion) {
+    	/*if (!this.miEdificio.enConstruccion) {
         	
         	if (this.miEdificio.produciendo) {
     	    	this.timeLeft = Math.floor(this.miEdificio.recursos[this.miEdificio.levelProduciendo-1][1] - (Date.now() - this.miEdificio.inicioProduccion)/60000);
@@ -376,7 +530,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 	    	else {
 	    		this.timeLeftText.visible = false;
 	    	}
-    	}
+    	}*/
     }
 
 }
