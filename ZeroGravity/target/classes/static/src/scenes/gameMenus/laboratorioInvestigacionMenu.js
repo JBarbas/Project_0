@@ -65,47 +65,67 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 			// Contenedor del panel de gestion
 			var edificiosContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
 			
+			// Contenedor del panel de gestion
+			var completadasContainer = this.add.container(game.global.buildingMenu.x, game.global.buildingMenu.y);
+			
 			//Se añade a cada contenedor su imagen de fondo			
 			if(game.global.idioma == "eng"){
-				this.intUpdates = this.add.image(0, 0, 'intUpdates').setOrigin(0, 0); 
-				this.intBuildings = this.add.image(0, 0, 'intBuildings').setOrigin(0, 0); 
-				this.intDetails = this.add.image(0, 0, 'intDetails').setOrigin(0, 0);
+				this.intUpdates = this.add.image(0, 0, 'interfazIUpdates').setOrigin(0, 0); 
+				this.intResearch = this.add.image(0, 0, 'interfazResearch').setOrigin(0, 0); 
+				this.intCompleted = this.add.image(0, 0, 'interfazCompleted').setOrigin(0, 0); 
+				this.intDetails = this.add.image(0, 0, 'interfazIDetails').setOrigin(0, 0);
 				mejorasContainer.add(this.intUpdates);
 				detallesContainer.add(this.intDetails);
-				edificiosContainer.add(this.intBuildings);
+				edificiosContainer.add(this.intResearch);
+				completadasContainer.add(this.intCompleted);
 			}else{
-				this.intMejoras = this.add.image(0, 0, 'intMejoras').setOrigin(0, 0); 
-				this.intDetalles = this.add.image(0, 0, 'intDetalles').setOrigin(0, 0); 
-				this.intEdificios = this.add.image(0, 0, 'intEdificios').setOrigin(0, 0);
+				this.intMejoras = this.add.image(0, 0, 'interfazIMejoras').setOrigin(0, 0); 
+				this.intDetalles = this.add.image(0, 0, 'interfazIDetalles').setOrigin(0, 0); 
+				this.intInvest = this.add.image(0, 0, 'interfazInvest').setOrigin(0, 0);
+				this.intCompletadas = this.add.image(0, 0, 'interfazCompletadas').setOrigin(0, 0); 
 				mejorasContainer.add(this.intMejoras);
 				detallesContainer.add(this.intDetalles);
-				edificiosContainer.add(this.intEdificios);
+				edificiosContainer.add(this.intInvest);
+				completadasContainer.add(this.intCompletadas);
 			}
 			
 			//Se alterna entre contenedores según el icono seleccionado
-			this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
+			this.iconoDetalles = this.add.image(game.global.buildingMenu.x + 240, game.global.buildingMenu.y + 10, 'iconoDetalles').setOrigin(0, 0);
 			this.iconoDetalles.setInteractive().on('pointerdown', function(pointer, localX, localY, event) { 
 				game.global.effects.pulsarBoton.play();
 	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
 				detallesContainer.visible= true;
 				mejorasContainer.visible= false;
+				completadasContainer.visible= false;
 				edificiosContainer.visible= false;
 			});
-			this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 100, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
+			this.iconoMejoras = this.add.image(game.global.buildingMenu.x + 170, game.global.buildingMenu.y + 10, 'iconoMejoras').setOrigin(0, 0);
 			this.iconoMejoras.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
 				game.global.effects.pulsarBoton.play();
 	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
 				detallesContainer.visible= false;
 				mejorasContainer.visible= true;
 				edificiosContainer.visible= false;
+				completadasContainer.visible= false;
 			});
-			this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 25, game.global.buildingMenu.y + 10, 'iconoEdificio').setOrigin(0, 0);
+			this.iconoEdificio = this.add.image(game.global.buildingMenu.x + 30, game.global.buildingMenu.y + 15, 'iconResearch').setOrigin(0, 0).setScale(0.32,0.32);
 			this.iconoEdificio.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
 				game.global.effects.pulsarBoton.play();
 	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
 				detallesContainer.visible= false;
 				mejorasContainer.visible= false;
 				edificiosContainer.visible= true;
+				completadasContainer.visible= false;
+			});
+			
+			this.iconCompleted = this.add.image(game.global.buildingMenu.x + 105, game.global.buildingMenu.y + 15, 'iconCompleted').setOrigin(0, 0).setScale(0.4,0.4);
+			this.iconCompleted.setInteractive().on('pointerdown', function(pointer, localX, localY, event) {
+				game.global.effects.pulsarBoton.play();
+	    		game.global.effects.pulsarBoton.setVolume(game.global.myPlayer.config.volEffects/100); 
+				detallesContainer.visible= false;
+				mejorasContainer.visible= false;
+				edificiosContainer.visible= false;
+				completadasContainer.visible= true;
 			});
 			
 			//  CONTENEDOR EDIFICIO
@@ -442,6 +462,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 			// Desactivamos al inicio los otros dos contenedores
 			detallesContainer.visible= false;
 			mejorasContainer.visible= false;
+			completadasContainer.visible= false;
 		}
 	    else {
     		let msg = new Object();

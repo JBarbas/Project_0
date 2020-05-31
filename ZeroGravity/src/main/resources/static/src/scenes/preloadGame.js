@@ -181,6 +181,16 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('intUpdates', 'assets/interface/interfazUpdates.png');
 		this.load.image('intDetails', 'assets/interface/interfazDetails.png');
 		
+		//Paneles de investigacion
+		this.load.image('interfazResearch', 'assets/interface/Gameplay/Investigacion/interfazResearch.png');
+		this.load.image('interfazInvest', 'assets/interface/Gameplay/Investigacion/interfazInvest.png');
+		this.load.image('interfazCompleted', 'assets/interface/Gameplay/Investigacion/interfazCompleted.png');
+		this.load.image('interfazCompletadas', 'assets/interface/Gameplay/Investigacion/interfazCompletadas.png');
+		this.load.image('interfazIMejoras', 'assets/interface/Gameplay/Investigacion/interfazIMejoras.png');
+		this.load.image('interfazIUpdates', 'assets/interface/Gameplay/Investigacion/interfazIUpdates.png');
+		this.load.image('interfazIDetails', 'assets/interface/Gameplay/Investigacion/interfazIDetails.png');
+		this.load.image('interfazIDetalles', 'assets/interface/Gameplay/Investigacion/interfazIDetalles.png');
+		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/UiGamePlayMenu.png');
 		this.load.image('hoverMats', 'assets/interface/Gameplay/hovermats.png');
 		
@@ -197,6 +207,9 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('iconoComprar', 'assets/interface/iconoComprar.png');
 		this.load.image('iconoVender', 'assets/interface/iconoVender.png');
 		this.load.image('iconoOfertas', 'assets/interface/iconoOfertas.png');
+		
+		this.load.image('iconResearch', 'assets/interface/iconResearch.png');
+		this.load.image('iconCompleted', 'assets/interface/iconCompleted.png');
 		
 		this.load.image('iconoUC', 'assets/interface/Gameplay/unioncoins.png');
 		this.load.image('iconoMoney', 'assets/interface/Gameplay/creditosFloat.png');
