@@ -141,6 +141,8 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 			edificiosContainer.add(this.timeLeftText);*/
 			
 
+			
+			/////////////////////////////////////SECCION PARA INVESTIGACIONES /////////////////////////////////////////////////////
 	    	var elementV = this.add.dom(-370, 280).createFromCache('centroMandoMenu');
 	        elementV.setPerspective(800);
 	        
@@ -293,6 +295,136 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 	    	}
 	        
 	    	edificiosContainer.add(elementV);
+	    	
+	    	
+	    	/////////////////////////////////////SECCION PARA investigaciones COMPLETADAS /////////////////////////////////////////////////////
+	    	var element = this.add.dom(-370, 280).createFromCache('laboratorioInvestigacionMenu');
+	        element.setPerspective(800);
+	        
+	        var divMando1 = document.getElementById("divInvest");
+	        var j = 0;
+	        
+	        var desc1 = document.createElement("span");
+	        desc1.style.position = "absolute";
+	        desc1.style.left = "10px";
+	        desc1.style.marginTop = "-240px";
+	        desc1.style.width = '250px';
+	        desc1.style.color = '#fff';
+	        desc1.style.fontSize = '10px';
+	        desc1.style.fontFamily = 'pantonLight';
+	        
+	        var desctxt1;
+    		if(game.global.idioma == 'esp'){
+    			desctxt1 = document.createTextNode("Aquí puedes ver las investigaciones completadas.");
+    			desc1.appendChild(desctxt1);
+        	}else{
+        		desctxt1 = document.createTextNode("Here you can see the completed investigations.");
+        		desc1.appendChild(desctxt1);
+        	}
+	        
+	    	for(let edificio of game.global.edificios.values()){
+	    		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
+		    		let divPuesto = document.createElement("div");
+		    		divPuesto.style.marginTop = "40px";
+		    		
+		    		
+		    		let box = document.createElement("img");
+		        	box.src = "assets/interface/Gameplay/Investigacion/cajaInvestigar.png";
+		        	box.style.marginLeft ="0px";
+		        	box.style.marginTop = "0px";
+		        	box.style.width = '98%';
+		        	box.style.height = 'auto';
+		        	box.indice = j;
+		        	
+		        	let circunf1 = document.createElement("img");
+		        	circunf1.src = 'assets/interface/Gameplay/Investigacion/cajaInvestigarAzul.png';
+		        	circunf1.style.position = "absolute";
+		        	circunf1.style.left = "3px";
+		        	circunf1.style.marginTop = "1px";
+		        	circunf1.style.width = '39px';
+		        	circunf1.style.heigth = 'auto';
+		        	circunf1.style.cursor = "pointer";
+		        	circunf1.indice = i;
+		        	circunf1.edificio = edificio;
+		        	circunf1.style.zIndex = "-3";
+		        	
+		        	let edif1 = document.createElement("img");
+		        	edif1.src = 'assets/interface/Gameplay/Construccion/selTaller1.png';
+		        	edif1.style.position = "absolute";
+		        	edif1.style.left = "0px";
+		        	edif1.style.marginTop = "-15px";
+		        	edif1.style.width = '60px';
+		        	edif1.style.heigth = 'auto';
+		        	edif1.style.cursor = "pointer";
+		        	edif1.indice = j;
+		        	edif1.edificio = edificio;
+		        	edif1.style.zIndex = "-3";
+		        	
+
+		    		var timetxt1 = document.createElement("span");
+		    		timetxt1.style.position = "absolute";
+		    		timetxt1.style.left = "50px";
+		    		timetxt1.style.marginTop = "4px";
+		    		timetxt1.style.width = '300px';
+		    		timetxt1.style.fontSize = '10px';
+		    		timetxt1.style.color = '#fff';
+		    		timetxt1.indice = j;
+		    		
+		    		var hourstxt1;
+	    		
+		    		//Aqui se debe cambiar el valor de inv1 por el inv + indice 
+	    			var textoDesdeXml1 = this.cache.xml.get(game.global.idioma).getElementsByTagName('inv1')[0].childNodes[0].nodeValue;
+	    			hourstxt1 = document.createTextNode(textoDesdeXml1);
+	    			timetxt1.appendChild(hourstxt1);
+		   
+		        	
+		        	
+		        	var contenido = document.createElement("div");
+		        	contenido.style.cssText = "position:relative;color:white;margin-top:-30px;margin-left:15px;";
+		        	
+		        	divPuesto.appendChild(desc1);
+		        	divPuesto.appendChild(timetxt1);
+		        	divPuesto.appendChild(circunf1);
+		        	divPuesto.appendChild(edif1);
+		        	divPuesto.appendChild(box);
+		        	divPuesto.appendChild(contenido);
+		        	
+		        	
+		        	divMando1.appendChild(divPuesto);
+		        	
+		        	j++;
+	    		}
+	    	}
+	    	
+	    	if(j==0){
+	    		let divPuesto = document.createElement("div");
+	    		divPuesto.style.marginTop = "40px";
+	    		
+	    		var noInfo1 = document.createElement("span");
+	    		noInfo1.style.position = "absolute";
+	    		noInfo1.style.left = "0px";
+	    		noInfo1.style.marginTop = "5px";
+	    		noInfo1.style.fontFamily = "pantonLight";
+	    		noInfo1.style.fontSize = '10px';
+	    		noInfo1.style.textAlign = "center";
+	    		noInfo1.style.color = '#fff';
+	    		noInfo1.indice = j;
+	    		
+	    		var n1;
+	        	if(game.global.idioma == 'esp'){
+	        		n1 = document.createTextNode("Para poder ver las investigaciones completadas, antes debes ir al panel de investigación y completar alguna mejora.");
+	        	}else{
+	        		n1 = document.createTextNode("In order to view completed research, you must first go to the research panel and complete an upgrade.");
+	        	}
+	        	noInfo1.appendChild(n1);
+	        	
+	        	divPuesto.appendChild(noInfo1);
+	        	
+	        	
+	        	divMando1.appendChild(divPuesto);
+	    	}
+	        
+	    	completadasContainer.add(element);
 			
 			//  CONTENEDOR DETALLES
 			// Se añade la descripción del edificio

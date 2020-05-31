@@ -301,6 +301,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
 		this.load.html('centroMandoMenu', 'assets/text/centroMandoMenu.html');
+		this.load.html('laboratorioInvestigacionMenu', 'assets/text/laboratorioInvestigacionMenu.html');
 		this.load.html('amigosMenu', 'assets/text/amigosMenu.html');
 		this.load.html('buscarAmigosMenu', 'assets/text/buscarAmigosMenu.html');
 		
