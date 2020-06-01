@@ -329,7 +329,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 		    		
 		    		
 		    		let box = document.createElement("img");
-		        	box.src = "assets/interface/Gameplay/Investigacion/cajaInvestigar.png";
+		        	box.src = "assets/interface/Gameplay/Investigacion/cajaInvestigarVerde.png";
 		        	box.style.marginLeft ="0px";
 		        	box.style.marginTop = "0px";
 		        	box.style.width = '98%';
@@ -337,7 +337,7 @@ class LaboratorioInvestigacionMenu extends Phaser.Scene {
 		        	box.indice = j;
 		        	
 		        	let circunf1 = document.createElement("img");
-		        	circunf1.src = 'assets/interface/Gameplay/Investigacion/cajaInvestigarAzul.png';
+		        	circunf1.src = 'assets/interface/Gameplay/Investigacion/ElipseVerde.png';
 		        	circunf1.style.position = "absolute";
 		        	circunf1.style.left = "3px";
 		        	circunf1.style.marginTop = "1px";
