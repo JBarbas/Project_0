@@ -191,6 +191,13 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.image('interfazIDetails', 'assets/interface/Gameplay/Investigacion/interfazIDetails.png');
 		this.load.image('interfazIDetalles', 'assets/interface/Gameplay/Investigacion/interfazIDetalles.png');
 		
+		//Paneles de Mando
+		this.load.image('interfazExpansionEng', 'assets/interface/Gameplay/Mando/interfazExpansionEng.png');
+		this.load.image('interfazExpansion', 'assets/interface/Gameplay/Mando/interfazExpansion.png');
+		this.load.image('interfazColony', 'assets/interface/Gameplay/Mando/interfazColony.png');
+		this.load.image('interfazColonia', 'assets/interface/Gameplay/Mando/interfazColonia.png');
+		this.load.image('iconExpansion','assets/interface/Gameplay/Mando/iconExp.png');
+		
 		this.load.image('intPrincipal', 'assets/interface/Gameplay/UiGamePlayMenu.png');
 		this.load.image('hoverMats', 'assets/interface/Gameplay/hovermats.png');
 		
@@ -301,6 +308,7 @@ class PreloadGameScene extends Phaser.Scene {
 		this.load.html('centroComercioMenuV', 'assets/text/centroComercioMenuV.html');
 		this.load.html('centroComercioMenuO', 'assets/text/centroComercioMenuO.html');
 		this.load.html('centroMandoMenu', 'assets/text/centroMandoMenu.html');
+		this.load.html('centroMandoEMenu', 'assets/text/centroMandoEMenu.html');
 		this.load.html('laboratorioInvestigacionMenu', 'assets/text/laboratorioInvestigacionMenu.html');
 		this.load.html('amigosMenu', 'assets/text/amigosMenu.html');
 		this.load.html('buscarAmigosMenu', 'assets/text/buscarAmigosMenu.html');
