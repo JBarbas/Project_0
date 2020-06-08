@@ -341,8 +341,8 @@ class CentroMandoMenu extends Phaser.Scene {
 	        
 	        var desc = document.createElement("span");
 	        desc.style.position = "absolute";
-	        desc.style.left = "10px";
-	        desc.style.marginTop = "-240px";
+	        desc.style.left = "0px";
+	        desc.style.marginTop = "-290px";
 	        desc.style.width = '250px';
 	        desc.style.color = '#fff';
 	        desc.style.fontSize = '10px';
@@ -350,92 +350,143 @@ class CentroMandoMenu extends Phaser.Scene {
 	        
 	        var desctxt;
     		if(game.global.idioma == 'esp'){
-    			desctxt = document.createTextNode("Aquí puedes desbloquear nuevas mejoras para tus edificios");
+    			desctxt = document.createTextNode("Aquí puedes desbloquear nuevas expansiones para tu territorio");
     			desc.appendChild(desctxt);
         	}else{
-        		desctxt = document.createTextNode("Here you can unlock new upgrades for your buildings");
+        		desctxt = document.createTextNode("Here you can unlock new expansions for your territory");
         		desc.appendChild(desctxt);
         	}
 	        
-	    	for(let edificio of game.global.edificios.values()){
-	    		if (edificio.sprite !== 'centroDeMando' && (edificio.numColonos + edificio.jobs) > 0) {	    		
+	    	for(i = 0;i<4;i++){
+	    		    		
 		    		let divPuestoV = document.createElement("div");
 		    		divPuestoV.style.marginTop = "40px";
 		    		
 		    		/*la imagen*/
 		    		let boxV = document.createElement("img");
-		        	boxV.src = "assets/interface/Gameplay/Investigacion/cajaInvestigar.png";
+		        	boxV.src = "assets/interface/Gameplay/Mando/rect.png";
 		        	boxV.style.marginLeft ="0px";
 		        	boxV.style.marginTop = "0px";
 		        	boxV.style.width = '98%';
 		        	boxV.style.height = 'auto';
 		        	boxV.indice = i;
 		        	
-		        	let circunf = document.createElement("img");
-		        	circunf.src = 'assets/interface/Gameplay/Investigacion/cajaInvestigarAzul.png';
-		        	circunf.style.position = "absolute";
-		        	circunf.style.left = "3px";
-		        	circunf.style.marginTop = "1px";
-		        	circunf.style.width = '39px';
-		        	circunf.style.heigth = 'auto';
-		        	circunf.style.cursor = "pointer";
-		        	circunf.indice = i;
-		        	circunf.edificio = edificio;
-		        	circunf.style.zIndex = "-3";
-		        	
-		        	let edif = document.createElement("img");
-		        	edif.src = 'assets/interface/Gameplay/Construccion/selTaller1.png';
-		        	edif.style.position = "absolute";
-		        	edif.style.left = "0px";
-		        	edif.style.marginTop = "-15px";
-		        	edif.style.width = '60px';
-		        	edif.style.heigth = 'auto';
-		        	edif.style.cursor = "pointer";
-		        	edif.indice = i;
-		        	edif.edificio = edificio;
-		        	edif.style.zIndex = "-3";
-		        	
 		    		let enviar = document.createElement("img");
-		    		enviar.src = 'assets/interface/Gameplay/Investigacion/botonInv.png';
+		    		enviar.src = 'assets/interface/Gameplay/Mando/botonExpansion.png';
 		    		enviar.style.position = "absolute";
-		    		enviar.style.left = "200px";
-		    		enviar.style.marginTop = "5px";
-		    		enviar.style.width = '30px';
+		    		enviar.style.left = "185px";
+		    		enviar.style.marginTop = "7px";
+		    		enviar.style.width = '40px';
 		    		enviar.style.heigth = 'auto';
 		    		enviar.style.cursor = "pointer";
 		    		enviar.indice = i;
-		    		enviar.edificio = edificio;
-
+		    		
+		    		let verMapa = document.createElement("img");
+		    		verMapa.src = 'assets/interface/Gameplay/Mando/buttonMapa.png';
+		    		verMapa.style.position = "absolute";
+		    		verMapa.style.left = "70px";
+		    		verMapa.style.marginTop = "33px";
+		    		verMapa.style.width = '80px';
+		    		verMapa.style.heigth = 'auto';
+		    		verMapa.style.cursor = "pointer";
+		    		verMapa.indice = i;
+		    		
+		    		let mapaicon = document.createElement("img");
+		    		var aux1 = i+1;
+		    		mapaicon.src = 'assets/interface/Gameplay/Mando/sector'+aux1+'.png';
+		    		mapaicon.style.position = "absolute";
+		    		mapaicon.style.left = "5px";
+		    		mapaicon.style.marginTop = "13px";
+		    		mapaicon.style.width = '45px';
+		    		mapaicon.style.heigth = 'auto';
+		    		mapaicon.indice = i;
+		    		
 		    		var timetxt = document.createElement("span");
 		    		timetxt.style.position = "absolute";
-		    		timetxt.style.left = "50px";
+		    		timetxt.style.left = "65px";
 		    		timetxt.style.marginTop = "4px";
-		    		timetxt.style.width = '300px';
+		    		timetxt.style.width = '100px';
 		    		timetxt.style.fontSize = '10px';
+		    		timetxt.style.fontFamily = 'pantonBlack';
 		    		timetxt.style.color = '#fff';
 		    		timetxt.indice = i;
-		    		
-		    		var hourstxt;
-	    		
-		    		//Aqui se debe cambiar el valor de inv1 por el inv + indice 
-	    			var textoDesdeXml = this.cache.xml.get(game.global.idioma).getElementsByTagName('inv1')[0].childNodes[0].nodeValue;
-	    			hourstxt = document.createTextNode(textoDesdeXml);
-	    			timetxt.appendChild(hourstxt);
+		    		var textAux = document.createTextNode("ZONA NOROESTE");
+	    			timetxt.appendChild(textAux);
+	    			
+	    			var casillas = document.createElement("span");
+	    			casillas.style.position = "absolute";
+	    			casillas.style.left = "65px";
+	    			casillas.style.marginTop = "20px";
+	    			casillas.style.width = '100px';
+	    			casillas.style.fontSize = '10px';
+	    			casillas.style.fontFamily = 'pantonLight';
+	    			casillas.style.color = '#fff';
+	    			casillas.indice = i;
+	    			var textAux1 = document.createTextNode("30 Casillas");
+	    			casillas.appendChild(textAux1);
+	    			
+	    			var coste = document.createElement("span");
+	    			coste.style.position = "absolute";
+	    			coste.style.left = "140px";
+	    			coste.style.marginTop = "20px";
+	    			coste.style.width = '100px';
+	    			coste.style.fontSize = '10px';
+	    			coste.style.fontFamily = 'pantonLight';
+	    			coste.style.color = '#fff';
+	    			coste.indice = i;
+	    			var textAux2 = document.createTextNode("10k");
+	    			coste.appendChild(textAux2);
+	    			
+	    			let billete = document.createElement("img");
+	    			billete.src = 'assets/interface/Gameplay/creditosFloat.png';
+	    			billete.style.position = "absolute";
+	    			billete.style.left = "160px";
+	    			billete.style.marginTop = "18px";
+	    			billete.style.width = '15px';
+	    			billete.style.heigth = 'auto';
+	    			billete.indice = i;
 		    
 		        	enviar.onmouseover = function(){
-		        		enviar.src = 'assets/interface/Gameplay/Investigacion/botonInvHover.png';
+		        		enviar.src = 'assets/interface/Gameplay/Mando/botonExpansionHover.png';
 		        	}
 		        	enviar.onmouseout = function(){
-		        		enviar.src = 'assets/interface/Gameplay/Investigacion/botonInv.png';
+		        		enviar.src = 'assets/interface/Gameplay/Mando/botonExpansion.png';
 		        	}
 		        	enviar.onmousedown = function(){
-		        		//Icono se cambia a recolectar con menos alpha
-		        		enviar.src = 'assets/interface/Gameplay/Investigacion/botonCancel.png';
-		        		enviar.style.cursor = 'no-drop';
-		        		enviar.style.opacity = '0.5';
+		        		//Aqui debe hacerse que se borre la expansion del listado y salga la expansion concedida en el mapa, ademas de reducir sus recursos
+		        		Swal.fire({
+	        			  title: '¿Estás seguro/a?',
+	        			  //text: "You won't be able to revert this!",
+	        			  icon: 'warning',
+	        			  showCancelButton: true,
+	        			  confirmButtonColor: '#3085d6',
+	        			  cancelButtonColor: '#d33',
+	        			  confirmButtonText: 'Si, comprar!'
+	        			}).then((result) => {
+	        			  if (result.value) {
+	        			    Swal.fire(
+	        			      '¡Enhorabuena!',
+	        			      'Has conseguido un nuevo terreno',
+	        			      'success'
+	        			    )
+			        		enviar.style.cursor = 'no-drop';
+			        		enviar.style.opacity = '0.5';
+	        			  }
+	        			})
+		        		
 		        		//Aqui hacer que se envie el colono a la expedición
 		        	}
 		        	
+		        	
+		        	verMapa.onmouseover = function(){
+		        		verMapa.src = 'assets/interface/Gameplay/Mando/buttonMapaHover.png';
+		        	}
+		        	verMapa.onmouseout = function(){
+		        		verMapa.src = 'assets/interface/Gameplay/Mando/buttonMapa.png';
+		        	}
+		        	verMapa.onmousedown = function(){
+		        		
+		        	}
 		        	
 		        	/*el div de los span*/
 		        	var contenidoV = document.createElement("div");
@@ -444,16 +495,18 @@ class CentroMandoMenu extends Phaser.Scene {
 		        	divPuestoV.appendChild(desc);
 		        	divPuestoV.appendChild(timetxt);
 		        	divPuestoV.appendChild(enviar);
-		        	divPuestoV.appendChild(circunf);
-		        	divPuestoV.appendChild(edif);
+		        	divPuestoV.appendChild(verMapa);
+		        	divPuestoV.appendChild(casillas);
+		        	divPuestoV.appendChild(coste);
+		        	divPuestoV.appendChild(billete);
+		        	divPuestoV.appendChild(mapaicon);
 		        	divPuestoV.appendChild(boxV);
 		        	divPuestoV.appendChild(contenidoV);
 		        	
 		        	
 		        	divExpansion.appendChild(divPuestoV);
-		        	
-		        	i++;
-	    		}
+		     
+	    		
 	    	}
 	    	
 	    	if(i==0){
