@@ -270,9 +270,9 @@ class CentroOperacionesMenu extends Phaser.Scene {
 	    		
 	    		var n;
 	        	if(game.global.idioma == 'eng'){
-	        		n = document.createTextNode("To manage settlers you must build houses and other buildings. The workshop, the generators or the extraction platform are some of the buildings that need settlers. Go to the Construction section on the left side of the screen.");
+	        		n = document.createTextNode("To send colones on expeditions, you must assign them in advance in the command center.");                       
 	        	}else{
-	        		n = document.createTextNode("Para administrar colonos debe construir viviendas y otros EDIFICIOS. El taller, los generadores o la plataforma de extracción son algunos de los EDIFICIOS que necesitan colonos. Ve a la sección de Construcción que se encuentra en la parte izquierda de la pantalla.");
+	        		n = document.createTextNode("Para mandar colonos a expediciones, debes asignarlos previamente en el centro de mando.");
 	        	}
 	        	noInfo.appendChild(n);
 	        	
