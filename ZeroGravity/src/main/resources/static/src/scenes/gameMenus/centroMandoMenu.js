@@ -372,11 +372,11 @@ class CentroMandoMenu extends Phaser.Scene {
 		        	boxV.indice = i;
 		        	
 		    		let enviar = document.createElement("img");
-		    		enviar.src = 'assets/interface/Gameplay/Mando/botonExpansion.png';
+		    		enviar.src = 'assets/interface/Gameplay/Mando/botonComprar.png';
 		    		enviar.style.position = "absolute";
-		    		enviar.style.left = "185px";
-		    		enviar.style.marginTop = "7px";
-		    		enviar.style.width = '40px';
+		    		enviar.style.left = "135px";
+		    		enviar.style.marginTop = "40px";
+		    		enviar.style.width = '70px';
 		    		enviar.style.heigth = 'auto';
 		    		enviar.style.cursor = "pointer";
 		    		enviar.indice = i;
@@ -384,9 +384,9 @@ class CentroMandoMenu extends Phaser.Scene {
 		    		let verMapa = document.createElement("img");
 		    		verMapa.src = 'assets/interface/Gameplay/Mando/buttonMapa.png';
 		    		verMapa.style.position = "absolute";
-		    		verMapa.style.left = "70px";
-		    		verMapa.style.marginTop = "33px";
-		    		verMapa.style.width = '80px';
+		    		verMapa.style.left = "55px";
+		    		verMapa.style.marginTop = "37px";
+		    		verMapa.style.width = '70px';
 		    		verMapa.style.heigth = 'auto';
 		    		verMapa.style.cursor = "pointer";
 		    		verMapa.indice = i;
@@ -403,7 +403,7 @@ class CentroMandoMenu extends Phaser.Scene {
 		    		
 		    		var timetxt = document.createElement("span");
 		    		timetxt.style.position = "absolute";
-		    		timetxt.style.left = "65px";
+		    		timetxt.style.left = "85px";
 		    		timetxt.style.marginTop = "4px";
 		    		timetxt.style.width = '100px';
 		    		timetxt.style.fontSize = '10px';
@@ -415,7 +415,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    			
 	    			var casillas = document.createElement("span");
 	    			casillas.style.position = "absolute";
-	    			casillas.style.left = "65px";
+	    			casillas.style.left = "75px";
 	    			casillas.style.marginTop = "20px";
 	    			casillas.style.width = '100px';
 	    			casillas.style.fontSize = '10px';
@@ -427,7 +427,7 @@ class CentroMandoMenu extends Phaser.Scene {
 	    			
 	    			var coste = document.createElement("span");
 	    			coste.style.position = "absolute";
-	    			coste.style.left = "140px";
+	    			coste.style.left = "160px";
 	    			coste.style.marginTop = "20px";
 	    			coste.style.width = '100px';
 	    			coste.style.fontSize = '10px';
@@ -440,17 +440,17 @@ class CentroMandoMenu extends Phaser.Scene {
 	    			let billete = document.createElement("img");
 	    			billete.src = 'assets/interface/Gameplay/creditosFloat.png';
 	    			billete.style.position = "absolute";
-	    			billete.style.left = "160px";
+	    			billete.style.left = "180px";
 	    			billete.style.marginTop = "18px";
 	    			billete.style.width = '15px';
 	    			billete.style.heigth = 'auto';
 	    			billete.indice = i;
 		    
 		        	enviar.onmouseover = function(){
-		        		enviar.src = 'assets/interface/Gameplay/Mando/botonExpansionHover.png';
+		        		enviar.src = 'assets/interface/Gameplay/Mando/botonComprarHover.png';
 		        	}
 		        	enviar.onmouseout = function(){
-		        		enviar.src = 'assets/interface/Gameplay/Mando/botonExpansion.png';
+		        		enviar.src = 'assets/interface/Gameplay/Mando/botonComprar.png';
 		        	}
 		        	enviar.onmousedown = function(){
 		        		//Aqui debe hacerse que se borre la expansion del listado y salga la expansion concedida en el mapa, ademas de reducir sus recursos
